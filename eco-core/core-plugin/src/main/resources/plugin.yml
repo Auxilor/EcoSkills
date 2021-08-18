@@ -1,0 +1,34 @@
+name: EcoSkills
+version: ${projectVersion}
+main: com.willfp.ecoskills.EcoSkillsPlugin
+api-version: 1.16
+authors: [ Auxilor ]
+website: willfp.com
+load: STARTUP
+depend:
+  - eco
+
+commands:
+  ecoskills:
+    description: Base Command
+    permission: ecoskills.command.ecoskills
+
+permissions:
+  ecoskills.*:
+    description: All ecoskills permissions
+    default: op
+    children:
+      ecoskills.command.*: true
+  ecoskills.command.*:
+    description: All commands
+    default: op
+    children:
+      ecoskills.command.reload: true
+      ecoskills.command.ecoskills: true
+
+  ecoskills.command.reload:
+    description: Allows reloading the config
+    default: op
+  ecoskills.command.ecoskills:
+    description: Allows the user of /ecoskills.
+    default: true

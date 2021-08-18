@@ -1,0 +1,93 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21"
+    }
+}
+
+plugins {
+    id 'java-library'
+    id 'com.github.johnrengelman.shadow' version '7.0.0'
+    id 'maven-publish'
+    id 'java'
+}
+
+dependencies {
+    implementation project(":eco-core").getSubprojects()
+}
+
+allprojects {
+    apply plugin: 'kotlin'
+    apply plugin: 'java'
+    apply plugin: 'maven-publish'
+    apply plugin: 'com.github.johnrengelman.shadow'
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+        maven { url 'https://repo.codemc.org/repository/nms/' }
+    }
+
+    jar {
+        onlyIf { !sourceSets.main.allSource.files.isEmpty() }
+    }
+
+    dependencies {
+        compileOnly 'com.willfp:eco:6.4.0'
+
+        compileOnly 'org.jetbrains:annotations:19.0.0'
+        compileOnly 'org.jetbrains.kotlin:kotlin-stdlib:1.5.21'
+
+        compileOnly 'org.projectlombok:lombok:1.18.20'
+        annotationProcessor 'org.projectlombok:lombok:1.18.20'
+
+        testCompileOnly 'org.projectlombok:lombok:1.18.20'
+        testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
+    }
+
+    tasks.withType(JavaCompile) {
+        options.deprecation = true
+        options.encoding = 'UTF-8'
+    }
+
+    processResources {
+        filesNotMatching(["**/*.png", "**/models/**", "**/textures/**"]) {
+            expand projectVersion: project.version
+        }
+    }
+
+    compileJava.options.encoding = 'UTF-8'
+    compileJava.dependsOn clean
+
+    build.dependsOn shadowJar
+}
+
+tasks.withType(Jar) {
+    destinationDirectory = file("$rootDir/bin/")
+}
+
+clean.doLast {
+    file("${rootDir}/bin").deleteDir()
+}
+
+shadowJar {
+    archiveFileName = findProperty("plugin-name") + " v" + findProperty("version") + ".jar"
+}
+
+jar {
+    archiveFileName = findProperty("plugin-name") + " v" + findProperty("version") + " " + "unshaded" + ".jar"
+}
+
+group = 'com.willfp'
+archivesBaseName = project.name
+version = findProperty("version")
+java.sourceCompatibility = JavaVersion.VERSION_16
+
+compileJava.options.encoding = 'UTF-8'
+
+build.dependsOn shadowJar
