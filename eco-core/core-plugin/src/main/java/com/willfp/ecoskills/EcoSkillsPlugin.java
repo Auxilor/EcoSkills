@@ -2,15 +2,16 @@ package com.willfp.ecoskills;
 
 import com.willfp.eco.core.EcoPlugin;
 import com.willfp.eco.core.command.impl.PluginCommand;
-import com.willfp.ecoskills.api.EcoSkillsAPI;
+import com.willfp.eco.core.integrations.IntegrationLoader;
 import com.willfp.ecoskills.commands.CommandEcoskills;
 import com.willfp.ecoskills.commands.CommandSkills;
 import com.willfp.ecoskills.effects.Effect;
 import com.willfp.ecoskills.effects.Effects;
-import com.willfp.ecoskills.skills.SkillDisplayListener;
 import com.willfp.ecoskills.skills.Skill;
+import com.willfp.ecoskills.skills.SkillDisplayListener;
 import com.willfp.ecoskills.skills.SkillLevellingListener;
 import com.willfp.ecoskills.skills.Skills;
+import com.willfp.ecoskills.stats.DamageIndicatorListener;
 import com.willfp.ecoskills.stats.Stat;
 import com.willfp.ecoskills.stats.Stats;
 import org.bukkit.event.Listener;
@@ -25,17 +26,11 @@ public class EcoSkillsPlugin extends EcoPlugin {
     private static EcoSkillsPlugin instance;
 
     /**
-     * Instance of EcoSkills API.
-     */
-    private final EcoSkillsAPI api;
-
-    /**
      * Internal constructor called by bukkit on plugin load.
      */
     public EcoSkillsPlugin() {
         super(0, 12205, "&#ff00ae");
         instance = this;
-        api = new EcoSkillsAPI();
     }
 
     @Override
@@ -55,15 +50,6 @@ public class EcoSkillsPlugin extends EcoPlugin {
     }
 
     /**
-     * Get the API.
-     *
-     * @return The API.
-     */
-    public EcoSkillsAPI getAPI() {
-        return api;
-    }
-
-    /**
      * Get the instance of EcoSkills.
      *
      * @return Instance.
@@ -76,6 +62,7 @@ public class EcoSkillsPlugin extends EcoPlugin {
     protected List<Listener> loadListeners() {
         return Arrays.asList(
                 new SkillLevellingListener(this),
+                EcoSkillsEventModifierHandler.INSTANCE,
                 new SkillDisplayListener(this)
         );
     }
@@ -85,6 +72,13 @@ public class EcoSkillsPlugin extends EcoPlugin {
         return Arrays.asList(
                 new CommandEcoskills(this),
                 new CommandSkills(this)
+        );
+    }
+
+    @Override
+    protected List<IntegrationLoader> loadIntegrationLoaders() {
+        return Arrays.asList(
+                new IntegrationLoader("HolographicDisplays", () -> this.getEventManager().registerListener(new DamageIndicatorListener(this)))
         );
     }
 }

@@ -4,7 +4,7 @@
 #
 
 gui:
-  rows: 5
+  rows: 6
 
   mask:
     # The way the mask works is by having a list of materials
@@ -24,6 +24,7 @@ gui:
       - "111111111"
       - "110000011"
       - "110010011"
+      - "111111111"
       - "111101111"
 
   player-info:
@@ -44,18 +45,19 @@ gui:
     material: barrier
     name: "&cClose"
     location:
-      row: 5
+      row: 6
       column: 5
 
   skill-icon:
-    name: "&9%skill% &3%level_numeral%"
+    name: "&#ff00ae%skill% &d%level_numeral%"
     lore:
-      - "&7%description%"
+      - "&8&o%description%"
       - "&f"
       - "%skill_specific%"
       - "&f"
-      - "&7Progress to next level: &e%percentage_progress%"
-      - "  &7%current_xp%/%required_xp% XP"
+      - "&fProgress to next level:"
+      - "&8» &e%percentage_progress%"
+      - "&8» &e%current_xp%&8/&7%required_xp% &fXP"
       - "&f"
       - "&eClick to view Level Progression!"
 
@@ -120,6 +122,16 @@ skills:
       enabled: true
       # The actionbar message that should be sent
       format: "&f%skill% &8| &9(%current_xp%/%required_xp%) &e+%gained_xp%"
+    sound:
+      # If a sound should be played
+      enabled: true
+      # The sound that should be played
+      id: entity_experience_orb_pickup
+      # Pitch between 0.5 and 2
+      pitch: 2
+      # The volume
+      volume: 0.1
+
 
   # Ways to tell the player about levelling up
   level-up:
@@ -128,7 +140,7 @@ skills:
       enabled: true
       message:
         - "&f"
-        - " &#ff00aeYou levelled up &9%skill%&#ff00ae to &eLevel %level%&#ff00ae!"
+        - " &#ff00aeYou levelled up &d%skill%&#ff00ae to &eLevel %level%&#ff00ae!"
         - "&f"
         - " &#ff00ae&lREWARDS:"
         - "%rewards%"
@@ -147,10 +159,11 @@ skills:
       row: 3
       column: 3
     gui-lore:
-      - "&7Primary Stat: %ecoskills_defense_name%"
+      - "&fImproves Stats:"
+      - "&8» &r%ecoskills_defense_name%"
       - "&f"
-      - "&7Ability Levels:"
-      - " &6Versatile Tools %ecoskills_versatile_tools_numeral%"
+      - "&fEffects:"
+      - "&8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
 
     # The maximum obtainable level
     max-level: 50
@@ -161,8 +174,8 @@ skills:
       - "versatile_tools:1"
 
     rewards-messages:
-      - " &f+1 %ecoskills_defense_name%"
-      - " &6Versatile Tools %ecoskills_versatile_tools_numeral%"
+      - " &8» &r&f+1 %ecoskills_defense_name%"
+      - " &8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
 
     # The xp rewards for each block type
     # Specify with type:xp
@@ -200,11 +213,12 @@ skills:
       row: 3
       column: 4
     gui-lore:
-      - "&7Primary Stat: %ecoskills_strength_name%"
-      - "&7Secondary Stat: %ecoskills_crit_damage_name%"
+      - "&fImproves Stats:"
+      - "&8» &r%ecoskills_strength_name%"
+      - "&8» &r%ecoskills_crit_damage_name%"
       - "&f"
-      - "&7Ability Levels:"
-      - " &6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
+      - "&fEffects:"
+      - "&8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
 
     # The maximum obtainable level
     max-level: 50
@@ -219,20 +233,21 @@ skills:
       - "serrated_strikes:1"
 
     rewards-messages:
-      - " &f+2 %ecoskills_strength_name%"
-      - " &f+1 %ecoskills_crit_damage_name%"
-      - " &6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
+      - " &8» &r&f+2 %ecoskills_strength_name%"
+      - " &8» &r&f+1 %ecoskills_crit_damage_name%"
+      - " &8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
   enchanting:
     gui-item: enchanting_table
     gui-position:
       row: 3
       column: 5
     gui-lore:
-      - "&7Primary Stat: %ecoskills_wisdom_name%"
-      - "&7Secondary Stat: %ecoskills_crit_chance_name%"
+      - "&fImproves Stats:"
+      - "&8» &r%ecoskills_wisdom_name%"
+      - "&8» &r%ecoskills_crit_chance_name%"
       - "&f"
-      - "&7Ability Levels:"
-      - " &6Second Chance %ecoskills_second_chance_numeral%"
+      - "&fEffects:"
+      - "&8» &r&6Second Chance %ecoskills_second_chance_numeral%"
 
     # The maximum obtainable level
     max-level: 50
@@ -247,19 +262,20 @@ skills:
       - "second_chance:1"
 
     rewards-messages:
-      - " &f+2 %ecoskills_wisdom_name%"
-      - " &f+1 %ecoskills_crit_chance_name%"
-      - " &6Second Chance %ecoskills_second_chance_numeral%"
+      - " &8» &r&f+2 %ecoskills_wisdom_name%"
+      - " &8» &r&f+1 %ecoskills_crit_chance_name%"
+      - " &8» &r&6Second Chance %ecoskills_second_chance_numeral%"
   farming:
     gui-position:
       row: 3
       column: 6
     gui-lore:
-      - "&7Primary Stat: %ecoskills_crit_damage_name%"
-      - "&7Secondary Stat: %ecoskills_wisdom_name%"
+      - "&fImproves Stats:"
+      - "&8» &r%ecoskills_crit_damage_name%"
+      - "&8» &r%ecoskills_wisdom_name%"
       - "&f"
-      - "&7Ability Levels:"
-      - " &6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
+      - "&fEffects:"
+      - "&8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
 
     gui-item: golden_hoe
     # The maximum obtainable level
@@ -272,9 +288,9 @@ skills:
       - "bountiful_harvest:1"
 
     rewards-messages:
-      - " &f+2 %ecoskills_crit_damage_name%"
-      - " &f+1 %ecoskills_wisdom_name%"
-      - " &6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
+      - " &8» &r&f+2 %ecoskills_crit_damage_name%"
+      - " &8» &r&f+1 %ecoskills_wisdom_name%"
+      - " &8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
 
     # The xp rewards for each crop type
     # Specify with type:xp
@@ -295,10 +311,11 @@ skills:
       column: 7
     gui-item: jungle_sapling
     gui-lore:
-      - "&7Primary Stat: %ecoskills_strength_name%"
+      - "&fImproves Stats:"
+      - "&8» &r%ecoskills_strength_name%"
       - "&f"
-      - "&7Ability Levels:"
-      - " &6Craftsmanship %ecoskills_craftsmanship_numeral%"
+      - "&fEffects:"
+      - "&8» &r&6Craftsmanship %ecoskills_craftsmanship_numeral%"
 
     # The maximum obtainable level
     max-level: 50
@@ -309,8 +326,8 @@ skills:
       - "craftsmanship:1"
 
     rewards-messages:
-      - " &f+2 %ecoskills_strength_name%"
-      - " &6Craftsmanship %ecoskills_craftsmanship_numeral%"
+      - " &8» &r&f+2 %ecoskills_strength_name%"
+      - " &8» &r&6Craftsmanship %ecoskills_craftsmanship_numeral%"
 
     # The xp rewards for each crop type
     # Specify with type:xp
@@ -328,11 +345,12 @@ skills:
       row: 4
       column: 3
     gui-lore:
-      - "&7Primary Stat: %ecoskills_defense_name%"
-      - "&7Secondary Stat: %ecoskills_wisdom_name%"
+      - "&fImproves Stats:"
+      - "&8» &r%ecoskills_defense_name%"
+      - "&8» &r%ecoskills_wisdom_name%"
       - "&f"
-      - "&7Ability Levels:"
-      - " &6Eye of the Depths %ecoskills_eye_of_the_depths_numeral%"
+      - "&fEffects:"
+      - "&8» &r&6Eye of the Depths %ecoskills_eye_of_the_depths_numeral%"
 
     gui-item: fishing_rod
     # The maximum obtainable level
@@ -348,19 +366,20 @@ skills:
       - "eye_of_the_depths:1"
 
     rewards-messages:
-      - " &f+2 %ecoskills_defense_name%"
-      - " &f+1 %ecoskills_wisdom_name%"
-      - " &6Eye of the Depths %ecoskills_eye_of_the_depths_numeral%"
+      - " &8» &r&f+2 %ecoskills_defense_name%"
+      - " &8» &r&f+1 %ecoskills_wisdom_name%"
+      - " &8» &r&6Eye of the Depths %ecoskills_eye_of_the_depths_numeral%"
   alchemy:
     gui-position:
       row: 4
       column: 4
     gui-lore:
-      - "&7Primary Stat: %ecoskills_crit_chance_name%"
-      - "&7Secondary Stat: %ecoskills_wisdom_name%"
+      - "&fImproves Stats:"
+      - "&8» &r%ecoskills_crit_chance_name%"
+      - "&8» &r%ecoskills_wisdom_name%"
       - "&f"
-      - "&7Ability Levels:"
-      - " &6Potionmaster %ecoskills_potionmaster_numeral%"
+      - "&fEffects:"
+      - "&8» &r&6Potionmaster %ecoskills_potionmaster_numeral%"
 
     gui-item: brewing_stand
     # The maximum obtainable level
@@ -373,9 +392,9 @@ skills:
       - "potionmaster:1"
 
     rewards-messages:
-      - " &f+2 %ecoskills_crit_chance_name%"
-      - " &f+1 %ecoskills_wisdom_name%"
-      - " &6Potionmaster %ecoskills_potionmaster_numeral%"
+      - " &8» &r&f+2 %ecoskills_crit_chance_name%"
+      - " &8» &r&f+1 %ecoskills_wisdom_name%"
+      - " &8» &r&6Potionmaster %ecoskills_potionmaster_numeral%"
 
     # The experience to give for each brewing ingredient
     xp-rewards:
@@ -401,11 +420,12 @@ skills:
       row: 4
       column: 6
     gui-lore:
-      - "&7Primary Stat: %ecoskills_defense_name%"
-      - "&7Secondary Stat: %ecoskills_speed_name%"
+      - "&fImproves Stats:"
+      - "&8» &r%ecoskills_defense_name%"
+      - "&8» &r%ecoskills_speed_name%"
       - "&f"
-      - "&7Ability Levels:"
-      - " &6Shamanism %ecoskills_shamanism_numeral%"
+      - "&fEffects:"
+      - "&8» &r&6Shamanism %ecoskills_shamanism_numeral%"
 
     gui-item: iron_chestplate
     # The maximum obtainable level
@@ -421,18 +441,19 @@ skills:
       - "shamanism:1"
 
     rewards-messages:
-      - " &f+2 %ecoskills_defense_name%"
-      - " &f+1 %ecoskills_speed_name%"
-      - " &6Shamanism %ecoskills_shamanism_numeral%"
+      - " &8» &r&f+2 %ecoskills_defense_name%"
+      - " &8» &r&f+1 %ecoskills_speed_name%"
+      - " &8» &r&6Shamanism %ecoskills_shamanism_numeral%"
   exploration:
     gui-position:
       row: 4
       column: 7
     gui-lore:
-      - "&7Primary Stat: %ecoskills_speed_name%"
+      - "&fImproves Stats:"
+      - "&8» &r%ecoskills_speed_name%"
       - "&f"
-      - "&7Ability Levels:"
-      - " &6Seamless Movement %ecoskills_seamless_movement_numeral%"
+      - "&fEffects:"
+      - "&8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
 
     gui-item: leather_boots
     # The maximum obtainable level
@@ -444,11 +465,18 @@ skills:
       - "seamless_movement:1"
 
     rewards-messages:
-      - " &f+2 %ecoskills_speed_name%"
-      - " &6Seamless Movement %ecoskills_seamless_movement_numeral%"
+      - " &8» &r&f+2 %ecoskills_speed_name%"
+      - " &8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
 
     # Chance to give 1 xp every time the player moves
-    xp-on-move-chance: 0.6
+    xp-on-move-chance: 0.05
+    # The amount of xp to give before any modifiers are applied
+    base-xp-to-give: 20
+    # If the amount of xp given should be higher when travelling faster
+    multiply-xp-by-speed: true
+
+    # The amount of experience to give for each point of fall damage taken
+    fall-damage-xp-per-hp: 16
 
 stats:
   defense:
@@ -530,3 +558,13 @@ effects:
     # This will follow a binomial distribution where the amount of trials is the durability check (30 by default, see above)
     # Since this chance will be called many times, it would be best to have this be low.
     chance-per-level: 0.1
+
+damage-indicators:
+  # Requires HolographicDisplays to be installed
+  enabled: true
+  format:
+    normal: "&7%damage%"
+    crit: "&f✧ <gradient:#f953c6>%damage%</gradient:#b91d73> &f✧"
+  max-x-offset: 0.6
+  max-y-offset: 0.6
+  max-z-offset: 0.6

@@ -22,21 +22,35 @@ class SkillDisplayListener(
         val skill = event.skill
         val amount = event.amount
 
-        if (this.plugin.configYml.getBool("skills.progress.action-bar.enabled")) {
-            var string = this.plugin.configYml.getString("skills.progress.action-bar.format")
-            string = string.replace("%skill%", skill.name)
-            string = string.replace("%current_xp%", NumberUtils.format(player.getSkillProgress(skill)))
-            val nextLevel = skill.getExpForLevel(player.getSkillLevel(skill) + 1).toDouble()
-            val nextLevelMessage = if (nextLevel >= 2_000_000_000) "∞" else NumberUtils.format(nextLevel)
-            string = string.replace(
-                "%required_xp%",
-                nextLevelMessage
-            )
-            string = string.replace("%gained_xp%", NumberUtils.format(amount))
-            player.spigot().sendMessage(
-                ChatMessageType.ACTION_BAR,
-                *TextComponent.fromLegacyText(string)
-            )
+        plugin.scheduler.run{
+            if (this.plugin.configYml.getBool("skills.progress.action-bar.enabled")) {
+                var string = this.plugin.configYml.getString("skills.progress.action-bar.format")
+                string = string.replace("%skill%", skill.name)
+                string = string.replace("%current_xp%", NumberUtils.format(player.getSkillProgress(skill)))
+                val nextLevel = skill.getExpForLevel(player.getSkillLevel(skill) + 1).toDouble()
+                val nextLevelMessage = if (nextLevel >= 2_000_000_000) "∞" else NumberUtils.format(nextLevel)
+                string = string.replace(
+                    "%required_xp%",
+                    nextLevelMessage
+                )
+                string = string.replace("%gained_xp%", NumberUtils.format(amount))
+                player.spigot().sendMessage(
+                    ChatMessageType.ACTION_BAR,
+                    *TextComponent.fromLegacyText(string)
+                )
+            }
+
+            if (this.plugin.configYml.getBool("skills.progress.sound.enabled")) {
+                val sound = Sound.valueOf(this.plugin.configYml.getString("skills.progress.sound.id").uppercase())
+                val pitch = this.plugin.configYml.getDouble("skills.progress.sound.pitch")
+
+                player.playSound(
+                    player.location,
+                    sound,
+                    this.plugin.configYml.getDouble("skills.progress.sound.volume").toFloat(),
+                    pitch.toFloat()
+                )
+            }
         }
 
     }

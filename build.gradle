@@ -31,6 +31,7 @@ allprojects {
         maven { url 'https://jitpack.io' }
         maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
         maven { url 'https://repo.codemc.org/repository/nms/' }
+        maven { url 'https://repo.codemc.io/repository/maven-public/' }
     }
 
     jar {
