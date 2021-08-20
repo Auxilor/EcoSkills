@@ -229,6 +229,31 @@ skills:
     gui-item: golden_hoe
     # The maximum obtainable level
     max-level: 50
+
+    # The level/skill increases to give on levelup
+    level-up-rewards:
+      - "speed:1"
+      - "wisdom:1"
+      - "bountiful_harvest:1"
+
+    rewards-messages:
+      - " &f+1 %ecoskills_speed_name%"
+      - " &f+1 %ecoskills_wisdom_name%"
+      - " &6Bountiful Harvest %ecoskills_harvest_numeral%"
+
+    # The xp rewards for each crop type
+    # Specify with type:xp
+    xp-rewards:
+      - "wheat:4"
+      - "potato:4"
+      - "carrots:4"
+      - "melon:4"
+      - "pumpkin:4.5"
+      - "cactus:2"
+      - "sugar_cane:2"
+      - "brown_mushroom:6"
+      - "red_mushroom:6"
+      - "cocoa_beans:3"
   woodcutting:
     gui-position:
       row: 3

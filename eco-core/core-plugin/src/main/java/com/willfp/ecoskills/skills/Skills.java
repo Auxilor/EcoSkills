@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import com.willfp.eco.core.config.updating.ConfigUpdater;
 import com.willfp.ecoskills.skills.skills.SkillCombat;
 import com.willfp.ecoskills.skills.skills.SkillEnchanting;
+import com.willfp.ecoskills.skills.skills.SkillFarming;
 import com.willfp.ecoskills.skills.skills.SkillMining;
 import org.bukkit.NamespacedKey;
 import org.jetbrains.annotations.ApiStatus;
@@ -23,8 +24,8 @@ public class Skills {
     public static final Skill MINING = new SkillMining();
     public static final Skill COMBAT = new SkillCombat();
     public static final Skill ENCHANTING = new SkillEnchanting();
+    public static final Skill FARMING = new SkillFarming();
     /*
-    public static final Skill FARMING = new Skill(PLUGIN, "farming");
     public static final Skill WOODCUTTING = new Skill(PLUGIN, "woodcutting");
     public static final Skill FISHING = new Skill(PLUGIN, "fishing");
     public static final Skill ALCHEMY = new Skill(PLUGIN, "alchemy");
