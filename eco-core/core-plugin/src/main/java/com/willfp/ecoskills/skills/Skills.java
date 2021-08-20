@@ -2,6 +2,7 @@ package com.willfp.ecoskills.skills;
 
 import com.google.common.collect.ImmutableSet;
 import com.willfp.eco.core.config.updating.ConfigUpdater;
+import com.willfp.ecoskills.skills.skills.SkillCombat;
 import com.willfp.ecoskills.skills.skills.SkillMining;
 import org.bukkit.NamespacedKey;
 import org.jetbrains.annotations.ApiStatus;
@@ -19,8 +20,8 @@ public class Skills {
     private static final Map<String, Skill> REGISTRY = new HashMap<>();
 
     public static final Skill MINING = new SkillMining();
+    public static final Skill COMBAT = new SkillCombat();
     /*
-    public static final Skill COMBAT = new Skill(PLUGIN, "combat");
     public static final Skill ENCHANTING = new Skill(PLUGIN, "enchanting");
     public static final Skill FARMING = new Skill(PLUGIN, "farming");
     public static final Skill WOODCUTTING = new Skill(PLUGIN, "woodcutting");

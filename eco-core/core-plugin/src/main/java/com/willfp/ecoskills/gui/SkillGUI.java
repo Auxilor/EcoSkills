@@ -6,6 +6,7 @@ import com.willfp.eco.core.gui.menu.Menu;
 import com.willfp.eco.core.gui.slot.FillerMask;
 import com.willfp.eco.core.gui.slot.MaskMaterials;
 import com.willfp.eco.core.gui.slot.Slot;
+import com.willfp.eco.core.items.builder.ItemStackBuilder;
 import com.willfp.eco.core.items.builder.SkullBuilder;
 import com.willfp.eco.util.StringUtils;
 import com.willfp.ecoskills.skills.Skill;
@@ -55,9 +56,13 @@ public class SkillGUI {
                 .filter(Objects::nonNull)
                 .toArray(Material[]::new);
 
+
+        Material closeMaterial = Material.getMaterial(plugin.getConfigYml().getString("gui.close.material", false).toUpperCase());
+        assert closeMaterial != null;
+
         Function<Player, ItemStack> playerHeadItemBuilder = player -> {
             ItemStack itemStack = new SkullBuilder()
-                    .setDisplayName(plugin.getConfigYml().getString("gui.player-info.name"))
+                    .setDisplayName(plugin.getConfigYml().getString("gui.player-info.name").replace("%player%", player.getDisplayName()))
                     .addLoreLines(() -> {
                         List<String> lore = new ArrayList<>();
 
@@ -106,6 +111,16 @@ public class SkillGUI {
                         );
                     }
                 })
+                .setSlot(plugin.getConfigYml().getInt("gui.close.location.row"),
+                        plugin.getConfigYml().getInt("gui.close.location.column"),
+                        Slot.builder(
+                                new ItemStackBuilder(closeMaterial)
+                                        .setDisplayName(plugin.getConfigYml().getString("gui.close.name"))
+                                        .build()
+                        ).onLeftClick((event, slot) -> {
+                            event.getWhoClicked().closeInventory();
+                        }).build()
+                )
                 .build();
     }
 }

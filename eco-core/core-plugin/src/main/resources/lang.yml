@@ -40,11 +40,11 @@ stats:
   crit_chance:
     name: "&#f7ff85☣ Crit Chance"
   crit_damage:
-    name: "&#000d9e☠ Crit Damage"
+    name: "&9☠ Crit Damage"
   speed:
     name: "&#40ffe6✦ Speed"
   wisdom:
-    name: "&#c8ffa6✎ Wisdom"
+    name: "&#42f566✎ Wisdom"
 
 effects:
   bountiful_harvest:
