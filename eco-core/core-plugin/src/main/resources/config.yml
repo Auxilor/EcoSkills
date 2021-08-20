@@ -307,6 +307,20 @@ skills:
     gui-item: iron_chestplate
     # The maximum obtainable level
     max-level: 50
+
+    # The experience to give for each hp of damage taken
+    xp-per-hp: 0.72
+
+    # The level/skill increases to give on levelup
+    level-up-rewards:
+      - "defense:2"
+      - "speed:1"
+      - "shamanism:1"
+
+    rewards-messages:
+      - " &f+2 %ecoskills_defense_name%"
+      - " &f+1 %ecoskills_speed_name%"
+      - " &6Shamanism %ecoskills_shamanism_numeral%"
   exploration:
     gui-position:
       row: 4
@@ -326,7 +340,7 @@ skills:
       - " &6Seamless Movement %ecoskills_seamless_movement_numeral%"
 
     # Chance to give 1 xp every time the player moves
-    xp-on-move-chance: 1
+    xp-on-move-chance: 0.6
 
 stats:
   defense:

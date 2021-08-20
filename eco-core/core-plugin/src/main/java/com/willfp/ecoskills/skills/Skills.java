@@ -2,6 +2,7 @@ package com.willfp.ecoskills.skills;
 
 import com.google.common.collect.ImmutableSet;
 import com.willfp.eco.core.config.updating.ConfigUpdater;
+import com.willfp.ecoskills.skills.skills.SkillArmory;
 import com.willfp.ecoskills.skills.skills.SkillCombat;
 import com.willfp.ecoskills.skills.skills.SkillEnchanting;
 import com.willfp.ecoskills.skills.skills.SkillExploration;
@@ -29,10 +30,10 @@ public class Skills {
     public static final Skill FARMING = new SkillFarming();
     public static final Skill WOODCUTTING = new SkillWoodcutting();
     public static final Skill EXPLORATION = new SkillExploration();
+    public static final Skill ARMORY = new SkillArmory();
     /*
     public static final Skill FISHING = new Skill(PLUGIN, "fishing");
     public static final Skill ALCHEMY = new Skill(PLUGIN, "alchemy");
-    public static final Skill ARMORY = new Skill(PLUGIN, "armory");
      */
 
     @ApiStatus.Internal
