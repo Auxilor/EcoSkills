@@ -3,6 +3,7 @@ package com.willfp.ecoskills.skills.skills
 import com.willfp.eco.core.events.EntityDeathByEntityEvent
 import com.willfp.ecoskills.api.PlayerSkillExpGainEvent
 import com.willfp.ecoskills.getStatLevel
+import com.willfp.ecoskills.giveSkillExperience
 import com.willfp.ecoskills.skills.Skill
 import org.bukkit.Bukkit
 import org.bukkit.Material
@@ -54,7 +55,6 @@ class SkillAlchemy : Skill(
         val type = event.contents.ingredient?.type ?: return
 
         val toGive = rewards[type] ?: return
-        val gainEvent = PlayerSkillExpGainEvent(player, this, toGive)
-        Bukkit.getPluginManager().callEvent(gainEvent)
+        player.giveSkillExperience(this, toGive)
     }
 }

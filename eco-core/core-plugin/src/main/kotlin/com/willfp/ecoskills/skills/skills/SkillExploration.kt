@@ -4,6 +4,7 @@ import com.willfp.eco.core.events.EntityDeathByEntityEvent
 import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.api.PlayerSkillExpGainEvent
 import com.willfp.ecoskills.getStatLevel
+import com.willfp.ecoskills.giveSkillExperience
 import com.willfp.ecoskills.skills.Skill
 import org.bukkit.Bukkit
 import org.bukkit.Material
@@ -27,8 +28,7 @@ class SkillExploration : Skill(
         val player = event.player
 
         if (NumberUtils.randFloat(0.0, 100.0) < this.config.getDouble("xp-on-move-chance")) {
-            val gainEvent = PlayerSkillExpGainEvent(player, this, 1.0)
-            Bukkit.getPluginManager().callEvent(gainEvent)
+            player.giveSkillExperience(this, 1.0)
         }
     }
 }

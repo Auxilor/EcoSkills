@@ -3,6 +3,7 @@ package com.willfp.ecoskills.skills.skills
 import com.willfp.eco.core.events.EntityDeathByEntityEvent
 import com.willfp.ecoskills.api.PlayerSkillExpGainEvent
 import com.willfp.ecoskills.getStatLevel
+import com.willfp.ecoskills.giveSkillExperience
 import com.willfp.ecoskills.skills.Skill
 import org.bukkit.Bukkit
 import org.bukkit.Material
@@ -26,7 +27,6 @@ class SkillEnchanting : Skill(
         val cost = event.expLevelCost
 
         val xp = cost * this.config.getDouble("xp-per-level")
-        val gainEvent = PlayerSkillExpGainEvent(player, this, xp)
-        Bukkit.getPluginManager().callEvent(gainEvent)
+        player.giveSkillExperience(this, xp)
     }
 }

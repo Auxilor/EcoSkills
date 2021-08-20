@@ -1,6 +1,7 @@
 package com.willfp.ecoskills.skills.skills
 
 import com.willfp.ecoskills.api.PlayerSkillExpGainEvent
+import com.willfp.ecoskills.giveSkillExperience
 import com.willfp.ecoskills.skills.Skill
 import org.bukkit.Bukkit
 import org.bukkit.attribute.Attribute
@@ -21,7 +22,6 @@ class SkillArmory : Skill(
         }
 
         val xp = event.damage * this.config.getDouble("xp-per-hp")
-        val gainEvent = PlayerSkillExpGainEvent(player, this, xp)
-        Bukkit.getPluginManager().callEvent(gainEvent)
+        player.giveSkillExperience(this, xp)
     }
 }

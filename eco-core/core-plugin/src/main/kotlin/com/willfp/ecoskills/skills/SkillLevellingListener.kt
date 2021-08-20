@@ -14,23 +14,6 @@ import org.bukkit.event.Listener
 class SkillLevellingListener(
     private val plugin: EcoPlugin
 ) : Listener {
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    fun onProgress(event: PlayerSkillExpGainEvent) {
-        val player = event.player
-        val skill = event.skill
-        val amount = event.amount
-        val level = player.getSkillLevel(skill)
-
-        player.setSkillProgress(skill, player.getSkillProgress(skill) + amount)
-
-        if (player.getSkillProgress(skill) >= skill.getExpForLevel(level + 1)) {
-            player.setSkillProgress(skill, 0.0)
-            player.setSkillLevel(skill, level + 1)
-            val levelUpEvent = PlayerSkillLevelUpEvent(player, skill, level + 1)
-            Bukkit.getPluginManager().callEvent(levelUpEvent)
-        }
-    }
-
     @EventHandler(priority = EventPriority.HIGHEST)
     fun onLevelUp(event: PlayerSkillLevelUpEvent) {
         val player = event.player
