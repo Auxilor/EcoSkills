@@ -13,29 +13,19 @@ import org.bukkit.entity.Projectile
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.block.BlockBreakEvent
+import org.bukkit.event.enchantment.EnchantItemEvent
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import java.util.*
 
-class SkillCombat : Skill(
-    "combat"
+class SkillEnchanting : Skill(
+    "enchanting"
 ) {
-    @EventHandler(priority = EventPriority.HIGH)
-    fun handleLevelling(event: EntityDeathByEntityEvent) {
-        var player = event.killer
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    fun handleLevelling(event: EnchantItemEvent) {
+        val player = event.enchanter
+        val cost = event.expLevelCost
 
-        if (player is Projectile) {
-            if (player.shooter !is Player) {
-                return
-            } else {
-                player = player.shooter as Player
-            }
-        }
-
-        if (player !is Player) {
-            return
-        }
-
-        val xp = event.victim.getAttribute(Attribute.GENERIC_MAX_HEALTH)!!.value * this.config.getDouble("xp-per-heart")
+        val xp = cost * this.config.getDouble("xp-per-level")
         val gainEvent = PlayerSkillExpGainEvent(player, this, xp)
         Bukkit.getPluginManager().callEvent(gainEvent)
     }

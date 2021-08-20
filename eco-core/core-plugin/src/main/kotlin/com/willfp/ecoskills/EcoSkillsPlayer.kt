@@ -7,7 +7,7 @@ import org.bukkit.entity.Player
 import org.bukkit.persistence.PersistentDataType
 
 fun Player.getSkillLevel(skill: Skill): Int {
-    return this.persistentDataContainer.getOrDefault(skill.key, PersistentDataType.INTEGER, 1)
+    return this.persistentDataContainer.getOrDefault(skill.key, PersistentDataType.INTEGER, 0)
 }
 
 fun Player.setSkillLevel(skill: Skill, level: Int) {
@@ -23,7 +23,7 @@ fun Player.setSkillProgress(skill: Skill, level: Double) {
 }
 
 fun Player.getEffectLevel(effect: Effect): Int {
-    return this.persistentDataContainer.getOrDefault(effect.key, PersistentDataType.INTEGER, 1)
+    return this.persistentDataContainer.getOrDefault(effect.key, PersistentDataType.INTEGER, 0)
 }
 
 fun Player.setEffectLevel(effect: Effect, level: Int) {
@@ -31,7 +31,7 @@ fun Player.setEffectLevel(effect: Effect, level: Int) {
 }
 
 fun Player.getStatLevel(stat: Stat): Int {
-    return this.persistentDataContainer.getOrDefault(stat.key, PersistentDataType.INTEGER, 1)
+    return this.persistentDataContainer.getOrDefault(stat.key, PersistentDataType.INTEGER, 0)
 }
 
 fun Player.setStatLevel(stat: Stat, level: Int) {

@@ -30,7 +30,7 @@ gui:
     row: 1
     column: 5
 
-    name: "&f%player%'s Stats:"
+    name: "&f%player%'s &fStats:"
     lore:
       - "&f"
       - " %ecoskills_defense_name%&f %ecoskills_defense%"
@@ -186,7 +186,7 @@ skills:
     # The maximum obtainable level
     max-level: 50
 
-    # The experience to give for each heart of a killed enemy
+    # The experience to give for each hp of a killed enemy
     xp-per-heart: 0.33
 
     # The level/skill increases to give on levelup
@@ -198,7 +198,7 @@ skills:
     rewards-messages:
       - " &f+1 %ecoskills_crit_damage_name%"
       - " &f+2 %ecoskills_strength_name%"
-      - " &6Versatile Tools %ecoskills_serrated_strikes_numeral%"
+      - " &6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
   enchanting:
     gui-item: enchanting_table
     gui-position:
@@ -207,6 +207,20 @@ skills:
 
     # The maximum obtainable level
     max-level: 50
+
+    # The experience to give for each level cost of enchanting
+    xp-per-level: 4
+
+    # The level/skill increases to give on levelup
+    level-up-rewards:
+      - "wisdom:2"
+      - "crit_chance:1"
+      - "second_chance:1"
+
+    rewards-messages:
+      - " &f+2 %ecoskills_wisdom_name%"
+      - " &f+1 %ecoskills_crit_chance_name%"
+      - " &6Second Chance %ecoskills_second_chance_numeral%"
   farming:
     gui-position:
       row: 3
