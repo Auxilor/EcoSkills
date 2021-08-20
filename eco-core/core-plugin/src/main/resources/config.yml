@@ -291,6 +291,20 @@ skills:
     gui-item: fishing_rod
     # The maximum obtainable level
     max-level: 50
+
+    # The experience to give for each in-game experience dropped
+    xp-per-experience-dropped: 3.5
+
+    # The level/skill increases to give on levelup
+    level-up-rewards:
+      - "defense:1"
+      - "wisdom:1"
+      - "eye_of_the_depths:1"
+
+    rewards-messages:
+      - " &f+1 %ecoskills_defense_name%"
+      - " &f+1 %ecoskills_wisdom_name%"
+      - " &6Eye Of The Depths %ecoskills_eye_of_the_depths_numeral%"
   alchemy:
     gui-position:
       row: 4
@@ -299,6 +313,37 @@ skills:
     gui-item: brewing_stand
     # The maximum obtainable level
     max-level: 50
+
+    # The level/skill increases to give on levelup
+    level-up-rewards:
+      - "wisdom:1"
+      - "speed:1"
+      - "potionmaster:1"
+
+    rewards-messages:
+      - " &f+1 %ecoskills_wisdom_name%"
+      - " &f+1 %ecoskills_speed_name%"
+      - " &6Potionmaster %ecoskills_potionmaster_numeral%"
+
+    # The experience to give for each brewing ingredient
+    xp-rewards:
+      - "nether_wart:6"
+      - "redstone:6"
+      - "glowstone_dust:6"
+      - "fermented_spider_eye:6"
+      - "gunpowder:6"
+      - "dragon_breath:42"
+      - "sugar:14"
+      - "rabbit_foot:22"
+      - "glistering_melon_slice:22"
+      - "spider_eye:8"
+      - "pufferfish:14"
+      - "magma_cream:12"
+      - "golden_carrot:22"
+      - "blaze_powder:12"
+      - "ghast_tear:12"
+      - "turtle_shell:80"
+      - "phantom_membrane:34"
   armory:
     gui-position:
       row: 4

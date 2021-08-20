@@ -2,11 +2,13 @@ package com.willfp.ecoskills.skills;
 
 import com.google.common.collect.ImmutableSet;
 import com.willfp.eco.core.config.updating.ConfigUpdater;
+import com.willfp.ecoskills.skills.skills.SkillAlchemy;
 import com.willfp.ecoskills.skills.skills.SkillArmory;
 import com.willfp.ecoskills.skills.skills.SkillCombat;
 import com.willfp.ecoskills.skills.skills.SkillEnchanting;
 import com.willfp.ecoskills.skills.skills.SkillExploration;
 import com.willfp.ecoskills.skills.skills.SkillFarming;
+import com.willfp.ecoskills.skills.skills.SkillFishing;
 import com.willfp.ecoskills.skills.skills.SkillMining;
 import com.willfp.ecoskills.skills.skills.SkillWoodcutting;
 import org.bukkit.NamespacedKey;
@@ -31,10 +33,8 @@ public class Skills {
     public static final Skill WOODCUTTING = new SkillWoodcutting();
     public static final Skill EXPLORATION = new SkillExploration();
     public static final Skill ARMORY = new SkillArmory();
-    /*
-    public static final Skill FISHING = new Skill(PLUGIN, "fishing");
-    public static final Skill ALCHEMY = new Skill(PLUGIN, "alchemy");
-     */
+    public static final Skill FISHING = new SkillFishing();
+    public static final Skill ALCHEMY = new SkillAlchemy();
 
     @ApiStatus.Internal
     public static void registerNewSkill(@NotNull final Skill skill) {

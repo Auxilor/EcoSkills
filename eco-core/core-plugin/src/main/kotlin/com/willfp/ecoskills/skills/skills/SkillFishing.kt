@@ -8,19 +8,22 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.entity.EntityDamageByEntityEvent
+import org.bukkit.event.player.PlayerFishEvent
 import java.util.*
 
-class SkillArmory : Skill(
-    "armory"
+class SkillFishing : Skill(
+    "fishing"
 ) {
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-    fun handleLevelling(event: EntityDamageByEntityEvent) {
-        val player = event.entity
+    fun handleLevelling(event: PlayerFishEvent) {
+        val player = event.player
+        val expToDrop = event.expToDrop
+
         if (player !is Player) {
             return
         }
 
-        val xp = event.damage * this.config.getDouble("xp-per-hp")
+        val xp = expToDrop * this.config.getDouble("xp-per-experience-dropped")
         val gainEvent = PlayerSkillExpGainEvent(player, this, xp)
         Bukkit.getPluginManager().callEvent(gainEvent)
     }
