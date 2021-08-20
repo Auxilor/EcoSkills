@@ -14,11 +14,11 @@ fun Player.setSkillLevel(skill: Skill, level: Int) {
     this.persistentDataContainer.set(skill.key, PersistentDataType.INTEGER, level)
 }
 
-fun Player.getSkillExperience(skill: Skill): Double {
+fun Player.getSkillProgress(skill: Skill): Double {
     return this.persistentDataContainer.getOrDefault(skill.xpKey, PersistentDataType.DOUBLE, 0.0)
 }
 
-fun Player.setSkillExperience(skill: Skill, level: Double) {
+fun Player.setSkillProgress(skill: Skill, level: Double) {
     this.persistentDataContainer.set(skill.xpKey, PersistentDataType.DOUBLE, level)
 }
 

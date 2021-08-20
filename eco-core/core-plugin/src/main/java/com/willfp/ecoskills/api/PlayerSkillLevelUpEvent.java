@@ -2,12 +2,11 @@ package com.willfp.ecoskills.api;
 
 import com.willfp.ecoskills.skills.Skill;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class PlayerSkillExpGainEvent extends PlayerEvent implements Cancellable {
+public class PlayerSkillLevelUpEvent extends PlayerEvent {
     /**
      * Bukkit parity.
      */
@@ -21,26 +20,21 @@ public class PlayerSkillExpGainEvent extends PlayerEvent implements Cancellable 
     /**
      * The amount.
      */
-    private double amount;
+    private final int level;
 
     /**
-     * If the event is cancelled.
-     */
-    private boolean cancelled = false;
-
-    /**
-     * Create a new PlayerSkillExpGainEvent.
+     * Create a new PlayerSkillLevelUpEvent.
      *
-     * @param who    The player.
-     * @param skill  The skill.
-     * @param amount The amount of skill exp gained.
+     * @param who   The player.
+     * @param skill The skill.
+     * @param level The level gained.
      */
-    public PlayerSkillExpGainEvent(@NotNull final Player who,
+    public PlayerSkillLevelUpEvent(@NotNull final Player who,
                                    @NotNull final Skill skill,
-                                   final double amount) {
+                                   final int level) {
         super(who);
         this.skill = skill;
-        this.amount = amount;
+        this.level = level;
     }
 
     /**
@@ -53,31 +47,12 @@ public class PlayerSkillExpGainEvent extends PlayerEvent implements Cancellable 
     }
 
     /**
-     * Get the amount of experience.
+     * Get the level achieved.
      *
-     * @return The experience.
+     * @return The level.
      */
-    public double getAmount() {
-        return amount;
-    }
-
-    /**
-     * Set the amount of experience.
-     *
-     * @param amount The amount.
-     */
-    public void setAmount(final double amount) {
-        this.amount = amount;
-    }
-
-    @Override
-    public void setCancelled(final boolean cancel) {
-        this.cancelled = cancel;
-    }
-
-    @Override
-    public boolean isCancelled() {
-        return this.cancelled;
+    public int getLevel() {
+        return level;
     }
 
     /**

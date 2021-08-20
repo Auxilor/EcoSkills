@@ -5,6 +5,10 @@ import com.willfp.eco.core.command.impl.PluginCommand;
 import com.willfp.ecoskills.commands.CommandEcoskills;
 import com.willfp.ecoskills.effects.Effect;
 import com.willfp.ecoskills.effects.Effects;
+import com.willfp.ecoskills.skills.SkillDisplayListener;
+import com.willfp.ecoskills.skills.Skill;
+import com.willfp.ecoskills.skills.SkillLevellingListener;
+import com.willfp.ecoskills.skills.Skills;
 import com.willfp.ecoskills.stats.Stat;
 import com.willfp.ecoskills.stats.Stats;
 import org.bukkit.event.Listener;
@@ -36,6 +40,10 @@ public class EcoSkillsPlugin extends EcoPlugin {
             this.getEventManager().unregisterListener(stat);
             this.getEventManager().registerListener(stat);
         }
+        for (Skill skill : Skills.values()) {
+            this.getEventManager().unregisterListener(skill);
+            this.getEventManager().registerListener(skill);
+        }
     }
 
     /**
@@ -50,7 +58,8 @@ public class EcoSkillsPlugin extends EcoPlugin {
     @Override
     protected List<Listener> loadListeners() {
         return Arrays.asList(
-
+                new SkillLevellingListener(this),
+                new SkillDisplayListener(this)
         );
     }
 

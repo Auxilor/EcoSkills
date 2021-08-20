@@ -12,59 +12,104 @@ skills:
   xp-multiplier-per-level: 1.26
   # Since the formula will give unpleasant ratios, then truncate it to an amount of significant figures.
   sig-fig: 2
+  # Always round to the nearest also
+  round-to: 10
 
   # Ways to tell the player about skill progress
   progress:
     action-bar:
       # If the action bar should be used
       enabled: true
-      format:
+      # The actionbar message that should be sent
+      format: "&f%skill% &8| &9(%current_xp%/%required_xp%) &e+%gained_xp%"
+
+  # Ways to tell the player about levelling up
+  level-up:
+    message:
+      enabled: true
+      message:
+        - "&f"
+        - "&3You levelled up &9%skill%&3 to level &e%level%&3!"
+        - "&f"
+        - "&3&lREWARDS:"
+        - "%rewards%"
+        - "&f"
+    sound:
+      # If a sound should be played
+      enabled: true
+      # The sound that should be played
+      id: entity_player_levelup
+      # Pitch between 0.5 and 2
+      pitch: 0.8
+
 
   mining:
     gui-item: stone_pickaxe
     # The maximum obtainable level
     max-level: 50
-    name: "Mining"
+
+    # The xp rewards for each block type
+    # Specify with type:xp
+    xp-rewards:
+      - "stone:1"
+      - "diorite:1"
+      - "andesite:1"
+      - "granite:1"
+      - "tuff:1"
+      - "deepslate:1"
+      - "cobblestone:1"
+      - "netherrack:0.5"
+      - "sand:3"
+      - "gravel:4"
+      - "nether_quartz_ore:5"
+      - "end_stone:3"
+      - "coal_ore:5"
+      - "deepslate_coal_ore:5"
+      - "iron_ore:5"
+      - "deepslate_iron_ore:5"
+      - "gold_ore:6"
+      - "deepslate_gold_ore:6"
+      - "lapis_lazuli_ore:7"
+      - "deepslate_lapis_lazuli_ore:7"
+      - "redstone_ore:7"
+      - "deepslate_redstone_ore:7"
+      - "emerald_ore:9"
+      - "deepslate_emerald_ore:9"
+      - "diamond_ore:10"
+      - "deepslate_diamond_ore:10"
+      - "ancient_debris:20"
   combat:
     gui-item: stone_sword
     # The maximum obtainable level
     max-level: 50
-    name: "Combat"
   enchanting:
     gui-item: enchanting_table
     # The maximum obtainable level
     max-level: 50
-    name: "Enchanting"
   farming:
     gui-item: golden_hoe
     # The maximum obtainable level
     max-level: 50
-    name: "Farming"
   woodcutting:
     gui-item: jungle_sapling
     # The maximum obtainable level
     max-level: 50
-    name: "Woodcutting"
   fishing:
     gui-item: fishing_rod
     # The maximum obtainable level
     max-level: 50
-    name: "Fishing"
   alchemy:
     gui-item: brewing_stand
     # The maximum obtainable level
     max-level: 50
-    name: "Alchemy"
   armory:
     gui-item: iron_chestplate
     # The maximum obtainable level
     max-level: 50
-    name: "Armory"
   exploration:
     gui-item: leather_boots
     # The maximum obtainable level
     max-level: 50
-    name: "Exploration"
 
 stats:
   defense:
