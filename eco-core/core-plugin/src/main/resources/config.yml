@@ -148,6 +148,7 @@ skills:
       column: 3
     gui-lore:
       - "&7Primary Stat: %ecoskills_defense_name%"
+      - "&f"
       - "&7Ability Levels:"
       - " &6Versatile Tools %ecoskills_versatile_tools_numeral%"
 
@@ -201,6 +202,7 @@ skills:
     gui-lore:
       - "&7Primary Stat: %ecoskills_strength_name%"
       - "&7Secondary Stat: %ecoskills_crit_damage_name%"
+      - "&f"
       - "&7Ability Levels:"
       - " &6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
 
@@ -228,6 +230,7 @@ skills:
     gui-lore:
       - "&7Primary Stat: %ecoskills_wisdom_name%"
       - "&7Secondary Stat: %ecoskills_crit_chance_name%"
+      - "&f"
       - "&7Ability Levels:"
       - " &6Second Chance %ecoskills_second_chance_numeral%"
 
@@ -254,6 +257,7 @@ skills:
     gui-lore:
       - "&7Primary Stat: %ecoskills_crit_damage_name%"
       - "&7Secondary Stat: %ecoskills_wisdom_name%"
+      - "&f"
       - "&7Ability Levels:"
       - " &6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
 
@@ -292,6 +296,7 @@ skills:
     gui-item: jungle_sapling
     gui-lore:
       - "&7Primary Stat: %ecoskills_strength_name%"
+      - "&f"
       - "&7Ability Levels:"
       - " &6Craftsmanship %ecoskills_craftsmanship_numeral%"
 
@@ -325,6 +330,7 @@ skills:
     gui-lore:
       - "&7Primary Stat: %ecoskills_defense_name%"
       - "&7Secondary Stat: %ecoskills_wisdom_name%"
+      - "&f"
       - "&7Ability Levels:"
       - " &6Eye of the Depths %ecoskills_eye_of_the_depths_numeral%"
 
@@ -352,6 +358,7 @@ skills:
     gui-lore:
       - "&7Primary Stat: %ecoskills_crit_chance_name%"
       - "&7Secondary Stat: %ecoskills_wisdom_name%"
+      - "&f"
       - "&7Ability Levels:"
       - " &6Potionmaster %ecoskills_potionmaster_numeral%"
 
@@ -396,6 +403,7 @@ skills:
     gui-lore:
       - "&7Primary Stat: %ecoskills_defense_name%"
       - "&7Secondary Stat: %ecoskills_speed_name%"
+      - "&f"
       - "&7Ability Levels:"
       - " &6Shamanism %ecoskills_shamanism_numeral%"
 
@@ -422,6 +430,7 @@ skills:
       column: 7
     gui-lore:
       - "&7Primary Stat: %ecoskills_speed_name%"
+      - "&f"
       - "&7Ability Levels:"
       - " &6Seamless Movement %ecoskills_seamless_movement_numeral%"
 

@@ -87,20 +87,21 @@ abstract class Skill(
                         NumberUtils.toNumeral(player.getSkillLevel(this))
                     )
             ).addLoreLines {
+                val currentXP = player.getSkillProgress(this)
+                val requiredXP = this.getExpForLevel(player.getSkillLevel(this) + 1)
                 val lore: MutableList<String> = ArrayList()
                 for (string in plugin.configYml.getStrings("gui.skill-icon.lore", false)) {
                     lore.add(
                         StringUtils.format(
                             string.replace("%description%", description)
-                                .replace("%current_xp%", player.getSkillProgress(this).toString())
+                                .replace("%current_xp%", NumberUtils.format(currentXP))
                                 .replace(
                                     "%required_xp%",
-                                    this.getExpForLevel(player.getSkillLevel(this) + 1).toString()
+                                    NumberUtils.format(requiredXP.toDouble())
                                 )
                                 .replace(
                                     "%percentage_progress%",
-                                    ((this.getExpForLevel(player.getSkillLevel(this) + 1) / player.getSkillLevel(this)) * 100)
-                                        .toString() + "%"
+                                    NumberUtils.format((currentXP / requiredXP) * 100) + "%"
                                 ),
                             player
                         )

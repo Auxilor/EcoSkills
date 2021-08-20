@@ -61,4 +61,8 @@ public class Skills {
             skill.update();
         }
     }
+
+    static {
+        update();
+    }
 }
