@@ -7,39 +7,50 @@ messages:
 
 skills:
   color: "&9"
-  names:
-    mining: "Mining"
-    combat: "Combat"
-    enchanting: "Enchanting"
-    farming: "Farming"
-    woodcutting: "Woodcutting"
-    fishing: "Fishing"
-    alchemy: "Alchemy"
-    armory: "Armory"
-    exploration: "Exploration"
+  mining:
+    name: "Mining"
+  combat:
+    name: "Combat"
+  enchanting:
+    name: "Enchanting"
+  farming:
+    name: "Farming"
+  woodcutting:
+    name: "Woodcutting"
+  fishing:
+    name: "Fishing"
+  alchemy:
+    name: "Alchemy"
+  armory:
+    name: "Armory"
+  exploration:
+    name: "Exploration"
 
 stats:
-  names:
-    defense: "Defense"
-    strength: "Strength"
-    crit_chance: "Crit Chance"
-    crit_damage: "Crit Damage"
-    speed: "Speed"
-    wisdom: "Wisdom"
-  colors:
-    defense: '&#e884b0'
-    strength: '&#db0000'
-    crit_chance: '&#f7ff85'
-    crit_damage: '&#000d9e'
-    speed: '&#40ffe6'
-    wisdom: '&#c8ffa6'
-  icons:
-    defense: '&#e884b0❤'
-    strength: '&#db0000❁'
-    crit_chance: '&#f7ff85☣'
-    crit_damage: '&#000d9e☠'
-    speed: '&#40ffe6✦'
-    wisdom: '&#c8ffa6✎'
+  defense:
+    name: "Defense"
+    color: '&#e884b0'
+    icon: '&#e884b0❤'
+  strength:
+    name: "Strength"
+    color: '&#db0000'
+    icon: '&#db0000❁'
+  crit_chance:
+    name: "Crit Chance"
+    color: '&#f7ff85'
+    icon: '&#f7ff85☣'
+  crit_damage:
+    name: "Crit Damage"
+    color: '&#000d9e'
+    icon: '&#000d9e☠'
+  speed:
+    name: "Speed"
+    color: '&#40ffe6'
+    icon: '&#40ffe6✦'
+  wisdom:
+    name: "Wisdom"
+    color: '&#c8ffa6'
+    icon: '&#c8ffa6✎'
 
 effects:
   bountiful_harvest:
@@ -63,8 +74,8 @@ effects:
   shamanism:
     name: "Shamanism"
     description: "Increases the speed at which you regain health"
-  craftmanship:
-    name: "Craftmanship"
+  craftsmanship:
+    name: "Craftsmanship"
     description: "Take less durability damage on axes"
   second_chance:
     name: "Second Chance"

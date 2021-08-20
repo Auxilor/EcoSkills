@@ -3,7 +3,15 @@ package com.willfp.ecoskills.effects;
 import com.google.common.collect.ImmutableSet;
 import com.willfp.eco.core.config.updating.ConfigUpdater;
 import com.willfp.ecoskills.EcoSkillsPlugin;
-import com.willfp.ecoskills.skills.Skill;
+import com.willfp.ecoskills.effects.effects.EffectBountifulHarvest;
+import com.willfp.ecoskills.effects.effects.EffectCraftsmanship;
+import com.willfp.ecoskills.effects.effects.EffectEyeOfTheDepths;
+import com.willfp.ecoskills.effects.effects.EffectPotionmaster;
+import com.willfp.ecoskills.effects.effects.EffectSeamlessMovement;
+import com.willfp.ecoskills.effects.effects.EffectSecondChance;
+import com.willfp.ecoskills.effects.effects.EffectSerratedStrikes;
+import com.willfp.ecoskills.effects.effects.EffectShamanism;
+import com.willfp.ecoskills.effects.effects.EffectVersatileTools;
 import org.bukkit.NamespacedKey;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -24,15 +32,15 @@ public class Effects {
      */
     private static final EcoSkillsPlugin PLUGIN = EcoSkillsPlugin.getInstance();
 
-    public static final Skill MINING = new Skill(PLUGIN, "mining");
-    public static final Skill COMBAT = new Skill(PLUGIN, "combat");
-    public static final Skill ENCHANTING = new Skill(PLUGIN, "enchanting");
-    public static final Skill FARMING = new Skill(PLUGIN, "farming");
-    public static final Skill WOODCUTTING = new Skill(PLUGIN, "woodcutting");
-    public static final Skill FISHING = new Skill(PLUGIN, "fishing");
-    public static final Skill ALCHEMY = new Skill(PLUGIN, "alchemy");
-    public static final Skill ARMORY = new Skill(PLUGIN, "armory");
-    public static final Skill EXPLORATION = new Skill(PLUGIN, "exploration");
+    public static final Effect BOUNTIFUL_HARVEST = new EffectBountifulHarvest();
+    public static final Effect CRAFTSMANSHIP = new EffectCraftsmanship();
+    public static final Effect EYE_OF_THE_DEPTHS = new EffectEyeOfTheDepths();
+    public static final Effect POTIONMASTER = new EffectPotionmaster();
+    public static final Effect SEAMLESS_MOVEMENT = new EffectSeamlessMovement();
+    public static final Effect SECOND_CHANCE = new EffectSecondChance();
+    public static final Effect SERRATED_STRIKES = new EffectSerratedStrikes();
+    public static final Effect SHAMANISM = new EffectShamanism();
+    public static final Effect VERSATILE_TOOLS = new EffectVersatileTools();
 
     @ApiStatus.Internal
     public static void registerNewEffect(@NotNull final Effect effect) {

@@ -1,6 +1,7 @@
 package com.willfp.ecoskills.effects
 
 import com.willfp.eco.core.EcoPlugin
+import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.ecoskills.EcoSkillsPlugin
 import org.bukkit.NamespacedKey
 import org.bukkit.event.Listener
@@ -13,6 +14,7 @@ abstract class Effect(
 
     val key: NamespacedKey
     val uuid: UUID
+    val config: Config
     lateinit var name: String
     lateinit var description: String
 
@@ -20,6 +22,7 @@ abstract class Effect(
         update()
         key = plugin.namespacedKeyFactory.create(id)
         uuid = UUID.nameUUIDFromBytes(id.toByteArray())
+        config = plugin.configYml.getSubsection("effects.$id")
 
         Effects.registerNewEffect(this)
     }

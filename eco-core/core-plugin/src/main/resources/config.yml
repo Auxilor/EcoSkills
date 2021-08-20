@@ -3,3 +3,83 @@
 # by Auxilor
 #
 
+stats:
+  defense:
+    # 100% halves the incoming damage
+    percent-less-damage-per-level: 1
+  strength:
+    # 100% is double damage
+    percent-more-damage-per-level: 1
+  crit_chance:
+    # Nothing happens above 100%, 200% is the same as it.
+    chance-per-level: 1
+  crit_damage:
+    # The percent more damage to deal on crits for each level.
+    percent-more-damage-per-level: 2
+    # The amount more damage to deal on crits by default.
+    base-percent-more: 50
+  speed:
+    # The percent more speed to give for the speed attribute (internal in the game)
+    # for each level
+    percent-faster-per-level: 1
+  wisdom:
+    # The percent more xp to gain from orbs for each level of the stat.
+    percent-more-xp-gain: 1
+
+effects:
+  bountiful_harvest:
+    # Chance is as a percentage; if the chance for a player is over 100 then it will always be double drops
+    # with a chance to get triple drops. Same goes if above 200, but then it will always be triple with a chance
+    # for quadruple.
+    chance-per-level: 1
+  versatile_tools:
+    # The percent (%) more damage to deal with a pickaxe for each level of the effect.
+    percent-more-per-level: 2
+  eye_of_the_depths:
+    # Chance is as a percentage.
+    chance-per-level: 0.1
+    # The rare loot items are listed below.
+    # You can import drops from the following plugins:
+    # EcoArmor, EcoItems, Talismans, StatTrackers, EcoWeapons, Reforges, Oraxen
+    # You can also use vanilla items with their material
+    # You can set enchantments on items with the following syntax:
+    # <item> <enchantment:level> <enchantment:level> etc
+    # For example, a reaper scythe with Razor 4 and Criticals 3 would be:
+    # ecoweapons:reaper_scythe razor:4 criticals:3
+    rare-loot-items:
+      - enchanted_book confusion:1
+      - enchanted_book confusion:2
+      - netherite_ingot
+      - ecoarmor:set_miner_helmet
+      - ecoarmor:set_miner_chestplate
+      - ecoarmor:set_miner_leggings
+      - ecoarmor:set_miner_boots
+      - reforges:dynamic
+  serrated_strikes:
+    # Chance is as a percentage.
+    chance-per-level: 2
+    # The damage to deal for each 'bleed tick'
+    bleed-tick-damage: 2
+    # The amount of ticks to wait between each bleed tick
+    bleed-tick-spacing: 15
+    # The amount of bleed ticks to give
+    bleed-ticks: 4
+  seamless_movement:
+    # The chance to ignore fall damage, as a percentage
+    chance-per-level: 2
+  potionmaster:
+    # The percent more time for potions to last for each level of the effect
+    percent-more-per-level: 4
+  shamanism:
+    # The percent faster regen for each level of the effect
+    percent-faster-per-level: 4
+  craftsmanship:
+    # 100% is double durability
+    percent-less-per-level: 3
+  second_chance:
+    # Items will try to heal every time durability damage is taken below this level
+    below-durability-check: 30
+    # Chance per level as a percentage
+    # This will follow a binomial distribution where the amount of trials is the durability check (30 by default, see above)
+    # Since this chance will be called many times, it would be best to have this be low.
+    chance-per-level: 0.1

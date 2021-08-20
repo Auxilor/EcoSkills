@@ -5,6 +5,8 @@ import com.willfp.eco.core.command.impl.PluginCommand;
 import com.willfp.ecoskills.commands.CommandEcoskills;
 import com.willfp.ecoskills.effects.Effect;
 import com.willfp.ecoskills.effects.Effects;
+import com.willfp.ecoskills.stats.Stat;
+import com.willfp.ecoskills.stats.Stats;
 import org.bukkit.event.Listener;
 
 import java.util.Arrays;
@@ -29,6 +31,10 @@ public class EcoSkillsPlugin extends EcoPlugin {
         for (Effect effect : Effects.values()) {
             this.getEventManager().unregisterListener(effect);
             this.getEventManager().registerListener(effect);
+        }
+        for (Stat stat : Stats.values()) {
+            this.getEventManager().unregisterListener(stat);
+            this.getEventManager().registerListener(stat);
         }
     }
 

@@ -20,3 +20,12 @@ fun Player.getEffectLevel(effect: Effect): Int {
 fun Player.setEffectLevel(effect: Effect, level: Int) {
     this.persistentDataContainer.set(effect.key, PersistentDataType.INTEGER, level)
 }
+
+fun Player.getStatLevel(stat: Stat): Int {
+    return this.persistentDataContainer.getOrDefault(stat.key, PersistentDataType.INTEGER, 1)
+}
+
+fun Player.setStatLevel(stat: Stat, level: Int) {
+    this.persistentDataContainer.set(stat.key, PersistentDataType.INTEGER, level)
+    stat.updateStatLevel(this)
+}
