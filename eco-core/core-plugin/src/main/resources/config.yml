@@ -68,12 +68,13 @@ skills:
   # Ways to tell the player about levelling up
   level-up:
     message:
+      level-as-numeral: true
       enabled: true
       message:
         - "&f"
-        - "&3You levelled up &9%skill%&3 to level &e%level%&3!"
+        - " &3You levelled up &9%skill%&3 to level &e%level%&3!"
         - "&f"
-        - "&3&lREWARDS:"
+        - " &3&lREWARDS:"
         - "%rewards%"
         - "&f"
     sound:
@@ -89,6 +90,15 @@ skills:
     gui-item: stone_pickaxe
     # The maximum obtainable level
     max-level: 50
+
+    # The level/skill increases to give on levelup
+    level-up-rewards:
+      - "defense:2"
+      - "versatile_tools:1"
+
+    rewards-messages:
+      - " &f+2 &#e884b0❤ Defense"
+      - " &6Versatile Tools %ecoskills_versatile_tools%"
 
     # The xp rewards for each block type
     # Specify with type:xp

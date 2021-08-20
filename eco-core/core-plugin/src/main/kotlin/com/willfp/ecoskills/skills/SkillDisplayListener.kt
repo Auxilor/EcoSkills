@@ -61,18 +61,19 @@ class SkillDisplayListener(
 
         if (this.plugin.configYml.getBool("skills.level-up.message.enabled")) {
             val messages = ArrayList<String>()
+            val levelName = if (this.plugin.configYml.getBool("skills.level-up.message.level-as-numeral")) NumberUtils.toNumeral(level) else level.toString()
 
             for (string in this.plugin.configYml.getStrings("skills.level-up.message.message")) {
                 messages.add(
                     string.replace("%skill%", skill.name)
-                        .replace("%level%", level.toString())
+                        .replace("%level%", levelName)
                 )
             }
 
             val rewardIndex = messages.indexOf("%rewards%")
             if (rewardIndex != -1) {
                 messages.removeAt(rewardIndex)
-                messages.addAll(rewardIndex, listOf())
+                messages.addAll(rewardIndex, skill.getRewardsMessages(player))
             }
 
             for (message in messages) {

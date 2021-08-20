@@ -58,28 +58,37 @@ stats:
 effects:
   bountiful_harvest:
     name: "Bountiful Harvest"
+    color: "&6"
     description: "Increases chance to get extra drops from farming"
   versatile_tools:
     name: "Versatile Tools"
+    color: "&6"
     description: "Increases damage dealt by pickaxes"
   eye_of_the_depths:
     name: "Eye of the Depths"
+    color: "&6"
     description: "Increases chance to get rare loot from fishing"
   serrated_strikes:
     name: "Serrated Strikes"
+    color: "&6"
     description: "Increases chance to cause your opponent to bleed, damaging them repeatedly"
   seamless_movement:
     name: "Seamless Movement"
+    color: "&6"
     description: "Increases chance to ignore fall damage"
   potionmaster:
     name: "Potionmaster"
+    color: "&6"
     description: "Brewed Potions last longer"
   shamanism:
     name: "Shamanism"
+    color: "&6"
     description: "Increases the speed at which you regain health"
   craftsmanship:
     name: "Craftsmanship"
+    color: "&6"
     description: "Take less durability damage on axes"
   second_chance:
     name: "Second Chance"
+    color: "&6"
     description: "Chance to instantly fix items on low durability"
