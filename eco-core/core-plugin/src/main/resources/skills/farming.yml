@@ -1,0 +1,44 @@
+gui-item: golden_hoe
+gui-position:
+  row: 3
+  column: 6
+gui-lore:
+  - "&fImproves Stats:"
+  - "&8» &r%ecoskills_crit_damage_name%"
+  - "&8» &r%ecoskills_wisdom_name%"
+  - "&f"
+  - "&fEffects:"
+  - "&8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
+
+# The maximum obtainable level
+max-level: 50
+
+# The level/skill increases to give on levelup
+level-up-rewards:
+  - "crit_damage:2"
+  - "wisdom:1"
+  - "bountiful_harvest:1"
+
+rewards-messages:
+  - " &8» &r&f+2 %ecoskills_crit_damage_name%"
+  - " &8» &r&f+1 %ecoskills_wisdom_name%"
+  - " &8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
+
+rewards-gui-lore:
+  - " &8» &r&f+2 %ecoskills_crit_damage_name%"
+  - " &8» &r&f+1 %ecoskills_wisdom_name%"
+  - " &8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
+
+# The xp rewards for each crop type
+# Specify with type:xp
+xp-rewards:
+  - "wheat:4"
+  - "potato:4"
+  - "carrots:4"
+  - "melon:4"
+  - "pumpkin:4.5"
+  - "cactus:2"
+  - "sugar_cane:2"
+  - "brown_mushroom:6"
+  - "red_mushroom:6"
+  - "cocoa_beans:3"

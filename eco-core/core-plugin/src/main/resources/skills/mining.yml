@@ -1,0 +1,57 @@
+gui-item: stone_pickaxe
+gui-position:
+  row: 3
+  column: 3
+gui-lore:
+  - "&fImproves Stats:"
+  - "&8» &r%ecoskills_defense_name%"
+  - "&f"
+  - "&fEffects:"
+  - "&8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
+
+# The maximum obtainable level
+max-level: 50
+
+# The level/skill increases to give on levelup
+level-up-rewards:
+  - "defense:2"
+  - "versatile_tools:1"
+
+rewards-messages:
+  - " &8» &r&f+1 %ecoskills_defense_name%"
+  - " &8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
+
+rewards-gui-lore:
+  - " &8» &r&f+1 %ecoskills_defense_name%"
+  - " &8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
+
+# The xp rewards for each block type
+# Specify with type:xp
+xp-rewards:
+  - "stone:1"
+  - "diorite:1"
+  - "andesite:1"
+  - "granite:1"
+  - "tuff:1"
+  - "deepslate:1"
+  - "cobblestone:1"
+  - "netherrack:0.5"
+  - "sand:3"
+  - "gravel:4"
+  - "nether_quartz_ore:5"
+  - "end_stone:3"
+  - "coal_ore:5"
+  - "deepslate_coal_ore:5"
+  - "iron_ore:5"
+  - "deepslate_iron_ore:5"
+  - "gold_ore:6"
+  - "deepslate_gold_ore:6"
+  - "lapis_lazuli_ore:7"
+  - "deepslate_lapis_lazuli_ore:7"
+  - "redstone_ore:7"
+  - "deepslate_redstone_ore:7"
+  - "emerald_ore:9"
+  - "deepslate_emerald_ore:9"
+  - "diamond_ore:10"
+  - "deepslate_diamond_ore:10"
+  - "ancient_debris:20"

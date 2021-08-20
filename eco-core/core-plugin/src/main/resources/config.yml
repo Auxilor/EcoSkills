@@ -61,6 +61,125 @@ gui:
       - "&f"
       - "&eClick to view Level Progression!"
 
+level-gui:
+  rows: 6
+
+  mask:
+    # The way the mask works is by having a list of materials
+    # And then a pattern to use those materials.
+
+    # The pattern is the rows in the GUI
+    # Each line must be 9 long, and the amount of rows should be the amount of rows in the GUI
+    # A zero represents nothing
+    # A 1 represents the first material
+    # A 2 represents the second material
+    # And so on, you can add up to 9.
+
+    materials:
+      - black_stained_glass_pane
+    pattern:
+      - "111111111"
+      - "111111111"
+      - "111111111"
+      - "111111111"
+      - "111111111"
+      - "111111111"
+
+  progression-slots:
+    # To set the order of the pattern,
+    # Use 1-9 and then a-z: a goes after 9.
+    pattern:
+      - "109ab0jkl"
+      - "2080c0i0m"
+      - "3070d0h0n"
+      - "4560efg0o"
+      - "00000000p"
+      - "00000000q"
+
+    # If the amount of the item should be the level
+    level-as-amount: true
+
+    prev-page:
+      material: arrow
+      name: "&fPrevious Page"
+      location:
+        row: 6
+        column: 4
+
+    next-page:
+      material: arrow
+      name: "&fNext Page"
+      location:
+        row: 6
+        column: 6
+
+    close:
+      material: barrier
+      name: "&cClose"
+      location:
+        row: 6
+        column: 5
+
+    unlocked:
+      material: lime_stained_glass_pane
+      name: "&a%skill% Level %level_numeral%"
+      lore:
+        - "&f"
+        - "%rewards%"
+        - "&f"
+        - "&aUNLOCKED"
+    in-progress:
+      material: yellow_stained_glass_pane
+      name: "&e%skill% Level %level_numeral%"
+      lore:
+        - "&f"
+        - "%rewards%"
+        - "&f"
+        - "&fProgress:"
+        - "&8» &e%percentage_progress%"
+        - "&8» &e%current_xp%&8/&7%required_xp% &fXP"
+    locked:
+      material: red_stained_glass_pane
+      name: "&c%skill% Level %level_numeral%"
+      lore:
+        - "&f"
+        - "%rewards%"
+
+
+  player-info:
+    row: 1
+    column: 5
+
+    name: "&f%player%'s &fStats:"
+    lore:
+      - "&f"
+      - " %ecoskills_defense_name%&f %ecoskills_defense%"
+      - " %ecoskills_strength_name%&f %ecoskills_strength%"
+      - " %ecoskills_crit_chance_name%&f %ecoskills_crit_chance%"
+      - " %ecoskills_crit_damage_name%&f %ecoskills_crit_damage%"
+      - " %ecoskills_speed_name%&f %ecoskills_speed%"
+      - " %ecoskills_wisdom_name%&f %ecoskills_wisdom%"
+
+  close:
+    material: barrier
+    name: "&cClose"
+    location:
+      row: 6
+      column: 5
+
+  skill-icon:
+    name: "&#ff00ae%skill% &d%level_numeral%"
+    lore:
+      - "&8&o%description%"
+      - "&f"
+      - "%skill_specific%"
+      - "&f"
+      - "&fProgress to next level:"
+      - "&8» &e%percentage_progress%"
+      - "&8» &e%current_xp%&8/&7%required_xp% &fXP"
+      - "&f"
+      - "&eClick to view Level Progression!"
+
 skills:
   # Add more levels depending on the highest max level for all skills
   level-xp-requirements:
@@ -132,7 +251,6 @@ skills:
       # The volume
       volume: 0.1
 
-
   # Ways to tell the player about levelling up
   level-up:
     message:
@@ -152,331 +270,6 @@ skills:
       id: entity_player_levelup
       # Pitch between 0.5 and 2
       pitch: 0.8
-
-  mining:
-    gui-item: stone_pickaxe
-    gui-position:
-      row: 3
-      column: 3
-    gui-lore:
-      - "&fImproves Stats:"
-      - "&8» &r%ecoskills_defense_name%"
-      - "&f"
-      - "&fEffects:"
-      - "&8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
-
-    # The maximum obtainable level
-    max-level: 50
-
-    # The level/skill increases to give on levelup
-    level-up-rewards:
-      - "defense:2"
-      - "versatile_tools:1"
-
-    rewards-messages:
-      - " &8» &r&f+1 %ecoskills_defense_name%"
-      - " &8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
-
-    # The xp rewards for each block type
-    # Specify with type:xp
-    xp-rewards:
-      - "stone:1"
-      - "diorite:1"
-      - "andesite:1"
-      - "granite:1"
-      - "tuff:1"
-      - "deepslate:1"
-      - "cobblestone:1"
-      - "netherrack:0.5"
-      - "sand:3"
-      - "gravel:4"
-      - "nether_quartz_ore:5"
-      - "end_stone:3"
-      - "coal_ore:5"
-      - "deepslate_coal_ore:5"
-      - "iron_ore:5"
-      - "deepslate_iron_ore:5"
-      - "gold_ore:6"
-      - "deepslate_gold_ore:6"
-      - "lapis_lazuli_ore:7"
-      - "deepslate_lapis_lazuli_ore:7"
-      - "redstone_ore:7"
-      - "deepslate_redstone_ore:7"
-      - "emerald_ore:9"
-      - "deepslate_emerald_ore:9"
-      - "diamond_ore:10"
-      - "deepslate_diamond_ore:10"
-      - "ancient_debris:20"
-  combat:
-    gui-item: stone_sword
-    gui-position:
-      row: 3
-      column: 4
-    gui-lore:
-      - "&fImproves Stats:"
-      - "&8» &r%ecoskills_strength_name%"
-      - "&8» &r%ecoskills_crit_damage_name%"
-      - "&f"
-      - "&fEffects:"
-      - "&8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
-
-    # The maximum obtainable level
-    max-level: 50
-
-    # The experience to give for each hp of a killed enemy
-    xp-per-heart: 0.33
-
-    # The level/skill increases to give on levelup
-    level-up-rewards:
-      - "strength:2"
-      - "crit_damage:1"
-      - "serrated_strikes:1"
-
-    rewards-messages:
-      - " &8» &r&f+2 %ecoskills_strength_name%"
-      - " &8» &r&f+1 %ecoskills_crit_damage_name%"
-      - " &8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
-  enchanting:
-    gui-item: enchanting_table
-    gui-position:
-      row: 3
-      column: 5
-    gui-lore:
-      - "&fImproves Stats:"
-      - "&8» &r%ecoskills_wisdom_name%"
-      - "&8» &r%ecoskills_crit_chance_name%"
-      - "&f"
-      - "&fEffects:"
-      - "&8» &r&6Second Chance %ecoskills_second_chance_numeral%"
-
-    # The maximum obtainable level
-    max-level: 50
-
-    # The experience to give for each level cost of enchanting
-    xp-per-level: 4
-
-    # The level/skill increases to give on levelup
-    level-up-rewards:
-      - "wisdom:2"
-      - "crit_chance:1"
-      - "second_chance:1"
-
-    rewards-messages:
-      - " &8» &r&f+2 %ecoskills_wisdom_name%"
-      - " &8» &r&f+1 %ecoskills_crit_chance_name%"
-      - " &8» &r&6Second Chance %ecoskills_second_chance_numeral%"
-  farming:
-    gui-position:
-      row: 3
-      column: 6
-    gui-lore:
-      - "&fImproves Stats:"
-      - "&8» &r%ecoskills_crit_damage_name%"
-      - "&8» &r%ecoskills_wisdom_name%"
-      - "&f"
-      - "&fEffects:"
-      - "&8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
-
-    gui-item: golden_hoe
-    # The maximum obtainable level
-    max-level: 50
-
-    # The level/skill increases to give on levelup
-    level-up-rewards:
-      - "crit_damage:2"
-      - "wisdom:1"
-      - "bountiful_harvest:1"
-
-    rewards-messages:
-      - " &8» &r&f+2 %ecoskills_crit_damage_name%"
-      - " &8» &r&f+1 %ecoskills_wisdom_name%"
-      - " &8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
-
-    # The xp rewards for each crop type
-    # Specify with type:xp
-    xp-rewards:
-      - "wheat:4"
-      - "potato:4"
-      - "carrots:4"
-      - "melon:4"
-      - "pumpkin:4.5"
-      - "cactus:2"
-      - "sugar_cane:2"
-      - "brown_mushroom:6"
-      - "red_mushroom:6"
-      - "cocoa_beans:3"
-  woodcutting:
-    gui-position:
-      row: 3
-      column: 7
-    gui-item: jungle_sapling
-    gui-lore:
-      - "&fImproves Stats:"
-      - "&8» &r%ecoskills_strength_name%"
-      - "&f"
-      - "&fEffects:"
-      - "&8» &r&6Craftsmanship %ecoskills_craftsmanship_numeral%"
-
-    # The maximum obtainable level
-    max-level: 50
-
-    # The level/skill increases to give on levelup
-    level-up-rewards:
-      - "strength:2"
-      - "craftsmanship:1"
-
-    rewards-messages:
-      - " &8» &r&f+2 %ecoskills_strength_name%"
-      - " &8» &r&6Craftsmanship %ecoskills_craftsmanship_numeral%"
-
-    # The xp rewards for each crop type
-    # Specify with type:xp
-    xp-rewards:
-      - "oak_log:6"
-      - "birch_log:6"
-      - "spruce_log:6"
-      - "jungle_log:6"
-      - "acacia_log:6"
-      - "dark_oak_log:6"
-      - "crimson_stem:14"
-      - "warped_stem:14"
-  fishing:
-    gui-position:
-      row: 4
-      column: 3
-    gui-lore:
-      - "&fImproves Stats:"
-      - "&8» &r%ecoskills_defense_name%"
-      - "&8» &r%ecoskills_wisdom_name%"
-      - "&f"
-      - "&fEffects:"
-      - "&8» &r&6Eye of the Depths %ecoskills_eye_of_the_depths_numeral%"
-
-    gui-item: fishing_rod
-    # The maximum obtainable level
-    max-level: 50
-
-    # The experience to give for each in-game experience dropped
-    xp-per-experience-dropped: 3.5
-
-    # The level/skill increases to give on levelup
-    level-up-rewards:
-      - "defense:2"
-      - "wisdom:1"
-      - "eye_of_the_depths:1"
-
-    rewards-messages:
-      - " &8» &r&f+2 %ecoskills_defense_name%"
-      - " &8» &r&f+1 %ecoskills_wisdom_name%"
-      - " &8» &r&6Eye of the Depths %ecoskills_eye_of_the_depths_numeral%"
-  alchemy:
-    gui-position:
-      row: 4
-      column: 4
-    gui-lore:
-      - "&fImproves Stats:"
-      - "&8» &r%ecoskills_crit_chance_name%"
-      - "&8» &r%ecoskills_wisdom_name%"
-      - "&f"
-      - "&fEffects:"
-      - "&8» &r&6Potionmaster %ecoskills_potionmaster_numeral%"
-
-    gui-item: brewing_stand
-    # The maximum obtainable level
-    max-level: 50
-
-    # The level/skill increases to give on levelup
-    level-up-rewards:
-      - "crit_chance:2"
-      - "wisdom:1"
-      - "potionmaster:1"
-
-    rewards-messages:
-      - " &8» &r&f+2 %ecoskills_crit_chance_name%"
-      - " &8» &r&f+1 %ecoskills_wisdom_name%"
-      - " &8» &r&6Potionmaster %ecoskills_potionmaster_numeral%"
-
-    # The experience to give for each brewing ingredient
-    xp-rewards:
-      - "nether_wart:6"
-      - "redstone:6"
-      - "glowstone_dust:6"
-      - "fermented_spider_eye:6"
-      - "gunpowder:6"
-      - "dragon_breath:42"
-      - "sugar:14"
-      - "rabbit_foot:22"
-      - "glistering_melon_slice:22"
-      - "spider_eye:8"
-      - "pufferfish:14"
-      - "magma_cream:12"
-      - "golden_carrot:22"
-      - "blaze_powder:12"
-      - "ghast_tear:12"
-      - "turtle_shell:80"
-      - "phantom_membrane:34"
-  armory:
-    gui-position:
-      row: 4
-      column: 6
-    gui-lore:
-      - "&fImproves Stats:"
-      - "&8» &r%ecoskills_defense_name%"
-      - "&8» &r%ecoskills_speed_name%"
-      - "&f"
-      - "&fEffects:"
-      - "&8» &r&6Shamanism %ecoskills_shamanism_numeral%"
-
-    gui-item: iron_chestplate
-    # The maximum obtainable level
-    max-level: 50
-
-    # The experience to give for each hp of damage taken
-    xp-per-hp: 0.72
-
-    # The level/skill increases to give on levelup
-    level-up-rewards:
-      - "defense:2"
-      - "speed:1"
-      - "shamanism:1"
-
-    rewards-messages:
-      - " &8» &r&f+2 %ecoskills_defense_name%"
-      - " &8» &r&f+1 %ecoskills_speed_name%"
-      - " &8» &r&6Shamanism %ecoskills_shamanism_numeral%"
-  exploration:
-    gui-position:
-      row: 4
-      column: 7
-    gui-lore:
-      - "&fImproves Stats:"
-      - "&8» &r%ecoskills_speed_name%"
-      - "&f"
-      - "&fEffects:"
-      - "&8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
-
-    gui-item: leather_boots
-    # The maximum obtainable level
-    max-level: 50
-
-    # The level/skill increases to give on levelup
-    level-up-rewards:
-      - "speed:2"
-      - "seamless_movement:1"
-
-    rewards-messages:
-      - " &8» &r&f+2 %ecoskills_speed_name%"
-      - " &8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
-
-    # Chance to give 1 xp every time the player moves
-    xp-on-move-chance: 0.05
-    # The amount of xp to give before any modifiers are applied
-    base-xp-to-give: 20
-    # If the amount of xp given should be higher when travelling faster
-    multiply-xp-by-speed: true
-
-    # The amount of experience to give for each point of fall damage taken
-    fall-damage-xp-per-hp: 16
 
 stats:
   defense:

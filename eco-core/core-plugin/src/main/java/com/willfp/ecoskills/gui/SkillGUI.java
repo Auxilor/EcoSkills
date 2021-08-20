@@ -101,7 +101,7 @@ public class SkillGUI {
                         menuBuilder.setSlot(
                                 skill.getConfig().getInt("gui-position.row"),
                                 skill.getConfig().getInt("gui-position.column"),
-                                skill.getSlot()
+                                skill.getGui().getSlot()
                         );
                     }
                 })

@@ -2,15 +2,14 @@ package com.willfp.ecoskills.skills
 
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.eco.core.gui.slot.Slot
 import com.willfp.eco.core.integrations.placeholder.PlaceholderEntry
-import com.willfp.eco.core.items.builder.ItemStackBuilder
 import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.*
+import com.willfp.ecoskills.config.SkillConfig
 import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.stats.Stats
-import org.bukkit.Material
+import org.bukkit.Bukkit
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
@@ -21,20 +20,17 @@ abstract class Skill(
 ) : Listener {
     protected val plugin: EcoPlugin = EcoSkillsPlugin.getInstance()
 
-    val key: NamespacedKey
-    val xpKey: NamespacedKey
-    val uuid: UUID
+    val key: NamespacedKey = plugin.namespacedKeyFactory.create(id)
+    val xpKey: NamespacedKey = plugin.namespacedKeyFactory.create(id + "_progress")
     val config: Config
     lateinit var name: String
     lateinit var description: String
-    lateinit var slot: Slot
+    lateinit var gui: SkillGUI
+    var maxLevel: Int = 50
     private val rewards: MutableMap<SkillObject, Int>
 
     init {
-        key = plugin.namespacedKeyFactory.create(id)
-        xpKey = plugin.namespacedKeyFactory.create(id + "_progress")
-        uuid = UUID.nameUUIDFromBytes(id.toByteArray())
-        config = plugin.configYml.getSubsection("skills.$id")
+        config = SkillConfig(this.id, this.javaClass, plugin)
         rewards = HashMap()
 
         Skills.registerNewSkill(this)
@@ -43,6 +39,7 @@ abstract class Skill(
     fun update() {
         name = plugin.langYml.getString("skills.$id.name")
         description = plugin.langYml.getString("skills.$id.description")
+        maxLevel = config.getInt("max-level")
         rewards.clear()
         for (string in config.getStrings("level-up-rewards")) {
             val split = string.split(":")
@@ -70,51 +67,7 @@ abstract class Skill(
 
         postUpdate()
 
-        slot = Slot.builder { player: Player ->
-            ItemStackBuilder(
-                Material.getMaterial(
-                    config.getString("gui-item").uppercase()
-                )!!
-            ).setDisplayName(
-                plugin.configYml.getString("gui.skill-icon.name")
-                    .replace("%skill%", name)
-                    .replace(
-                        "%level%",
-                        player.getSkillLevel(this).toString()
-                    )
-                    .replace(
-                        "%level_numeral%",
-                        NumberUtils.toNumeral(player.getSkillLevel(this))
-                    )
-            ).addLoreLines {
-                val currentXP = player.getSkillProgress(this)
-                val requiredXP = this.getExpForLevel(player.getSkillLevel(this) + 1)
-                val lore: MutableList<String> = ArrayList()
-                for (string in plugin.configYml.getStrings("gui.skill-icon.lore", false)) {
-                    lore.add(
-                        StringUtils.format(
-                            string.replace("%description%", description)
-                                .replace("%current_xp%", NumberUtils.format(currentXP))
-                                .replace(
-                                    "%required_xp%",
-                                    NumberUtils.format(requiredXP.toDouble())
-                                )
-                                .replace(
-                                    "%percentage_progress%",
-                                    NumberUtils.format((currentXP / requiredXP) * 100) + "%"
-                                ),
-                            player
-                        )
-                    )
-                }
-                val skillSpecificIndex = lore.indexOf("%skill_specific%")
-                if (skillSpecificIndex != -1) {
-                    lore.removeAt(skillSpecificIndex)
-                    lore.addAll(skillSpecificIndex, this.getGUILore(player))
-                }
-                lore
-            }.build()
-        }.build()
+        gui = SkillGUI(plugin, this)
     }
 
     fun getLevelUpRewards(): Collection<SkillObject> {
@@ -131,6 +84,14 @@ abstract class Skill(
             messages.add(StringUtils.format(string, player))
         }
         return messages
+    }
+
+    fun getGUIRewardsMessages(player: Player): MutableList<String> {
+        val lore = ArrayList<String>()
+        for (string in this.config.getStrings("rewards-gui-lore", false)) {
+            lore.add(StringUtils.format(string, player))
+        }
+        return lore
     }
 
     fun getGUILore(player: Player): MutableList<String> {

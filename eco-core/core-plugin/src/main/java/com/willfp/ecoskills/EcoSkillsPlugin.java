@@ -62,8 +62,8 @@ public class EcoSkillsPlugin extends EcoPlugin {
     protected List<Listener> loadListeners() {
         return Arrays.asList(
                 new SkillLevellingListener(this),
-                EcoSkillsEventModifierHandler.INSTANCE,
-                new SkillDisplayListener(this)
+                new SkillDisplayListener(this),
+                EcoSkillsEventModifierHandler.INSTANCE
         );
     }
 

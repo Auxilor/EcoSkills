@@ -1,0 +1,302 @@
+package com.willfp.ecoskills.skills
+
+import com.willfp.eco.core.EcoPlugin
+import com.willfp.eco.core.gui.menu.Menu
+import com.willfp.eco.core.gui.slot.FillerMask
+import com.willfp.eco.core.gui.slot.MaskMaterials
+import com.willfp.eco.core.gui.slot.Slot
+import com.willfp.eco.core.items.builder.ItemStackBuilder
+import com.willfp.eco.util.NumberUtils
+import com.willfp.eco.util.StringUtils
+import com.willfp.ecoskills.getSkillLevel
+import com.willfp.ecoskills.getSkillProgress
+import com.willfp.ecoskills.gui.SkillGUI
+import org.bukkit.Bukkit
+import org.bukkit.Material
+import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.meta.ItemMeta
+import org.bukkit.persistence.PersistentDataType
+import org.jetbrains.annotations.NotNull
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.math.ceil
+
+class SkillGUI(
+    plugin: EcoPlugin,
+    skill: Skill
+) {
+    val slot: Slot = Slot.builder { player: Player ->
+        ItemStackBuilder(
+            Material.getMaterial(
+                skill.config.getString("gui-item").uppercase()
+            )!!
+        ).setDisplayName(
+            plugin.configYml.getString("gui.skill-icon.name")
+                .replace("%skill%", skill.name)
+                .replace(
+                    "%level%",
+                    player.getSkillLevel(skill).toString()
+                )
+                .replace(
+                    "%level_numeral%",
+                    NumberUtils.toNumeral(player.getSkillLevel(skill))
+                )
+        ).addLoreLines {
+            val currentXP = player.getSkillProgress(skill)
+            val requiredXP = skill.getExpForLevel(player.getSkillLevel(skill) + 1)
+            val lore: MutableList<String> = ArrayList()
+            for (string in plugin.configYml.getStrings("gui.skill-icon.lore", false)) {
+                lore.add(
+                    StringUtils.format(
+                        string.replace("%description%", skill.description)
+                            .replace("%current_xp%", NumberUtils.format(currentXP))
+                            .replace(
+                                "%required_xp%",
+                                NumberUtils.format(requiredXP.toDouble())
+                            )
+                            .replace(
+                                "%percentage_progress%",
+                                NumberUtils.format((currentXP / requiredXP) * 100) + "%"
+                            ),
+                        player
+                    )
+                )
+            }
+            val skillSpecificIndex = lore.indexOf("%skill_specific%")
+            if (skillSpecificIndex != -1) {
+                lore.removeAt(skillSpecificIndex)
+                lore.addAll(skillSpecificIndex, skill.getGUILore(player))
+            }
+            lore
+        }.build()
+    }.onLeftClick { event, _, _ ->
+        levels.open(event.whoClicked as Player)
+    }.build()
+
+    val levels: Menu
+
+    init {
+        val maskPattern = plugin.configYml.getStrings("level-gui.mask.pattern", false).toTypedArray()
+        val maskMaterials: Array<Material> = plugin.configYml
+            .getStrings("level-gui.mask.materials", false)
+            .stream()
+            .map { string: String -> Material.getMaterial(string.uppercase()) }
+            .filter(Objects::nonNull)
+            .toArray { length -> arrayOfNulls(length) }
+
+        val progressionOrder = "123456789abcdefghijklmnopqrstuvwxyz"
+        val progressionPattern = plugin.configYml.getStrings("level-gui.progression-slots.pattern", false)
+
+        val progressionSlots: MutableMap<Int, Pair<Int, Int>> = HashMap()
+
+        var x = 0
+        for (row in progressionPattern) {
+            x++
+            var y = 0
+            for (char in row) {
+                y++
+                if (char == '0') {
+                    continue
+                }
+
+                val pos = progressionOrder.indexOf(char)
+
+                if (pos == -1) {
+                    continue
+                }
+
+                progressionSlots[pos + 1] = Pair(x, y)
+            }
+        }
+
+        val pages = ceil(skill.maxLevel / progressionSlots.size.toDouble()).toInt()
+        val levelsPerPage = progressionSlots.size
+
+        val closeMaterial =
+            Material.getMaterial(
+                plugin.configYml.getString("level-gui.progression-slots.close.material", false).uppercase()
+            )!!
+        val homeMaterial =
+            Material.getMaterial(
+                plugin.configYml.getString("level-gui.progression-slots.prev-page.material", false).uppercase()
+            )!!
+        val nextMaterial =
+            Material.getMaterial(
+                plugin.configYml.getString("level-gui.progression-slots.next-page.material", false).uppercase()
+            )!!
+
+        val pageKey = plugin.namespacedKeyFactory.create("page")
+
+        levels = Menu.builder(plugin.configYml.getInt("level-gui.rows"))
+            .setTitle(skill.name)
+            .setMask(
+                FillerMask(
+                    MaskMaterials(
+                        *maskMaterials
+                    ),
+                    *maskPattern
+                )
+            )
+            .modfiy { builder ->
+                for (entry in progressionSlots.entries) {
+                    val level = entry.key
+
+                    builder.setSlot(
+                        entry.value.first,
+                        entry.value.second,
+                        Slot.builder(ItemStack(Material.BLACK_STAINED_GLASS_PANE))
+                            .setModifier { player, menu, item ->
+                                var page = menu.readData(player, pageKey, PersistentDataType.INTEGER)
+                                if (page == null) {
+                                    menu.writeData(player, pageKey, PersistentDataType.INTEGER, 1)
+                                    page = 1
+                                }
+
+                                val slotLevel = ((page - 1) * levelsPerPage) + level
+
+                                val meta: ItemMeta
+                                val lore: MutableList<String>
+
+                                item.amount = 1
+
+                                if (slotLevel > skill.maxLevel) {
+                                    item.type = maskMaterials[0]
+                                    meta = item.itemMeta!!
+                                    meta.setDisplayName("")
+                                    meta.lore = listOf()
+                                    item.itemMeta = meta
+                                } else {
+                                    if (plugin.configYml.getBool("level-gui.progression-slots.level-as-amount")) {
+                                        item.amount = slotLevel
+                                    }
+
+                                    when {
+                                        slotLevel <= player.getSkillLevel(skill) -> {
+                                            item.type = Material.getMaterial(
+                                                plugin.configYml.getString("level-gui.progression-slots.unlocked.material")
+                                                    .uppercase()
+                                            )!!
+                                            meta = item.itemMeta!!
+                                            meta.setDisplayName(
+                                                plugin.configYml.getString("level-gui.progression-slots.unlocked.name")
+                                                    .replace("%skill%", skill.name)
+                                                    .replace("%level%", slotLevel.toString())
+                                                    .replace("%level_numeral%", NumberUtils.toNumeral(slotLevel))
+                                            )
+
+                                            lore =
+                                                plugin.configYml.getStrings("level-gui.progression-slots.unlocked.lore")
+                                        }
+                                        slotLevel == player.getSkillLevel(skill) + 1 -> {
+                                            item.type = Material.getMaterial(
+                                                plugin.configYml.getString("level-gui.progression-slots.in-progress.material")
+                                                    .uppercase()
+                                            )!!
+                                            meta = item.itemMeta!!
+                                            meta.setDisplayName(
+                                                plugin.configYml.getString("level-gui.progression-slots.in-progress.name")
+                                                    .replace("%skill%", skill.name)
+                                                    .replace("%level%", slotLevel.toString())
+                                                    .replace("%level_numeral%", NumberUtils.toNumeral(slotLevel))
+                                            )
+
+                                            lore =
+                                                plugin.configYml.getStrings("level-gui.progression-slots.in-progress.lore")
+                                        }
+                                        else -> {
+                                            item.type = Material.getMaterial(
+                                                plugin.configYml.getString("level-gui.progression-slots.locked.material")
+                                                    .uppercase()
+                                            )!!
+                                            meta = item.itemMeta!!
+                                            meta.setDisplayName(
+                                                plugin.configYml.getString("level-gui.progression-slots.locked.name")
+                                                    .replace("%skill%", skill.name)
+                                                    .replace("%level%", slotLevel.toString())
+                                                    .replace("%level_numeral%", NumberUtils.toNumeral(slotLevel))
+                                            )
+
+                                            lore =
+                                                plugin.configYml.getStrings("level-gui.progression-slots.locked.lore")
+                                        }
+                                    }
+
+                                    val currentXP = player.getSkillProgress(skill)
+                                    val requiredXP = skill.getExpForLevel(player.getSkillLevel(skill) + 1)
+                                    lore.replaceAll { string ->
+                                        string.replace("%current_xp%", NumberUtils.format(currentXP))
+                                            .replace(
+                                                "%required_xp%",
+                                                NumberUtils.format(requiredXP.toDouble())
+                                            )
+                                            .replace(
+                                                "%percentage_progress%",
+                                                NumberUtils.format((currentXP / requiredXP) * 100) + "%"
+                                            )
+                                    }
+
+                                    val skillSpecificIndex = lore.indexOf("%rewards%")
+                                    if (skillSpecificIndex != -1) {
+                                        lore.removeAt(skillSpecificIndex)
+                                        lore.addAll(skillSpecificIndex, skill.getGUIRewardsMessages(player))
+                                    }
+
+                                    Bukkit.getLogger().info(lore.toString())
+                                    meta.lore = lore
+                                    item.itemMeta = meta
+                                }
+                            }
+                            .build()
+                    )
+                }
+            }
+            .setSlot(
+                plugin.configYml.getInt("level-gui.progression-slots.prev-page.location.row"),
+                plugin.configYml.getInt("level-gui.progression-slots.prev-page.location.column"),
+                Slot.builder(
+                    ItemStackBuilder(homeMaterial)
+                        .setDisplayName(plugin.configYml.getString("level-gui.progression-slots.prev-page.name"))
+                        .build()
+                ).onLeftClick { event, _, menu ->
+                    val player = event.whoClicked as Player
+                    var page = menu.readData(player, pageKey, PersistentDataType.INTEGER) ?: 1
+                    page--
+                    menu.writeData(player, pageKey, PersistentDataType.INTEGER, page)
+                    if (page == 0) {
+                        SkillGUI.getHomeMenu().open(event.whoClicked as Player)
+                    }
+                }.build()
+            )
+            .setSlot(
+                plugin.configYml.getInt("level-gui.progression-slots.next-page.location.row"),
+                plugin.configYml.getInt("level-gui.progression-slots.next-page.location.column"),
+                Slot.builder(
+                    ItemStackBuilder(nextMaterial)
+                        .setDisplayName(plugin.configYml.getString("level-gui.progression-slots.next-page.name"))
+                        .build()
+                ).onLeftClick { event, _, menu ->
+                    val player = event.whoClicked as Player
+                    var page = menu.readData(player, pageKey, PersistentDataType.INTEGER) ?: 1
+                    if (page < pages) {
+                        page++
+                    }
+                    menu.writeData(player, pageKey, PersistentDataType.INTEGER, page)
+
+                }.build()
+            )
+            .setSlot(
+                plugin.configYml.getInt("level-gui.progression-slots.close.location.row"),
+                plugin.configYml.getInt("level-gui.progression-slots.close.location.column"),
+                Slot.builder(
+                    ItemStackBuilder(closeMaterial)
+                        .setDisplayName(plugin.configYml.getString("level-gui.progression-slots.close.name"))
+                        .build()
+                ).onLeftClick { event, _ ->
+                    event.whoClicked.closeInventory()
+                }.build()
+            )
+            .build()
+    }
+
+}
