@@ -191,8 +191,8 @@ skills:
 
     # The level/skill increases to give on levelup
     level-up-rewards:
-      - "crit_damage:1"
       - "strength:2"
+      - "crit_damage:1"
       - "serrated_strikes:1"
 
     rewards-messages:
@@ -232,12 +232,12 @@ skills:
 
     # The level/skill increases to give on levelup
     level-up-rewards:
-      - "speed:1"
+      - "crit_damage:2"
       - "wisdom:1"
       - "bountiful_harvest:1"
 
     rewards-messages:
-      - " &f+1 %ecoskills_speed_name%"
+      - " &f+2 %ecoskills_crit_damage_name%"
       - " &f+1 %ecoskills_wisdom_name%"
       - " &6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
 
@@ -316,13 +316,13 @@ skills:
 
     # The level/skill increases to give on levelup
     level-up-rewards:
+      - "crit_chance:2"
       - "wisdom:1"
-      - "speed:1"
       - "potionmaster:1"
 
     rewards-messages:
+      - " &f+2 %ecoskills_crit_chance_name%"
       - " &f+1 %ecoskills_wisdom_name%"
-      - " &f+1 %ecoskills_speed_name%"
       - " &6Potionmaster %ecoskills_potionmaster_numeral%"
 
     # The experience to give for each brewing ingredient
