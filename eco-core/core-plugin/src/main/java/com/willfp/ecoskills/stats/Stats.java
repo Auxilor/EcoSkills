@@ -2,7 +2,12 @@ package com.willfp.ecoskills.stats;
 
 import com.google.common.collect.ImmutableSet;
 import com.willfp.eco.core.config.updating.ConfigUpdater;
-import com.willfp.ecoskills.EcoSkillsPlugin;
+import com.willfp.ecoskills.stats.stats.StatCritChance;
+import com.willfp.ecoskills.stats.stats.StatCritDamage;
+import com.willfp.ecoskills.stats.stats.StatDefense;
+import com.willfp.ecoskills.stats.stats.StatSpeed;
+import com.willfp.ecoskills.stats.stats.StatStrength;
+import com.willfp.ecoskills.stats.stats.StatWisdom;
 import org.bukkit.NamespacedKey;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -18,17 +23,12 @@ public class Stats {
      */
     private static final Map<String, Stat> REGISTRY = new HashMap<>();
 
-    /**
-     * Instance of EcoSkills.
-     */
-    private static final EcoSkillsPlugin PLUGIN = EcoSkillsPlugin.getInstance();
-
-    public static final Stat DEFENCE = new Stat(PLUGIN, "defence");
-    public static final Stat STRENGTH = new Stat(PLUGIN, "strength");
-    public static final Stat CRIT_CHANCE = new Stat(PLUGIN, "crit_chance");
-    public static final Stat CRIT_DAMAGE = new Stat(PLUGIN, "crit_damage");
-    public static final Stat SPEED = new Stat(PLUGIN, "speed");
-    public static final Stat WISDOM = new Stat(PLUGIN, "wisdom");
+    public static final Stat DEFENSE = new StatDefense();
+    public static final Stat STRENGTH = new StatStrength();
+    public static final Stat CRIT_CHANCE = new StatCritChance();
+    public static final Stat CRIT_DAMAGE = new StatCritDamage();
+    public static final Stat SPEED = new StatSpeed();
+    public static final Stat WISDOM = new StatWisdom();
 
     @ApiStatus.Internal
     public static void registerNewStat(@NotNull final Stat skill) {

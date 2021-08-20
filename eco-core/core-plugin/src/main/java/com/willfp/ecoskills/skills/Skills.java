@@ -18,11 +18,6 @@ public class Skills {
      */
     private static final Map<String, Skill> REGISTRY = new HashMap<>();
 
-    /**
-     * Instance of EcoSkills.
-     */
-    private static final EcoSkillsPlugin PLUGIN = EcoSkillsPlugin.getInstance();
-
     public static final Skill MINING = new Skill(PLUGIN, "mining");
     public static final Skill COMBAT = new Skill(PLUGIN, "combat");
     public static final Skill ENCHANTING = new Skill(PLUGIN, "enchanting");

@@ -5,13 +5,8 @@
         "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
 
 <suppressions>
-    <!-- Effects don't need javadoc. -->
-    <suppress files="[\\/]effects[\\/]effects[\\/]" checks="MissingJavadocMethod"/>
-    <suppress files="[\\/]effects[\\/]effects[\\/]" checks="JavadocVariable"/>
-    <suppress files="[\\/]conditions[\\/]conditions[\\/]" checks="MissingJavadocMethod"/>
-    <suppress files="[\\/]conditions[\\/]conditions[\\/]" checks="JavadocVariable"/>
-
     <!-- Fields don't need javadoc -->
     <suppress files="Effects.java" checks="JavadocVariable"/>
-    <suppress files="Conditions.java" checks="JavadocVariable"/>
+    <suppress files="Skills.java" checks="JavadocVariable"/>
+    <suppress files="Stats.java" checks="JavadocVariable"/>
 </suppressions>

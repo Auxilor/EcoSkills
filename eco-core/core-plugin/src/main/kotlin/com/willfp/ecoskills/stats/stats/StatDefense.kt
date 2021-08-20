@@ -7,7 +7,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.entity.EntityDamageEvent
 
-class StatDefense() : Stat(
+class StatDefense : Stat(
     "defense"
 ) {
     @EventHandler(priority = EventPriority.LOW)

@@ -2,7 +2,6 @@ package com.willfp.ecoskills.effects;
 
 import com.google.common.collect.ImmutableSet;
 import com.willfp.eco.core.config.updating.ConfigUpdater;
-import com.willfp.ecoskills.EcoSkillsPlugin;
 import com.willfp.ecoskills.effects.effects.EffectBountifulHarvest;
 import com.willfp.ecoskills.effects.effects.EffectCraftsmanship;
 import com.willfp.ecoskills.effects.effects.EffectEyeOfTheDepths;
@@ -26,11 +25,6 @@ public class Effects {
      * All registered Skills.
      */
     private static final Map<String, Effect> REGISTRY = new HashMap<>();
-
-    /**
-     * Instance of EcoSkills.
-     */
-    private static final EcoSkillsPlugin PLUGIN = EcoSkillsPlugin.getInstance();
 
     public static final Effect BOUNTIFUL_HARVEST = new EffectBountifulHarvest();
     public static final Effect CRAFTSMANSHIP = new EffectCraftsmanship();

@@ -3,6 +3,69 @@
 # by Auxilor
 #
 
+skills:
+  # The experience needed to get to level 1 of the skill
+  level-1-xp: 50
+  # The percent more experience needed to get to the next level relative to the previous level
+  # In short, the experience required for one level follows this formula:
+  # level-1-xp * (multiplier ^ level)
+  xp-multiplier-per-level: 1.26
+  # Since the formula will give unpleasant ratios, then truncate it to an amount of significant figures.
+  sig-fig: 2
+
+  # Ways to tell the player about skill progress
+  progress:
+    action-bar:
+      # If the action bar should be used
+      enabled: true
+      format:
+
+  mining:
+    gui-item: stone_pickaxe
+    # The maximum obtainable level
+    max-level: 50
+    name: "Mining"
+  combat:
+    gui-item: stone_sword
+    # The maximum obtainable level
+    max-level: 50
+    name: "Combat"
+  enchanting:
+    gui-item: enchanting_table
+    # The maximum obtainable level
+    max-level: 50
+    name: "Enchanting"
+  farming:
+    gui-item: golden_hoe
+    # The maximum obtainable level
+    max-level: 50
+    name: "Farming"
+  woodcutting:
+    gui-item: jungle_sapling
+    # The maximum obtainable level
+    max-level: 50
+    name: "Woodcutting"
+  fishing:
+    gui-item: fishing_rod
+    # The maximum obtainable level
+    max-level: 50
+    name: "Fishing"
+  alchemy:
+    gui-item: brewing_stand
+    # The maximum obtainable level
+    max-level: 50
+    name: "Alchemy"
+  armory:
+    gui-item: iron_chestplate
+    # The maximum obtainable level
+    max-level: 50
+    name: "Armory"
+  exploration:
+    gui-item: leather_boots
+    # The maximum obtainable level
+    max-level: 50
+    name: "Exploration"
+
 stats:
   defense:
     # 100% halves the incoming damage
