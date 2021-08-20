@@ -14,6 +14,9 @@ commands:
   ecoskills:
     description: Base Command
     permission: ecoskills.command.ecoskills
+  skills:
+    description: Open the skills menu
+    permission: ecoskills.command.skills
 
 permissions:
   ecoskills.*:
@@ -28,12 +31,16 @@ permissions:
       ecoskills.command.reload: true
       ecoskills.command.ecoskills: true
       ecoskills.command.reset: true
+      ecoskills.command.skills: true
 
   ecoskills.command.reload:
     description: Allows reloading the config
     default: op
   ecoskills.command.ecoskills:
     description: Allows the use of /ecoskills.
+    default: true
+  ecoskills.command.skills:
+    description: Allows the use of /skills.
     default: true
   ecoskills.command.reset:
     description: Allows the use of /ecoskills reset.

@@ -3,6 +3,7 @@ package com.willfp.ecoskills;
 import com.willfp.eco.core.EcoPlugin;
 import com.willfp.eco.core.command.impl.PluginCommand;
 import com.willfp.ecoskills.commands.CommandEcoskills;
+import com.willfp.ecoskills.commands.CommandSkills;
 import com.willfp.ecoskills.effects.Effect;
 import com.willfp.ecoskills.effects.Effects;
 import com.willfp.ecoskills.skills.SkillDisplayListener;
@@ -66,7 +67,8 @@ public class EcoSkillsPlugin extends EcoPlugin {
     @Override
     protected List<PluginCommand> loadPluginCommands() {
         return Arrays.asList(
-                new CommandEcoskills(this)
+                new CommandEcoskills(this),
+                new CommandSkills(this)
         );
     }
 }

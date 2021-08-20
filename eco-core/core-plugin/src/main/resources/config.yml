@@ -3,6 +3,43 @@
 # by Auxilor
 #
 
+gui:
+  rows: 5
+
+  mask:
+    # The way the mask works is by having a list of materials
+    # And then a pattern to use those materials.
+
+    # The pattern is the rows in the GUI
+    # Each line must be 9 long, and the amount of rows should be the amount of rows in the GUI
+    # A zero represents nothing
+    # A 1 represents the first material
+    # A 2 represents the second material
+    # And so on, you can add up to 9.
+
+    materials:
+      - black_stained_glass_pane
+    pattern:
+      - "111101111"
+      - "111111111"
+      - "110000011"
+      - "110010011"
+      - "111101111"
+
+  player-info:
+    row: 1
+    column: 5
+
+    name: "&f%player%'s Stats:"
+    lore:
+      - "&f"
+      - " %ecoskills_defense_name%&f %ecoskills_defense%"
+      - " %ecoskills_strength_name%&f %ecoskills_strength%"
+      - " %ecoskills_crit_chance_name%&f %ecoskills_crit_chance%"
+      - " %ecoskills_crit_damage_name%&f %ecoskills_crit_damage%"
+      - " %ecoskills_speed_name%&f %ecoskills_speed%"
+      - " %ecoskills_wisdom_name%&f %ecoskills_wisdom%"
+
 skills:
   # Add more levels depending on the highest max level for all skills
   level-xp-requirements:
@@ -72,9 +109,9 @@ skills:
       enabled: true
       message:
         - "&f"
-        - " &3You levelled up &9%skill%&3 to level &e%level%&3!"
+        - " &#ff00aeYou levelled up &9%skill%&#ff00ae to &eLevel %level%&#ff00ae!"
         - "&f"
-        - " &3&lREWARDS:"
+        - " &#ff00ae&lREWARDS:"
         - "%rewards%"
         - "&f"
     sound:
@@ -88,6 +125,10 @@ skills:
 
   mining:
     gui-item: stone_pickaxe
+    gui-position:
+      row: 3
+      column: 3
+
     # The maximum obtainable level
     max-level: 50
 
@@ -97,8 +138,8 @@ skills:
       - "versatile_tools:1"
 
     rewards-messages:
-      - " &f+2 &#e884b0❤ Defense"
-      - " &6Versatile Tools %ecoskills_versatile_tools%"
+      - " &f+1 %ecoskills_defense_name%"
+      - " &6Versatile Tools %ecoskills_versatile_tools_numeral%"
 
     # The xp rewards for each block type
     # Specify with type:xp
@@ -132,33 +173,65 @@ skills:
       - "ancient_debris:20"
   combat:
     gui-item: stone_sword
+    gui-position:
+      row: 3
+      column: 4
+
     # The maximum obtainable level
     max-level: 50
   enchanting:
     gui-item: enchanting_table
+    gui-position:
+      row: 3
+      column: 5
+
     # The maximum obtainable level
     max-level: 50
   farming:
+    gui-position:
+      row: 3
+      column: 6
+
     gui-item: golden_hoe
     # The maximum obtainable level
     max-level: 50
   woodcutting:
+    gui-position:
+      row: 3
+      column: 7
+
     gui-item: jungle_sapling
     # The maximum obtainable level
     max-level: 50
   fishing:
+    gui-position:
+      row: 4
+      column: 3
+
     gui-item: fishing_rod
     # The maximum obtainable level
     max-level: 50
   alchemy:
+    gui-position:
+      row: 4
+      column: 4
+
     gui-item: brewing_stand
     # The maximum obtainable level
     max-level: 50
   armory:
+    gui-position:
+      row: 4
+      column: 6
+
     gui-item: iron_chestplate
     # The maximum obtainable level
     max-level: 50
   exploration:
+    gui-position:
+      row: 4
+      column: 7
+
     gui-item: leather_boots
     # The maximum obtainable level
     max-level: 50

@@ -4,12 +4,10 @@ import com.google.gson.annotations.Since
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.integrations.placeholder.PlaceholderEntry
+import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.StringUtils
-import com.willfp.ecoskills.EcoSkillsPlugin
-import com.willfp.ecoskills.SkillObject
+import com.willfp.ecoskills.*
 import com.willfp.ecoskills.effects.Effects
-import com.willfp.ecoskills.getSkillLevel
-import com.willfp.ecoskills.getStatLevel
 import com.willfp.ecoskills.stats.Stats
 import org.bukkit.NamespacedKey
 import org.bukkit.OfflinePlayer
@@ -64,6 +62,12 @@ abstract class Skill(
         PlaceholderEntry(
             id,
             { player -> player.getSkillLevel(this).toString() },
+            true
+        ).register()
+
+        PlaceholderEntry(
+            "${id}_numeral",
+            { player -> NumberUtils.toNumeral(player.getSkillLevel(this)) },
             true
         ).register()
 

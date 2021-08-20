@@ -8,6 +8,9 @@ messages:
   invalid-player: "&cInvalid player!"
   reset-player: "&fReset player!"
 
+menu:
+  title: "Your Skills"
+
 skills:
   color: "&9"
   mining:
@@ -31,29 +34,17 @@ skills:
 
 stats:
   defense:
-    name: "Defense"
-    color: '&#e884b0'
-    icon: '&#e884b0❤'
+    name: "&#e884b0🛡 Defense"
   strength:
-    name: "Strength"
-    color: '&#db0000'
-    icon: '&#db0000❁'
+    name: "&#db0000🗡 Strength"
   crit_chance:
-    name: "Crit Chance"
-    color: '&#f7ff85'
-    icon: '&#f7ff85☣'
+    name: "&#f7ff85☣ Crit Chance"
   crit_damage:
-    name: "Crit Damage"
-    color: '&#000d9e'
-    icon: '&#000d9e☠'
+    name: "&#000d9e☠ Crit Damage"
   speed:
-    name: "Speed"
-    color: '&#40ffe6'
-    icon: '&#40ffe6✦'
+    name: "&#40ffe6✦ Speed"
   wisdom:
-    name: "Wisdom"
-    color: '&#c8ffa6'
-    icon: '&#c8ffa6✎'
+    name: "&#c8ffa6✎ Wisdom"
 
 effects:
   bountiful_harvest:

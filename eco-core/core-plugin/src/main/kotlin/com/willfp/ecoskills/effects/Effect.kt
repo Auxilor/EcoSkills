@@ -3,6 +3,7 @@ package com.willfp.ecoskills.effects
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.integrations.placeholder.PlaceholderEntry
+import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.SkillObject
 import com.willfp.ecoskills.getEffectLevel
@@ -38,6 +39,12 @@ abstract class Effect(
         PlaceholderEntry(
             id,
             { player -> player.getEffectLevel(this).toString() },
+            true
+        ).register()
+
+        PlaceholderEntry(
+            "${id}_numeral",
+            { player -> NumberUtils.toNumeral(player.getEffectLevel(this)) },
             true
         ).register()
     }
