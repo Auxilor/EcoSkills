@@ -51,8 +51,8 @@ public class Stats {
 
     @ConfigUpdater
     public static void update() {
-        for (Stat skill : Stats.values()) {
-            skill.update();
+        for (Stat stat : Stats.values()) {
+            stat.update();
         }
     }
 }

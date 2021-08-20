@@ -25,7 +25,9 @@ class SkillLevellingListener(
         val amount = event.amount
         val level = player.getSkillLevel(skill)
 
-        if (player.getSkillProgress(skill) + amount >= skill.getExpForLevel(level + 1)) {
+        player.setSkillProgress(skill, player.getSkillProgress(skill) + amount)
+
+        if (player.getSkillProgress(skill) >= skill.getExpForLevel(level + 1)) {
             player.setSkillProgress(skill, 0.0)
             player.setSkillLevel(skill, level + 1)
             val levelUpEvent = PlayerSkillLevelUpEvent(player, skill, level + 1)

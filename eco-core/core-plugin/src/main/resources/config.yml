@@ -4,16 +4,58 @@
 #
 
 skills:
-  # The experience needed to get to level 1 of the skill
-  level-1-xp: 50
-  # The percent more experience needed to get to the next level relative to the previous level
-  # In short, the experience required for one level follows this formula:
-  # level-1-xp * (multiplier ^ level)
-  xp-multiplier-per-level: 1.26
-  # Since the formula will give unpleasant ratios, then truncate it to an amount of significant figures.
-  sig-fig: 2
-  # Always round to the nearest also
-  round-to: 10
+  # Add more levels depending on the highest max level for all skills
+  level-xp-requirements:
+    - 50
+    - 125
+    - 200
+    - 300
+    - 500
+    - 750
+    - 1000
+    - 1500
+    - 2000
+    - 3500
+    - 5000
+    - 7500
+    - 10000
+    - 15000
+    - 20000
+    - 30000
+    - 50000
+    - 75000
+    - 100000
+    - 200000
+    - 300000
+    - 400000
+    - 500000
+    - 600000
+    - 700000
+    - 800000
+    - 900000
+    - 1000000
+    - 1100000
+    - 1200000
+    - 1300000
+    - 1400000
+    - 1500000
+    - 1600000
+    - 1700000
+    - 1800000
+    - 1900000
+    - 2000000
+    - 2100000
+    - 2200000
+    - 2300000
+    - 2400000
+    - 2500000
+    - 2600000
+    - 2750000
+    - 2900000
+    - 3100000
+    - 3400000
+    - 3700000
+    - 4000000
 
   # Ways to tell the player about skill progress
   progress:

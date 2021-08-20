@@ -4,6 +4,9 @@ messages:
   not-player: "&cThis command must be run by a player"
   invalid-command: "&cUnknown subcommand!"
   reloaded: "Reloaded! (Restart if you're removed weapons!)"
+  requires-player: "&cYou must specify a player!"
+  invalid-player: "&cInvalid player!"
+  reset-player: "&fReset player!"
 
 skills:
   color: "&9"

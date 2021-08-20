@@ -7,6 +7,8 @@ website: willfp.com
 load: STARTUP
 depend:
   - eco
+libraries:
+  - org.jetbrains.kotlin:kotlin-stdlib:1.5.21
 
 commands:
   ecoskills:
@@ -25,10 +27,14 @@ permissions:
     children:
       ecoskills.command.reload: true
       ecoskills.command.ecoskills: true
+      ecoskills.command.reset: true
 
   ecoskills.command.reload:
     description: Allows reloading the config
     default: op
   ecoskills.command.ecoskills:
-    description: Allows the user of /ecoskills.
+    description: Allows the use of /ecoskills.
     default: true
+  ecoskills.command.reset:
+    description: Allows the use of /ecoskills reset.
+    default: op

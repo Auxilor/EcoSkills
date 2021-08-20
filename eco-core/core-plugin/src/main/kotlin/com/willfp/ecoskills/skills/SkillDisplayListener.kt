@@ -26,11 +26,11 @@ class SkillDisplayListener(
             var string = this.plugin.configYml.getString("skills.progress.action-bar.format")
             string = string.replace("%skill%", skill.name)
             string = string.replace("%current_xp%", NumberUtils.format(player.getSkillProgress(skill)))
+            val nextLevel = skill.getExpForLevel(player.getSkillLevel(skill) + 1).toDouble()
+            val nextLevelMessage = if (nextLevel >= 2_000_000_000) "∞" else NumberUtils.format(nextLevel)
             string = string.replace(
                 "%required_xp%",
-                NumberUtils.format(
-                    skill.getExpForLevel(player.getSkillLevel(skill) + 1).toDouble()
-                )
+                nextLevelMessage
             )
             string = string.replace("%gained_xp%", NumberUtils.format(amount))
             player.spigot().sendMessage(
