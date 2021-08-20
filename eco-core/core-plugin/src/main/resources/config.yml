@@ -239,7 +239,7 @@ skills:
     rewards-messages:
       - " &f+1 %ecoskills_speed_name%"
       - " &f+1 %ecoskills_wisdom_name%"
-      - " &6Bountiful Harvest %ecoskills_harvest_numeral%"
+      - " &6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
 
     # The xp rewards for each crop type
     # Specify with type:xp
@@ -262,6 +262,27 @@ skills:
     gui-item: jungle_sapling
     # The maximum obtainable level
     max-level: 50
+
+    # The level/skill increases to give on levelup
+    level-up-rewards:
+      - "strength:2"
+      - "craftsmanship:1"
+
+    rewards-messages:
+      - " &f+2 %ecoskills_strength_name%"
+      - " &6Craftsmanship %ecoskills_craftsmanship_numeral%"
+
+    # The xp rewards for each crop type
+    # Specify with type:xp
+    xp-rewards:
+      - "oak_log:6"
+      - "birch_log:6"
+      - "spruce_log:6"
+      - "jungle_log:6"
+      - "acacia_log:6"
+      - "dark_oak_log:6"
+      - "crimson_stem:14"
+      - "warped_stem:14"
   fishing:
     gui-position:
       row: 4
@@ -294,6 +315,18 @@ skills:
     gui-item: leather_boots
     # The maximum obtainable level
     max-level: 50
+
+    # The level/skill increases to give on levelup
+    level-up-rewards:
+      - "speed:2"
+      - "seamless_movement:1"
+
+    rewards-messages:
+      - " &f+2 %ecoskills_speed_name%"
+      - " &6Seamless Movement %ecoskills_seamless_movement_numeral%"
+
+    # Chance to give 1 xp every time the player moves
+    xp-on-move-chance: 1
 
 stats:
   defense:
