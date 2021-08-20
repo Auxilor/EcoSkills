@@ -1,6 +1,5 @@
 package com.willfp.ecoskills.gui;
 
-import com.willfp.eco.core.EcoPlugin;
 import com.willfp.eco.core.config.updating.ConfigUpdater;
 import com.willfp.eco.core.gui.menu.Menu;
 import com.willfp.eco.core.gui.slot.FillerMask;
@@ -9,6 +8,7 @@ import com.willfp.eco.core.gui.slot.Slot;
 import com.willfp.eco.core.items.builder.ItemStackBuilder;
 import com.willfp.eco.core.items.builder.SkullBuilder;
 import com.willfp.eco.util.StringUtils;
+import com.willfp.ecoskills.EcoSkillsPlugin;
 import com.willfp.ecoskills.skills.Skill;
 import com.willfp.ecoskills.skills.Skills;
 import org.bukkit.Material;
@@ -43,11 +43,11 @@ public class SkillGUI {
      * @param plugin The plugin.
      */
     @ConfigUpdater
-    public static void update(@NotNull final EcoPlugin plugin) {
+    public static void update(@NotNull final EcoSkillsPlugin plugin) {
         homeMenu = buildHomeMenu(plugin);
     }
 
-    private static Menu buildHomeMenu(@NotNull final EcoPlugin plugin) {
+    private static Menu buildHomeMenu(@NotNull final EcoSkillsPlugin plugin) {
         String[] maskPattern = plugin.getConfigYml().getStrings("gui.mask.pattern", false).toArray(new String[0]);
         Material[] maskMaterials = plugin.getConfigYml()
                 .getStrings("gui.mask.materials", false)
@@ -101,13 +101,7 @@ public class SkillGUI {
                         menuBuilder.setSlot(
                                 skill.getConfig().getInt("gui-position.row"),
                                 skill.getConfig().getInt("gui-position.column"),
-                                Slot.builder(
-                                        new ItemStack(
-                                                Objects.requireNonNull(Material.getMaterial(
-                                                        skill.getConfig().getString("gui-item").toUpperCase()
-                                                ))
-                                        )
-                                ).build()
+                                skill.getSlot()
                         );
                     }
                 })

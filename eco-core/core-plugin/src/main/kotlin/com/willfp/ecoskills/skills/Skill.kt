@@ -1,26 +1,20 @@
 package com.willfp.ecoskills.skills
 
-import com.google.gson.annotations.Since
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.config.interfaces.Config
+import com.willfp.eco.core.gui.slot.Slot
 import com.willfp.eco.core.integrations.placeholder.PlaceholderEntry
+import com.willfp.eco.core.items.builder.ItemStackBuilder
 import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.*
 import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.stats.Stats
+import org.bukkit.Material
 import org.bukkit.NamespacedKey
-import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
-import java.math.BigDecimal
-import java.math.MathContext
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
-import kotlin.math.pow
-import kotlin.math.round
-import kotlin.math.roundToInt
 
 abstract class Skill(
     val id: String
@@ -32,6 +26,8 @@ abstract class Skill(
     val uuid: UUID
     val config: Config
     lateinit var name: String
+    lateinit var description: String
+    lateinit var slot: Slot
     private val rewards: MutableMap<SkillObject, Int>
 
     init {
@@ -46,6 +42,7 @@ abstract class Skill(
 
     fun update() {
         name = plugin.langYml.getString("skills.$id.name")
+        description = plugin.langYml.getString("skills.$id.description")
         rewards.clear()
         for (string in config.getStrings("level-up-rewards")) {
             val split = string.split(":")
@@ -72,6 +69,51 @@ abstract class Skill(
         ).register()
 
         postUpdate()
+
+        slot = Slot.builder { player: Player ->
+            ItemStackBuilder(
+                Material.getMaterial(
+                    config.getString("gui-item").uppercase()
+                )!!
+            ).setDisplayName(
+                plugin.configYml.getString("gui.skill-icon.name")
+                    .replace("%skill%", name)
+                    .replace(
+                        "%level%",
+                        player.getSkillLevel(this).toString()
+                    )
+                    .replace(
+                        "%level_numeral%",
+                        NumberUtils.toNumeral(player.getSkillLevel(this))
+                    )
+            ).addLoreLines {
+                val lore: MutableList<String> = ArrayList()
+                for (string in plugin.configYml.getStrings("gui.skill-icon.lore", false)) {
+                    lore.add(
+                        StringUtils.format(
+                            string.replace("%description%", description)
+                                .replace("%current_xp%", player.getSkillProgress(this).toString())
+                                .replace(
+                                    "%required_xp%",
+                                    this.getExpForLevel(player.getSkillLevel(this) + 1).toString()
+                                )
+                                .replace(
+                                    "%percentage_progress%",
+                                    ((this.getExpForLevel(player.getSkillLevel(this) + 1) / player.getSkillLevel(this)) * 100)
+                                        .toString() + "%"
+                                ),
+                            player
+                        )
+                    )
+                }
+                val skillSpecificIndex = lore.indexOf("%skill_specific%")
+                if (skillSpecificIndex != -1) {
+                    lore.removeAt(skillSpecificIndex)
+                    lore.addAll(skillSpecificIndex, this.getGUILore(player))
+                }
+                lore
+            }.build()
+        }.build()
     }
 
     fun getLevelUpRewards(): Collection<SkillObject> {
@@ -88,6 +130,14 @@ abstract class Skill(
             messages.add(StringUtils.format(string, player))
         }
         return messages
+    }
+
+    fun getGUILore(player: Player): MutableList<String> {
+        val lore = ArrayList<String>()
+        for (string in this.config.getStrings("gui-lore", false)) {
+            lore.add(StringUtils.format(string, player))
+        }
+        return lore
     }
 
     open fun postUpdate() {

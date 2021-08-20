@@ -2,6 +2,7 @@ package com.willfp.ecoskills;
 
 import com.willfp.eco.core.EcoPlugin;
 import com.willfp.eco.core.command.impl.PluginCommand;
+import com.willfp.ecoskills.api.EcoSkillsAPI;
 import com.willfp.ecoskills.commands.CommandEcoskills;
 import com.willfp.ecoskills.commands.CommandSkills;
 import com.willfp.ecoskills.effects.Effect;
@@ -19,9 +20,14 @@ import java.util.List;
 
 public class EcoSkillsPlugin extends EcoPlugin {
     /**
-     * Instance of EcoItems.
+     * Instance of EcoSkills.
      */
     private static EcoSkillsPlugin instance;
+
+    /**
+     * Instance of EcoSkills API.
+     */
+    private final EcoSkillsAPI api;
 
     /**
      * Internal constructor called by bukkit on plugin load.
@@ -29,6 +35,7 @@ public class EcoSkillsPlugin extends EcoPlugin {
     public EcoSkillsPlugin() {
         super(0, 12205, "&#ff00ae");
         instance = this;
+        api = new EcoSkillsAPI();
     }
 
     @Override
@@ -45,6 +52,15 @@ public class EcoSkillsPlugin extends EcoPlugin {
             this.getEventManager().unregisterListener(skill);
             this.getEventManager().registerListener(skill);
         }
+    }
+
+    /**
+     * Get the API.
+     *
+     * @return The API.
+     */
+    public EcoSkillsAPI getAPI() {
+        return api;
     }
 
     /**

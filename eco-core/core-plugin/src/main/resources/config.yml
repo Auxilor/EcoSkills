@@ -47,6 +47,18 @@ gui:
       row: 5
       column: 5
 
+  skill-icon:
+    name: "&9%skill% &3%level_numeral%"
+    lore:
+      - "&7%description%"
+      - "&f"
+      - "%skill_specific%"
+      - "&f"
+      - "&7Progress to next level: &e%percentage_progress%"
+      - "  &7%current_xp%/%required_xp% XP"
+      - "&f"
+      - "&eClick to view Level Progression!"
+
 skills:
   # Add more levels depending on the highest max level for all skills
   level-xp-requirements:
@@ -134,6 +146,10 @@ skills:
     gui-position:
       row: 3
       column: 3
+    gui-lore:
+      - "&7Primary Stat: %ecoskills_defense_name%"
+      - "&7Ability Levels:"
+      - " &6Versatile Tools %ecoskills_versatile_tools_numeral%"
 
     # The maximum obtainable level
     max-level: 50
@@ -182,6 +198,11 @@ skills:
     gui-position:
       row: 3
       column: 4
+    gui-lore:
+      - "&7Primary Stat: %ecoskills_strength_name%"
+      - "&7Secondary Stat: %ecoskills_crit_damage_name%"
+      - "&7Ability Levels:"
+      - " &6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
 
     # The maximum obtainable level
     max-level: 50
@@ -196,14 +217,19 @@ skills:
       - "serrated_strikes:1"
 
     rewards-messages:
-      - " &f+1 %ecoskills_crit_damage_name%"
       - " &f+2 %ecoskills_strength_name%"
+      - " &f+1 %ecoskills_crit_damage_name%"
       - " &6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
   enchanting:
     gui-item: enchanting_table
     gui-position:
       row: 3
       column: 5
+    gui-lore:
+      - "&7Primary Stat: %ecoskills_wisdom_name%"
+      - "&7Secondary Stat: %ecoskills_crit_chance_name%"
+      - "&7Ability Levels:"
+      - " &6Second Chance %ecoskills_second_chance_numeral%"
 
     # The maximum obtainable level
     max-level: 50
@@ -225,6 +251,11 @@ skills:
     gui-position:
       row: 3
       column: 6
+    gui-lore:
+      - "&7Primary Stat: %ecoskills_crit_damage_name%"
+      - "&7Secondary Stat: %ecoskills_wisdom_name%"
+      - "&7Ability Levels:"
+      - " &6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
 
     gui-item: golden_hoe
     # The maximum obtainable level
@@ -258,8 +289,12 @@ skills:
     gui-position:
       row: 3
       column: 7
-
     gui-item: jungle_sapling
+    gui-lore:
+      - "&7Primary Stat: %ecoskills_strength_name%"
+      - "&7Ability Levels:"
+      - " &6Craftsmanship %ecoskills_craftsmanship_numeral%"
+
     # The maximum obtainable level
     max-level: 50
 
@@ -287,6 +322,11 @@ skills:
     gui-position:
       row: 4
       column: 3
+    gui-lore:
+      - "&7Primary Stat: %ecoskills_defense_name%"
+      - "&7Secondary Stat: %ecoskills_wisdom_name%"
+      - "&7Ability Levels:"
+      - " &6Eye of the Depths %ecoskills_eye_of_the_depths_numeral%"
 
     gui-item: fishing_rod
     # The maximum obtainable level
@@ -297,18 +337,23 @@ skills:
 
     # The level/skill increases to give on levelup
     level-up-rewards:
-      - "defense:1"
+      - "defense:2"
       - "wisdom:1"
       - "eye_of_the_depths:1"
 
     rewards-messages:
-      - " &f+1 %ecoskills_defense_name%"
+      - " &f+2 %ecoskills_defense_name%"
       - " &f+1 %ecoskills_wisdom_name%"
-      - " &6Eye Of The Depths %ecoskills_eye_of_the_depths_numeral%"
+      - " &6Eye of the Depths %ecoskills_eye_of_the_depths_numeral%"
   alchemy:
     gui-position:
       row: 4
       column: 4
+    gui-lore:
+      - "&7Primary Stat: %ecoskills_crit_chance_name%"
+      - "&7Secondary Stat: %ecoskills_wisdom_name%"
+      - "&7Ability Levels:"
+      - " &6Potionmaster %ecoskills_potionmaster_numeral%"
 
     gui-item: brewing_stand
     # The maximum obtainable level
@@ -348,6 +393,11 @@ skills:
     gui-position:
       row: 4
       column: 6
+    gui-lore:
+      - "&7Primary Stat: %ecoskills_defense_name%"
+      - "&7Secondary Stat: %ecoskills_speed_name%"
+      - "&7Ability Levels:"
+      - " &6Shamanism %ecoskills_shamanism_numeral%"
 
     gui-item: iron_chestplate
     # The maximum obtainable level
@@ -370,6 +420,10 @@ skills:
     gui-position:
       row: 4
       column: 7
+    gui-lore:
+      - "&7Primary Stat: %ecoskills_speed_name%"
+      - "&7Ability Levels:"
+      - " &6Seamless Movement %ecoskills_seamless_movement_numeral%"
 
     gui-item: leather_boots
     # The maximum obtainable level
