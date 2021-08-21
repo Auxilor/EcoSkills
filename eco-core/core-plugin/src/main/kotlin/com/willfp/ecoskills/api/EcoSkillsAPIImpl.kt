@@ -1,6 +1,8 @@
 package com.willfp.ecoskills.api
 
 import com.willfp.ecoskills.*
+import com.willfp.ecoskills.api.modifier.ItemStatModifier
+import com.willfp.ecoskills.api.modifier.StatModifier
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.stats.Stat
@@ -37,23 +39,39 @@ object EcoSkillsAPIImpl: EcoSkillsAPI {
         return player.getStatLevel(stat)
     }
 
-    override fun addStatModifier(itemStack: ItemStack, modifier: StatModifier) {
+    override fun addStatModifier(itemStack: ItemStack, modifier: ItemStatModifier) {
         itemStack.addStatModifier(modifier)
     }
 
-    override fun removeStatModifier(itemStack: ItemStack, modifier: StatModifier) {
+    override fun removeStatModifier(itemStack: ItemStack, modifier: ItemStatModifier) {
         itemStack.removeStatModifier(modifier)
+    }
+
+    override fun removeStatModifier(player: Player, modifier: ItemStatModifier) {
+        player.removeStatModifier(modifier)
     }
 
     override fun getStatModifierKeys(itemStack: ItemStack): MutableSet<NamespacedKey> {
         return itemStack.getStatModifierKeys()
     }
 
-    override fun getStatModifiers(itemStack: ItemStack): MutableSet<StatModifier> {
+    override fun getStatModifierKeys(player: Player): MutableSet<NamespacedKey> {
+        return player.getStatModifierKeys()
+    }
+
+    override fun getStatModifiers(itemStack: ItemStack): MutableSet<ItemStatModifier> {
         return itemStack.getStatModifiers()
     }
 
-    override fun getStatModifier(itemStack: ItemStack, key: NamespacedKey): StatModifier? {
+    override fun getStatModifiers(player: Player): MutableSet<StatModifier> {
+        return player.getStatModifiers()
+    }
+
+    override fun getStatModifier(itemStack: ItemStack, key: NamespacedKey): ItemStatModifier? {
         return itemStack.getStatModifier(key)
+    }
+
+    override fun getStatModifier(player: Player, key: NamespacedKey): StatModifier? {
+        return player.getStatModifier(key)
     }
 }

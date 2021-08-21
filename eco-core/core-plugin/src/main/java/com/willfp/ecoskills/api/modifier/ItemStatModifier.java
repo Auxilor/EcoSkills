@@ -1,12 +1,11 @@
-package com.willfp.ecoskills.api;
+package com.willfp.ecoskills.api.modifier;
 
-import com.willfp.eco.util.NamespacedKeyUtils;
 import com.willfp.ecoskills.stats.Stat;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.EquipmentSlot;
 import org.jetbrains.annotations.NotNull;
 
-public class StatModifier {
+public class ItemStatModifier implements StatModifier {
     /**
      * The key.
      */
@@ -35,39 +34,27 @@ public class StatModifier {
      * @param amount The amount.
      * @param slot   The slots. (Empty is the same as all).
      */
-    public StatModifier(@NotNull final NamespacedKey key,
-                        @NotNull final Stat stat,
-                        final int amount,
-                        @NotNull final EquipmentSlot... slot) {
+    public ItemStatModifier(@NotNull final NamespacedKey key,
+                            @NotNull final Stat stat,
+                            final int amount,
+                            @NotNull final EquipmentSlot... slot) {
         this.key = key;
         this.stat = stat;
         this.amount = amount;
         this.slots = slot;
     }
 
-    /**
-     * Get the key.
-     *
-     * @return The key.
-     */
+    @Override
     public NamespacedKey getKey() {
         return key;
     }
 
-    /**
-     * Get the stat.
-     *
-     * @return The stat.
-     */
+    @Override
     public Stat getStat() {
         return stat;
     }
 
-    /**
-     * Get the amount.
-     *
-     * @return The amount.
-     */
+    @Override
     public int getAmount() {
         return amount;
     }
