@@ -2,7 +2,6 @@ package com.willfp.ecoskills.effects.effects
 
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.getEffectLevel
-import org.bukkit.Bukkit
 import org.bukkit.block.BrewingStand
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler

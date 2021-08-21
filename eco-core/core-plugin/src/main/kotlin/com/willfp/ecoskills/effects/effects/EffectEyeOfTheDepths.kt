@@ -8,7 +8,6 @@ import com.willfp.ecoskills.getEffectLevel
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.player.PlayerFishEvent
-import org.bukkit.event.player.PlayerItemDamageEvent
 
 class EffectEyeOfTheDepths: Effect(
     "eye_of_the_depths"

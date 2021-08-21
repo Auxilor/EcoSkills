@@ -5,16 +5,15 @@ import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.integrations.placeholder.PlaceholderEntry
 import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.StringUtils
-import com.willfp.ecoskills.*
+import com.willfp.ecoskills.EcoSkillsPlugin
+import com.willfp.ecoskills.SkillObject
 import com.willfp.ecoskills.config.SkillConfig
 import com.willfp.ecoskills.effects.Effects
+import com.willfp.ecoskills.getSkillLevel
 import com.willfp.ecoskills.stats.Stats
-import org.bukkit.Bukkit
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
-import java.util.*
-import kotlin.collections.ArrayList
 
 abstract class Skill(
     val id: String

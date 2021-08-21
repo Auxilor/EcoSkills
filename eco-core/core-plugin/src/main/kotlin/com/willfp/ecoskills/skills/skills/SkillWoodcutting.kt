@@ -1,11 +1,8 @@
 package com.willfp.ecoskills.skills.skills
 
-import com.willfp.ecoskills.api.PlayerSkillExpGainEvent
 import com.willfp.ecoskills.giveSkillExperience
 import com.willfp.ecoskills.skills.Skill
-import org.bukkit.Bukkit
 import org.bukkit.Material
-import org.bukkit.enchantments.Enchantment
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.block.BlockBreakEvent

@@ -1,11 +1,10 @@
 package com.willfp.ecoskills.stats.stats
 
 import com.willfp.eco.util.NumberUtils
-import com.willfp.ecoskills.isCrit
 import com.willfp.ecoskills.getStatLevel
+import com.willfp.ecoskills.isCrit
 import com.willfp.ecoskills.stats.Stat
 import com.willfp.ecoskills.stats.Stats
-import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
 import org.bukkit.event.EventHandler

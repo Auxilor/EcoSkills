@@ -1,12 +1,13 @@
 package com.willfp.ecoskills.skills
 
 import com.willfp.eco.core.EcoPlugin
-import com.willfp.ecoskills.*
-import com.willfp.ecoskills.api.PlayerSkillExpGainEvent
 import com.willfp.ecoskills.api.PlayerSkillLevelUpEvent
 import com.willfp.ecoskills.effects.Effect
+import com.willfp.ecoskills.getEffectLevel
+import com.willfp.ecoskills.getStatLevel
+import com.willfp.ecoskills.setEffectLevel
+import com.willfp.ecoskills.setStatLevel
 import com.willfp.ecoskills.stats.Stat
-import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener

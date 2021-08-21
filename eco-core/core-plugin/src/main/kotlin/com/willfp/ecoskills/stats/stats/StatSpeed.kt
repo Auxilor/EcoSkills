@@ -5,9 +5,6 @@ import com.willfp.ecoskills.stats.Stat
 import org.bukkit.attribute.Attribute
 import org.bukkit.attribute.AttributeModifier
 import org.bukkit.entity.Player
-import org.bukkit.event.EventHandler
-import org.bukkit.event.EventPriority
-import org.bukkit.event.entity.EntityDamageEvent
 
 class StatSpeed : Stat(
     "speed"

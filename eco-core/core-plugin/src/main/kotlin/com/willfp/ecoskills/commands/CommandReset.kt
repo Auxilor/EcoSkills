@@ -13,9 +13,7 @@ import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.stats.Stats
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
-import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
-import java.util.stream.Collectors
 
 
 class CommandReset(plugin: EcoPlugin) :

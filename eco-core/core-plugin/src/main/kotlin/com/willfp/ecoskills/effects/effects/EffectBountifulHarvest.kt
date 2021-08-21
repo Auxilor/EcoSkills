@@ -4,12 +4,10 @@ import com.willfp.eco.core.drops.DropQueue
 import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.getEffectLevel
-import com.willfp.ecoskills.getStatLevel
 import org.bukkit.Material
 import org.bukkit.block.data.Ageable
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
-import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockDropItemEvent
 
 class EffectBountifulHarvest: Effect(

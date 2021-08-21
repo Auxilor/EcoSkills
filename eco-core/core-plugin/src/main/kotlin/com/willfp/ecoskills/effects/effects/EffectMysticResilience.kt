@@ -3,15 +3,10 @@ package com.willfp.ecoskills.effects.effects
 import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.getEffectLevel
-import org.bukkit.Bukkit
-import org.bukkit.block.BrewingStand
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.entity.EntityPotionEffectEvent
-import org.bukkit.event.inventory.InventoryClickEvent
-import org.bukkit.event.player.PlayerRecipeDiscoverEvent
-import org.bukkit.potion.PotionType
 
 
 class EffectMysticResilience : Effect(

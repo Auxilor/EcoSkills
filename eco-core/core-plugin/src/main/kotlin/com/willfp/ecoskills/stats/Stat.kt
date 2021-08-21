@@ -6,14 +6,11 @@ import com.willfp.eco.core.integrations.placeholder.PlaceholderEntry
 import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.SkillObject
-import com.willfp.ecoskills.getEffectLevel
 import com.willfp.ecoskills.getStatLevel
-import com.willfp.ecoskills.skills.Skills
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
 import java.util.*
-import java.util.function.Function
 
 abstract class Stat(
     id: String

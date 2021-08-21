@@ -3,10 +3,8 @@ package com.willfp.ecoskills.stats.stats
 import com.willfp.eco.core.events.NaturalExpGainEvent
 import com.willfp.ecoskills.getStatLevel
 import com.willfp.ecoskills.stats.Stat
-import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
-import org.bukkit.event.entity.EntityDamageEvent
 import kotlin.math.ceil
 
 class StatWisdom : Stat(

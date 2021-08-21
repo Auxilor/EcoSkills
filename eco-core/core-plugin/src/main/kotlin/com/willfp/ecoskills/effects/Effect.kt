@@ -7,7 +7,6 @@ import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.SkillObject
 import com.willfp.ecoskills.getEffectLevel
-import com.willfp.ecoskills.getStatLevel
 import org.bukkit.NamespacedKey
 import org.bukkit.event.Listener
 import java.util.*
