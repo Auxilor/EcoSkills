@@ -14,6 +14,7 @@ import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
 import java.util.*
+import kotlin.collections.ArrayList
 
 abstract class Skill(
     val id: String
@@ -27,11 +28,11 @@ abstract class Skill(
     lateinit var description: String
     lateinit var gui: SkillGUI
     var maxLevel: Int = 50
-    private val rewards: MutableMap<SkillObject, Int>
+    private val rewards: MutableList<SkillObjectReward>
 
     init {
         config = SkillConfig(this.id, this.javaClass, plugin)
-        rewards = HashMap()
+        rewards = ArrayList()
 
         Skills.registerNewSkill(this)
     }
@@ -42,14 +43,14 @@ abstract class Skill(
         maxLevel = config.getInt("max-level")
         rewards.clear()
         for (string in config.getStrings("level-up-rewards")) {
-            val split = string.split(":")
+            val split = string.split("::")
             val asEffect = Effects.getByID(split[0].lowercase())
             val asStat = Stats.getByID(split[0].lowercase())
             if (asEffect != null) {
-                rewards[asEffect] = split[1].toInt()
+                rewards.add(SkillObjectReward(asEffect, SkillObjectOptions(split[1])))
             }
             if (asStat != null) {
-                rewards[asStat] = split[1].toInt()
+                rewards.add(SkillObjectReward(asStat, SkillObjectOptions(split[1])))
             }
         }
 
@@ -70,12 +71,34 @@ abstract class Skill(
         gui = SkillGUI(plugin, this)
     }
 
-    fun getLevelUpRewards(): Collection<SkillObject> {
-        return rewards.keys
+    fun getLevelUpRewards(): MutableList<SkillObjectReward> {
+        return ArrayList(rewards)
     }
 
-    fun getLevelUpReward(skillObject: SkillObject): Int {
-        return rewards[skillObject] ?: 0
+    fun getLevelUpReward(skillObject: SkillObject, to: Int): Int {
+        for (reward in rewards) {
+            if (reward.obj != skillObject) {
+                continue
+            }
+
+            val opt = reward.options
+            if (opt.startLevel > to || opt.endLevel < to) {
+                continue
+            }
+
+            return reward.options.amountPerLevel
+        }
+
+        return 0
+    }
+
+    fun getCumulativeLevelUpReward(skillObject: SkillObject, to: Int): Int {
+        var levels = 0
+        for (i in 1..to) {
+            levels += getLevelUpReward(skillObject, i)
+        }
+
+        return levels
     }
 
     fun getRewardsMessages(player: Player): MutableList<String> {
@@ -92,7 +115,7 @@ abstract class Skill(
             var s = string;
 
             for (skillObject in Effects.values() union Stats.values()) {
-                val objLevel = level * this.getLevelUpReward(skillObject)
+                val objLevel = this.getCumulativeLevelUpReward(skillObject, level)
 
                 s = s.replace("%ecoskills_${skillObject.id}%", objLevel.toString())
                 s = s.replace("%ecoskills_${skillObject.id}_numeral%", NumberUtils.toNumeral(objLevel))

@@ -15,9 +15,9 @@ max-level: 50
 
 # The level/skill increases to give on levelup
 level-up-rewards:
-  - "strength:2"
-  - "crit_damage:1"
-  - "serrated_strikes:1"
+  - "strength::2"
+  - "crit_damage::1"
+  - "serrated_strikes::1"
 
 rewards-messages:
   - " &8» &r&f+2 %ecoskills_strength_name%"

@@ -18,13 +18,14 @@ class SkillLevellingListener(
     fun onLevelUp(event: PlayerSkillLevelUpEvent) {
         val player = event.player
         val skill = event.skill
+        val to = event.level
 
-        for (obj in skill.getLevelUpRewards()) {
-            if (obj is Effect) {
-                player.setEffectLevel(obj, player.getEffectLevel(obj) + skill.getLevelUpReward(obj))
+        for (reward in skill.getLevelUpRewards()) {
+            if (reward.obj is Effect) {
+                player.setEffectLevel(reward.obj, player.getEffectLevel(reward.obj) + skill.getLevelUpReward(reward.obj, to))
             }
-            if (obj is Stat) {
-                player.setStatLevel(obj, player.getStatLevel(obj) + skill.getLevelUpReward(obj))
+            if (reward.obj is Stat) {
+                player.setStatLevel(reward.obj, player.getStatLevel(reward.obj) + skill.getLevelUpReward(reward.obj, to))
             }
         }
     }

@@ -14,8 +14,8 @@ max-level: 50
 
 # The level/skill increases to give on levelup
 level-up-rewards:
-  - "defense:2"
-  - "versatile_tools:1"
+  - "defense::2"
+  - "versatile_tools::1"
 
 rewards-messages:
   - " &8» &r&f+1 %ecoskills_defense_name%"

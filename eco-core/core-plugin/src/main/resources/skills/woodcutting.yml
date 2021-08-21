@@ -14,8 +14,8 @@ max-level: 50
 
 # The level/skill increases to give on levelup
 level-up-rewards:
-  - "strength:2"
-  - "craftsmanship:1"
+  - "strength::2"
+  - "craftsmanship::1"
 
 rewards-messages:
   - " &8» &r&f+2 %ecoskills_strength_name%"

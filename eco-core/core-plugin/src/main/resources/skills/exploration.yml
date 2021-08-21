@@ -14,8 +14,8 @@ max-level: 50
 
 # The level/skill increases to give on levelup
 level-up-rewards:
-  - "speed:2"
-  - "seamless_movement:1"
+  - "speed::2"
+  - "seamless_movement::1"
 
 rewards-messages:
   - " &8» &r&f+2 %ecoskills_speed_name%"

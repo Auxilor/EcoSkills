@@ -15,9 +15,9 @@ max-level: 50
 
 # The level/skill increases to give on levelup
 level-up-rewards:
-  - "wisdom:2"
-  - "crit_chance:1"
-  - "second_chance:1"
+  - "wisdom::2"
+  - "crit_chance::1"
+  - "second_chance::1"
 
 rewards-messages:
   - " &8» &r&f+2 %ecoskills_wisdom_name%"

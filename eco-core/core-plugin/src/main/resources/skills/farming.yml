@@ -17,11 +17,11 @@ max-level: 50
 
 # The level/skill increases to give on levelup
 level-up-rewards:
-  - "crit_damage:2"
-  - "wisdom:1"
-  - "bountiful_harvest:1"
-  - "satiation:1"
-  - "golden_yield:1"
+  - "crit_damage::2"
+  - "wisdom::1"
+  - "bountiful_harvest::1"
+  - "satiation::1"
+  - "golden_yield::1:10:100"
 
 rewards-messages:
   - " &8» &r&f+2 %ecoskills_crit_damage_name%"
