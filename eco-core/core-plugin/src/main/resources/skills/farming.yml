@@ -9,6 +9,7 @@ gui-lore:
   - "&f"
   - "&fEffects:"
   - "&8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
+  - "&8» &r&6Satiation %ecoskills_satiation_numeral%"
 
 # The maximum obtainable level
 max-level: 50
@@ -23,11 +24,13 @@ rewards-messages:
   - " &8» &r&f+2 %ecoskills_crit_damage_name%"
   - " &8» &r&f+1 %ecoskills_wisdom_name%"
   - " &8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
+  - " &8» &r&6Satiation %ecoskills_satiation_numeral%"
 
 rewards-gui-lore:
   - " &8» &r&f+2 %ecoskills_crit_damage_name%"
   - " &8» &r&f+1 %ecoskills_wisdom_name%"
   - " &8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
+  - " &8» &r&6Satiation %ecoskills_satiation_numeral%"
 
 # The xp rewards for each crop type
 # Specify with type:xp

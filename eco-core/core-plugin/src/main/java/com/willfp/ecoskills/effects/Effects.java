@@ -8,6 +8,7 @@ import com.willfp.ecoskills.effects.effects.EffectEfficientBrewing;
 import com.willfp.ecoskills.effects.effects.EffectEyeOfTheDepths;
 import com.willfp.ecoskills.effects.effects.EffectMysticResilience;
 import com.willfp.ecoskills.effects.effects.EffectPotionmaster;
+import com.willfp.ecoskills.effects.effects.EffectSatiation;
 import com.willfp.ecoskills.effects.effects.EffectSeamlessMovement;
 import com.willfp.ecoskills.effects.effects.EffectSecondChance;
 import com.willfp.ecoskills.effects.effects.EffectSerratedStrikes;
@@ -39,6 +40,7 @@ public class Effects {
     public static final Effect VERSATILE_TOOLS = new EffectVersatileTools();
     public static final Effect EFFICIENT_BREWING = new EffectEfficientBrewing();
     public static final Effect MYSTIC_RESILIENCE = new EffectMysticResilience();
+    public static final Effect SATIATION = new EffectSatiation();
 
     @ApiStatus.Internal
     public static void registerNewEffect(@NotNull final Effect effect) {

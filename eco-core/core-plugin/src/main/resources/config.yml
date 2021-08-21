@@ -366,6 +366,9 @@ effects:
   mystic_resilience:
     # Chance per level as a percentage
     chance-per-level: 0.1
+  satiation:
+    # 100% is no hunger
+    percent-less-hunger-per-level: 2
 
 damage-indicators:
   # Requires HolographicDisplays to be installed

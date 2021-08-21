@@ -99,3 +99,7 @@ effects:
     name: "Mystic Resilience"
     color: "&6"
     description: "Increases the chance to ignore negative potion effects"
+  satiation:
+    name: "Satiation"
+    color: "&6"
+    description: "Decreases the rate at which you lose hunger"
