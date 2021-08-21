@@ -341,6 +341,12 @@ effects:
   potionmaster:
     # The percent more time for potions to last for each level of the effect
     percent-more-per-level: 4
+
+    # The lore to add to indicate a duration buff
+    lore:
+      - ""
+      - "&fPotionmaster Buff:"
+      - "&8» &f+&e%seconds%&f Seconds"
   shamanism:
     # The percent faster regen for each level of the effect
     percent-faster-per-level: 4
