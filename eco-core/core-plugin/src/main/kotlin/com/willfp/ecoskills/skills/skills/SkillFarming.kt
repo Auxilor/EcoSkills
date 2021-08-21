@@ -35,13 +35,11 @@ class SkillFarming : Skill(
         val type = event.block.type
         val player = event.player
 
-        if (event.block.blockData !is Ageable) {
-            return
-        }
-
-        val data = event.block.blockData as Ageable
-        if (data.age < data.maximumAge) {
-            return
+        if (event.block.blockData is Ageable) {
+            val data = event.block.blockData as Ageable
+            if (data.age < data.maximumAge) {
+                return
+            }
         }
 
         val toGive = rewards[type] ?: return
