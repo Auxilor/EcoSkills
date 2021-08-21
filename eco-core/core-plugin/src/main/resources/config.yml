@@ -125,6 +125,7 @@ level-gui:
       name: "&a%skill% Level %level_numeral%"
       lore:
         - "&f"
+        - "&fRewards:"
         - "%rewards%"
         - "&f"
         - "&aUNLOCKED"
@@ -133,6 +134,7 @@ level-gui:
       name: "&e%skill% Level %level_numeral%"
       lore:
         - "&f"
+        - "&fRewards:"
         - "%rewards%"
         - "&f"
         - "&fProgress:"
@@ -143,6 +145,7 @@ level-gui:
       name: "&c%skill% Level %level_numeral%"
       lore:
         - "&f"
+        - "&fRewards:"
         - "%rewards%"
 
 

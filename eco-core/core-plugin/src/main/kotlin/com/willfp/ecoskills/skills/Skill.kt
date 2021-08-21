@@ -86,10 +86,18 @@ abstract class Skill(
         return messages
     }
 
-    fun getGUIRewardsMessages(player: Player): MutableList<String> {
+    fun getGUIRewardsMessages(player: Player, level: Int): MutableList<String> {
         val lore = ArrayList<String>()
         for (string in this.config.getStrings("rewards-gui-lore", false)) {
-            lore.add(StringUtils.format(string, player))
+            var s = string;
+
+            for (skillObject in Effects.values() union Stats.values()) {
+                val objLevel = level * this.getLevelUpReward(skillObject)
+
+                s = s.replace("%ecoskills_${skillObject.id}%", objLevel.toString())
+                s = s.replace("%ecoskills_${skillObject.id}_numeral%", NumberUtils.toNumeral(objLevel))
+            }
+            lore.add(StringUtils.format(s, player))
         }
         return lore
     }

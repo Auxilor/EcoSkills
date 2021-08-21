@@ -10,6 +10,8 @@ import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.getSkillLevel
 import com.willfp.ecoskills.getSkillProgress
+import com.willfp.ecoskills.getSkillProgressRequired
+import com.willfp.ecoskills.getSkillProgressToNextLevel
 import com.willfp.ecoskills.gui.SkillGUI
 import org.bukkit.Bukkit
 import org.bukkit.Material
@@ -155,16 +157,15 @@ class SkillGUI(
 
                                 val slotLevel = ((page - 1) * levelsPerPage) + level
 
-                                val meta: ItemMeta
-                                val lore: MutableList<String>
+                                val meta = item.itemMeta!!
+                                meta.lore = ArrayList()
+                                val lore: MutableList<String> = ArrayList()
 
                                 item.amount = 1
 
                                 if (slotLevel > skill.maxLevel) {
                                     item.type = maskMaterials[0]
-                                    meta = item.itemMeta!!
                                     meta.setDisplayName("")
-                                    meta.lore = listOf()
                                     item.itemMeta = meta
                                 } else {
                                     if (plugin.configYml.getBool("level-gui.progression-slots.level-as-amount")) {
@@ -177,7 +178,6 @@ class SkillGUI(
                                                 plugin.configYml.getString("level-gui.progression-slots.unlocked.material")
                                                     .uppercase()
                                             )!!
-                                            meta = item.itemMeta!!
                                             meta.setDisplayName(
                                                 plugin.configYml.getString("level-gui.progression-slots.unlocked.name")
                                                     .replace("%skill%", skill.name)
@@ -185,15 +185,13 @@ class SkillGUI(
                                                     .replace("%level_numeral%", NumberUtils.toNumeral(slotLevel))
                                             )
 
-                                            lore =
-                                                plugin.configYml.getStrings("level-gui.progression-slots.unlocked.lore")
+                                            lore.addAll(plugin.configYml.getStrings("level-gui.progression-slots.unlocked.lore"))
                                         }
                                         slotLevel == player.getSkillLevel(skill) + 1 -> {
                                             item.type = Material.getMaterial(
                                                 plugin.configYml.getString("level-gui.progression-slots.in-progress.material")
                                                     .uppercase()
                                             )!!
-                                            meta = item.itemMeta!!
                                             meta.setDisplayName(
                                                 plugin.configYml.getString("level-gui.progression-slots.in-progress.name")
                                                     .replace("%skill%", skill.name)
@@ -201,15 +199,13 @@ class SkillGUI(
                                                     .replace("%level_numeral%", NumberUtils.toNumeral(slotLevel))
                                             )
 
-                                            lore =
-                                                plugin.configYml.getStrings("level-gui.progression-slots.in-progress.lore")
+                                            lore.addAll(plugin.configYml.getStrings("level-gui.progression-slots.in-progress.lore"))
                                         }
                                         else -> {
                                             item.type = Material.getMaterial(
                                                 plugin.configYml.getString("level-gui.progression-slots.locked.material")
                                                     .uppercase()
                                             )!!
-                                            meta = item.itemMeta!!
                                             meta.setDisplayName(
                                                 plugin.configYml.getString("level-gui.progression-slots.locked.name")
                                                     .replace("%skill%", skill.name)
@@ -217,13 +213,12 @@ class SkillGUI(
                                                     .replace("%level_numeral%", NumberUtils.toNumeral(slotLevel))
                                             )
 
-                                            lore =
-                                                plugin.configYml.getStrings("level-gui.progression-slots.locked.lore")
+                                            lore.addAll(plugin.configYml.getStrings("level-gui.progression-slots.locked.lore"))
                                         }
                                     }
 
                                     val currentXP = player.getSkillProgress(skill)
-                                    val requiredXP = skill.getExpForLevel(player.getSkillLevel(skill) + 1)
+                                    val requiredXP = player.getSkillProgressRequired(skill)
                                     lore.replaceAll { string ->
                                         string.replace("%current_xp%", NumberUtils.format(currentXP))
                                             .replace(
@@ -232,17 +227,16 @@ class SkillGUI(
                                             )
                                             .replace(
                                                 "%percentage_progress%",
-                                                NumberUtils.format((currentXP / requiredXP) * 100) + "%"
+                                                NumberUtils.format(player.getSkillProgressToNextLevel(skill) * 100) + "%"
                                             )
                                     }
 
                                     val skillSpecificIndex = lore.indexOf("%rewards%")
                                     if (skillSpecificIndex != -1) {
                                         lore.removeAt(skillSpecificIndex)
-                                        lore.addAll(skillSpecificIndex, skill.getGUIRewardsMessages(player))
+                                        skill.getGUIRewardsMessages(player, slotLevel) // scary
+                                        lore.addAll(skillSpecificIndex, skill.getGUIRewardsMessages(player, slotLevel))
                                     }
-
-                                    Bukkit.getLogger().info(lore.toString())
                                     meta.lore = lore
                                     item.itemMeta = meta
                                 }
