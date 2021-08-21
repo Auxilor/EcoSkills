@@ -95,3 +95,7 @@ effects:
     name: "Efficient Brewing"
     color: "&6"
     description: "Decrease the time taken to brew potions"
+  mystic_resilience:
+    name: "Mystic Resilience"
+    color: "&6"
+    description: "Increases the chance to ignore negative potion effects"

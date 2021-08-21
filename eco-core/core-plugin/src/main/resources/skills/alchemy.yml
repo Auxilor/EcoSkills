@@ -10,6 +10,7 @@ gui-lore:
   - "&fEffects:"
   - "&8» &r&6Potionmaster %ecoskills_potionmaster_numeral%"
   - "&8» &r&6Efficient Brewing %ecoskills_efficient_brewing_numeral%"
+  - "&8» &r&6Mystic Resilience %ecoskills_mystic_resilience_numeral%"
 
 # The maximum obtainable level
 max-level: 50
@@ -26,12 +27,14 @@ rewards-messages:
   - " &8» &r&f+1 %ecoskills_wisdom_name%"
   - " &8» &r&6Potionmaster %ecoskills_potionmaster_numeral%"
   - " &8» &r&6Efficient Brewing %ecoskills_efficient_brewing_numeral%"
+  - " &8» &r&6Mystic Resilience %ecoskills_mystic_resilience_numeral%"
 
 rewards-gui-lore:
   - " &8» &r&f+2 %ecoskills_crit_chance_name%"
   - " &8» &r&f+1 %ecoskills_wisdom_name%"
   - " &8» &r&6Potionmaster %ecoskills_potionmaster_numeral%"
   - " &8» &r&6Efficient Brewing %ecoskills_efficient_brewing_numeral%"
+  - " &8» &r&6Mystic Resilience %ecoskills_mystic_resilience_numeral%"
 
 # The experience to give for each brewing ingredient
 xp-rewards:
