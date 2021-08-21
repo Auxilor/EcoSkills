@@ -37,6 +37,10 @@ class EffectPotionmaster : Effect(
             return
         }
 
+        if (player.getEffectLevel(this) == 0) {
+            return
+        }
+
         val multiplier = ((player.getEffectLevel(this) * this.config.getDouble("percent-more-per-level")) / 100) + 1
 
         this.plugin.scheduler.runLater({

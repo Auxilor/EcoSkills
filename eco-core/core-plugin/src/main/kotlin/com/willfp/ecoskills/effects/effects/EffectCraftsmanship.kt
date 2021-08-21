@@ -15,9 +15,8 @@ class EffectCraftsmanship : Effect(
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: PlayerItemDamageEvent) {
         val player = event.player
-        val item = event.item
 
-        if (!player.inventory.itemInMainHand.type.toString().lowercase().contains("axe")) {
+        if (!event.item.type.toString().lowercase().contains("axe")) {
             return
         }
 

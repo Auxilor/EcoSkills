@@ -65,12 +65,18 @@ class StatModifierListener(
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun onHold(event: ArmorChangeEvent) {
         for (itemStack in event.before) {
+            if (itemStack == null) {
+                continue
+            }
             val mods = itemStack.getStatModifiers()
             for (mod in mods) {
                 event.player.removeStatModifier(mod)
             }
         }
         for (itemStack in event.after) {
+            if (itemStack == null) {
+                continue
+            }
             val mods = itemStack.getStatModifiers()
             for (mod in mods) {
                 when (itemStack) {
