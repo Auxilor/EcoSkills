@@ -363,6 +363,9 @@ effects:
   efficient_brewing:
     # The ticks faster brewing time for each level (default is 400)
     ticks-less-per-level: 6
+  mystic_resilience:
+    # Chance per level as a percentage
+    chance-per-level: 0.1
 
 damage-indicators:
   # Requires HolographicDisplays to be installed
