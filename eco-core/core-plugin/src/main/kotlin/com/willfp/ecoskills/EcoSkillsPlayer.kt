@@ -22,10 +22,12 @@ fun Player.giveSkillExperience(skill: Skill, experience: Double) {
     this.setSkillProgress(skill, this.getSkillProgress(skill) + experience)
 
     if (this.getSkillProgress(skill) >= skill.getExpForLevel(level + 1)) {
+        val overshoot = this.getSkillProgress(skill) - skill.getExpForLevel(level + 1);
         this.setSkillProgress(skill, 0.0)
         this.setSkillLevel(skill, level + 1)
         val levelUpEvent = PlayerSkillLevelUpEvent(this, skill, level + 1)
         Bukkit.getPluginManager().callEvent(levelUpEvent)
+        this.giveSkillExperience(skill, overshoot)
     }
 }
 
