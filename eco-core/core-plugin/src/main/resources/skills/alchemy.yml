@@ -21,6 +21,7 @@ level-up-rewards:
   - "wisdom:1"
   - "potionmaster:1"
   - "efficient_brewing:1"
+  - "mystic_resilience:1"
 
 rewards-messages:
   - " &8» &r&f+2 %ecoskills_crit_chance_name%"

@@ -302,7 +302,7 @@ effects:
     # Chance is as a percentage; if the chance for a player is over 100 then it will always be double drops
     # with a chance to get triple drops. Same goes if above 200, but then it will always be triple with a chance
     # for quadruple.
-    chance-per-level: 1
+    chance-per-level: 8
   versatile_tools:
     # The percent (%) more damage to deal with a pickaxe for each level of the effect.
     percent-more-per-level: 2
@@ -369,6 +369,12 @@ effects:
   satiation:
     # 100% is no hunger
     percent-less-hunger-per-level: 2
+  golden_yield:
+    # Chance as a percentage
+    chance-per-level: 0.3
+
+    # The amount more drops to give
+    drop-multiplier: 5
 
 damage-indicators:
   # Requires HolographicDisplays to be installed

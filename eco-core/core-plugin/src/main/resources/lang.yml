@@ -103,3 +103,7 @@ effects:
     name: "Satiation"
     color: "&6"
     description: "Decreases the rate at which you lose hunger"
+  golden_yield:
+    name: "Golden Yield"
+    color: "&6"
+    description: "Increases chance to get 5x drops from farming"
