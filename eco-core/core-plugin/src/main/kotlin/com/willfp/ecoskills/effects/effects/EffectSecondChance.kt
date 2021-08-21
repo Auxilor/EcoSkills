@@ -1,8 +1,37 @@
 package com.willfp.ecoskills.effects.effects
 
+import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.effects.Effect
+import com.willfp.ecoskills.getEffectLevel
+import org.bukkit.event.EventHandler
+import org.bukkit.event.EventPriority
+import org.bukkit.event.player.PlayerItemDamageEvent
+import org.bukkit.inventory.meta.Damageable
 
 class EffectSecondChance: Effect(
     "second_chance"
 ) {
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    fun handle(event: PlayerItemDamageEvent) {
+        val player = event.player
+        val item = event.item
+        val meta = item.itemMeta
+
+        if (meta !is Damageable) {
+            return
+        }
+
+        if (item.type.maxDurability - meta.damage > this.config.getInt("below-durability-check")) {
+            return
+        }
+
+        val level = player.getEffectLevel(this)
+
+        if (NumberUtils.randFloat(0.0, 100.0) < config.getDouble("chance-per-level") * level) {
+            meta.damage = 0
+            event.isCancelled = true
+        }
+
+        item.itemMeta = meta
+    }
 }
