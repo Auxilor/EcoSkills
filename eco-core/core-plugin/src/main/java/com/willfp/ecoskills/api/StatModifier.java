@@ -13,11 +13,6 @@ public class StatModifier {
     private final NamespacedKey key;
 
     /**
-     * The key.
-     */
-    private final NamespacedKey slotKey;
-
-    /**
      * The stat.
      */
     private final Stat stat;
@@ -45,7 +40,6 @@ public class StatModifier {
                         final int amount,
                         @NotNull final EquipmentSlot... slot) {
         this.key = key;
-        this.slotKey = NamespacedKeyUtils.create(key.getNamespace(), key.getKey() + "_slot");
         this.stat = stat;
         this.amount = amount;
         this.slots = slot;
@@ -58,15 +52,6 @@ public class StatModifier {
      */
     public NamespacedKey getKey() {
         return key;
-    }
-
-    /**
-     * Get the slot key.
-     *
-     * @return The key.
-     */
-    public NamespacedKey getSlotKey() {
-        return slotKey;
     }
 
     /**

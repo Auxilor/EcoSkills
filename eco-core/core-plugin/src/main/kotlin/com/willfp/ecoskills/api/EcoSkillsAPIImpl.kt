@@ -4,7 +4,9 @@ import com.willfp.ecoskills.*
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.stats.Stat
+import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemStack
 
 object EcoSkillsAPIImpl: EcoSkillsAPI {
     override fun getSkillLevel(player: Player, skill: Skill): Int {
@@ -33,5 +35,25 @@ object EcoSkillsAPIImpl: EcoSkillsAPI {
 
     override fun getStatLevel(player: Player, stat: Stat): Int {
         return player.getStatLevel(stat)
+    }
+
+    override fun addStatModifier(itemStack: ItemStack, modifier: StatModifier) {
+        itemStack.addStatModifier(modifier)
+    }
+
+    override fun removeStatModifier(itemStack: ItemStack, modifier: StatModifier) {
+        itemStack.removeStatModifier(modifier)
+    }
+
+    override fun getStatModifierKeys(itemStack: ItemStack): MutableSet<NamespacedKey> {
+        return itemStack.getStatModifierKeys()
+    }
+
+    override fun getStatModifiers(itemStack: ItemStack): MutableSet<StatModifier> {
+        return itemStack.getStatModifiers()
+    }
+
+    override fun getStatModifier(itemStack: ItemStack, key: NamespacedKey): StatModifier? {
+        return itemStack.getStatModifier(key)
     }
 }

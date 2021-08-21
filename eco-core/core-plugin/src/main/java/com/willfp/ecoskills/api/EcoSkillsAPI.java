@@ -3,8 +3,13 @@ package com.willfp.ecoskills.api;
 import com.willfp.ecoskills.effects.Effect;
 import com.willfp.ecoskills.skills.Skill;
 import com.willfp.ecoskills.stats.Stat;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Set;
 
 public interface EcoSkillsAPI {
     /**
@@ -77,6 +82,51 @@ public interface EcoSkillsAPI {
      */
     int getStatLevel(@NotNull Player player,
                      @NotNull Stat stat);
+
+    /**
+     * Add a stat modifier to an item.
+     *
+     * @param itemStack The item.
+     * @param modifier  The modifier.
+     */
+    void addStatModifier(@NotNull ItemStack itemStack,
+                         @NotNull StatModifier modifier);
+
+    /**
+     * Remove a stat modifier from an item.
+     *
+     * @param itemStack The item.
+     * @param modifier  The modifier.
+     */
+    void removeStatModifier(@NotNull ItemStack itemStack,
+                            @NotNull StatModifier modifier);
+
+    /**
+     * Get stat modifier keys on an item.
+     *
+     * @param itemStack The item.
+     * @return The modifier keys.
+     */
+    Set<NamespacedKey> getStatModifierKeys(@NotNull ItemStack itemStack);
+
+    /**
+     * Get stat modifiers on an item.
+     *
+     * @param itemStack The item.
+     * @return The modifiers.
+     */
+    Set<StatModifier> getStatModifiers(@NotNull ItemStack itemStack);
+
+    /**
+     * Get stat modifier on an item.
+     *
+     * @param itemStack The item.
+     * @param key The key
+     * @return The modifier.
+     */
+    @Nullable
+    StatModifier getStatModifier(@NotNull ItemStack itemStack,
+                                 @NotNull NamespacedKey key);
 
     /**
      * Get the instance of the API.
