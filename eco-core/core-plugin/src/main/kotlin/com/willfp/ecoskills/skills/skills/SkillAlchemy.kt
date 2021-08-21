@@ -17,6 +17,7 @@ import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.enchantment.EnchantItemEvent
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.inventory.BrewEvent
+import org.bukkit.inventory.meta.PotionMeta
 import java.util.*
 
 class SkillAlchemy : Skill(
@@ -52,9 +53,17 @@ class SkillAlchemy : Skill(
             return
         }
 
+        var mult = 0;
+
+        for (i in 0..2) {
+            if (event.contents.getItem(i)?.itemMeta is PotionMeta) {
+                mult++
+            }
+        }
+
         val type = event.contents.ingredient?.type ?: return
 
         val toGive = rewards[type] ?: return
-        player.giveSkillExperience(this, toGive)
+        player.giveSkillExperience(this, toGive * mult)
     }
 }

@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import com.willfp.eco.core.config.updating.ConfigUpdater;
 import com.willfp.ecoskills.effects.effects.EffectBountifulHarvest;
 import com.willfp.ecoskills.effects.effects.EffectCraftsmanship;
+import com.willfp.ecoskills.effects.effects.EffectEfficientBrewing;
 import com.willfp.ecoskills.effects.effects.EffectEyeOfTheDepths;
 import com.willfp.ecoskills.effects.effects.EffectPotionmaster;
 import com.willfp.ecoskills.effects.effects.EffectSeamlessMovement;
@@ -35,6 +36,7 @@ public class Effects {
     public static final Effect SERRATED_STRIKES = new EffectSerratedStrikes();
     public static final Effect SHAMANISM = new EffectShamanism();
     public static final Effect VERSATILE_TOOLS = new EffectVersatileTools();
+    public static final Effect EFFICIENT_BREWING = new EffectEfficientBrewing();
 
     @ApiStatus.Internal
     public static void registerNewEffect(@NotNull final Effect effect) {

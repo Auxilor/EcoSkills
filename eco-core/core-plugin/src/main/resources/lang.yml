@@ -91,3 +91,7 @@ effects:
     name: "Second Chance"
     color: "&6"
     description: "Chance to instantly fix items on low durability"
+  efficient_brewing:
+    name: "Efficient Brewing"
+    color: "&6"
+    description: "Decrease the time taken to brew potions"
