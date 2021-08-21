@@ -14,6 +14,7 @@ import com.willfp.ecoskills.skills.Skills;
 import com.willfp.ecoskills.stats.DamageIndicatorListener;
 import com.willfp.ecoskills.stats.Stat;
 import com.willfp.ecoskills.stats.Stats;
+import com.willfp.ecoskills.stats.modifier.StatModifierListener;
 import org.bukkit.event.Listener;
 
 import java.util.Arrays;
@@ -63,6 +64,7 @@ public class EcoSkillsPlugin extends EcoPlugin {
         return Arrays.asList(
                 new SkillLevellingListener(this),
                 new SkillDisplayListener(this),
+                new StatModifierListener(this),
                 EcoSkillsEventModifierHandler.INSTANCE
         );
     }
