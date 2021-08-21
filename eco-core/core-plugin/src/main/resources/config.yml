@@ -361,8 +361,8 @@ effects:
     # Since this chance will be called many times, it would be best to have this be low.
     chance-per-level: 0.1
   efficient_brewing:
-    # The percent faster brewing time for each level
-    percent-faster-per-level: 4
+    # The ticks faster brewing time for each level (default is 400)
+    ticks-less-per-level: 6
 
 damage-indicators:
   # Requires HolographicDisplays to be installed

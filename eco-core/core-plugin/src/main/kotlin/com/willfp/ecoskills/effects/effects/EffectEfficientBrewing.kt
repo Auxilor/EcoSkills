@@ -1,25 +1,13 @@
 package com.willfp.ecoskills.effects.effects
 
-import com.willfp.eco.util.NumberUtils
-import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.getEffectLevel
-import com.willfp.ecoskills.util.PotionUtils
 import org.bukkit.Bukkit
 import org.bukkit.block.BrewingStand
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
-import org.bukkit.event.entity.PotionSplashEvent
-import org.bukkit.event.inventory.BrewEvent
 import org.bukkit.event.inventory.InventoryClickEvent
-import org.bukkit.event.player.PlayerItemConsumeEvent
-import org.bukkit.inventory.meta.PotionMeta
-import org.bukkit.persistence.PersistentDataType
-import org.bukkit.potion.PotionData
-import org.bukkit.potion.PotionEffect
-import org.bukkit.potion.PotionEffectType
-import org.bukkit.potion.PotionType
 
 
 class EffectEfficientBrewing : Effect(
@@ -37,23 +25,21 @@ class EffectEfficientBrewing : Effect(
             return
         }
 
-        if (event.inventory.holder !is BrewingStand) {
+        if (player.openInventory.topInventory.holder !is BrewingStand) {
             return
         }
 
-        val stand = event.inventory.holder as BrewingStand
+        val ticksLess = player.getEffectLevel(this) * this.config.getInt("ticks-less-per-level")
 
         this.plugin.scheduler.runLater({
+            val stand = player.openInventory.topInventory.holder
+            if (stand !is BrewingStand) {
+                return@runLater
+            }
             if (stand.brewingTime == 400) {
-                val multiplier = ((player.getEffectLevel(this) * this.config.getDouble("percent-faster-per-level")) / 100) + 1
-                stand.brewingTime = (stand.brewingTime / multiplier).toInt()
-                this.plugin.runnableFactory.create { task ->
-                    if (stand.brewingTime - 20 <= 0) {
-                        stand.brewingTime = 1
-                        task.cancel();
-                    }
-                    stand.brewingTime = stand.brewingTime - 20
-                }.runTaskTimer(0, 2)
+                stand.brewingTime = 400 - ticksLess
+                stand.update()
+                player.updateInventory()
             }
         }, 2)
     }
