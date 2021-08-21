@@ -29,10 +29,20 @@ rewards-messages:
     - " &8» &r&f+1 %ecoskills_wisdom_name%"
     - " &8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
     - " &8» &r&6Satiation %ecoskills_satiation_numeral%"
+  10:
+    - " &8» &r&f+2 %ecoskills_crit_damage_name%"
+    - " &8» &r&f+1 %ecoskills_wisdom_name%"
+    - " &8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
+    - " &8» &r&6Satiation %ecoskills_satiation_numeral%"
     - " &8» &r&6Golden Yield %ecoskills_golden_yield_numeral%"
 
 rewards-gui-lore:
   1:
+    - " &8» &r&f+2 %ecoskills_crit_damage_name%"
+    - " &8» &r&f+1 %ecoskills_wisdom_name%"
+    - " &8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
+    - " &8» &r&6Satiation %ecoskills_satiation_numeral%"
+  10:
     - " &8» &r&f+2 %ecoskills_crit_damage_name%"
     - " &8» &r&f+1 %ecoskills_wisdom_name%"
     - " &8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"

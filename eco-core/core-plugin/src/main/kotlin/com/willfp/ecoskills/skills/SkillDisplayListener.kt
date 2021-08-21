@@ -87,7 +87,7 @@ class SkillDisplayListener(
             val rewardIndex = messages.indexOf("%rewards%")
             if (rewardIndex != -1) {
                 messages.removeAt(rewardIndex)
-                messages.addAll(rewardIndex, skill.getRewardsMessages(player))
+                messages.addAll(rewardIndex, skill.getRewardsMessages(player, level))
             }
 
             for (message in messages) {

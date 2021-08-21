@@ -104,7 +104,7 @@ abstract class Skill(
     fun getRewardsMessages(player: Player, level: Int): MutableList<String> {
         var highestLevel = 1
         for (startLevel in this.config.getSubsection("rewards-messages").getKeys(false)) {
-            if (startLevel.toInt() < level) {
+            if (startLevel.toInt() > level) {
                 break
             }
 
@@ -123,7 +123,7 @@ abstract class Skill(
     fun getGUIRewardsMessages(player: Player, level: Int): MutableList<String> {
         var highestLevel = 1
         for (startLevel in this.config.getSubsection("rewards-gui-lore").getKeys(false)) {
-            if (startLevel.toInt() < level) {
+            if (startLevel.toInt() > level) {
                 break
             }
 
