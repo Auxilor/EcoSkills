@@ -20,14 +20,16 @@ level-up-rewards:
   - "shamanism::1"
 
 rewards-messages:
-  - " &8» &r&f+2 %ecoskills_defense_name%"
-  - " &8» &r&f+1 %ecoskills_speed_name%"
-  - " &8» &r&6Shamanism %ecoskills_shamanism_numeral%"
+  1:
+    - " &8» &r&f+2 %ecoskills_defense_name%"
+    - " &8» &r&f+1 %ecoskills_speed_name%"
+    - " &8» &r&6Shamanism %ecoskills_shamanism_numeral%"
 
 rewards-gui-lore:
-  - " &8» &r&f+2 %ecoskills_defense_name%"
-  - " &8» &r&f+1 %ecoskills_speed_name%"
-  - " &8» &r&6Shamanism %ecoskills_shamanism_numeral%"
+  1:
+    - " &8» &r&f+2 %ecoskills_defense_name%"
+    - " &8» &r&f+1 %ecoskills_speed_name%"
+    - " &8» &r&6Shamanism %ecoskills_shamanism_numeral%"
 
 # The experience to give for each hp of damage taken
 xp-per-hp: 0.72

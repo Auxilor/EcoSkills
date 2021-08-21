@@ -12,6 +12,8 @@ class SkillConfig(
     true,
     plugin,
     source,
-    "skills/"
+    "skills/",
+    "rewards-messages",
+    "rewards-gui-lore"
 ) {
 }

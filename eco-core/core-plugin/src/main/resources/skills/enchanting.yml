@@ -20,14 +20,16 @@ level-up-rewards:
   - "second_chance::1"
 
 rewards-messages:
-  - " &8» &r&f+2 %ecoskills_wisdom_name%"
-  - " &8» &r&f+1 %ecoskills_crit_chance_name%"
-  - " &8» &r&6Second Chance %ecoskills_second_chance_numeral%"
+  1:
+    - " &8» &r&f+2 %ecoskills_wisdom_name%"
+    - " &8» &r&f+1 %ecoskills_crit_chance_name%"
+    - " &8» &r&6Second Chance %ecoskills_second_chance_numeral%"
 
 rewards-gui-lore:
-  - " &8» &r&f+2 %ecoskills_wisdom_name%"
-  - " &8» &r&f+1 %ecoskills_crit_chance_name%"
-  - " &8» &r&6Second Chance %ecoskills_second_chance_numeral%"
+  1:
+    - " &8» &r&f+2 %ecoskills_wisdom_name%"
+    - " &8» &r&f+1 %ecoskills_crit_chance_name%"
+    - " &8» &r&6Second Chance %ecoskills_second_chance_numeral%"
 
 # The experience to give for each level cost of enchanting
 xp-per-level: 4

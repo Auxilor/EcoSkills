@@ -101,17 +101,39 @@ abstract class Skill(
         return levels
     }
 
-    fun getRewardsMessages(player: Player): MutableList<String> {
+    fun getRewardsMessages(player: Player, level: Int): MutableList<String> {
+        var highestLevel = 1
+        for (startLevel in this.config.getSubsection("rewards-messages").getKeys(false)) {
+            if (startLevel.toInt() < level) {
+                break
+            }
+
+            if (startLevel.toInt() > highestLevel) {
+                highestLevel = startLevel.toInt()
+            }
+        }
+
         val messages = ArrayList<String>()
-        for (string in this.config.getStrings("rewards-messages", false)) {
+        for (string in this.config.getStrings("rewards-messages.$highestLevel", false)) {
             messages.add(StringUtils.format(string, player))
         }
         return messages
     }
 
     fun getGUIRewardsMessages(player: Player, level: Int): MutableList<String> {
+        var highestLevel = 1
+        for (startLevel in this.config.getSubsection("rewards-gui-lore").getKeys(false)) {
+            if (startLevel.toInt() < level) {
+                break
+            }
+
+            if (startLevel.toInt() > highestLevel) {
+                highestLevel = startLevel.toInt()
+            }
+        }
+
         val lore = ArrayList<String>()
-        for (string in this.config.getStrings("rewards-gui-lore", false)) {
+        for (string in this.config.getStrings("rewards-gui-lore.$highestLevel", false)) {
             var s = string;
 
             for (skillObject in Effects.values() union Stats.values()) {

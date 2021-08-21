@@ -24,18 +24,20 @@ level-up-rewards:
   - "golden_yield::1:10:100"
 
 rewards-messages:
-  - " &8» &r&f+2 %ecoskills_crit_damage_name%"
-  - " &8» &r&f+1 %ecoskills_wisdom_name%"
-  - " &8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
-  - " &8» &r&6Satiation %ecoskills_satiation_numeral%"
-  - " &8» &r&6Golden Yield %ecoskills_golden_yield_numeral%"
+  1:
+    - " &8» &r&f+2 %ecoskills_crit_damage_name%"
+    - " &8» &r&f+1 %ecoskills_wisdom_name%"
+    - " &8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
+    - " &8» &r&6Satiation %ecoskills_satiation_numeral%"
+    - " &8» &r&6Golden Yield %ecoskills_golden_yield_numeral%"
 
 rewards-gui-lore:
-  - " &8» &r&f+2 %ecoskills_crit_damage_name%"
-  - " &8» &r&f+1 %ecoskills_wisdom_name%"
-  - " &8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
-  - " &8» &r&6Satiation %ecoskills_satiation_numeral%"
-  - " &8» &r&6Golden Yield %ecoskills_golden_yield_numeral%"
+  1:
+    - " &8» &r&f+2 %ecoskills_crit_damage_name%"
+    - " &8» &r&f+1 %ecoskills_wisdom_name%"
+    - " &8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
+    - " &8» &r&6Satiation %ecoskills_satiation_numeral%"
+    - " &8» &r&6Golden Yield %ecoskills_golden_yield_numeral%"
 
 # The xp rewards for each crop type
 # Specify with type:xp
