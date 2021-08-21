@@ -345,8 +345,8 @@ effects:
     # The percent faster regen for each level of the effect
     percent-faster-per-level: 4
   craftsmanship:
-    # 100% is double durability
-    percent-less-per-level: 3
+    # 100% is unbreakable
+    percent-less-per-level: 2
   second_chance:
     # Items will try to heal every time durability damage is taken below this level
     below-durability-check: 30
