@@ -107,11 +107,19 @@ fun Player.addStatModifier(modifier: StatModifier) {
     modifierTag.set(amountKey, PersistentDataType.INTEGER, modifier.amount)
 
     modifiers.set(modifier.key, PersistentDataType.TAG_CONTAINER, modifierTag)
+
+    for (stat in Stats.values()) {
+        stat.updateStatLevel(this)
+    }
 }
 
 fun Player.removeStatModifier(modifier: StatModifier) {
     val modifiers = getModifiersTag(this)
     modifiers.remove(modifier.key)
+
+    for (stat in Stats.values()) {
+        stat.updateStatLevel(this)
+    }
 }
 
 fun Player.getStatModifierKeys(): MutableSet<NamespacedKey> {
