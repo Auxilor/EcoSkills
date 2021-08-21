@@ -1,13 +1,47 @@
 package com.willfp.ecoskills
 
+import com.willfp.eco.core.integrations.placeholder.PlaceholderEntry
+import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.api.PlayerSkillExpGainEvent
 import com.willfp.ecoskills.api.PlayerSkillLevelUpEvent
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.skills.Skill
+import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.stats.Stat
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.persistence.PersistentDataType
+
+object PlayerPlaceholders {
+    init {
+        PlaceholderEntry(
+            "average_skill_level",
+            { player -> NumberUtils.format(player.getAverageSkillLevel()) },
+            true
+        ).register()
+        PlaceholderEntry(
+            "total_skill_level",
+            { player -> player.getTotalSkillLevel().toString() },
+            true
+        ).register()
+    }
+}
+
+fun Player.getTotalSkillLevel(): Int {
+    var total = 0
+    for (skill in Skills.values()) {
+        total += this.getSkillLevel(skill)
+    }
+    return total
+}
+
+fun Player.getAverageSkillLevel(): Double {
+    var total = 0
+    for (skill in Skills.values()) {
+        total += this.getSkillLevel(skill)
+    }
+    return total / Skills.values().size.toDouble()
+}
 
 fun Player.giveSkillExperience(skill: Skill, experience: Double) {
     val gainEvent = PlayerSkillExpGainEvent(this, skill, experience)

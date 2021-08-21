@@ -74,4 +74,12 @@ object EcoSkillsAPIImpl: EcoSkillsAPI {
     override fun getStatModifier(player: Player, key: NamespacedKey): StatModifier? {
         return player.getStatModifier(key)
     }
+
+    override fun getAverageSkillLevel(player: Player): Double {
+        return player.getAverageSkillLevel()
+    }
+
+    override fun getTotalSkillLevel(player: Player): Int {
+        return player.getTotalSkillLevel()
+    }
 }

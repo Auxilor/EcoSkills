@@ -66,6 +66,22 @@ public interface EcoSkillsAPI {
                             @NotNull Skill skill);
 
     /**
+     * Get the average skill level.
+     *
+     * @param player The player.
+     * @return The average skill level.
+     */
+    double getAverageSkillLevel(@NotNull Player player);
+
+    /**
+     * Get the total skill level.
+     *
+     * @param player The player.
+     * @return The total skill level.
+     */
+    int getTotalSkillLevel(@NotNull Player player);
+
+    /**
      * Get the effect level for player.
      *
      * @param player The player.
