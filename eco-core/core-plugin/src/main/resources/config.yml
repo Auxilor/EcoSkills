@@ -375,6 +375,9 @@ effects:
 
     # The amount more drops to give
     drop-multiplier: 5
+  dodging:
+    # The chance to ignore damage, as a percentage
+    chance-per-level: 0.5
 
 damage-indicators:
   # Requires HolographicDisplays to be installed
