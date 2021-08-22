@@ -7,6 +7,7 @@ website: willfp.com
 load: STARTUP
 depend:
   - eco
+  - PlaceholderAPI
 softdepend:
   - HolographicDisplays
 libraries:

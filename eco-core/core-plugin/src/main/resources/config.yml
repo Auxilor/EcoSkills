@@ -31,7 +31,7 @@ gui:
     row: 1
     column: 5
 
-    name: "&f%player%'s &fStats:"
+    name: "&f%player%&f's &fStats:"
     lore:
       - "&f"
       - " %ecoskills_defense_name%&f %ecoskills_defense%"
