@@ -296,6 +296,9 @@ stats:
   wisdom:
     # The percent more xp to gain from orbs for each level of the stat.
     percent-more-xp-gain: 1
+  ferocity:
+    # The percent chance to deal damage twice
+    chance-per-level: 0.5
 
 effects:
   bountiful_harvest:

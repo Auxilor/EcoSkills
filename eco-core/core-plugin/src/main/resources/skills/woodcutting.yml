@@ -10,6 +10,7 @@ gui:
   lore:
     - "&fImproves Stats:"
     - "&8» &r%ecoskills_strength_name%"
+    - "&8» &r%ecoskills_crit_damage_name%"
     - "&f"
     - "&fEffects:"
     - "&8» &r&6Craftsmanship %ecoskills_craftsmanship_numeral%"
@@ -18,6 +19,7 @@ rewards:
   # The actual rewards to be given
   rewards:
     - "strength::2"
+    - "crit_damage::1"
     - "craftsmanship::1"
 
   # The chat messages to send on level up
