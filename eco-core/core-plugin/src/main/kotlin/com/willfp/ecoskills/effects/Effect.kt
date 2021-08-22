@@ -19,8 +19,6 @@ abstract class Effect(
     val key: NamespacedKey
     val uuid: UUID
     val config: Config
-    lateinit var name: String
-    lateinit var description: String
 
     init {
         update()
@@ -32,9 +30,6 @@ abstract class Effect(
     }
 
     fun update() {
-        name = plugin.langYml.getString("effects.$id.name")
-        description = plugin.langYml.getString("effects.$id.description")
-
         PlaceholderEntry(
             id,
             { player -> player.getEffectLevel(this).toString() },

@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import com.willfp.eco.core.config.updating.ConfigUpdater;
 import com.willfp.ecoskills.effects.effects.EffectBountifulHarvest;
 import com.willfp.ecoskills.effects.effects.EffectCraftsmanship;
+import com.willfp.ecoskills.effects.effects.EffectDodging;
 import com.willfp.ecoskills.effects.effects.EffectEfficientBrewing;
 import com.willfp.ecoskills.effects.effects.EffectEyeOfTheDepths;
 import com.willfp.ecoskills.effects.effects.EffectGoldenYield;
@@ -43,6 +44,7 @@ public class Effects {
     public static final Effect MYSTIC_RESILIENCE = new EffectMysticResilience();
     public static final Effect SATIATION = new EffectSatiation();
     public static final Effect GOLDEN_YIELD = new EffectGoldenYield();
+    public static final Effect DODGING = new EffectDodging();
 
     @ApiStatus.Internal
     public static void registerNewEffect(@NotNull final Effect effect) {

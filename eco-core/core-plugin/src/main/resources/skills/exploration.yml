@@ -8,6 +8,7 @@ gui-lore:
   - "&f"
   - "&fEffects:"
   - "&8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
+  - "&8» &r&6Dodging %ecoskills_dodging_numeral%"
 
 # The maximum obtainable level
 max-level: 50
@@ -16,16 +17,19 @@ max-level: 50
 level-up-rewards:
   - "speed::2"
   - "seamless_movement::1"
+  - "dodging::1"
 
 rewards-messages:
   1:
     - " &8» &r&f+2 %ecoskills_speed_name%"
     - " &8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
+    - " &8» &r&6Dodging %ecoskills_dodging_numeral%"
 
 rewards-gui-lore:
   1:
     - " &8» &r&f+2 %ecoskills_speed_name%"
     - " &8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
+    - " &8» &r&6Dodging %ecoskills_dodging_numeral%"
 
 # Chance to give 1 xp every time the player moves
 xp-on-move-chance: 0.05
