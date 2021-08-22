@@ -378,6 +378,12 @@ effects:
   dodging:
     # The chance to ignore damage, as a percentage
     chance-per-level: 0.5
+  accelerated_escape:
+    # The percent faster speed, as a percentage
+    percent-faster-per-level: 4
+
+    # The duration to go faster for, in ticks
+    ticks: 30
 
 damage-indicators:
   # Requires HolographicDisplays to be installed

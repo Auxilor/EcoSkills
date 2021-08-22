@@ -9,6 +9,7 @@ gui-lore:
   - "&fEffects:"
   - "&8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
   - "&8» &r&6Dodging %ecoskills_dodging_numeral%"
+  - "&8» &r&6Accelerated Escape %ecoskills_accelerated_escape_numeral%"
 
 # The maximum obtainable level
 max-level: 50
@@ -18,18 +19,29 @@ level-up-rewards:
   - "speed::2"
   - "seamless_movement::1"
   - "dodging::1"
+  - "accelerated_escape::1:10:100"
 
 rewards-messages:
   1:
     - " &8» &r&f+2 %ecoskills_speed_name%"
     - " &8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
     - " &8» &r&6Dodging %ecoskills_dodging_numeral%"
+  10:
+    - " &8» &r&f+2 %ecoskills_speed_name%"
+    - " &8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
+    - " &8» &r&6Dodging %ecoskills_dodging_numeral%"
+    - " &8» &r&6Accelerated Escape %ecoskills_accelerated_escape_numeral%"
 
 rewards-gui-lore:
   1:
     - " &8» &r&f+2 %ecoskills_speed_name%"
     - " &8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
     - " &8» &r&6Dodging %ecoskills_dodging_numeral%"
+  10:
+    - " &8» &r&f+2 %ecoskills_speed_name%"
+    - " &8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
+    - " &8» &r&6Dodging %ecoskills_dodging_numeral%"
+    - " &8» &r&6Accelerated Escape %ecoskills_accelerated_escape_numeral%"
 
 # Chance to give 1 xp every time the player moves
 xp-on-move-chance: 0.05
