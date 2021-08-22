@@ -7,11 +7,12 @@ import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.stats.Stat
 import org.bukkit.NamespacedKey
+import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
 object EcoSkillsAPIImpl: EcoSkillsAPI {
-    override fun getSkillLevel(player: Player, skill: Skill): Int {
+    override fun getSkillLevel(player: OfflinePlayer, skill: Skill): Int {
         return player.getSkillLevel(skill)
     }
 

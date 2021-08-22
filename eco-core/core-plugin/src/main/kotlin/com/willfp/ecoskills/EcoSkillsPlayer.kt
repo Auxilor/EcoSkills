@@ -5,14 +5,17 @@ import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.api.PlayerSkillExpGainEvent
 import com.willfp.ecoskills.api.PlayerSkillLevelUpEvent
 import com.willfp.ecoskills.effects.Effect
+import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.stats.Stat
+import com.willfp.ecoskills.stats.Stats
 import org.bukkit.Bukkit
+import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
 import org.bukkit.persistence.PersistentDataType
 
-object PlayerPlaceholders {
+object PlayerHelper {
     init {
         PlaceholderEntry(
             "average_skill_level",
@@ -25,6 +28,8 @@ object PlayerPlaceholders {
             true
         ).register()
     }
+
+    val plugin: EcoSkillsPlugin = EcoSkillsPlugin.getInstance()
 }
 
 fun Player.getTotalSkillLevel(): Int {
@@ -65,12 +70,17 @@ fun Player.giveSkillExperience(skill: Skill, experience: Double) {
     }
 }
 
-fun Player.getSkillLevel(skill: Skill): Int {
-    return this.persistentDataContainer.getOrDefault(skill.key, PersistentDataType.INTEGER, 0)
+fun OfflinePlayer.getSkillLevel(skill: Skill): Int {
+    return if (this !is Player) {
+        PlayerHelper.plugin.dataYml.getInt("player.${this.uniqueId}.${skill.id}", 0)
+    } else {
+        this.persistentDataContainer.get(skill.key, PersistentDataType.INTEGER)
+            ?: PlayerHelper.plugin.dataYml.getInt("player.${this.uniqueId}.${skill.id}", 0)
+    }
 }
 
 fun Player.setSkillLevel(skill: Skill, level: Int) {
-    this.persistentDataContainer.set(skill.key, PersistentDataType.INTEGER, level)
+    PlayerHelper.plugin.dataYml.set("player.${this.uniqueId}.${skill.id}", level)
 }
 
 fun Player.getSkillProgressToNextLevel(skill: Skill): Double {
@@ -104,4 +114,16 @@ fun Player.getStatLevel(stat: Stat): Int {
 fun Player.setStatLevel(stat: Stat, level: Int) {
     this.persistentDataContainer.set(stat.key, PersistentDataType.INTEGER, level)
     stat.updateStatLevel(this)
+}
+
+fun Player.convertPersistentToYml() {
+    for (effect in Effects.values()) {
+        PlayerHelper.plugin.dataYml.set("player.${this.uniqueId}.${effect.id}", this.getEffectLevel(effect))
+    }
+    for (stat in Stats.values()) {
+        PlayerHelper.plugin.dataYml.set("player.${this.uniqueId}.${stat.id}", this.getStatLevel(stat))
+    }
+    for (skill in Skills.values()) {
+        PlayerHelper.plugin.dataYml.set("player.${this.uniqueId}.${skill.id}", this.getSkillLevel(skill))
+    }
 }

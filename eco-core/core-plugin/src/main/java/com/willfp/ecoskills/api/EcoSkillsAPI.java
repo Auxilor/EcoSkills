@@ -6,6 +6,7 @@ import com.willfp.ecoskills.effects.Effect;
 import com.willfp.ecoskills.skills.Skill;
 import com.willfp.ecoskills.stats.Stat;
 import org.bukkit.NamespacedKey;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -21,7 +22,7 @@ public interface EcoSkillsAPI {
      * @param skill  The skill.
      * @return The level.
      */
-    int getSkillLevel(@NotNull Player player,
+    int getSkillLevel(@NotNull OfflinePlayer player,
                       @NotNull Skill skill);
 
     /**
