@@ -2,6 +2,7 @@ package com.willfp.ecoskills.commands
 
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.CommandHandler
+import com.willfp.eco.core.command.TabCompleteHandler
 import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.EcoSkillsPlugin
@@ -9,6 +10,7 @@ import com.willfp.ecoskills.getTotalSkillLevel
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import org.bukkit.command.CommandSender
+import org.bukkit.util.StringUtil
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -59,6 +61,7 @@ class CommandTop(plugin: EcoPlugin) :
             val messages = plugin.langYml.getStrings("top", false)
             val lines = ArrayList<String>()
 
+
             var rank = start
             for (entry in pagePlayers.entries) {
                 val line = plugin.langYml.getString("top-line-format", false)
@@ -66,13 +69,19 @@ class CommandTop(plugin: EcoPlugin) :
                     .replace("%player%", entry.key.name!!)
                     .replace("%level%", entry.value.toString())
 
-                messages.add(StringUtils.format(line))
+                lines.add(line)
 
                 rank++
             }
 
+            val linesIndex = messages.indexOf("%lines%")
+            if (linesIndex != -1) {
+                messages.removeAt(linesIndex)
+                messages.addAll(linesIndex, lines)
+            }
+
             for (message in messages) {
-                sender.sendMessage(message)
+                sender.sendMessage(StringUtils.format(message))
             }
         }
     }
