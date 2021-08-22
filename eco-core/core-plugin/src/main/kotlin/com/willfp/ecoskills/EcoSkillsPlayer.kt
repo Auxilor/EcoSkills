@@ -32,7 +32,7 @@ object PlayerHelper {
     val plugin: EcoSkillsPlugin = EcoSkillsPlugin.getInstance()
 }
 
-fun Player.getTotalSkillLevel(): Int {
+fun OfflinePlayer.getTotalSkillLevel(): Int {
     var total = 0
     for (skill in Skills.values()) {
         total += this.getSkillLevel(skill)
@@ -40,7 +40,7 @@ fun Player.getTotalSkillLevel(): Int {
     return total
 }
 
-fun Player.getAverageSkillLevel(): Double {
+fun OfflinePlayer.getAverageSkillLevel(): Double {
     var total = 0
     for (skill in Skills.values()) {
         total += this.getSkillLevel(skill)
@@ -71,12 +71,7 @@ fun Player.giveSkillExperience(skill: Skill, experience: Double) {
 }
 
 fun OfflinePlayer.getSkillLevel(skill: Skill): Int {
-    return if (this !is Player) {
-        PlayerHelper.plugin.dataYml.getInt("player.${this.uniqueId}.${skill.id}", 0)
-    } else {
-        this.persistentDataContainer.get(skill.key, PersistentDataType.INTEGER)
-            ?: PlayerHelper.plugin.dataYml.getInt("player.${this.uniqueId}.${skill.id}", 0)
-    }
+    return PlayerHelper.plugin.dataYml.getInt("player.${this.uniqueId}.${skill.id}", 0)
 }
 
 fun Player.setSkillLevel(skill: Skill, level: Int) {
@@ -99,20 +94,20 @@ fun Player.setSkillProgress(skill: Skill, level: Double) {
     this.persistentDataContainer.set(skill.xpKey, PersistentDataType.DOUBLE, level)
 }
 
-fun Player.getEffectLevel(effect: Effect): Int {
-    return this.persistentDataContainer.getOrDefault(effect.key, PersistentDataType.INTEGER, 0)
+fun OfflinePlayer.getEffectLevel(effect: Effect): Int {
+    return PlayerHelper.plugin.dataYml.getInt("player.${this.uniqueId}.${effect.id}", 0)
 }
 
 fun Player.setEffectLevel(effect: Effect, level: Int) {
-    this.persistentDataContainer.set(effect.key, PersistentDataType.INTEGER, level)
+    PlayerHelper.plugin.dataYml.set("player.${this.uniqueId}.${effect.id}", level)
 }
 
-fun Player.getStatLevel(stat: Stat): Int {
-    return this.persistentDataContainer.getOrDefault(stat.key, PersistentDataType.INTEGER, 0)
+fun OfflinePlayer.getStatLevel(stat: Stat): Int {
+    return PlayerHelper.plugin.dataYml.getInt("player.${this.uniqueId}.${stat.id}", 0)
 }
 
 fun Player.setStatLevel(stat: Stat, level: Int) {
-    this.persistentDataContainer.set(stat.key, PersistentDataType.INTEGER, level)
+    PlayerHelper.plugin.dataYml.set("player.${this.uniqueId}.${stat.id}", level)
     stat.updateStatLevel(this)
 }
 

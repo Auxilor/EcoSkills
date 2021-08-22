@@ -5,6 +5,7 @@ import com.willfp.eco.core.command.impl.PluginCommand;
 import com.willfp.eco.core.integrations.IntegrationLoader;
 import com.willfp.ecoskills.commands.CommandEcoskills;
 import com.willfp.ecoskills.commands.CommandSkills;
+import com.willfp.ecoskills.data.DataConversionListener;
 import com.willfp.ecoskills.data.DataYml;
 import com.willfp.ecoskills.effects.Effect;
 import com.willfp.ecoskills.effects.Effects;
@@ -91,6 +92,7 @@ public class EcoSkillsPlugin extends EcoPlugin {
                 new SkillLevellingListener(this),
                 new SkillDisplayListener(this),
                 new StatModifierListener(this),
+                new DataConversionListener(this),
                 EcoSkillsEventModifierHandler.INSTANCE
         );
     }

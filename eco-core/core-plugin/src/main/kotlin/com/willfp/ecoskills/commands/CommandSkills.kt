@@ -14,6 +14,11 @@ class CommandSkills(plugin: EcoPlugin) :
         "ecoskills.command.skills",
         true
     ) {
+
+    init {
+        this.addSubcommand(CommandTop(plugin))
+    }
+
     override fun getHandler(): CommandHandler {
         return CommandHandler { sender: CommandSender, _: List<String> ->
             val player = sender as Player

@@ -8,6 +8,11 @@ messages:
   invalid-player: "&cInvalid player!"
   reset-player: "&fReset player!"
 
+top-line-format: "%rank%. %player% - %level%"
+top:
+  - "---- Skills Leaderboard ----"
+  - "%lines%"
+
 menu:
   title: "Your Skills"
 
