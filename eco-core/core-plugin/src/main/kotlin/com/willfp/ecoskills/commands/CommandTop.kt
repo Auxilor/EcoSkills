@@ -2,7 +2,6 @@ package com.willfp.ecoskills.commands
 
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.CommandHandler
-import com.willfp.eco.core.command.TabCompleteHandler
 import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.EcoSkillsPlugin
@@ -10,11 +9,11 @@ import com.willfp.ecoskills.getTotalSkillLevel
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import org.bukkit.command.CommandSender
-import org.bukkit.util.StringUtil
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
+import java.util.stream.Collectors
+import kotlin.collections.set
 import kotlin.math.ceil
+
 
 class CommandTop(plugin: EcoPlugin) :
     Subcommand(
@@ -32,14 +31,19 @@ class CommandTop(plugin: EcoPlugin) :
             }
 
             val plugin = plugin as EcoSkillsPlugin
-            val uuidStrings = plugin.dataYml.getSubsectionOrNull("stats")?.getKeys(false) ?: ArrayList()
+            val uuidStrings = plugin.dataYml.getSubsectionOrNull("player")?.getKeys(false) ?: ArrayList()
             val uuids = uuidStrings.stream().map { s -> UUID.fromString(s) }.toList()
 
-            val top = TreeMap<OfflinePlayer, Int>()
+            val temp = LinkedHashMap<OfflinePlayer, Int>()
 
             for (uuid in uuids) {
                 val player = Bukkit.getOfflinePlayer(uuid)
-                top[player] = player.getTotalSkillLevel()
+                temp[player] = player.getTotalSkillLevel()
+            }
+
+            val top = LinkedHashMap<OfflinePlayer, Int>()
+            for (entry in temp.toList().sortedByDescending { (_, value) -> value }.toMap()) {
+                top[entry.key] = entry.value
             }
 
             val maxPage = ceil(top.size / 10.0).toInt()
@@ -47,22 +51,29 @@ class CommandTop(plugin: EcoPlugin) :
                 page = maxPage
             }
 
+            if (page <= 0) {
+                page = 1
+            }
+
             val pagePlayers = HashMap<OfflinePlayer, Int>()
 
             val start = (page - 1) * 10
             val end = start + 10
 
-            val players = top.descendingKeySet().toTypedArray()
+            val players = top.keys.toTypedArray()
             for (i in start..end) {
-                val player = players[i] ?: continue
-                pagePlayers[player] = top[player]!!
+                if (i > players.size - 1) {
+                    break
+                }
+                val player = players[i]
+                pagePlayers[player] = temp[player]!!
             }
 
             val messages = plugin.langYml.getStrings("top", false)
             val lines = ArrayList<String>()
 
 
-            var rank = start
+            var rank = start + 1
             for (entry in pagePlayers.entries) {
                 val line = plugin.langYml.getString("top-line-format", false)
                     .replace("%rank%", rank.toString())

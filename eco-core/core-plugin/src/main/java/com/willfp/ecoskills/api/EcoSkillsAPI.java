@@ -72,7 +72,7 @@ public interface EcoSkillsAPI {
      * @param player The player.
      * @return The average skill level.
      */
-    double getAverageSkillLevel(@NotNull Player player);
+    double getAverageSkillLevel(@NotNull OfflinePlayer player);
 
     /**
      * Get the total skill level.
@@ -80,7 +80,7 @@ public interface EcoSkillsAPI {
      * @param player The player.
      * @return The total skill level.
      */
-    int getTotalSkillLevel(@NotNull Player player);
+    int getTotalSkillLevel(@NotNull OfflinePlayer player);
 
     /**
      * Get the effect level for player.
@@ -89,7 +89,7 @@ public interface EcoSkillsAPI {
      * @param effect The effect.
      * @return The level.
      */
-    int getEffectLevel(@NotNull Player player,
+    int getEffectLevel(@NotNull OfflinePlayer player,
                        @NotNull Effect effect);
 
     /**
@@ -99,7 +99,7 @@ public interface EcoSkillsAPI {
      * @param stat   The stat.
      * @return The stat level.
      */
-    int getStatLevel(@NotNull Player player,
+    int getStatLevel(@NotNull OfflinePlayer player,
                      @NotNull Stat stat);
 
     /**

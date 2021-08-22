@@ -32,11 +32,11 @@ object EcoSkillsAPIImpl: EcoSkillsAPI {
         return player.getSkillProgress(skill)
     }
 
-    override fun getEffectLevel(player: Player, effect: Effect): Int {
+    override fun getEffectLevel(player: OfflinePlayer, effect: Effect): Int {
         return player.getEffectLevel(effect)
     }
 
-    override fun getStatLevel(player: Player, stat: Stat): Int {
+    override fun getStatLevel(player: OfflinePlayer, stat: Stat): Int {
         return player.getStatLevel(stat)
     }
 
@@ -76,11 +76,11 @@ object EcoSkillsAPIImpl: EcoSkillsAPI {
         return player.getStatModifier(key)
     }
 
-    override fun getAverageSkillLevel(player: Player): Double {
+    override fun getAverageSkillLevel(player: OfflinePlayer): Double {
         return player.getAverageSkillLevel()
     }
 
-    override fun getTotalSkillLevel(player: Player): Int {
+    override fun getTotalSkillLevel(player: OfflinePlayer): Int {
         return player.getTotalSkillLevel()
     }
 }
