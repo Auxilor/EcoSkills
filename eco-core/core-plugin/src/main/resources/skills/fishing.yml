@@ -1,35 +1,40 @@
-gui-item: fishing_rod
-gui-position:
-  row: 4
-  column: 3
-gui-lore:
-  - "&fImproves Stats:"
-  - "&8» &r%ecoskills_defense_name%"
-  - "&8» &r%ecoskills_wisdom_name%"
-  - "&f"
-  - "&fEffects:"
-  - "&8» &r&6Eye of the Depths %ecoskills_eye_of_the_depths_numeral%"
-
-# The maximum obtainable level
+name: "Fishing"
+description: "Fish to earn Fishing XP"
 max-level: 50
 
-# The level/skill increases to give on levelup
-level-up-rewards:
-  - "defense::2"
-  - "wisdom::1"
-  - "eye_of_the_depths::1"
+gui:
+  item: fishing_rod
+  position:
+    row: 4
+    column: 3
+  lore:
+    - "&fImproves Stats:"
+    - "&8» &r%ecoskills_defense_name%"
+    - "&8» &r%ecoskills_wisdom_name%"
+    - "&f"
+    - "&fEffects:"
+    - "&8» &r&6Eye of the Depths %ecoskills_eye_of_the_depths_numeral%"
 
-rewards-messages:
-  1:
-    - " &8» &r&f+2 %ecoskills_defense_name%"
-    - " &8» &r&f+1 %ecoskills_wisdom_name%"
-    - " &8» &r&6Eye of the Depths %ecoskills_eye_of_the_depths_numeral%"
+rewards:
+  # The actual rewards to be given
+  rewards:
+    - "defense::2"
+    - "wisdom::1"
+    - "eye_of_the_depths::1"
 
-rewards-gui-lore:
-  1:
-    - " &8» &r&f+2 %ecoskills_defense_name%"
-    - " &8» &r&f+1 %ecoskills_wisdom_name%"
-    - " &8» &r&6Eye of the Depths %ecoskills_eye_of_the_depths_numeral%"
+  # The chat messages to send on level up
+  chat-messages:
+    1:
+      - " &8» &r&f+2 %ecoskills_defense_name%"
+      - " &8» &r&f+1 %ecoskills_wisdom_name%"
+      - " &8» &r&6Eye of the Depths %ecoskills_eye_of_the_depths_numeral%"
+
+  # The lore to show in the levels gui
+  progression-lore:
+    1:
+      - " &8» &r&f+2 %ecoskills_defense_name%"
+      - " &8» &r&f+1 %ecoskills_wisdom_name%"
+      - " &8» &r&6Eye of the Depths %ecoskills_eye_of_the_depths_numeral%"
 
 # The experience to give for each in-game experience dropped
 xp-per-experience-dropped: 3.5

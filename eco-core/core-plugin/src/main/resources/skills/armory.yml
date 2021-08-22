@@ -1,35 +1,41 @@
-gui-item: iron_chestplate
-gui-position:
-  row: 4
-  column: 6
-gui-lore:
-  - "&fImproves Stats:"
-  - "&8» &r%ecoskills_defense_name%"
-  - "&8» &r%ecoskills_speed_name%"
-  - "&f"
-  - "&fEffects:"
-  - "&8» &r&6Shamanism %ecoskills_shamanism_numeral%"
-
-# The maximum obtainable level
+name: "Armory"
+description: "Take damage to earn Armory XP"
 max-level: 50
 
-# The level/skill increases to give on levelup
-level-up-rewards:
-  - "defense::2"
-  - "speed::1"
-  - "shamanism::1"
+gui:
+  item: iron_chestplate
+  position:
+    row: 4
+    column: 6
+  lore:
+    - "&fImproves Stats:"
+    - "&8» &r%ecoskills_defense_name%"
+    - "&8» &r%ecoskills_speed_name%"
+    - "&f"
+    - "&fEffects:"
+    - "&8» &r&6Shamanism %ecoskills_shamanism_numeral%"
 
-rewards-messages:
-  1:
-    - " &8» &r&f+2 %ecoskills_defense_name%"
-    - " &8» &r&f+1 %ecoskills_speed_name%"
-    - " &8» &r&6Shamanism %ecoskills_shamanism_numeral%"
+rewards:
+  # The actual rewards to be given
+  rewards:
+    - "defense::2"
+    - "speed::1"
+    - "shamanism::1"
 
-rewards-gui-lore:
-  1:
-    - " &8» &r&f+2 %ecoskills_defense_name%"
-    - " &8» &r&f+1 %ecoskills_speed_name%"
-    - " &8» &r&6Shamanism %ecoskills_shamanism_numeral%"
+  # The chat messages to send on level up
+  chat-messages:
+    1:
+      - " &8» &r&f+2 %ecoskills_defense_name%"
+      - " &8» &r&f+1 %ecoskills_speed_name%"
+      - " &8» &r&6Shamanism %ecoskills_shamanism_numeral%"
+
+  # The lore to show in the levels gui
+  progression-lore:
+    1:
+      - " &8» &r&f+2 %ecoskills_defense_name%"
+      - " &8» &r&f+1 %ecoskills_speed_name%"
+      - " &8» &r&6Shamanism %ecoskills_shamanism_numeral%"
+
 
 # The experience to give for each hp of damage taken
 xp-per-hp: 0.72

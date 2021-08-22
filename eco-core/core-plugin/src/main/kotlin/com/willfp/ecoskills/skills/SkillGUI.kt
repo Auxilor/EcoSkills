@@ -27,7 +27,7 @@ class SkillGUI(
     val slot: Slot = Slot.builder { player: Player ->
         ItemStackBuilder(
             Material.getMaterial(
-                skill.config.getString("gui-item").uppercase()
+                skill.config.getString("gui.item").uppercase()
             )!!
         ).setDisplayName(
             plugin.configYml.getString("gui.skill-icon.name")

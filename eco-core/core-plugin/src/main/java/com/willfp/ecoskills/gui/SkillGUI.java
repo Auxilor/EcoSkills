@@ -99,8 +99,8 @@ public class SkillGUI {
                 .modfiy(menuBuilder -> {
                     for (Skill skill : Skills.values()) {
                         menuBuilder.setSlot(
-                                skill.getConfig().getInt("gui-position.row"),
-                                skill.getConfig().getInt("gui-position.column"),
+                                skill.getConfig().getInt("gui.position.row"),
+                                skill.getConfig().getInt("gui.position.column"),
                                 skill.getGui().getSlot()
                         );
                     }

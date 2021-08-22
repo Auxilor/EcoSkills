@@ -16,35 +16,6 @@ top:
 menu:
   title: "Your Skills"
 
-skills:
-  mining:
-    name: "Mining"
-    description: "Break blocks to earn Mining XP"
-  combat:
-    name: "Combat"
-    description: "Kill mobs to earn Combat XP"
-  enchanting:
-    name: "Enchanting"
-    description: "Enchant items to earn Enchanting XP"
-  farming:
-    name: "Farming"
-    description: "Harvest crops to earn Farming XP"
-  woodcutting:
-    name: "Woodcutting"
-    description: "Cut down trees to earn Woodcutting XP"
-  fishing:
-    name: "Fishing"
-    description: "Fish to earn Fishing XP"
-  alchemy:
-    name: "Alchemy"
-    description: "Brew potions to earn Alchemy XP"
-  armory:
-    name: "Armory"
-    description: "Take damage to earn Armory XP"
-  exploration:
-    name: "Exploration"
-    description: "Move to earn Exploration XP"
-
 stats:
   defense:
     name: "&#e884b0🛡 Defense"

@@ -1,47 +1,53 @@
-gui-item: leather_boots
-gui-position:
-  row: 4
-  column: 7
-gui-lore:
-  - "&fImproves Stats:"
-  - "&8» &r%ecoskills_speed_name%"
-  - "&f"
-  - "&fEffects:"
-  - "&8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
-  - "&8» &r&6Dodging %ecoskills_dodging_numeral%"
-  - "&8» &r&6Accelerated Escape %ecoskills_accelerated_escape_numeral%"
-
-# The maximum obtainable level
+name: "Exploration"
+description: "Move to earn Exploration XP"
 max-level: 50
 
-# The level/skill increases to give on levelup
-level-up-rewards:
-  - "speed::2"
-  - "seamless_movement::1"
-  - "dodging::1"
-  - "accelerated_escape::1:10:100"
+gui:
+  item: leather_boots
+  position:
+    row: 4
+    column: 7
+  lore:
+    - "&fImproves Stats:"
+    - "&8» &r%ecoskills_speed_name%"
+    - "&f"
+    - "&fEffects:"
+    - "&8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
+    - "&8» &r&6Dodging %ecoskills_dodging_numeral%"
+    - "&8» &r&6Accelerated Escape %ecoskills_accelerated_escape_numeral%"
 
-rewards-messages:
-  1:
-    - " &8» &r&f+2 %ecoskills_speed_name%"
-    - " &8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
-    - " &8» &r&6Dodging %ecoskills_dodging_numeral%"
-  10:
-    - " &8» &r&f+2 %ecoskills_speed_name%"
-    - " &8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
-    - " &8» &r&6Dodging %ecoskills_dodging_numeral%"
-    - " &8» &r&6Accelerated Escape %ecoskills_accelerated_escape_numeral%"
+rewards:
+  # The actual rewards to be given
+  rewards:
+    - "speed::2"
+    - "seamless_movement::1"
+    - "dodging::1"
+    - "accelerated_escape::1:10:100"
 
-rewards-gui-lore:
-  1:
-    - " &8» &r&f+2 %ecoskills_speed_name%"
-    - " &8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
-    - " &8» &r&6Dodging %ecoskills_dodging_numeral%"
-  10:
-    - " &8» &r&f+2 %ecoskills_speed_name%"
-    - " &8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
-    - " &8» &r&6Dodging %ecoskills_dodging_numeral%"
-    - " &8» &r&6Accelerated Escape %ecoskills_accelerated_escape_numeral%"
+  # The chat messages to send on level up
+  chat-messages:
+    1:
+      - " &8» &r&f+2 %ecoskills_speed_name%"
+      - " &8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
+      - " &8» &r&6Dodging %ecoskills_dodging_numeral%"
+    10:
+      - " &8» &r&f+2 %ecoskills_speed_name%"
+      - " &8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
+      - " &8» &r&6Dodging %ecoskills_dodging_numeral%"
+      - " &8» &r&6Accelerated Escape %ecoskills_accelerated_escape_numeral%"
+
+  # The lore to show in the levels gui
+  progression-lore:
+    1:
+      - " &8» &r&f+2 %ecoskills_speed_name%"
+      - " &8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
+      - " &8» &r&6Dodging %ecoskills_dodging_numeral%"
+    10:
+      - " &8» &r&f+2 %ecoskills_speed_name%"
+      - " &8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
+      - " &8» &r&6Dodging %ecoskills_dodging_numeral%"
+      - " &8» &r&6Accelerated Escape %ecoskills_accelerated_escape_numeral%"
+
 
 # Chance to give 1 xp every time the player moves
 xp-on-move-chance: 0.05
@@ -49,6 +55,5 @@ xp-on-move-chance: 0.05
 base-xp-to-give: 20
 # If the amount of xp given should be higher when travelling faster
 multiply-xp-by-speed: true
-
 # The amount of experience to give for each point of fall damage taken
 fall-damage-xp-per-hp: 16

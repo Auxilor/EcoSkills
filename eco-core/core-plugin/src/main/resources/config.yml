@@ -36,7 +36,7 @@ gui:
       - "&f"
       - " %ecoskills_defense_name%&f %ecoskills_defense%"
       - " %ecoskills_strength_name%&f %ecoskills_strength%"
-      - " %ecoskills_crit_chance_name%&f %ecoskills_crit_chance%"
+      - " %ecoskills_crit_chance_name%&f %ecoskills_crit_chance%%"
       - " %ecoskills_crit_damage_name%&f %ecoskills_crit_damage%"
       - " %ecoskills_speed_name%&f %ecoskills_speed%"
       - " %ecoskills_wisdom_name%&f %ecoskills_wisdom%"

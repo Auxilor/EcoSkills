@@ -37,11 +37,11 @@ abstract class Skill(
     }
 
     fun update() {
-        name = plugin.langYml.getString("skills.$id.name")
-        description = plugin.langYml.getString("skills.$id.description")
+        name = config.getString("name")
+        description = config.getString("description")
         maxLevel = config.getInt("max-level")
         rewards.clear()
-        for (string in config.getStrings("level-up-rewards")) {
+        for (string in config.getStrings("rewards.rewards")) {
             val split = string.split("::")
             val asEffect = Effects.getByID(split[0].lowercase())
             val asStat = Stats.getByID(split[0].lowercase())
@@ -102,7 +102,7 @@ abstract class Skill(
 
     fun getRewardsMessages(player: Player, level: Int): MutableList<String> {
         var highestLevel = 1
-        for (startLevel in this.config.getSubsection("rewards-messages").getKeys(false)) {
+        for (startLevel in this.config.getSubsection("rewards.chat-messages").getKeys(false)) {
             if (startLevel.toInt() > level) {
                 break
             }
@@ -113,7 +113,7 @@ abstract class Skill(
         }
 
         val messages = ArrayList<String>()
-        for (string in this.config.getStrings("rewards-messages.$highestLevel", false)) {
+        for (string in this.config.getStrings("rewards.chat-messages.$highestLevel", false)) {
             messages.add(StringUtils.format(string, player))
         }
         return messages
@@ -121,7 +121,7 @@ abstract class Skill(
 
     fun getGUIRewardsMessages(player: Player, level: Int): MutableList<String> {
         var highestLevel = 1
-        for (startLevel in this.config.getSubsection("rewards-gui-lore").getKeys(false)) {
+        for (startLevel in this.config.getSubsection("rewards.progression-lore").getKeys(false)) {
             if (startLevel.toInt() > level) {
                 break
             }
@@ -132,7 +132,7 @@ abstract class Skill(
         }
 
         val lore = ArrayList<String>()
-        for (string in this.config.getStrings("rewards-gui-lore.$highestLevel", false)) {
+        for (string in this.config.getStrings("rewards.progression-lore.$highestLevel", false)) {
             var s = string;
 
             for (skillObject in Effects.values() union Stats.values()) {
@@ -148,7 +148,7 @@ abstract class Skill(
 
     fun getGUILore(player: Player): MutableList<String> {
         val lore = ArrayList<String>()
-        for (string in this.config.getStrings("gui-lore", false)) {
+        for (string in this.config.getStrings("gui.lore", false)) {
             lore.add(StringUtils.format(string, player))
         }
         return lore

@@ -1,35 +1,41 @@
-gui-item: stone_sword
-gui-position:
-  row: 3
-  column: 4
-gui-lore:
-  - "&fImproves Stats:"
-  - "&8» &r%ecoskills_strength_name%"
-  - "&8» &r%ecoskills_crit_damage_name%"
-  - "&f"
-  - "&fEffects:"
-  - "&8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
-
-# The maximum obtainable level
+name: "Combat"
+description: "Kill mobs to earn Combat XP"
 max-level: 50
 
-# The level/skill increases to give on levelup
-level-up-rewards:
-  - "strength::2"
-  - "crit_damage::1"
-  - "serrated_strikes::1"
+gui:
+  item: stone_sword
+  position:
+    row: 3
+    column: 4
+  lore:
+    - "&fImproves Stats:"
+    - "&8» &r%ecoskills_strength_name%"
+    - "&8» &r%ecoskills_crit_damage_name%"
+    - "&f"
+    - "&fEffects:"
+    - "&8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
 
-rewards-messages:
-  1:
-    - " &8» &r&f+2 %ecoskills_strength_name%"
-    - " &8» &r&f+1 %ecoskills_crit_damage_name%"
-    - " &8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
+rewards:
+  # The actual rewards to be given
+  rewards:
+    - "strength::2"
+    - "crit_damage::1"
+    - "serrated_strikes::1"
 
-rewards-gui-lore:
-  1:
-    - " &8» &r&f+2 %ecoskills_strength_name%"
-    - " &8» &r&f+1 %ecoskills_crit_damage_name%"
-    - " &8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
+  # The chat messages to send on level up
+  chat-messages:
+    1:
+      - " &8» &r&f+2 %ecoskills_strength_name%"
+      - " &8» &r&f+1 %ecoskills_crit_damage_name%"
+      - " &8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
+
+  # The lore to show in the levels gui
+  progression-lore:
+    1:
+      - " &8» &r&f+2 %ecoskills_strength_name%"
+      - " &8» &r&f+1 %ecoskills_crit_damage_name%"
+      - " &8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
+
 
 # The experience to give for each hp of a killed enemy
 xp-per-heart: 0.33

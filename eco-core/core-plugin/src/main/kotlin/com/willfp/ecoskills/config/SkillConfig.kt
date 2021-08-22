@@ -13,7 +13,7 @@ class SkillConfig(
     plugin,
     source,
     "skills/",
-    "rewards-messages",
-    "rewards-gui-lore"
+    "rewards.chat-messages",
+    "rewards.progression-lore"
 ) {
 }
