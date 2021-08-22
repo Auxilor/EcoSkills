@@ -93,7 +93,7 @@ abstract class Skill(
 
     fun getCumulativeLevelUpReward(skillObject: SkillObject, to: Int): Int {
         var levels = 0
-        for (i in 1..to) {
+        for (i in 0..to) {
             levels += getLevelUpReward(skillObject, i)
         }
 
