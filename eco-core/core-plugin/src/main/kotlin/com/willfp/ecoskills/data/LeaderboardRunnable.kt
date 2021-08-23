@@ -14,14 +14,10 @@ class LeaderboardRunnable (
     private val plugin: EcoSkillsPlugin
 ) : Runnable {
     override fun run() {
-        val uuidStrings = plugin.dataYml.getSubsectionOrNull("player")?.getKeys(false) ?: ArrayList()
-        val uuids = uuidStrings.stream().map { s -> UUID.fromString(s) }.toList()
-
         val temp = HashMap<OfflinePlayer, Int>()
         val top = ArrayList<OfflinePlayer>()
 
-        for (uuid in uuids) {
-            val player = Bukkit.getOfflinePlayer(uuid)
+        for (player in Bukkit.getOfflinePlayers()) {
             temp[player] = 10000 - player.getTotalSkillLevel()
         }
 
