@@ -43,19 +43,19 @@ class EffectBountifulHarvest: Effect(
 
         val level = player.getEffectLevel(this)
 
-        val chance = config.getDouble("chance-per-level") * level
+        val chance = getChance(level)
 
-        val base = (chance / 100).toInt()
+        val multiplier = getMultiplier(level)
 
-        if (base >= 1) {
-            for (i in 1..base) {
+        if (multiplier >= 2) {
+            for (i in 2..multiplier) {
                 DropQueue(player)
                     .addItems(*event.items.map { item -> item.itemStack })
                     .push()
             }
         }
 
-        if (NumberUtils.randFloat(0.0, 100.0) < chance - (base * 100)) {
+        if (NumberUtils.randFloat(0.0, 100.0) < chance) {
             DropQueue(player)
                 .addItems(*event.items.map { item -> item.itemStack })
                 .push()
@@ -65,12 +65,23 @@ class EffectBountifulHarvest: Effect(
     private fun getMultiplier(level: Int): Int {
         val chance = config.getDouble("chance-per-level") * level
 
-        return (chance / 100).toInt() + 1
+        var add = 2
+
+        if (chance % 100 == 0.0) {
+            add = 1
+        }
+
+        return (chance / 100).toInt() + add
     }
 
     private fun getChance(level: Int): Double {
-        val chance = config.getDouble("chance-per-level") * level
+        var chance = config.getDouble("chance-per-level") * level
 
-        return chance - ((getMultiplier(level) - 1) * 100)
+        chance -= ((getMultiplier(level) - 2) * 100)
+        if (chance == 0.0) {
+            chance = 100.0
+        }
+
+        return chance
     }
 }

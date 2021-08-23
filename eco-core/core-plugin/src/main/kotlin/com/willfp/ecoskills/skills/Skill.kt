@@ -8,10 +8,10 @@ import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.SkillObject
 import com.willfp.ecoskills.config.SkillConfig
+import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.getSkillLevel
 import com.willfp.ecoskills.stats.Stats
-import org.bukkit.Effect
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
@@ -118,7 +118,7 @@ abstract class Skill(
             var msg = string
 
             for (effect in Effects.values()) {
-                msg = msg.replace("%ecoskills_${effect.id}_description", effect.getDescription(level))
+                msg = msg.replace("%ecoskills_${effect.id}_description%", effect.getDescription(level))
             }
             messages.add(
                 StringUtils.format(
@@ -146,14 +146,16 @@ abstract class Skill(
         for (string in this.config.getStrings("rewards.progression-lore.$highestLevel", false)) {
             var s = string;
 
-            for (skillObject in Effects.values() union Stats.values()) {
+            for (levelUpReward in this.getLevelUpRewards()) {
+                val skillObject = levelUpReward.obj
                 val objLevel = this.getCumulativeLevelUpReward(skillObject, level)
 
                 s = s.replace("%ecoskills_${skillObject.id}%", objLevel.toString())
                 s = s.replace("%ecoskills_${skillObject.id}_numeral%", NumberUtils.toNumeral(objLevel))
-            }
-            for (effect in Effects.values()) {
-                s = s.replace("%ecoskills_${effect.id}_description%", effect.getDescription(level))
+
+                if (skillObject is Effect) {
+                    s = s.replace("%ecoskills_${skillObject.id}_description%", skillObject.getDescription(level))
+                }
             }
 
             lore.add(StringUtils.format(s, player))
