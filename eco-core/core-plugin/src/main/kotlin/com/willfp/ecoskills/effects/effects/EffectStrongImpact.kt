@@ -13,8 +13,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 import java.util.concurrent.atomic.AtomicInteger
 
 
-class EffectSerratedStrikes : Effect(
-    "serrated_strikes"
+class EffectStrongImpact : Effect(
+    "strong_impact"
 ) {
     override fun formatDescription(string: String, level: Int): String {
         return string.replace("%chance%", NumberUtils.format(config.getDouble("chance-per-level") * level))
@@ -35,11 +35,6 @@ class EffectSerratedStrikes : Effect(
         if (player !is Player) {
             return
         }
-        val victim = event.entity
-
-        if (victim !is LivingEntity) {
-            return
-        }
 
         val level = player.getEffectLevel(this)
 
@@ -47,20 +42,6 @@ class EffectSerratedStrikes : Effect(
             return
         }
 
-        val bleedDamage = config.getDouble("bleed-tick-damage")
-
-        var bleedCount = config.getInt("bleed-ticks")
-        bleedCount *= level
-        val finalBleedCount = bleedCount
-
-        val currentBleedCount = AtomicInteger(0)
-
-        plugin.runnableFactory.create { bukkitRunnable: RunnableTask ->
-            currentBleedCount.addAndGet(1)
-            victim.damage(bleedDamage)
-            if (currentBleedCount.get() >= finalBleedCount) {
-                bukkitRunnable.cancel()
-            }
-        }.runTaskTimer(config.getInt("bleed-tick-spacing").toLong(), config.getInt("bleed-tick-spacing").toLong())
+        event.damage = event.damage * config.getDouble("multiplier")
     }
 }

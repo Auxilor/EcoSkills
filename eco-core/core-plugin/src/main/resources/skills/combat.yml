@@ -15,6 +15,10 @@ gui:
     - "&fEffects:"
     - "&8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
     - "   %ecoskills_serrated_strikes_description%"
+    - "&8» &r&6Dazzle %ecoskills_dazzle_numeral%"
+    - "   %ecoskills_dazzle_description%"
+    - "&8» &r&6Strong Impact %ecoskills_strong_impact_numeral%"
+    - "   %ecoskills_strong_impact_description%"
 
 rewards:
   # The actual rewards to be given
@@ -22,6 +26,8 @@ rewards:
     - "strength::2"
     - "ferocity::1:15:100"
     - "serrated_strikes::1"
+    - "dazzle::1"
+    - "strong_impact::1:10:100"
 
   # The chat messages to send on level up
   chat-messages:
@@ -29,11 +35,25 @@ rewards:
       - " &8» &r&f+2 %ecoskills_strength_name%"
       - " &8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
       - "    %ecoskills_serrated_strikes_description%"
+      - " &8» &r&6Dazzle %ecoskills_dazzle_numeral%"
+      - "    %ecoskills_dazzle_description%"
+    10:
+      - " &8» &r&f+2 %ecoskills_strength_name%"
+      - " &8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
+      - "    %ecoskills_serrated_strikes_description%"
+      - " &8» &r&6Dazzle %ecoskills_dazzle_numeral%"
+      - "    %ecoskills_dazzle_description%"
+      - " &8» &r&6Strong Impact %ecoskills_strong_impact_numeral%"
+      - "    %ecoskills_strong_impact_description%"
     15:
       - " &8» &r&f+2 %ecoskills_strength_name%"
       - " &8» &r&f+1 %ecoskills_ferocity_name%"
       - " &8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
       - "    %ecoskills_serrated_strikes_description%"
+      - " &8» &r&6Dazzle %ecoskills_dazzle_numeral%"
+      - "    %ecoskills_dazzle_description%"
+      - " &8» &r&6Strong Impact %ecoskills_strong_impact_numeral%"
+      - "    %ecoskills_strong_impact_description%"
 
   # The lore to show in the levels gui
   progression-lore:
@@ -42,11 +62,25 @@ rewards:
       - " &8» &r&f+1 %ecoskills_ferocity_name%"
       - " &8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
       - "    %ecoskills_serrated_strikes_description%"
+      - " &8» &r&6Dazzle %ecoskills_dazzle_numeral%"
+      - "    %ecoskills_dazzle_description%"
+    10:
+      - " &8» &r&f+2 %ecoskills_strength_name%"
+      - " &8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
+      - "    %ecoskills_serrated_strikes_description%"
+      - " &8» &r&6Dazzle %ecoskills_dazzle_numeral%"
+      - "    %ecoskills_dazzle_description%"
+      - " &8» &r&6Strong Impact %ecoskills_strong_impact_numeral%"
+      - "    %ecoskills_strong_impact_description%"
     15:
       - " &8» &r&f+2 %ecoskills_strength_name%"
       - " &8» &r&f+1 %ecoskills_ferocity_name%"
       - " &8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
       - "    %ecoskills_serrated_strikes_description%"
+      - " &8» &r&6Dazzle %ecoskills_dazzle_numeral%"
+      - "    %ecoskills_dazzle_description%"
+      - " &8» &r&6Strong Impact %ecoskills_strong_impact_numeral%"
+      - "    %ecoskills_strong_impact_description%"
 
 
 # The experience to give for each hp of a killed enemy

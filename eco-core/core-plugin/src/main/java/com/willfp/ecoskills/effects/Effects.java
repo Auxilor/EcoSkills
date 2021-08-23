@@ -6,6 +6,7 @@ import com.willfp.ecoskills.effects.effects.EffectAcceleratedEscape;
 import com.willfp.ecoskills.effects.effects.EffectBountifulHarvest;
 import com.willfp.ecoskills.effects.effects.EffectBravery;
 import com.willfp.ecoskills.effects.effects.EffectCraftsmanship;
+import com.willfp.ecoskills.effects.effects.EffectDazzle;
 import com.willfp.ecoskills.effects.effects.EffectDodging;
 import com.willfp.ecoskills.effects.effects.EffectEfficientBrewing;
 import com.willfp.ecoskills.effects.effects.EffectEyeOfTheDepths;
@@ -51,6 +52,7 @@ public class Effects {
     public static final Effect ACCELERATED_ESCAPE = new EffectAcceleratedEscape();
     public static final Effect BRAVERY = new EffectBravery();
     public static final Effect INFERNAL_RESISTANCE = new EffectInfernalResistance();
+    public static final Effect DAZZLE = new EffectDazzle();
 
     @ApiStatus.Internal
     public static void registerNewEffect(@NotNull final Effect effect) {

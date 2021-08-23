@@ -10,14 +10,18 @@ import org.bukkit.entity.Projectile
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.entity.EntityDamageByEntityEvent
+import org.bukkit.potion.PotionEffect
+import org.bukkit.potion.PotionEffectType
+import org.bukkit.util.Vector
 import java.util.concurrent.atomic.AtomicInteger
 
 
-class EffectSerratedStrikes : Effect(
-    "serrated_strikes"
+class EffectDazzle : Effect(
+    "dazzle"
 ) {
     override fun formatDescription(string: String, level: Int): String {
         return string.replace("%chance%", NumberUtils.format(config.getDouble("chance-per-level") * level))
+            .replace("%seconds%", NumberUtils.format(((config.getInt("ticks-per-level") * level) + config.getInt("base-ticks")) / 20.0))
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
@@ -35,6 +39,7 @@ class EffectSerratedStrikes : Effect(
         if (player !is Player) {
             return
         }
+
         val victim = event.entity
 
         if (victim !is LivingEntity) {
@@ -47,20 +52,9 @@ class EffectSerratedStrikes : Effect(
             return
         }
 
-        val bleedDamage = config.getDouble("bleed-tick-damage")
+        val duration = (config.getInt("ticks-per-level") * level) + config.getInt("base-ticks")
 
-        var bleedCount = config.getInt("bleed-ticks")
-        bleedCount *= level
-        val finalBleedCount = bleedCount
-
-        val currentBleedCount = AtomicInteger(0)
-
-        plugin.runnableFactory.create { bukkitRunnable: RunnableTask ->
-            currentBleedCount.addAndGet(1)
-            victim.damage(bleedDamage)
-            if (currentBleedCount.get() >= finalBleedCount) {
-                bukkitRunnable.cancel()
-            }
-        }.runTaskTimer(config.getInt("bleed-tick-spacing").toLong(), config.getInt("bleed-tick-spacing").toLong())
+        victim.setVelocity(Vector(0, 0, 0))
+        victim.addPotionEffect(PotionEffect(PotionEffectType.CONFUSION, duration, level))
     }
 }

@@ -122,4 +122,21 @@ infernal_resistance:
 bravery:
   description: "&8Take &a%chance%%&8 less damage from bosses"
 
+  # The percent less damage to take
   percent-less-per-level: 1.5
+dazzle:
+  description: "&a%chance%%&8 chance to give your opponent nausea for &a%seconds%&8 seconds"
+
+  # The base ticks to give nausea for
+  base-ticks: 18
+  # The extra ticks to give nausea for per level
+  ticks-per-level: 2
+  # The chance to give nausea per level, as a percentage
+  chance-per-level: 1.5
+strong_impact:
+  description: "&a%chance%%&8 chance to deal &a3x&8 damage"
+
+  # The damage multiplier
+  multiplier: 3
+  # The chance to deal 3x damage, per level
+  chance-per-level: 0.2
