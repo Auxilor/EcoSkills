@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import com.willfp.eco.core.config.updating.ConfigUpdater;
 import com.willfp.ecoskills.effects.effects.EffectAcceleratedEscape;
 import com.willfp.ecoskills.effects.effects.EffectBountifulHarvest;
+import com.willfp.ecoskills.effects.effects.EffectEndangering;
 import com.willfp.ecoskills.effects.effects.EffectInfernalResistance;
 import com.willfp.ecoskills.effects.effects.EffectCraftsmanship;
 import com.willfp.ecoskills.effects.effects.EffectDazzle;
@@ -54,6 +55,7 @@ public class Effects {
     public static final Effect INFERNAL_RESISTANCE = new EffectInfernalResistance();
     public static final Effect DAZZLE = new EffectDazzle();
     public static final Effect STRONG_IMPACT = new EffectStrongImpact();
+    public static final Effect ENDANGERING = new EffectEndangering();
 
     @ApiStatus.Internal
     public static void registerNewEffect(@NotNull final Effect effect) {

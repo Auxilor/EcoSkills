@@ -19,6 +19,8 @@ gui:
     - "   %ecoskills_dazzle_description%"
     - "&8» &r&6Strong Impact %ecoskills_strong_impact_numeral%"
     - "   %ecoskills_strong_impact_description%"
+    - "&8» &r&6Endangering %ecoskills_endangering_numeral%"
+    - "   %ecoskills_endangering_description%"
 
 rewards:
   # The actual rewards to be given
@@ -28,6 +30,7 @@ rewards:
     - "serrated_strikes::1"
     - "dazzle::1"
     - "strong_impact::1:10:100"
+    - "endangering::1:20:100"
 
   # The chat messages to send on level up
   chat-messages:
@@ -54,6 +57,17 @@ rewards:
       - "    %ecoskills_dazzle_description%"
       - " &8» &r&6Strong Impact %ecoskills_strong_impact_numeral%"
       - "    %ecoskills_strong_impact_description%"
+    20:
+      - " &8» &r&f+2 %ecoskills_strength_name%"
+      - " &8» &r&f+1 %ecoskills_ferocity_name%"
+      - " &8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
+      - "    %ecoskills_serrated_strikes_description%"
+      - " &8» &r&6Dazzle %ecoskills_dazzle_numeral%"
+      - "    %ecoskills_dazzle_description%"
+      - " &8» &r&6Strong Impact %ecoskills_strong_impact_numeral%"
+      - "    %ecoskills_strong_impact_description%"
+      - " &8» &r&6Endangering %ecoskills_endangering_numeral%"
+      - "    %ecoskills_endangering_description%"
 
   # The lore to show in the levels gui
   progression-lore:
@@ -81,6 +95,17 @@ rewards:
       - "    %ecoskills_dazzle_description%"
       - " &8» &r&6Strong Impact %ecoskills_strong_impact_numeral%"
       - "    %ecoskills_strong_impact_description%"
+    20:
+      - " &8» &r&f+2 %ecoskills_strength_name%"
+      - " &8» &r&f+1 %ecoskills_ferocity_name%"
+      - " &8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
+      - "    %ecoskills_serrated_strikes_description%"
+      - " &8» &r&6Dazzle %ecoskills_dazzle_numeral%"
+      - "    %ecoskills_dazzle_description%"
+      - " &8» &r&6Strong Impact %ecoskills_strong_impact_numeral%"
+      - "    %ecoskills_strong_impact_description%"
+      - " &8» &r&6Endangering %ecoskills_endangering_numeral%"
+      - "    %ecoskills_endangering_description%"
 
 
 # The experience to give for each hp of a killed enemy

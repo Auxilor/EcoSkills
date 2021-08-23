@@ -140,3 +140,8 @@ strong_impact:
   multiplier: 3
   # The chance to deal 3x damage, per level
   chance-per-level: 0.2
+endangering:
+  description: "&a%chance%%&8 chance to remove your opponents invulnerability frame"
+
+  # The chance as a percentage
+  chance-per-level: 3
