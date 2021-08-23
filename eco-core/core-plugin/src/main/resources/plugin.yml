@@ -39,6 +39,7 @@ permissions:
       ecoskills.command.reset: true
       ecoskills.command.skills: true
       ecoskills.command.give: true
+      ecoskills.command.top: true
 
   ecoskills.command.reload:
     description: Allows reloading the config
@@ -52,6 +53,9 @@ permissions:
   ecoskills.command.reset:
     description: Allows the use of /ecoskills reset.
     default: op
+  ecoskills.command.top:
+    description: Allows the use of /ecoskills top.
+    default: true
   ecoskills.command.give:
     description: Allows the use of /ecoskills give.
     default: op
