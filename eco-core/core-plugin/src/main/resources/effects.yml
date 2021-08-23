@@ -166,6 +166,7 @@ spelunking:
     - "deepslate_emerald_ore"
     - "diamond_ore"
     - "deepslate_diamond_ore"
+    - "ancient_debris:22"
 
   # Chance is as a percentage; if the chance for a player is over 100 then it will always be double drops
   # with a chance to get triple drops. Same goes if above 200, but then it will always be triple with a chance
