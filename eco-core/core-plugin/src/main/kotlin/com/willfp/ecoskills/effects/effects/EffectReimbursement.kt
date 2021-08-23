@@ -20,7 +20,7 @@ class EffectReimbursement : Effect(
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handleLevelling(event: EnchantItemEvent) {
         val player = event.enchanter
-        val cost = event.expLevelCost
+        val cost = event.whichButton() + 3
 
         val chance = config.getDouble("chance-per-level") * player.getEffectLevel(this)
 
