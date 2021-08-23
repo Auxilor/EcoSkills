@@ -145,3 +145,30 @@ endangering:
 
   # The chance as a percentage
   chance-per-level: 3
+spelunking:
+  description: "&a%chance%%&8 to get &a%multiplier%x&8 drops from ores"
+
+  # The ores that can drop double
+  on-blocks:
+    - "nether_quartz_ore"
+    - "coal_ore"
+    - "deepslate_coal_ore"
+    - "iron_ore"
+    - "deepslate_iron_ore"
+    - "gold_ore"
+    - "deepslate_gold_ore"
+    - "gilded_blackstone"
+    - "lapis_lazuli_ore"
+    - "deepslate_lapis_lazuli_ore"
+    - "redstone_ore"
+    - "deepslate_redstone_ore"
+    - "emerald_ore"
+    - "deepslate_emerald_ore"
+    - "diamond_ore"
+    - "deepslate_diamond_ore"
+
+
+  # Chance is as a percentage; if the chance for a player is over 100 then it will always be double drops
+  # with a chance to get triple drops. Same goes if above 200, but then it will always be triple with a chance
+  # for quadruple.
+  chance-per-level: 4

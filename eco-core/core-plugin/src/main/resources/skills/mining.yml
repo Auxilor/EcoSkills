@@ -15,6 +15,8 @@ gui:
     - "&fEffects:"
     - "&8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
     - "   %ecoskills_versatile_tools_description%"
+    - "&8» &r&6Spelunking %ecoskills_spelunking_numeral%"
+    - "   %ecoskills_spelunking_description%"
 
 rewards:
   # The actual rewards to be given
@@ -22,6 +24,7 @@ rewards:
     - "defense::2"
     - "ferocity::1:15:100"
     - "versatile_tools::1"
+    - "spelunking::1"
 
   # The chat messages to send on level up
   chat-messages:
@@ -29,11 +32,15 @@ rewards:
       - " &8» &r&f+2 %ecoskills_defense_name%"
       - " &8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
       - "    %ecoskills_versatile_tools_description%"
+      - " &8» &r&6Spelunking %ecoskills_spelunking_numeral%"
+      - "    %ecoskills_spelunking_description%"
     15:
       - " &8» &r&f+2 %ecoskills_defense_name%"
       - " &8» &r&f+1 %ecoskills_ferocity_name%"
       - " &8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
       - "    %ecoskills_versatile_tools_description%"
+      - " &8» &r&6Spelunking %ecoskills_spelunking_numeral%"
+      - "    %ecoskills_spelunking_description%"
 
   # The lore to show in the levels gui
   progression-lore:
@@ -41,11 +48,15 @@ rewards:
       - " &8» &r&f+2 %ecoskills_defense_name%"
       - " &8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
       - "    %ecoskills_versatile_tools_description%"
+      - " &8» &r&6Spelunking %ecoskills_spelunking_numeral%"
+      - "    %ecoskills_spelunking_description%"
     15:
       - " &8» &r&f+2 %ecoskills_defense_name%"
       - " &8» &r&f+1 %ecoskills_ferocity_name%"
       - " &8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
       - "    %ecoskills_versatile_tools_description%"
+      - " &8» &r&6Spelunking %ecoskills_spelunking_numeral%"
+      - "    %ecoskills_spelunking_description%"
 
 # The xp rewards for each block type
 # Specify with type:xp

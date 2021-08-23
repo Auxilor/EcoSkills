@@ -19,6 +19,7 @@ import com.willfp.ecoskills.effects.effects.EffectSeamlessMovement;
 import com.willfp.ecoskills.effects.effects.EffectSecondChance;
 import com.willfp.ecoskills.effects.effects.EffectSerratedStrikes;
 import com.willfp.ecoskills.effects.effects.EffectShamanism;
+import com.willfp.ecoskills.effects.effects.EffectSpelunking;
 import com.willfp.ecoskills.effects.effects.EffectStrongImpact;
 import com.willfp.ecoskills.effects.effects.EffectVersatileTools;
 import org.bukkit.NamespacedKey;
@@ -56,6 +57,7 @@ public class Effects {
     public static final Effect DAZZLE = new EffectDazzle();
     public static final Effect STRONG_IMPACT = new EffectStrongImpact();
     public static final Effect ENDANGERING = new EffectEndangering();
+    public static final Effect SPELUNKING = new EffectSpelunking();
 
     @ApiStatus.Internal
     public static void registerNewEffect(@NotNull final Effect effect) {
