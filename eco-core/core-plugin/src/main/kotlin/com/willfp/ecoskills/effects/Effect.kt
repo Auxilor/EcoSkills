@@ -15,7 +15,7 @@ import java.util.*
 abstract class Effect(
     id: String
 ): SkillObject(id), Listener {
-    protected val plugin: EcoPlugin = EcoSkillsPlugin.getInstance()
+    protected val plugin: EcoSkillsPlugin = EcoSkillsPlugin.getInstance()
 
     val key: NamespacedKey
     val uuid: UUID
@@ -25,7 +25,7 @@ abstract class Effect(
         update()
         key = plugin.namespacedKeyFactory.create(id)
         uuid = UUID.nameUUIDFromBytes(id.toByteArray())
-        config = plugin.configYml.getSubsection("effects.$id")
+        config = plugin.effectsYml.getSubsection(id)
 
         Effects.registerNewEffect(this)
     }

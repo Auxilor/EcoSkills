@@ -7,6 +7,7 @@ import com.willfp.ecoskills.commands.CommandEcoskills;
 import com.willfp.ecoskills.commands.CommandSkills;
 import com.willfp.ecoskills.data.DataListener;
 import com.willfp.ecoskills.data.DataYml;
+import com.willfp.ecoskills.data.EffectsYml;
 import com.willfp.ecoskills.effects.Effect;
 import com.willfp.ecoskills.effects.Effects;
 import com.willfp.ecoskills.skills.Skill;
@@ -35,12 +36,18 @@ public class EcoSkillsPlugin extends EcoPlugin {
     private final DataYml dataYml;
 
     /**
+     * effects.yml.
+     */
+    private final EffectsYml effectsYml;
+
+    /**
      * Internal constructor called by bukkit on plugin load.
      */
     public EcoSkillsPlugin() {
         super(0, 12205, "&#ff00ae");
         instance = this;
         dataYml = new DataYml(this);
+        effectsYml = new EffectsYml(this);
     }
 
     @Override
@@ -75,6 +82,15 @@ public class EcoSkillsPlugin extends EcoPlugin {
      */
     public DataYml getDataYml() {
         return dataYml;
+    }
+
+    /**
+     * Get effects.yml.
+     *
+     * @return effects.yml.
+     */
+    public EffectsYml getEffectsYml() {
+        return effectsYml;
     }
 
     /**

@@ -1,0 +1,116 @@
+bountiful_harvest:
+  description: "&a%chance%%&8 to get &a%multiplier%x&8 drops from farming"
+
+  # Chance is as a percentage; if the chance for a player is over 100 then it will always be double drops
+  # with a chance to get triple drops. Same goes if above 200, but then it will always be triple with a chance
+  # for quadruple.
+  chance-per-level: 8
+versatile_tools:
+  description: "&8Deal &a%percent_more%%&8 more damage with pickaxes"
+
+  # The percent (%) more damage to deal with a pickaxe for each level of the effect.
+  percent-more-per-level: 8
+eye_of_the_depths:
+  description: "&a%chance%%&8 chance to get rare drops from fishing"
+
+  # Chance is as a percentage.
+  chance-per-level: 0.1
+  # The rare loot items are listed below.
+  # You can import drops from the following plugins:
+  # EcoArmor, EcoItems, Talismans, StatTrackers, EcoWeapons, Reforges, Oraxen
+  # You can also use vanilla items with their material
+  # You can set enchantments on items with the following syntax:
+  # <item> <enchantment:level> <enchantment:level> etc
+  # For example, a reaper scythe with Razor 4 and Criticals 3 would be:
+  # ecoweapons:reaper_scythe razor:4 criticals:3
+  rare-loot-items:
+    - enchanted_book confusion:1
+    - enchanted_book confusion:2
+    - netherite_ingot
+    - ecoarmor:set_miner_helmet
+    - ecoarmor:set_miner_chestplate
+    - ecoarmor:set_miner_leggings
+    - ecoarmor:set_miner_boots
+    - reforges:dynamic
+serrated_strikes:
+  description: "&a%chance%%&8 to make your opponent bleed"
+
+  # Chance is as a percentage.
+  chance-per-level: 2
+  # The damage to deal for each 'bleed tick'
+  bleed-tick-damage: 2
+  # The amount of ticks to wait between each bleed tick
+  bleed-tick-spacing: 15
+  # The amount of bleed ticks to give
+  bleed-ticks: 4
+seamless_movement:
+  description: "&a%chance%%&8 to ignore fall damage"
+
+  # The chance to ignore fall damage, as a percentage
+  chance-per-level: 2
+potionmaster:
+  description: "&8Brewed potions last &a%percent_more%%&8 longer"
+
+  # The percent more time for potions to last for each level of the effect
+  percent-more-per-level: 4
+
+  # The lore to add to indicate a duration buff
+  lore:
+    - ""
+    - "&fPotionmaster Buff:"
+    - "&8» &f+&e%seconds%&f Seconds"
+shamanism:
+  description: "&8Heal &a%percent_faster%%&8 faster"
+
+  # The percent faster regen for each level of the effect
+  percent-faster-per-level: 4
+craftsmanship:
+  description: "&8Axes take &a%percent_less%%&8 less durability damage"
+
+  # 100% is unbreakable
+  percent-less-per-level: 2
+second_chance:
+  description: "&8Items have a &a%chance%%&8 chance to instantly repair below &a30&8 durability"
+
+  # Items will try to heal every time durability damage is taken below this level
+  below-durability-check: 30
+  # Chance per level as a percentage
+  # This will follow a binomial distribution where the amount of trials is the durability check (30 by default, see above)
+  # Since this chance will be called many times, it would be best to have this be low.
+  chance-per-level: 0.1
+efficient_brewing:
+  description: "&8Potions take &a%seconds_less%&8 less seconds to brew"
+
+  # The ticks faster brewing time for each level (default is 400)
+  ticks-less-per-level: 6
+mystic_resilience:
+  description: "&a%chance%%&8 chance to ignore negative potion effects"
+
+  # Chance per level as a percentage
+  chance-per-level: 0.1
+satiation:
+  description: "&8Lose &a%percent_less%%&8 less hunger"
+
+  # 100% is no hunger
+  percent-less-hunger-per-level: 2
+golden_yield:
+  description: "&a%chance%%&8 chance to get &a5x&8 drops"
+
+  # Chance as a percentage
+  chance-per-level: 0.3
+
+  # The amount more drops to give
+  drop-multiplier: 5
+dodging:
+  description: "&a%chance%%&8 chance to ignore incoming damage"
+
+  # The chance to ignore damage, as a percentage
+  chance-per-level: 0.5
+accelerated_escape:
+  description: "&8Run &a%percent_faster%%&8 faster for &a1.5&8 seconds after taking damage"
+
+  # The percent faster speed, as a percentage
+  percent-faster-per-level: 4
+
+  # The duration to go faster for, in ticks
+  ticks: 30
