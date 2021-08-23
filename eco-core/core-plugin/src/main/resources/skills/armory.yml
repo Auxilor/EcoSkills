@@ -15,6 +15,10 @@ gui:
     - "&fEffects:"
     - "&8» &r&6Shamanism %ecoskills_shamanism_numeral%"
     - "   %ecoskills_shamanism_description%"
+    - "&8» &r&6Infernal Resistance %ecoskills_infernal_resistance_numeral%"
+    - "   %ecoskills_infernal_resistance_description%"
+    - "&8» &r&6Bravery %ecoskills_bravery_numeral%"
+    - "   %ecoskills_bravery_description%"
 
 rewards:
   # The actual rewards to be given
@@ -22,6 +26,8 @@ rewards:
     - "defense::2"
     - "speed::1"
     - "shamanism::1"
+    - "infernal_resistance::1"
+    - "bravery::1:10:100"
 
   # The chat messages to send on level up
   chat-messages:
@@ -30,6 +36,17 @@ rewards:
       - " &8» &r&f+1 %ecoskills_speed_name%"
       - " &8» &r&6Shamanism %ecoskills_shamanism_numeral%"
       - "    %ecoskills_shamanism_description%"
+      - " &8» &r&6Infernal Resistance %ecoskills_infernal_resistance_numeral%"
+      - "    %ecoskills_infernal_resistance_description%"
+    10:
+      - " &8» &r&f+2 %ecoskills_defense_name%"
+      - " &8» &r&f+1 %ecoskills_speed_name%"
+      - " &8» &r&6Shamanism %ecoskills_shamanism_numeral%"
+      - "    %ecoskills_shamanism_description%"
+      - " &8» &r&6Infernal Resistance %ecoskills_infernal_resistance_numeral%"
+      - "    %ecoskills_infernal_resistance_description%"
+      - " &8» &r&6Bravery %ecoskills_bravery_numeral%"
+      - "    %ecoskills_bravery_description%"
 
   # The lore to show in the levels gui
   progression-lore:
@@ -38,6 +55,17 @@ rewards:
       - " &8» &r&f+1 %ecoskills_speed_name%"
       - " &8» &r&6Shamanism %ecoskills_shamanism_numeral%"
       - "    %ecoskills_shamanism_description%"
+      - " &8» &r&6Infernal Resistance %ecoskills_infernal_resistance_numeral%"
+      - "    %ecoskills_infernal_resistance_description%"
+    10:
+      - " &8» &r&f+2 %ecoskills_defense_name%"
+      - " &8» &r&f+1 %ecoskills_speed_name%"
+      - " &8» &r&6Shamanism %ecoskills_shamanism_numeral%"
+      - "    %ecoskills_shamanism_description%"
+      - " &8» &r&6Infernal Resistance %ecoskills_infernal_resistance_numeral%"
+      - "    %ecoskills_infernal_resistance_description%"
+      - " &8» &r&6Bravery %ecoskills_bravery_numeral%"
+      - "    %ecoskills_bravery_description%"
 
 
 # The experience to give for each hp of damage taken
