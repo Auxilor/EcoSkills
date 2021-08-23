@@ -300,7 +300,7 @@ effects:
     # The percent (%) more damage to deal with a pickaxe for each level of the effect.
     percent-more-per-level: 8
   eye_of_the_depths:
-    description: "&a%chance%%&8 to get rare drops from fishing"
+    description: "&a%chance%%&8 chance to get rare drops from fishing"
 
     # Chance is as a percentage.
     chance-per-level: 0.1

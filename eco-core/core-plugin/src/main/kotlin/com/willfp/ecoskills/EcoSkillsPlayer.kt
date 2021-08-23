@@ -15,6 +15,7 @@ import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
 import org.bukkit.persistence.PersistentDataType
 
+
 object PlayerHelper {
     init {
         PlaceholderEntry(
@@ -30,6 +31,34 @@ object PlayerHelper {
     }
 
     val plugin: EcoSkillsPlugin = EcoSkillsPlugin.getInstance()
+}
+
+fun Player.getSkillExperienceMultiplier(): Double {
+    if (this.hasPermission("ecoskills.xpmultiplier.quadruple")) {
+        return 0.25
+    }
+
+    if (this.hasPermission("ecoskills.xpmultiplier.triple")) {
+        return 0.33
+    }
+
+    if (this.hasPermission("ecoskills.xpmultiplier.double")) {
+        return 0.5
+    }
+
+    if (this.hasPermission("ecoskills.xpmultiplier.50percent")) {
+        return 0.75
+    }
+
+    val prefix = "ecoskills.xpmultiplier."
+    for (permissionAttachmentInfo in this.effectivePermissions) {
+        val permission = permissionAttachmentInfo.permission
+        if (permission.startsWith(prefix)) {
+            return (permission.substring(permission.lastIndexOf(".") + 1).toDouble() / 100) + 1
+        }
+    }
+
+    return 1.0
 }
 
 fun OfflinePlayer.getTotalSkillLevel(): Int {

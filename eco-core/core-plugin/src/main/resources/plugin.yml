@@ -51,3 +51,16 @@ permissions:
   ecoskills.command.reset:
     description: Allows the use of /ecoskills reset.
     default: op
+
+  ecoskills.xpmultiplier.50percent:
+    description: Gives the player 50% more skill experience
+    default: false
+  ecoskills.xpmultiplier.double:
+    description: Gives the player 2x skill experience
+    default: false
+  ecoskills.xpmultiplier.triple:
+    description: Gives the player 3x skill experience
+    default: false
+  ecoskills.xpmultiplier.quadruple:
+    description: Gives the player 4x skill experience
+    default: false
