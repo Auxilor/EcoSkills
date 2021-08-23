@@ -40,6 +40,7 @@ gui:
       - " %ecoskills_crit_damage_name%&f %ecoskills_crit_damage%"
       - " %ecoskills_speed_name%&f %ecoskills_speed%"
       - " %ecoskills_wisdom_name%&f %ecoskills_wisdom%"
+      - " %ecoskills_ferocity_name%&f %ecoskills_ferocity%"
 
   close:
     material: barrier
@@ -147,21 +148,6 @@ level-gui:
         - "&f"
         - "&fRewards:"
         - "%rewards%"
-
-
-  player-info:
-    row: 1
-    column: 5
-
-    name: "&f%player%'s &fStats:"
-    lore:
-      - "&f"
-      - " %ecoskills_defense_name%&f %ecoskills_defense%"
-      - " %ecoskills_strength_name%&f %ecoskills_strength%"
-      - " %ecoskills_crit_chance_name%&f %ecoskills_crit_chance%"
-      - " %ecoskills_crit_damage_name%&f %ecoskills_crit_damage%"
-      - " %ecoskills_speed_name%&f %ecoskills_speed%"
-      - " %ecoskills_wisdom_name%&f %ecoskills_wisdom%"
 
   close:
     material: barrier
