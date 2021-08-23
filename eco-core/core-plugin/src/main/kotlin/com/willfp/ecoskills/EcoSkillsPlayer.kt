@@ -14,6 +14,8 @@ import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
 import org.bukkit.persistence.PersistentDataType
+import java.util.*
+import kotlin.collections.HashMap
 
 
 object PlayerHelper {
@@ -30,10 +32,20 @@ object PlayerHelper {
         ).register()
     }
 
+    val expMultiplierCache = HashMap<UUID, Double>()
+
     val plugin: EcoSkillsPlugin = EcoSkillsPlugin.getInstance()
 }
 
 fun Player.getSkillExperienceMultiplier(): Double {
+    if (PlayerHelper.expMultiplierCache.containsKey(this.uniqueId)) {
+        return PlayerHelper.expMultiplierCache[this.uniqueId]!!
+    }
+    PlayerHelper.expMultiplierCache[this.uniqueId] = cacheSkillExperienceMultiplier()
+    return this.getSkillExperienceMultiplier()
+}
+
+private fun Player.cacheSkillExperienceMultiplier(): Double {
     if (this.hasPermission("ecoskills.xpmultiplier.quadruple")) {
         return 4.0
     }
