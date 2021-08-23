@@ -77,8 +77,8 @@ fun OfflinePlayer.getAverageSkillLevel(): Double {
     return total / Skills.values().size.toDouble()
 }
 
-fun Player.giveSkillExperience(skill: Skill, experience: Double) {
-    val exp = experience * this.getSkillExperienceMultiplier()
+fun Player.giveSkillExperience(skill: Skill, experience: Double, isOvershoot: Boolean = false) {
+    val exp = if (isOvershoot) experience else experience * this.getSkillExperienceMultiplier()
 
     val gainEvent = PlayerSkillExpGainEvent(this, skill, exp)
     Bukkit.getPluginManager().callEvent(gainEvent)
@@ -97,7 +97,7 @@ fun Player.giveSkillExperience(skill: Skill, experience: Double) {
         this.setSkillLevel(skill, level + 1)
         val levelUpEvent = PlayerSkillLevelUpEvent(this, skill, level + 1)
         Bukkit.getPluginManager().callEvent(levelUpEvent)
-        this.giveSkillExperience(skill, overshoot)
+        this.giveSkillExperience(skill, overshoot, true)
     }
 }
 
