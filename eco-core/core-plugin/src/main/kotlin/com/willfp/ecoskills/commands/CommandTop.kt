@@ -11,7 +11,8 @@ import org.bukkit.OfflinePlayer
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import java.util.*
-import java.util.stream.Collectors
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 import kotlin.collections.set
 import kotlin.math.ceil
 
@@ -35,16 +36,18 @@ class CommandTop(plugin: EcoPlugin) :
             val uuidStrings = plugin.dataYml.getSubsectionOrNull("player")?.getKeys(false) ?: ArrayList()
             val uuids = uuidStrings.stream().map { s -> UUID.fromString(s) }.toList()
 
-            val temp = LinkedHashMap<OfflinePlayer, Int>()
+            val temp = HashMap<OfflinePlayer, Int>()
+            val top = ArrayList<OfflinePlayer>()
 
             for (uuid in uuids) {
                 val player = Bukkit.getOfflinePlayer(uuid)
-                temp[player] = player.getTotalSkillLevel()
+                temp[player] = 10000 - player.getTotalSkillLevel()
             }
 
-            val top = LinkedHashMap<OfflinePlayer, Int>()
-            for (entry in temp.toList().sortedByDescending { (_, value) -> value }.toMap()) {
-                top[entry.key] = entry.value
+            val temp2 = temp.toList().sortedBy { (_, value) -> value }.toMap()
+
+            for (entry in temp2) {
+                top.add(entry.key)
             }
 
             val maxPage = ceil(top.size / 10.0).toInt()
@@ -56,18 +59,17 @@ class CommandTop(plugin: EcoPlugin) :
                 page = 1
             }
 
-            val pagePlayers = HashMap<OfflinePlayer, Int>()
+            val pagePlayers = ArrayList<OfflinePlayer>()
 
             val start = (page - 1) * 10
-            val end = start + 10
+            val end = start + 9
 
-            val players = top.keys.toTypedArray()
             for (i in start..end) {
-                if (i > players.size - 1) {
+                if (i > top.size - 1) {
                     break
                 }
-                val player = players[i]
-                pagePlayers[player] = temp[player]!!
+
+                pagePlayers.add(top[i])
             }
 
             val messages = plugin.langYml.getStrings("top", false)
@@ -76,12 +78,12 @@ class CommandTop(plugin: EcoPlugin) :
             val useDisplayName = plugin.configYml.getBool("commands.top.use-display-name");
 
             var rank = start + 1
-            for (entry in pagePlayers.entries) {
+
+            for (player in pagePlayers) {
                 var line = plugin.langYml.getString("top-line-format", false)
                     .replace("%rank%", rank.toString())
-                    .replace("%level%", entry.value.toString())
+                    .replace("%level%", player.getTotalSkillLevel().toString())
 
-                val player = entry.key
                 var name = player.name!!
 
                 if (useDisplayName && player is Player) {
