@@ -15,6 +15,7 @@ import com.willfp.ecoskills.effects.effects.EffectEyeOfTheDepths;
 import com.willfp.ecoskills.effects.effects.EffectGoldenYield;
 import com.willfp.ecoskills.effects.effects.EffectMysticResilience;
 import com.willfp.ecoskills.effects.effects.EffectPotionmaster;
+import com.willfp.ecoskills.effects.effects.EffectReimbursement;
 import com.willfp.ecoskills.effects.effects.EffectSatiation;
 import com.willfp.ecoskills.effects.effects.EffectSeamlessMovement;
 import com.willfp.ecoskills.effects.effects.EffectSecondChance;
@@ -60,6 +61,7 @@ public class Effects {
     public static final Effect ENDANGERING = new EffectEndangering();
     public static final Effect SPELUNKING = new EffectSpelunking();
     public static final Effect DYNAMIC_MINING = new EffectDynamicMining();
+    public static final Effect REIMBURSEMENT = new EffectReimbursement();
 
     @ApiStatus.Internal
     public static void registerNewEffect(@NotNull final Effect effect) {

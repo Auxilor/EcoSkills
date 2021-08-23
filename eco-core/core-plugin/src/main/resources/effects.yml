@@ -182,3 +182,8 @@ dynamic_mining:
   chance-per-level: 1.5
   # The level of haste to give
   level: 3
+reimbursement:
+  description: "&a%chance%%&8 chance to get experience back after enchanting"
+
+  # The chance to get experience back, as a percentage
+  chance-per-level: 0.5

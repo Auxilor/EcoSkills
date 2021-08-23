@@ -15,6 +15,8 @@ gui:
     - "&fEffects:"
     - "&8» &r&6Second Chance %ecoskills_second_chance_numeral%"
     - "   %ecoskills_second_chance_description%"
+    - "&8» &r&6Reimbursement %ecoskills_reimbursement_numeral%"
+    - "   %ecoskills_reimbursement_description%"
 
 rewards:
   # The actual rewards to be given
@@ -22,6 +24,7 @@ rewards:
     - "wisdom::2"
     - "crit_chance::1"
     - "second_chance::1"
+    - "reimbursement::1"
 
   # The chat messages to send on level up
   chat-messages:
@@ -30,6 +33,8 @@ rewards:
       - " &8» &r&f+1 %ecoskills_crit_chance_name%"
       - " &8» &r&6Second Chance %ecoskills_second_chance_numeral%"
       - "    %ecoskills_second_chance_description%"
+      - " &8» &r&6Reimbursement %ecoskills_reimbursement_numeral%"
+      - "    %ecoskills_reimbursement_description%"
 
   # The lore to show in the levels gui
   progression-lore:
@@ -38,6 +43,8 @@ rewards:
       - " &8» &r&f+1 %ecoskills_crit_chance_name%"
       - " &8» &r&6Second Chance %ecoskills_second_chance_numeral%"
       - "    %ecoskills_second_chance_description%"
+      - " &8» &r&6Reimbursement %ecoskills_reimbursement_numeral%"
+      - "    %ecoskills_reimbursement_description%"
 
 # The experience to give for each level cost of enchanting
 xp-per-level: 4
