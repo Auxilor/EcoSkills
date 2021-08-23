@@ -29,6 +29,8 @@ abstract class Skill(
     lateinit var gui: SkillGUI
     var maxLevel: Int = 50
     private val rewards: MutableList<SkillObjectReward>
+    private val guiLoreCache = HashMap<Int, List<String>>()
+    private val messagesCache = HashMap<Int, List<String>>()
 
     init {
         config = SkillConfig(this.id, this.javaClass, plugin)
@@ -102,65 +104,68 @@ abstract class Skill(
     }
 
     fun getRewardsMessages(player: Player, level: Int): MutableList<String> {
-        var highestLevel = 1
-        for (startLevel in this.config.getSubsection("rewards.chat-messages").getKeys(false)) {
-            if (startLevel.toInt() > level) {
-                break
-            }
-
-            if (startLevel.toInt() > highestLevel) {
-                highestLevel = startLevel.toInt()
-            }
-        }
-
         val messages = ArrayList<String>()
-        for (string in this.config.getStrings("rewards.chat-messages.$highestLevel", false)) {
-            var msg = string
+        if (messagesCache.containsKey(level)) {
+            messages.addAll(messagesCache[level]!!)
+        } else {
+            var highestLevel = 1
+            for (startLevel in this.config.getSubsection("rewards.chat-messages").getKeys(false)) {
+                if (startLevel.toInt() > level) {
+                    break
+                }
 
-            for (effect in Effects.values()) {
-                msg = msg.replace("%ecoskills_${effect.id}_description%", effect.getDescription(level))
-            }
-            messages.add(
-                StringUtils.format(
-                    msg,
-                    player
-                )
-            )
-        }
-        return messages
-    }
-
-    fun getGUIRewardsMessages(player: Player, level: Int): MutableList<String> {
-        var highestLevel = 1
-        for (startLevel in this.config.getSubsection("rewards.progression-lore").getKeys(false)) {
-            if (startLevel.toInt() > level) {
-                break
-            }
-
-            if (startLevel.toInt() > highestLevel) {
-                highestLevel = startLevel.toInt()
-            }
-        }
-
-        val lore = ArrayList<String>()
-        for (string in this.config.getStrings("rewards.progression-lore.$highestLevel", false)) {
-            var s = string;
-
-            for (levelUpReward in this.getLevelUpRewards()) {
-                val skillObject = levelUpReward.obj
-                val objLevel = this.getCumulativeLevelUpReward(skillObject, level)
-
-                s = s.replace("%ecoskills_${skillObject.id}%", objLevel.toString())
-                s = s.replace("%ecoskills_${skillObject.id}_numeral%", NumberUtils.toNumeral(objLevel))
-
-                if (skillObject is Effect) {
-                    s = s.replace("%ecoskills_${skillObject.id}_description%", skillObject.getDescription(level))
+                if (startLevel.toInt() > highestLevel) {
+                    highestLevel = startLevel.toInt()
                 }
             }
 
-            lore.add(StringUtils.format(s, player))
+            for (string in this.config.getStrings("rewards.chat-messages.$highestLevel", false)) {
+                var msg = string
+
+                for (effect in Effects.values()) {
+                    msg = msg.replace("%ecoskills_${effect.id}_description%", effect.getDescription(level))
+                }
+                messages.add(msg)
+            }
         }
-        return lore
+
+        return StringUtils.formatList(messages, player)
+    }
+
+    fun getGUIRewardsMessages(player: Player, level: Int): MutableList<String> {
+        val lore = ArrayList<String>()
+        if (guiLoreCache.containsKey(level)) {
+            lore.addAll(guiLoreCache[level]!!)
+        } else {
+            var highestLevel = 1
+            for (startLevel in this.config.getSubsection("rewards.progression-lore").getKeys(false)) {
+                if (startLevel.toInt() > level) {
+                    break
+                }
+
+                if (startLevel.toInt() > highestLevel) {
+                    highestLevel = startLevel.toInt()
+                }
+            }
+
+            for (string in this.config.getStrings("rewards.progression-lore.$highestLevel", false)) {
+                var s = string;
+
+                for (levelUpReward in this.getLevelUpRewards()) {
+                    val skillObject = levelUpReward.obj
+                    val objLevel = this.getCumulativeLevelUpReward(skillObject, level)
+
+                    s = s.replace("%ecoskills_${skillObject.id}%", objLevel.toString())
+                    s = s.replace("%ecoskills_${skillObject.id}_numeral%", NumberUtils.toNumeral(objLevel))
+
+                    if (skillObject is Effect) {
+                        s = s.replace("%ecoskills_${skillObject.id}_description%", skillObject.getDescription(level))
+                    }
+                }
+            }
+        }
+
+        return StringUtils.formatList(lore, player)
     }
 
     fun getGUILore(player: Player): MutableList<String> {
