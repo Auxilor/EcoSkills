@@ -14,7 +14,7 @@ gui:
     - "&f"
     - "&fEffects:"
     - "&8» &r&6Craftsmanship %ecoskills_craftsmanship_numeral%"
-    - "    %ecoskills_craftsmanship_description%"
+    - "   %ecoskills_craftsmanship_description%"
 
 rewards:
   # The actual rewards to be given
@@ -28,14 +28,14 @@ rewards:
     1:
       - " &8» &r&f+2 %ecoskills_strength_name%"
       - " &8» &r&6Craftsmanship %ecoskills_craftsmanship_numeral%"
-      - "     %ecoskills_craftsmanship_description%"
+      - "    %ecoskills_craftsmanship_description%"
 
   # The lore to show in the levels gui
   progression-lore:
     1:
       - " &8» &r&f+2 %ecoskills_strength_name%"
       - " &8» &r&6Craftsmanship %ecoskills_craftsmanship_numeral%"
-      - "     %ecoskills_craftsmanship_description%"
+      - "    %ecoskills_craftsmanship_description%"
 
 # The xp rewards for each crop type
 # Specify with type:xp

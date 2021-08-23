@@ -14,7 +14,7 @@ gui:
     - "&f"
     - "&fEffects:"
     - "&8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
-    - "    %ecoskills_versatile_tools_description%"
+    - "   %ecoskills_versatile_tools_description%"
 
 rewards:
   # The actual rewards to be given
@@ -28,24 +28,24 @@ rewards:
     1:
       - " &8» &r&f+2 %ecoskills_defense_name%"
       - " &8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
-      - "     %ecoskills_versatile_tools_description%"
+      - "    %ecoskills_versatile_tools_description%"
     15:
       - " &8» &r&f+2 %ecoskills_defense_name%"
       - " &8» &r&f+1 %ecoskills_ferocity_name%"
       - " &8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
-      - "     %ecoskills_versatile_tools_description%"
+      - "    %ecoskills_versatile_tools_description%"
 
   # The lore to show in the levels gui
   progression-lore:
     1:
       - " &8» &r&f+2 %ecoskills_defense_name%"
       - " &8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
-      - "     %ecoskills_versatile_tools_description%"
+      - "    %ecoskills_versatile_tools_description%"
     15:
       - " &8» &r&f+2 %ecoskills_defense_name%"
       - " &8» &r&f+1 %ecoskills_ferocity_name%"
       - " &8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
-      - "     %ecoskills_versatile_tools_description%"
+      - "    %ecoskills_versatile_tools_description%"
 
 # The xp rewards for each block type
 # Specify with type:xp

@@ -14,7 +14,7 @@ gui:
     - "&f"
     - "&fEffects:"
     - "&8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
-    - "    %ecoskills_serrated_strikes_description%"
+    - "   %ecoskills_serrated_strikes_description%"
 
 rewards:
   # The actual rewards to be given
@@ -28,12 +28,12 @@ rewards:
     1:
       - " &8» &r&f+2 %ecoskills_strength_name%"
       - " &8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
-      - "     %ecoskills_serrated_strikes_description%"
+      - "    %ecoskills_serrated_strikes_description%"
     15:
       - " &8» &r&f+2 %ecoskills_strength_name%"
       - " &8» &r&f+1 %ecoskills_ferocity_name%"
       - " &8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
-      - "     %ecoskills_serrated_strikes_description%"
+      - "    %ecoskills_serrated_strikes_description%"
 
   # The lore to show in the levels gui
   progression-lore:
@@ -41,12 +41,12 @@ rewards:
       - " &8» &r&f+2 %ecoskills_strength_name%"
       - " &8» &r&f+1 %ecoskills_ferocity_name%"
       - " &8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
-      - "     %ecoskills_serrated_strikes_description%"
+      - "    %ecoskills_serrated_strikes_description%"
     15:
       - " &8» &r&f+2 %ecoskills_strength_name%"
       - " &8» &r&f+1 %ecoskills_ferocity_name%"
       - " &8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
-      - "     %ecoskills_serrated_strikes_description%"
+      - "    %ecoskills_serrated_strikes_description%"
 
 
 # The experience to give for each hp of a killed enemy

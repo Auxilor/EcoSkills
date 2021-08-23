@@ -14,7 +14,7 @@ gui:
     - "&f"
     - "&fEffects:"
     - "&8» &r&6Shamanism %ecoskills_shamanism_numeral%"
-    - "    %ecoskills_shamanism_description%"
+    - "   %ecoskills_shamanism_description%"
 
 rewards:
   # The actual rewards to be given
@@ -29,7 +29,7 @@ rewards:
       - " &8» &r&f+2 %ecoskills_defense_name%"
       - " &8» &r&f+1 %ecoskills_speed_name%"
       - " &8» &r&6Shamanism %ecoskills_shamanism_numeral%"
-      - "     %ecoskills_shamanism_description%"
+      - "    %ecoskills_shamanism_description%"
 
   # The lore to show in the levels gui
   progression-lore:
@@ -37,7 +37,7 @@ rewards:
       - " &8» &r&f+2 %ecoskills_defense_name%"
       - " &8» &r&f+1 %ecoskills_speed_name%"
       - " &8» &r&6Shamanism %ecoskills_shamanism_numeral%"
-      - "     %ecoskills_shamanism_description%"
+      - "    %ecoskills_shamanism_description%"
 
 
 # The experience to give for each hp of damage taken
