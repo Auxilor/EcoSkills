@@ -4,17 +4,12 @@ import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.CommandHandler
 import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.eco.util.StringUtils
-import com.willfp.ecoskills.EcoSkillsPlugin
-import com.willfp.ecoskills.data.LeaderboardRunnable
+import com.willfp.ecoskills.data.LeaderboardHandler
 import com.willfp.ecoskills.getTotalSkillLevel
-import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
-import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
-import kotlin.collections.set
 import kotlin.math.ceil
 
 
@@ -33,7 +28,7 @@ class CommandTop(plugin: EcoPlugin) :
                 page = args[0].toIntOrNull() ?: 1
             }
 
-            val top = LeaderboardRunnable.sortedLeaderboard
+            val top = LeaderboardHandler.sortedLeaderboard
 
             val maxPage = ceil(top.size / 10.0).toInt()
             if (maxPage < page) {
