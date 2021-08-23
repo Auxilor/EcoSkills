@@ -12,6 +12,7 @@ import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.getSkillLevel
 import com.willfp.ecoskills.stats.Stats
+import org.bukkit.Bukkit
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
@@ -70,6 +71,9 @@ abstract class Skill(
 
         postUpdate()
 
+        guiLoreCache.clear()
+        messagesCache.clear()
+
         gui = SkillGUI(plugin, this)
     }
 
@@ -103,9 +107,9 @@ abstract class Skill(
         return levels
     }
 
-    fun getRewardsMessages(player: Player, level: Int): MutableList<String> {
+    fun getRewardsMessages(player: Player?, level: Int, useCache: Boolean = true): MutableList<String> {
         val messages = ArrayList<String>()
-        if (messagesCache.containsKey(level)) {
+        if (messagesCache.containsKey(level) && useCache) {
             messages.addAll(messagesCache[level]!!)
         } else {
             var highestLevel = 1
@@ -127,14 +131,16 @@ abstract class Skill(
                 }
                 messages.add(msg)
             }
+
+            guiLoreCache[level] = messages
         }
 
         return StringUtils.formatList(messages, player)
     }
 
-    fun getGUIRewardsMessages(player: Player, level: Int): MutableList<String> {
+    fun getGUIRewardsMessages(player: Player?, level: Int, useCache: Boolean = true): MutableList<String> {
         val lore = ArrayList<String>()
-        if (guiLoreCache.containsKey(level)) {
+        if (guiLoreCache.containsKey(level) && useCache) {
             lore.addAll(guiLoreCache[level]!!)
         } else {
             var highestLevel = 1
@@ -149,7 +155,7 @@ abstract class Skill(
             }
 
             for (string in this.config.getStrings("rewards.progression-lore.$highestLevel", false)) {
-                var s = string;
+                var s = string
 
                 for (levelUpReward in this.getLevelUpRewards()) {
                     val skillObject = levelUpReward.obj
@@ -162,7 +168,11 @@ abstract class Skill(
                         s = s.replace("%ecoskills_${skillObject.id}_description%", skillObject.getDescription(level))
                     }
                 }
+
+                lore.add(s)
             }
+
+            guiLoreCache[level] = lore
         }
 
         return StringUtils.formatList(lore, player)

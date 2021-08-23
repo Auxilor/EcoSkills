@@ -295,10 +295,10 @@ effects:
     # for quadruple.
     chance-per-level: 8
   versatile_tools:
-    description: "&8Deal &a%percent_more%%&8 damage with pickaxes"
+    description: "&8Deal &a%percent_more%%&8 more damage with pickaxes"
 
     # The percent (%) more damage to deal with a pickaxe for each level of the effect.
-    percent-more-per-level: 2
+    percent-more-per-level: 8
   eye_of_the_depths:
     description: "&a%chance%%&8 to get rare drops from fishing"
 
@@ -354,7 +354,7 @@ effects:
     # The percent faster regen for each level of the effect
     percent-faster-per-level: 4
   craftsmanship:
-    description: "&8Axes take &a%percent_less%%&8 durability damage"
+    description: "&8Axes take &a%percent_less%%&8 less durability damage"
 
     # 100% is unbreakable
     percent-less-per-level: 2
@@ -373,12 +373,12 @@ effects:
     # The ticks faster brewing time for each level (default is 400)
     ticks-less-per-level: 6
   mystic_resilience:
-    description: "&a%chance%%&8 to ignore negative potion effects"
+    description: "&a%chance%%&8 chance to ignore negative potion effects"
 
     # Chance per level as a percentage
     chance-per-level: 0.1
   satiation:
-    description: "&8Lose &a%percent_less%%&8 hunger"
+    description: "&8Lose &a%percent_less%%&8 less hunger"
 
     # 100% is no hunger
     percent-less-hunger-per-level: 2
@@ -391,7 +391,7 @@ effects:
     # The amount more drops to give
     drop-multiplier: 5
   dodging:
-    description: "&a%chance%%&8 to ignore incoming damage"
+    description: "&a%chance%%&8 chance to ignore incoming damage"
 
     # The chance to ignore damage, as a percentage
     chance-per-level: 0.5
