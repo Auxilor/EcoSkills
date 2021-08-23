@@ -27,6 +27,7 @@ rewards:
   chat-messages:
     1:
       - " &8» &r&f+2 %ecoskills_strength_name%"
+      - " &8» &r&f+1 %ecoskills_crit_damage_name%"
       - " &8» &r&6Craftsmanship %ecoskills_craftsmanship_numeral%"
       - "    %ecoskills_craftsmanship_description%"
 
@@ -34,6 +35,7 @@ rewards:
   progression-lore:
     1:
       - " &8» &r&f+2 %ecoskills_strength_name%"
+      - " &8» &r&f+1 %ecoskills_crit_damage_name%"
       - " &8» &r&6Craftsmanship %ecoskills_craftsmanship_numeral%"
       - "    %ecoskills_craftsmanship_description%"
 
