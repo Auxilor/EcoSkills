@@ -62,7 +62,7 @@ public class SkillGUI {
 
         Function<Player, ItemStack> playerHeadItemBuilder = player -> {
             ItemStack itemStack = new SkullBuilder()
-                    .setDisplayName(plugin.getConfigYml().getString("gui.player-info.name").replace("%player%", player.getDisplayName()))
+                    .setDisplayName(StringUtils.format(plugin.getConfigYml().getString("gui.player-info.name", false).replace("%player%", player.getDisplayName()), player))
                     .addLoreLines(() -> {
                         List<String> lore = new ArrayList<>();
 
