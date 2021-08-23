@@ -35,19 +35,19 @@ object PlayerHelper {
 
 fun Player.getSkillExperienceMultiplier(): Double {
     if (this.hasPermission("ecoskills.xpmultiplier.quadruple")) {
-        return 0.25
+        return 4.0
     }
 
     if (this.hasPermission("ecoskills.xpmultiplier.triple")) {
-        return 0.33
+        return 3.0
     }
 
     if (this.hasPermission("ecoskills.xpmultiplier.double")) {
-        return 0.5
+        return 2.0
     }
 
     if (this.hasPermission("ecoskills.xpmultiplier.50percent")) {
-        return 0.75
+        return 1.5
     }
 
     val prefix = "ecoskills.xpmultiplier."
