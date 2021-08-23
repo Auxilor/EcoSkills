@@ -4,31 +4,46 @@ import com.willfp.eco.core.drops.DropQueue
 import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.getEffectLevel
+import org.bukkit.Bukkit
+import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.data.Ageable
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
+import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockDropItemEvent
 
 class EffectSpelunking: Effect(
     "spelunking"
 ) {
+    private val blockMap = HashMap<Location, Material>()
+
     override fun formatDescription(string: String, level: Int): String {
         return string.replace("%chance%", NumberUtils.format(this.getChance(level)))
             .replace("%multiplier%", this.getMultiplier(level).toString())
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    fun onBreak(event: BlockBreakEvent) {
+        blockMap[event.block.location] = event.block.type
+
+        this.plugin.scheduler.runLater({
+            blockMap.remove(event.block.location)
+        }, 1)
+    }
+
+    @EventHandler(ignoreCancelled = true)
     fun handle(event: BlockDropItemEvent) {
-        val block = event.block
+        val mat = blockMap[event.block.location] ?: return
+
         val player = event.player
 
         if (player.inventory.itemInMainHand.containsEnchantment(Enchantment.SILK_TOUCH)) {
             return
         }
 
-        if (!config.getStrings("on-blocks").contains(block.type.name.lowercase())) {
+        if (!config.getStrings("on-blocks").contains(mat.name.lowercase())) {
             return
         }
 

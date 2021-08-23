@@ -4,22 +4,37 @@ import com.willfp.eco.core.drops.DropQueue
 import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.getEffectLevel
+import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.data.Ageable
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
+import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockDropItemEvent
 
 class EffectBountifulHarvest: Effect(
     "bountiful_harvest"
 ) {
+    private val blockMap = HashMap<Location, Material>()
+
     override fun formatDescription(string: String, level: Int): String {
         return string.replace("%chance%", NumberUtils.format(this.getChance(level)))
             .replace("%multiplier%", this.getMultiplier(level).toString())
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    fun onBreak(event: BlockBreakEvent) {
+        blockMap[event.block.location] = event.block.type
+
+        this.plugin.scheduler.runLater({
+            blockMap.remove(event.block.location)
+        }, 1)
+    }
+
+    @EventHandler(ignoreCancelled = true)
     fun handle(event: BlockDropItemEvent) {
+        val mat = blockMap[event.block.location] ?: return
+
         val block = event.block
         val player = event.player
 
@@ -29,7 +44,7 @@ class EffectBountifulHarvest: Effect(
             return
         }
 
-        if (block.type == Material.SUGAR_CANE || block.type == Material.SWEET_BERRY_BUSH || block.type == Material.CACTUS) {
+        if (mat == Material.SUGAR_CANE || mat == Material.SWEET_BERRY_BUSH || mat == Material.CACTUS) {
             return
         }
 
