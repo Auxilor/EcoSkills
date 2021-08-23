@@ -172,7 +172,7 @@ spelunking:
   # for quadruple.
   chance-per-level: 4
 dynamic_mining:
-  description: "&a%chance%%&8 chance to get Haste III for &a%seconds%&8 when breaking blocks"
+  description: "&a%chance%%&8 chance to get Haste III for &a%seconds%&8 seconds when breaking blocks"
 
   # The base ticks to give nausea for
   base-ticks: 18

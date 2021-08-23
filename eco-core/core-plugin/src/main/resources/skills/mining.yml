@@ -35,8 +35,8 @@ rewards:
       - " &8» &r&f+2 %ecoskills_defense_name%"
       - " &8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
       - "    %ecoskills_versatile_tools_description%"
-      - " &8» &r&6Spelunking %ecoskills_spelunking_numeral%"
-      - "    %ecoskills_spelunking_description%"
+      - " &8» &r&6Dynamic Mining %ecoskills_dynamic_mining_numeral%"
+      - "    %ecoskills_dynamic_mining_description%"
     10:
       - " &8» &r&f+2 %ecoskills_defense_name%"
       - " &8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
@@ -61,8 +61,8 @@ rewards:
       - " &8» &r&f+2 %ecoskills_defense_name%"
       - " &8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
       - "    %ecoskills_versatile_tools_description%"
-      - " &8» &r&6Spelunking %ecoskills_spelunking_numeral%"
-      - "    %ecoskills_spelunking_description%"
+      - " &8» &r&6Dynamic Mining %ecoskills_dynamic_mining_numeral%"
+      - "    %ecoskills_dynamic_mining_description%"
     10:
       - " &8» &r&f+2 %ecoskills_defense_name%"
       - " &8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
