@@ -41,6 +41,9 @@ gui:
       - " %ecoskills_speed_name%&f %ecoskills_speed%"
       - " %ecoskills_wisdom_name%&f %ecoskills_wisdom%"
       - " %ecoskills_ferocity_name%&f %ecoskills_ferocity%"
+      - "&f"
+      - "&7Total Skill Level: &f%ecoskills_total_skill_level%"
+      - "&7Average Skill Level: &f%ecoskills_average_skill_level%"
 
   close:
     material: barrier

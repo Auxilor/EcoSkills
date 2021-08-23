@@ -33,7 +33,7 @@ eye_of_the_depths:
     - ecoarmor:set_miner_boots
     - reforges:dynamic
 serrated_strikes:
-  description: "&a%chance%%&8 to make your opponent bleed"
+  description: "&a%chance%%&8 chance to make your opponent bleed"
 
   # Chance is as a percentage.
   chance-per-level: 2
@@ -44,7 +44,7 @@ serrated_strikes:
   # The amount of bleed ticks to give
   bleed-ticks: 4
 seamless_movement:
-  description: "&a%chance%%&8 to ignore fall damage"
+  description: "&a%chance%%&8 chance to ignore fall damage"
 
   # The chance to ignore fall damage, as a percentage
   chance-per-level: 2

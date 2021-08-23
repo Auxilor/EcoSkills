@@ -10,6 +10,7 @@ gui:
   lore:
     - "&fImproves Stats:"
     - "&8» &r%ecoskills_speed_name%"
+    - "&8» &r%ecoskills_crit_chance_name%"
     - "&f"
     - "&fEffects:"
     - "&8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
@@ -23,6 +24,7 @@ rewards:
   # The actual rewards to be given
   rewards:
     - "speed::2"
+    - "crit_chance::1"
     - "seamless_movement::1"
     - "dodging::1"
     - "accelerated_escape::1:10:100"
@@ -31,12 +33,14 @@ rewards:
   chat-messages:
     1:
       - " &8» &r&f+2 %ecoskills_speed_name%"
+      - " &8» &r&f+1 %ecoskills_crit_chance_name%"
       - " &8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
       - "    %ecoskills_seamless_movement_description%"
       - " &8» &r&6Dodging %ecoskills_dodging_numeral%"
       - "    %ecoskills_dodging_description%"
     10:
       - " &8» &r&f+2 %ecoskills_speed_name%"
+      - " &8» &r&f+1 %ecoskills_crit_chance_name%"
       - " &8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
       - "    %ecoskills_seamless_movement_description%"
       - " &8» &r&6Dodging %ecoskills_dodging_numeral%"
@@ -48,12 +52,14 @@ rewards:
   progression-lore:
     1:
       - " &8» &r&f+2 %ecoskills_speed_name%"
+      - " &8» &r&f+1 %ecoskills_crit_chance_name%"
       - " &8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
       - "    %ecoskills_seamless_movement_description%"
       - " &8» &r&6Dodging %ecoskills_dodging_numeral%"
       - "    %ecoskills_dodging_description%"
     10:
       - " &8» &r&f+2 %ecoskills_speed_name%"
+      - " &8» &r&f+1 %ecoskills_crit_chance_name%"
       - " &8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
       - "    %ecoskills_seamless_movement_description%"
       - " &8» &r&6Dodging %ecoskills_dodging_numeral%"
