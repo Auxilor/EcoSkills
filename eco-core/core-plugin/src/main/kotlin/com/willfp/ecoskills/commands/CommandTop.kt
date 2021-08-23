@@ -9,6 +9,7 @@ import com.willfp.ecoskills.getTotalSkillLevel
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 import java.util.*
 import java.util.stream.Collectors
 import kotlin.collections.set
@@ -72,13 +73,22 @@ class CommandTop(plugin: EcoPlugin) :
             val messages = plugin.langYml.getStrings("top", false)
             val lines = ArrayList<String>()
 
+            val useDisplayName = plugin.configYml.getBool("commands.top.use-display-name");
 
             var rank = start + 1
             for (entry in pagePlayers.entries) {
-                val line = plugin.langYml.getString("top-line-format", false)
+                var line = plugin.langYml.getString("top-line-format", false)
                     .replace("%rank%", rank.toString())
-                    .replace("%player%", entry.key.name!!)
                     .replace("%level%", entry.value.toString())
+
+                val player = entry.key
+                var name = player.name!!
+
+                if (useDisplayName && player is Player) {
+                    name = player.displayName
+                }
+
+                line = line.replace("%player%", name)
 
                 lines.add(line)
 

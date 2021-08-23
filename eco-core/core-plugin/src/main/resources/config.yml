@@ -298,3 +298,8 @@ damage-indicators:
   max-x-offset: 0.6
   max-y-offset: 0.6
   max-z-offset: 0.6
+
+commands:
+  top:
+    # If displayname (including rank) should be used
+    use-display-name: true
