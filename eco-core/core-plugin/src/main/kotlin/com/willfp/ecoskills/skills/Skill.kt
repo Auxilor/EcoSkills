@@ -159,6 +159,11 @@ abstract class Skill(
     }
 
     fun getExpForLevel(level: Int): Int {
-        return this.plugin.configYml.getInts("skills.level-xp-requirements")[level - 1] ?: Integer.MAX_VALUE
+        val req = this.plugin.configYml.getInts("skills.level-xp-requirements")
+        return if (req.size <= level) {
+            Int.MAX_VALUE
+        } else {
+            req[level - 1]
+        }
     }
 }

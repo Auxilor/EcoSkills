@@ -21,6 +21,10 @@ class StatFerocity : Stat(
         val victim = event.entity
         val entity = event.damager
 
+        if (victim.hasMetadata("ferocity")) {
+            return
+        }
+
         if (victim !is LivingEntity) {
             return
         }
@@ -44,8 +48,9 @@ class StatFerocity : Stat(
         }
 
         this.plugin.run {
+            victim.setMetadata("ferocity", plugin.metadataValueFactory.create(true))
             victim.noDamageTicks = 0
-            victim.damage(event.finalDamage, entity)
+            victim.damage(event.damage, entity)
         }
     }
 }
