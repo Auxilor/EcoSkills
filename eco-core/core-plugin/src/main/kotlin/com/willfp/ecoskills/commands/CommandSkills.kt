@@ -12,7 +12,7 @@ class CommandSkills(plugin: EcoPlugin) :
         plugin,
         "skills",
         "ecoskills.command.skills",
-        true
+        false
     ) {
 
     init {
@@ -21,8 +21,12 @@ class CommandSkills(plugin: EcoPlugin) :
 
     override fun getHandler(): CommandHandler {
         return CommandHandler { sender: CommandSender, _: List<String> ->
-            val player = sender as Player
-            SkillGUI.getHomeMenu().open(player)
+            if (sender !is Player) {
+                sender.sendMessage(this.plugin.langYml.getMessage("not-player"))
+                return@CommandHandler
+            }
+
+            SkillGUI.getHomeMenu().open(sender)
         }
     }
 }
