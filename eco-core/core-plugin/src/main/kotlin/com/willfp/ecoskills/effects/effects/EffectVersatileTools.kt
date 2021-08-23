@@ -1,5 +1,6 @@
 package com.willfp.ecoskills.effects.effects
 
+import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.getEffectLevel
 import org.bukkit.entity.Player
@@ -10,6 +11,10 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 class EffectVersatileTools: Effect(
     "versatile_tools"
 ) {
+    override fun formatDescription(string: String, level: Int): String {
+        return string.replace("%percent_more%", NumberUtils.format(config.getDouble("percent-more-per-level") * level))
+    }
+
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: EntityDamageByEntityEvent) {
         val player = event.damager

@@ -11,6 +11,10 @@ import org.bukkit.event.entity.EntityDamageEvent
 class EffectSeamlessMovement: Effect(
     "seamless_movement"
 ) {
+    override fun formatDescription(string: String, level: Int): String {
+        return string.replace("%chance%", NumberUtils.format(config.getDouble("chance-per-level") * level))
+    }
+
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: EntityDamageEvent) {
         val player = event.entity

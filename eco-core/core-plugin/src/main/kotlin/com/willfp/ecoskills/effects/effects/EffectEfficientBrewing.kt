@@ -1,5 +1,6 @@
 package com.willfp.ecoskills.effects.effects
 
+import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.getEffectLevel
 import org.bukkit.block.BrewingStand
@@ -12,6 +13,10 @@ import org.bukkit.event.inventory.InventoryClickEvent
 class EffectEfficientBrewing : Effect(
     "efficient_brewing"
 ) {
+    override fun formatDescription(string: String, level: Int): String {
+        return string.replace("%seconds_less%", NumberUtils.format((config.getDouble("ticks-less-per-level") * level) / 20))
+    }
+
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: InventoryClickEvent) {
         val player = event.whoClicked

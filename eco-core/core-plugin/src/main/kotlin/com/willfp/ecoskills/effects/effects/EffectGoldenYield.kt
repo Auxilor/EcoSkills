@@ -13,6 +13,10 @@ import org.bukkit.event.block.BlockDropItemEvent
 class EffectGoldenYield: Effect(
     "golden_yield"
 ) {
+    override fun formatDescription(string: String, level: Int): String {
+        return string.replace("%chance%", NumberUtils.format(config.getDouble("chance-per-level") * level))
+    }
+
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: BlockDropItemEvent) {
         val block = event.block

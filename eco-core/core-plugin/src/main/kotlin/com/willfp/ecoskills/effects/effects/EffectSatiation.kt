@@ -11,6 +11,10 @@ import org.bukkit.event.entity.FoodLevelChangeEvent
 class EffectSatiation: Effect(
     "satiation"
 ) {
+    override fun formatDescription(string: String, level: Int): String {
+        return string.replace("%percent_less%", NumberUtils.format(config.getDouble("percent-less-hunger-per-level") * level))
+    }
+
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: FoodLevelChangeEvent) {
         val player = event.entity

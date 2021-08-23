@@ -14,6 +14,10 @@ import java.util.*
 class EffectAcceleratedEscape: Effect(
     "accelerated_escape"
 ) {
+    override fun formatDescription(string: String, level: Int): String {
+        return string.replace("%percent_faster%", NumberUtils.format(config.getDouble("percent-faster-per-level") * level))
+    }
+
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: EntityDamageEvent) {
         val player = event.entity

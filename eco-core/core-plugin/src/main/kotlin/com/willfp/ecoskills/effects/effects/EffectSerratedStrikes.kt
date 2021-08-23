@@ -12,11 +12,13 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 import java.util.concurrent.atomic.AtomicInteger
 
 
-
-
-class EffectSerratedStrikes: Effect(
+class EffectSerratedStrikes : Effect(
     "serrated_strikes"
 ) {
+    override fun formatDescription(string: String, level: Int): String {
+        return string.replace("%chance%", NumberUtils.format(config.getDouble("chance-per-level") * level))
+    }
+
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: EntityDamageByEntityEvent) {
         val player = event.damager

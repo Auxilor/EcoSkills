@@ -10,6 +10,10 @@ import org.bukkit.event.player.PlayerItemDamageEvent
 class EffectCraftsmanship : Effect(
     "craftsmanship"
 ) {
+    override fun formatDescription(string: String, level: Int): String {
+        return string.replace("%percent_less%", NumberUtils.format(config.getDouble("percent-less-per-level") * level))
+    }
+
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: PlayerItemDamageEvent) {
         val player = event.player

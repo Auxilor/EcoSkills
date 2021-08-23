@@ -1,5 +1,6 @@
 package com.willfp.ecoskills.effects.effects
 
+import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.getEffectLevel
 import org.bukkit.entity.Player
@@ -10,6 +11,10 @@ import org.bukkit.event.entity.EntityRegainHealthEvent
 class EffectShamanism: Effect(
     "shamanism"
 ) {
+    override fun formatDescription(string: String, level: Int): String {
+        return string.replace("%percent_faster%", NumberUtils.format(config.getDouble("percent-faster-per-level") * level))
+    }
+
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: EntityRegainHealthEvent) {
         val player = event.entity

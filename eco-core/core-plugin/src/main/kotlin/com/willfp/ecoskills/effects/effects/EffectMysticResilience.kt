@@ -12,6 +12,10 @@ import org.bukkit.event.entity.EntityPotionEffectEvent
 class EffectMysticResilience : Effect(
     "mystic_resilience"
 ) {
+    override fun formatDescription(string: String, level: Int): String {
+        return string.replace("%chance%", NumberUtils.format(config.getDouble("chance-per-level") * level))
+    }
+
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: EntityPotionEffectEvent) {
         val player = event.entity

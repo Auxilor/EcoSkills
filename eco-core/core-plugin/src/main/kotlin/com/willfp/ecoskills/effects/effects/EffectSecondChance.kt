@@ -11,6 +11,10 @@ import org.bukkit.inventory.meta.Damageable
 class EffectSecondChance: Effect(
     "second_chance"
 ) {
+    override fun formatDescription(string: String, level: Int): String {
+        return string.replace("%chance%", NumberUtils.format(config.getDouble("chance-per-level") * level))
+    }
+
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: PlayerItemDamageEvent) {
         val player = event.player

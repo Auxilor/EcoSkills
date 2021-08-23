@@ -12,6 +12,10 @@ import org.bukkit.event.player.PlayerFishEvent
 class EffectEyeOfTheDepths: Effect(
     "eye_of_the_depths"
 ) {
+    override fun formatDescription(string: String, level: Int): String {
+        return string.replace("%chance%", NumberUtils.format(config.getDouble("chance-per-level") * level))
+    }
+
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: PlayerFishEvent) {
         val player = event.player

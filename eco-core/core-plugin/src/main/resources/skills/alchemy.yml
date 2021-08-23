@@ -14,8 +14,11 @@ gui:
   - "&f"
   - "&fEffects:"
   - "&8» &r&6Potionmaster %ecoskills_potionmaster_numeral%"
+  - "  %ecoskills_potionmaster_description%"
   - "&8» &r&6Efficient Brewing %ecoskills_efficient_brewing_numeral%"
+  - "  %ecoskills_efficient_brewing_description%"
   - "&8» &r&6Mystic Resilience %ecoskills_mystic_resilience_numeral%"
+  - "  %ecoskills_mystic_resilience_description%"
 
 rewards:
   # The actual rewards to be given
@@ -32,13 +35,18 @@ rewards:
       - " &8» &r&f+2 %ecoskills_crit_chance_name%"
       - " &8» &r&f+1 %ecoskills_wisdom_name%"
       - " &8» &r&6Potionmaster %ecoskills_potionmaster_numeral%"
+      - "  %ecoskills_potionmaster_description%"
       - " &8» &r&6Mystic Resilience %ecoskills_mystic_resilience_numeral%"
+      - "  %ecoskills_mystic_resilience_description%"
     10:
       - " &8» &r&f+2 %ecoskills_crit_chance_name%"
       - " &8» &r&f+1 %ecoskills_wisdom_name%"
       - " &8» &r&6Potionmaster %ecoskills_potionmaster_numeral%"
+      - "  %ecoskills_potionmaster_description%"
       - " &8» &r&6Efficient Brewing %ecoskills_efficient_brewing_numeral%"
+      - "  %ecoskills_efficient_brewing_description%"
       - " &8» &r&6Mystic Resilience %ecoskills_mystic_resilience_numeral%"
+      - "  %ecoskills_mystic_resilience_description%"
 
   # The lore to show in the levels gui
   progression-lore:
@@ -46,13 +54,18 @@ rewards:
       - " &8» &r&f+2 %ecoskills_crit_chance_name%"
       - " &8» &r&f+1 %ecoskills_wisdom_name%"
       - " &8» &r&6Potionmaster %ecoskills_potionmaster_numeral%"
+      - "  %ecoskills_potionmaster_description%"
       - " &8» &r&6Mystic Resilience %ecoskills_mystic_resilience_numeral%"
+      - "  %ecoskills_mystic_resilience_description%"
     10:
       - " &8» &r&f+2 %ecoskills_crit_chance_name%"
       - " &8» &r&f+1 %ecoskills_wisdom_name%"
       - " &8» &r&6Potionmaster %ecoskills_potionmaster_numeral%"
+      - "  %ecoskills_potionmaster_description%"
       - " &8» &r&6Efficient Brewing %ecoskills_efficient_brewing_numeral%"
+      - "  %ecoskills_efficient_brewing_description%"
       - " &8» &r&6Mystic Resilience %ecoskills_mystic_resilience_numeral%"
+      - "  %ecoskills_mystic_resilience_description%"
 
 
 # The experience to give for each brewing ingredient

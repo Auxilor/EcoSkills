@@ -13,6 +13,11 @@ import org.bukkit.event.block.BlockDropItemEvent
 class EffectBountifulHarvest: Effect(
     "bountiful_harvest"
 ) {
+    override fun formatDescription(string: String, level: Int): String {
+        return string.replace("%chance%", NumberUtils.format(this.getChance(level)))
+            .replace("%multiplier%", this.getMultiplier(level).toString())
+    }
+
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: BlockDropItemEvent) {
         val block = event.block
@@ -55,5 +60,17 @@ class EffectBountifulHarvest: Effect(
                 .addItems(*event.items.map { item -> item.itemStack })
                 .push()
         }
+    }
+
+    private fun getMultiplier(level: Int): Int {
+        val chance = config.getDouble("chance-per-level") * level
+
+        return (chance / 100).toInt() + 1
+    }
+
+    private fun getChance(level: Int): Double {
+        val chance = config.getDouble("chance-per-level") * level
+
+        return chance - ((getMultiplier(level) - 1) * 100)
     }
 }

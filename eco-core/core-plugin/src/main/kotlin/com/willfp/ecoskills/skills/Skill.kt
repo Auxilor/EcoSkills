@@ -11,6 +11,7 @@ import com.willfp.ecoskills.config.SkillConfig
 import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.getSkillLevel
 import com.willfp.ecoskills.stats.Stats
+import org.bukkit.Effect
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
@@ -114,7 +115,17 @@ abstract class Skill(
 
         val messages = ArrayList<String>()
         for (string in this.config.getStrings("rewards.chat-messages.$highestLevel", false)) {
-            messages.add(StringUtils.format(string, player))
+            var msg = string
+
+            for (effect in Effects.values()) {
+                msg = msg.replace("%ecoskills_${effect.id}_description", effect.getDescription(level))
+            }
+            messages.add(
+                StringUtils.format(
+                    msg,
+                    player
+                )
+            )
         }
         return messages
     }
@@ -141,6 +152,11 @@ abstract class Skill(
                 s = s.replace("%ecoskills_${skillObject.id}%", objLevel.toString())
                 s = s.replace("%ecoskills_${skillObject.id}_numeral%", NumberUtils.toNumeral(objLevel))
             }
+            for (effect in Effects.values()) {
+                val objLevel = this.getCumulativeLevelUpReward(effect, level)
+                s = s.replace("%ecoskills_${effect.id}_description%", effect.getDescription(level))
+            }
+
             lore.add(StringUtils.format(s, player))
         }
         return lore

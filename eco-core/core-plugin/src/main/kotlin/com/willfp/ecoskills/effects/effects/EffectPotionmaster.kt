@@ -21,6 +21,10 @@ import org.bukkit.potion.PotionType
 class EffectPotionmaster : Effect(
     "potionmaster"
 ) {
+    override fun formatDescription(string: String, level: Int): String {
+        return string.replace("%percent_more%", NumberUtils.format(config.getDouble("percent-more-per-level") * level))
+    }
+
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: BrewEvent) {
         var player: Player? = null
