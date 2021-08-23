@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableSet;
 import com.willfp.eco.core.config.updating.ConfigUpdater;
 import com.willfp.ecoskills.effects.effects.EffectAcceleratedEscape;
 import com.willfp.ecoskills.effects.effects.EffectBountifulHarvest;
+import com.willfp.ecoskills.effects.effects.EffectDynamicMining;
 import com.willfp.ecoskills.effects.effects.EffectEndangering;
 import com.willfp.ecoskills.effects.effects.EffectInfernalResistance;
 import com.willfp.ecoskills.effects.effects.EffectCraftsmanship;
@@ -58,6 +59,7 @@ public class Effects {
     public static final Effect STRONG_IMPACT = new EffectStrongImpact();
     public static final Effect ENDANGERING = new EffectEndangering();
     public static final Effect SPELUNKING = new EffectSpelunking();
+    public static final Effect DYNAMIC_MINING = new EffectDynamicMining();
 
     @ApiStatus.Internal
     public static void registerNewEffect(@NotNull final Effect effect) {

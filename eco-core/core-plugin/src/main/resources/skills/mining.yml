@@ -17,6 +17,8 @@ gui:
     - "   %ecoskills_versatile_tools_description%"
     - "&8» &r&6Spelunking %ecoskills_spelunking_numeral%"
     - "   %ecoskills_spelunking_description%"
+    - "&8» &r&6Dynamic Mining %ecoskills_dynamic_mining_numeral%"
+    - "   %ecoskills_dynamic_mining_description%"
 
 rewards:
   # The actual rewards to be given
@@ -24,7 +26,8 @@ rewards:
     - "defense::2"
     - "ferocity::1:15:100"
     - "versatile_tools::1"
-    - "spelunking::1"
+    - "spelunking::1:10:100"
+    - "dynamic_mining::1"
 
   # The chat messages to send on level up
   chat-messages:
@@ -34,6 +37,14 @@ rewards:
       - "    %ecoskills_versatile_tools_description%"
       - " &8» &r&6Spelunking %ecoskills_spelunking_numeral%"
       - "    %ecoskills_spelunking_description%"
+    10:
+      - " &8» &r&f+2 %ecoskills_defense_name%"
+      - " &8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
+      - "    %ecoskills_versatile_tools_description%"
+      - " &8» &r&6Spelunking %ecoskills_spelunking_numeral%"
+      - "    %ecoskills_spelunking_description%"
+      - " &8» &r&6Dynamic Mining %ecoskills_dynamic_mining_numeral%"
+      - "    %ecoskills_dynamic_mining_description%"
     15:
       - " &8» &r&f+2 %ecoskills_defense_name%"
       - " &8» &r&f+1 %ecoskills_ferocity_name%"
@@ -41,6 +52,8 @@ rewards:
       - "    %ecoskills_versatile_tools_description%"
       - " &8» &r&6Spelunking %ecoskills_spelunking_numeral%"
       - "    %ecoskills_spelunking_description%"
+      - " &8» &r&6Dynamic Mining %ecoskills_dynamic_mining_numeral%"
+      - "    %ecoskills_dynamic_mining_description%"
 
   # The lore to show in the levels gui
   progression-lore:
@@ -50,6 +63,14 @@ rewards:
       - "    %ecoskills_versatile_tools_description%"
       - " &8» &r&6Spelunking %ecoskills_spelunking_numeral%"
       - "    %ecoskills_spelunking_description%"
+    10:
+      - " &8» &r&f+2 %ecoskills_defense_name%"
+      - " &8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
+      - "    %ecoskills_versatile_tools_description%"
+      - " &8» &r&6Spelunking %ecoskills_spelunking_numeral%"
+      - "    %ecoskills_spelunking_description%"
+      - " &8» &r&6Dynamic Mining %ecoskills_dynamic_mining_numeral%"
+      - "    %ecoskills_dynamic_mining_description%"
     15:
       - " &8» &r&f+2 %ecoskills_defense_name%"
       - " &8» &r&f+1 %ecoskills_ferocity_name%"
@@ -57,6 +78,8 @@ rewards:
       - "    %ecoskills_versatile_tools_description%"
       - " &8» &r&6Spelunking %ecoskills_spelunking_numeral%"
       - "    %ecoskills_spelunking_description%"
+      - " &8» &r&6Dynamic Mining %ecoskills_dynamic_mining_numeral%"
+      - "    %ecoskills_dynamic_mining_description%"
 
 # The xp rewards for each block type
 # Specify with type:xp

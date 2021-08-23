@@ -167,8 +167,18 @@ spelunking:
     - "diamond_ore"
     - "deepslate_diamond_ore"
 
-
   # Chance is as a percentage; if the chance for a player is over 100 then it will always be double drops
   # with a chance to get triple drops. Same goes if above 200, but then it will always be triple with a chance
   # for quadruple.
   chance-per-level: 4
+dynamic_mining:
+  description: "&a%chance%%&8 chance to get Haste III for &a%seconds%&8 when breaking blocks"
+
+  # The base ticks to give nausea for
+  base-ticks: 18
+  # The extra ticks to give nausea for per level
+  ticks-per-level: 2
+  # The chance to give nausea per level, as a percentage
+  chance-per-level: 1.5
+  # The level of haste to give
+  level: 3
