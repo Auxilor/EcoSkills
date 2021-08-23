@@ -153,7 +153,6 @@ abstract class Skill(
                 s = s.replace("%ecoskills_${skillObject.id}_numeral%", NumberUtils.toNumeral(objLevel))
             }
             for (effect in Effects.values()) {
-                val objLevel = this.getCumulativeLevelUpReward(effect, level)
                 s = s.replace("%ecoskills_${effect.id}_description%", effect.getDescription(level))
             }
 
