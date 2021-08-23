@@ -120,7 +120,7 @@ infernal_resistance:
   # The chance to ignore damage, as a percentage
   chance-per-level: 2
 bravery:
-  description: "&8Take &a%chance%%&8 less damage from bosses"
+  description: "&8Take &a%percent_less%%&8 less damage from bosses"
 
   # The percent less damage to take
   percent-less-per-level: 1.5

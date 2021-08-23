@@ -1,41 +1,44 @@
 package com.willfp.ecoskills.effects.effects
 
+import com.willfp.eco.util.NamespacedKeyUtils
 import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.getEffectLevel
+import org.bukkit.entity.Boss
+import org.bukkit.entity.ElderGuardian
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
-import org.bukkit.event.entity.EntityDamageEvent
+import org.bukkit.event.entity.EntityDamageByEntityEvent
+import org.bukkit.persistence.PersistentDataType
+
 
 class EffectBravery: Effect(
     "bravery"
 ) {
     override fun formatDescription(string: String, level: Int): String {
-        return string.replace("%chance%", NumberUtils.format(config.getDouble("chance-per-level") * level))
+        return string.replace("%percent_less%", NumberUtils.format(config.getDouble("percent-less-per-level") * level))
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-    fun handle(event: EntityDamageEvent) {
+    fun handle(event: EntityDamageByEntityEvent) {
         val player = event.entity
 
         if (player !is Player) {
             return
         }
 
-        if (event.cause != EntityDamageEvent.DamageCause.FIRE
-            && event.cause != EntityDamageEvent.DamageCause.FIRE_TICK
-            && event.cause != EntityDamageEvent.DamageCause.LAVA
-            && event.cause != EntityDamageEvent.DamageCause.HOT_FLOOR) {
+        if (event.damager !is Boss && event.damager !is ElderGuardian
+            && !event.damager.persistentDataContainer.has(NamespacedKeyUtils.create("ecobosses", "boss"), PersistentDataType.STRING)) {
             return
         }
 
         val level = player.getEffectLevel(this)
 
-        val chance = config.getDouble("chance-per-level") * level
+        var multiplier = config.getDouble("percent-less-per-level") * level
+        multiplier /= 100
+        multiplier = 1 - multiplier
 
-        if (NumberUtils.randFloat(0.0, 100.0) < chance) {
-            event.isCancelled = true
-        }
+        event.damage = event.damage * multiplier
     }
 }
