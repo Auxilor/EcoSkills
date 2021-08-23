@@ -9,13 +9,16 @@ class DataRunnable (
     private val plugin: EcoSkillsPlugin
 ) : Runnable {
     override fun run() {
+        if (Bukkit.getOnlinePlayers().isEmpty()) {
+            return
+        }
         if (plugin.configYml.getBool("log-autosaves")) {
-            Bukkit.getLogger().info("Auto-Saving player data!")
+            plugin.logger.info("Auto-Saving player data!")
         }
         plugin.dataYml.save()
         PlayerHelper.expMultiplierCache.clear()
         if (plugin.configYml.getBool("log-autosaves")) {
-            Bukkit.getLogger().info("Saved data!")
+            plugin.logger.info("Saved data!")
         }
     }
 }
