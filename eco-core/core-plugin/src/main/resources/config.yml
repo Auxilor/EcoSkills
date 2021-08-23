@@ -303,3 +303,5 @@ commands:
   top:
     # If displayname (including rank) should be used
     use-display-name: true
+
+log-autosaves: true # If auto-save messages should be sent to console

@@ -5,6 +5,7 @@ import com.willfp.eco.core.command.CommandHandler
 import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.EcoSkillsPlugin
+import com.willfp.ecoskills.data.LeaderboardRunnable
 import com.willfp.ecoskills.getTotalSkillLevel
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
@@ -32,23 +33,7 @@ class CommandTop(plugin: EcoPlugin) :
                 page = args[0].toIntOrNull() ?: 1
             }
 
-            val plugin = plugin as EcoSkillsPlugin
-            val uuidStrings = plugin.dataYml.getSubsectionOrNull("player")?.getKeys(false) ?: ArrayList()
-            val uuids = uuidStrings.stream().map { s -> UUID.fromString(s) }.toList()
-
-            val temp = HashMap<OfflinePlayer, Int>()
-            val top = ArrayList<OfflinePlayer>()
-
-            for (uuid in uuids) {
-                val player = Bukkit.getOfflinePlayer(uuid)
-                temp[player] = 10000 - player.getTotalSkillLevel()
-            }
-
-            val temp2 = temp.toList().sortedBy { (_, value) -> value }.toMap()
-
-            for (entry in temp2) {
-                top.add(entry.key)
-            }
+            val top = LeaderboardRunnable.sortedLeaderboard
 
             val maxPage = ceil(top.size / 10.0).toInt()
             if (maxPage < page) {

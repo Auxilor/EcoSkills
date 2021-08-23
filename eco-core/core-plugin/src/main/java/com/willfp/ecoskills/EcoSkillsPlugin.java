@@ -5,10 +5,11 @@ import com.willfp.eco.core.command.impl.PluginCommand;
 import com.willfp.eco.core.integrations.IntegrationLoader;
 import com.willfp.ecoskills.commands.CommandEcoskills;
 import com.willfp.ecoskills.commands.CommandSkills;
-import com.willfp.ecoskills.data.DataAutosave;
+import com.willfp.ecoskills.data.DataRunnable;
 import com.willfp.ecoskills.data.DataListener;
 import com.willfp.ecoskills.data.DataYml;
 import com.willfp.ecoskills.data.EffectsYml;
+import com.willfp.ecoskills.data.LeaderboardRunnable;
 import com.willfp.ecoskills.effects.Effect;
 import com.willfp.ecoskills.effects.Effects;
 import com.willfp.ecoskills.skills.Skill;
@@ -66,7 +67,8 @@ public class EcoSkillsPlugin extends EcoPlugin {
             this.getEventManager().registerListener(skill);
         }
 
-        this.getScheduler().runAsyncTimer(new DataAutosave(this), 20000, 20000);
+        this.getScheduler().runTimer(new DataRunnable(this), 20000, 20000);
+        this.getScheduler().runTimer(new LeaderboardRunnable(this), 50, 2400);
     }
 
     @Override
