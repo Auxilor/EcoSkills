@@ -1,13 +1,13 @@
-package com.willfp.ecoskills.data
+package com.willfp.ecoskills.config
 
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.config.yaml.YamlBaseConfig
 
-class DataYml(
+class EffectsYml(
     plugin: EcoPlugin
 ): YamlBaseConfig(
-    "data",
-    false,
+    "effects",
+    true,
     plugin
 ) {
 }
