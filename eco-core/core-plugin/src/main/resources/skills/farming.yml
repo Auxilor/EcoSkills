@@ -14,8 +14,11 @@ gui:
     - "&f"
     - "&fEffects:"
     - "&8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
+    - "    %ecoskills_bountiful_harvest_description%"
     - "&8» &r&6Satiation %ecoskills_satiation_numeral%"
+    - "    %ecoskills_satiation_description%"
     - "&8» &r&6Golden Yield %ecoskills_golden_yield_numeral%"
+    - "    %ecoskills_golden_yield_description%"
 
 rewards:
   # The actual rewards to be given
@@ -32,13 +35,18 @@ rewards:
       - " &8» &r&f+2 %ecoskills_crit_damage_name%"
       - " &8» &r&f+1 %ecoskills_wisdom_name%"
       - " &8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
+      - "     %ecoskills_bountiful_harvest_description%"
       - " &8» &r&6Satiation %ecoskills_satiation_numeral%"
+      - "     %ecoskills_satiation_description%"
     10:
       - " &8» &r&f+2 %ecoskills_crit_damage_name%"
       - " &8» &r&f+1 %ecoskills_wisdom_name%"
       - " &8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
+      - "     %ecoskills_bountiful_harvest_description%"
       - " &8» &r&6Satiation %ecoskills_satiation_numeral%"
+      - "     %ecoskills_satiation_description%"
       - " &8» &r&6Golden Yield %ecoskills_golden_yield_numeral%"
+      - "     %ecoskills_golden_yield_description%"
 
   # The lore to show in the levels gui
   progression-lore:
@@ -46,13 +54,18 @@ rewards:
       - " &8» &r&f+2 %ecoskills_crit_damage_name%"
       - " &8» &r&f+1 %ecoskills_wisdom_name%"
       - " &8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
+      - "     %ecoskills_bountiful_harvest_description%"
       - " &8» &r&6Satiation %ecoskills_satiation_numeral%"
+      - "     %ecoskills_satiation_description%"
     10:
       - " &8» &r&f+2 %ecoskills_crit_damage_name%"
       - " &8» &r&f+1 %ecoskills_wisdom_name%"
       - " &8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
+      - "     %ecoskills_bountiful_harvest_description%"
       - " &8» &r&6Satiation %ecoskills_satiation_numeral%"
+      - "     %ecoskills_satiation_description%"
       - " &8» &r&6Golden Yield %ecoskills_golden_yield_numeral%"
+      - "     %ecoskills_golden_yield_description%"
 
 # The xp rewards for each crop type
 # Specify with type:xp

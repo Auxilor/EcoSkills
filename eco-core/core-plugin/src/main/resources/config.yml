@@ -373,7 +373,7 @@ effects:
     # The ticks faster brewing time for each level (default is 400)
     ticks-less-per-level: 6
   mystic_resilience:
-    description: "&a%chance%%&8 to ignore negative potion effects take"
+    description: "&a%chance%%&8 to ignore negative potion effects"
 
     # Chance per level as a percentage
     chance-per-level: 0.1

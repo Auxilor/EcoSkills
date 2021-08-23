@@ -14,6 +14,7 @@ gui:
     - "&f"
     - "&fEffects:"
     - "&8» &r&6Second Chance %ecoskills_second_chance_numeral%"
+    - "    %ecoskills_second_chance_description%"
 
 rewards:
   # The actual rewards to be given
@@ -28,6 +29,7 @@ rewards:
       - " &8» &r&f+2 %ecoskills_wisdom_name%"
       - " &8» &r&f+1 %ecoskills_crit_chance_name%"
       - " &8» &r&6Second Chance %ecoskills_second_chance_numeral%"
+      - "     %ecoskills_second_chance_description%"
 
   # The lore to show in the levels gui
   progression-lore:
@@ -35,6 +37,7 @@ rewards:
       - " &8» &r&f+2 %ecoskills_wisdom_name%"
       - " &8» &r&f+1 %ecoskills_crit_chance_name%"
       - " &8» &r&6Second Chance %ecoskills_second_chance_numeral%"
+      - "     %ecoskills_second_chance_description%"
 
 # The experience to give for each level cost of enchanting
 xp-per-level: 4
