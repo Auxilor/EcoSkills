@@ -51,15 +51,15 @@ class EffectSerratedStrikes : Effect(
 
         var bleedCount = config.getInt("bleed-ticks")
         bleedCount *= level
-        val finalBleedCount = bleedCount
 
-        val currentBleedCount = AtomicInteger(0)
+        var currentBleedCount = 0
 
         plugin.runnableFactory.create { bukkitRunnable: RunnableTask ->
-            currentBleedCount.addAndGet(1)
+            currentBleedCount++
             victim.damage(bleedDamage)
-            if (currentBleedCount.get() >= finalBleedCount) {
+            if (currentBleedCount >= bleedCount) {
                 bukkitRunnable.cancel()
+                return@create
             }
         }.runTaskTimer(config.getInt("bleed-tick-spacing").toLong(), config.getInt("bleed-tick-spacing").toLong())
     }

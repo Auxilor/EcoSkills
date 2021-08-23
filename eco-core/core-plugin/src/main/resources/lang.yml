@@ -12,7 +12,7 @@ messages:
   requires-amount: "&cYou must specify the amount!"
   invalid-amount: "&cInvalid amount!"
   gave-skill-xp: "Gave %player% %amount% %skill% experience!"
-  gave-stat: "Gave %player% %amount% %stat% levels!"
+  gave-stat: "Gave %player% %amount% %stat%&r!"
 
 top-line-format: "%rank%. %player% - %level%"
 top:

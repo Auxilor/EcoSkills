@@ -11,6 +11,7 @@ import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.stats.Stat
 import com.willfp.ecoskills.stats.Stats
+import com.willfp.ecoskills.util.CommandGiveHelper
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
@@ -100,7 +101,7 @@ class CommandGive(plugin: EcoPlugin) :
             if (args.size == 2) {
                 StringUtil.copyPartialMatches(
                     args[1],
-                    skills union stats,
+                    CommandGiveHelper.SKILL_NAMES union CommandGiveHelper.STAT_NAMES,
                     completions
                 )
                 return@TabCompleteHandler completions
@@ -109,39 +110,13 @@ class CommandGive(plugin: EcoPlugin) :
             if (args.size == 3) {
                 StringUtil.copyPartialMatches(
                     args[2],
-                    amount,
+                    CommandGiveHelper.AMOUNTS,
                     completions
                 )
                 return@TabCompleteHandler completions
             }
 
             return@TabCompleteHandler  ArrayList<String>(0)
-        }
-    }
-
-    companion object {
-        val skills = ArrayList<String>()
-        val stats = ArrayList<String>()
-        val amount = listOf(
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "10"
-        )
-
-        @JvmStatic
-        @ConfigUpdater
-        fun update(plugin: EcoPlugin) {
-            skills.clear()
-            skills.addAll(
-                Skills.values().map { skill -> skill.id.lowercase() }.toList()
-            )
-            stats.clear()
-            stats.addAll(
-                Stats.values().map { stat -> stat.id.lowercase() }.toList()
-            )
         }
     }
 }
