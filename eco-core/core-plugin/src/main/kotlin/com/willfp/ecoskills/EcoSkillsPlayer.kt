@@ -15,7 +15,6 @@ import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
 import org.bukkit.persistence.PersistentDataType
 import java.util.*
-import kotlin.collections.HashMap
 
 
 object PlayerHelper {
@@ -66,7 +65,7 @@ private fun Player.cacheSkillExperienceMultiplier(): Double {
     for (permissionAttachmentInfo in this.effectivePermissions) {
         val permission = permissionAttachmentInfo.permission
         if (permission.startsWith(prefix)) {
-            return (permission.substring(permission.lastIndexOf(".") + 1).toDouble() / 100) + 1
+            return (permission.substring(permission.lastIndexOf(".") + 1).toDoubleOrNull() ?: 100.0 / 100) + 1
         }
     }
 
