@@ -17,8 +17,8 @@ gui:
     - "   %ecoskills_second_chance_description%"
     - "&8» &r&6Reimbursement %ecoskills_reimbursement_numeral%"
     - "   %ecoskills_reimbursement_description%"
-    - "&8» &r&6Over Compensation %ecoskills_over_compensation_numeral%"
-    - "   %ecoskills_over_compensation_description%"
+    - "&8» &r&6Overcompensation %ecoskills_overcompensation_numeral%"
+    - "   %ecoskills_overcompensation_description%"
 
 rewards:
   # The actual rewards to be given
@@ -27,7 +27,7 @@ rewards:
     - "crit_chance::1"
     - "second_chance::1"
     - "reimbursement::1"
-    - "over_compensation::1:10:100"
+    - "overcompensation::1:10:100"
 
   # The chat messages to send on level up
   chat-messages:
@@ -45,8 +45,8 @@ rewards:
       - "    %ecoskills_second_chance_description%"
       - " &8» &r&6Reimbursement %ecoskills_reimbursement_numeral%"
       - "    %ecoskills_reimbursement_description%"
-      - " &8» &r&6Over Compensation %ecoskills_over_compensation_numeral%"
-      - "    %ecoskills_over_compensation_description%"
+      - " &8» &r&6Overcompensation %ecoskills_over_compensation_numeral%"
+      - "    %ecoskills_overcompensation_description%"
 
   # The lore to show in the levels gui
   progression-lore:
@@ -64,7 +64,7 @@ rewards:
       - "    %ecoskills_second_chance_description%"
       - " &8» &r&6Reimbursement %ecoskills_reimbursement_numeral%"
       - "    %ecoskills_reimbursement_description%"
-      - " &8» &r&6Over Compensation %ecoskills_over_compensation_numeral%"
-      - "    %ecoskills_over_compensation_description%"
+      - " &8» &r&6Overcompensation %ecoskills_over_compensation_numeral%"
+      - "    %ecoskills_overcompensation_description%"
 # The experience to give for each level cost of enchanting
 xp-per-level: 4
