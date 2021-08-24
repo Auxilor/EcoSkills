@@ -41,7 +41,7 @@ public class Effects {
     public static final Effect SPELUNKING = new EffectSpelunking();
     public static final Effect DYNAMIC_MINING = new EffectDynamicMining();
     public static final Effect REIMBURSEMENT = new EffectReimbursement();
-    public static final Effect OVER_COMPENSATION = new EffectOverCompensation();
+    public static final Effect OVERCOMPENSATION = new EffectOvercompensation();
 
     @ApiStatus.Internal
     public static void registerNewEffect(@NotNull final Effect effect) {

@@ -12,8 +12,8 @@ import org.bukkit.inventory.EnchantingInventory
 import org.bukkit.inventory.ItemStack
 
 
-class EffectOverCompensation : Effect(
-        "over_compensation"
+class EffectOvercompensation : Effect(
+        "overcompensation"
 ) {
     override fun formatDescription(string: String, level: Int): String {
         return string.replace("%chance%", NumberUtils.format(config.getDouble("chance-per-level") * level))
@@ -22,17 +22,11 @@ class EffectOverCompensation : Effect(
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handleLevelling(event: EnchantItemEvent) {
         val player = event.enchanter
-        val cost = event.whichButton()+1
+        val cost = event.whichButton() + 1
 
         val chance = config.getDouble("chance-per-level") * player.getEffectLevel(this)
 
         if (NumberUtils.randFloat(0.0, 100.0) < chance) {
-            Bukkit.getLogger().info("?")
-            Bukkit.getLogger().info(NumberUtils.randFloat(0.0, 100.0).toString())
-            Bukkit.getLogger().info(chance.toString())
-
-
-//            event.isCancelled = true
                 this.plugin.scheduler.runLater({
                     event.inventory.addItem(ItemStack(Material.LAPIS_LAZULI, cost))
                 }, 2)

@@ -187,8 +187,8 @@ reimbursement:
 
   # The chance to get experience back, as a percentage
   chance-per-level: 0.5
-over_compensation:
-  description: "&a%chance%%&8 chance to get Lapis Lazuli back after enchanting"
+overcompensation:
+  description: "&a%chance%%&8 chance to get lapis back after enchanting"
 
   # The chance to get experience back, as a percentage
   chance-per-level: 0.75
