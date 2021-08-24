@@ -5,6 +5,7 @@ import com.willfp.eco.core.command.impl.PluginCommand;
 import com.willfp.eco.core.integrations.IntegrationLoader;
 import com.willfp.ecoskills.commands.CommandEcoskills;
 import com.willfp.ecoskills.commands.CommandSkills;
+import com.willfp.ecoskills.data.PlayerBlockListener;
 import com.willfp.ecoskills.data.SaveHandler;
 import com.willfp.ecoskills.data.DataListener;
 import com.willfp.ecoskills.config.DataYml;
@@ -115,6 +116,7 @@ public class EcoSkillsPlugin extends EcoPlugin {
                 new SkillDisplayListener(this),
                 new StatModifierListener(this),
                 new DataListener(this),
+                new PlayerBlockListener(this),
                 EcoSkillsEventModifierHandler.INSTANCE
         );
     }
