@@ -2,13 +2,11 @@ package com.willfp.ecoskills.effects.effects
 
 import com.willfp.eco.core.drops.DropQueue
 import com.willfp.eco.util.NumberUtils
+import com.willfp.ecoskills.data.isPlayerPlaced
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.getEffectLevel
-import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
-import org.bukkit.block.data.Ageable
-import org.bukkit.enchantments.Enchantment
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.block.BlockBreakEvent
@@ -39,7 +37,9 @@ class EffectSpelunking: Effect(
 
         val player = event.player
 
-        if (player.inventory.itemInMainHand.containsEnchantment(Enchantment.SILK_TOUCH)) {
+        val block = event.block
+
+        if (block.isPlayerPlaced()) {
             return
         }
 
