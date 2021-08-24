@@ -1,8 +1,10 @@
 package com.willfp.ecoskills.effects.effects
 
 import com.willfp.eco.core.drops.DropQueue
+import com.willfp.eco.util.NamespacedKeyUtils
 import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.data.isPlayerPlaced
+import com.willfp.ecoskills.data.removeEcoPlacedMetadata
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.getEffectLevel
 import org.bukkit.Location
@@ -40,8 +42,10 @@ class EffectSpelunking: Effect(
         val block = event.block
 
         if (block.isPlayerPlaced()) {
+            block.removeEcoPlacedMetadata()
             return
         }
+        block.removeEcoPlacedMetadata()
 
         if (!config.getStrings("on-blocks").contains(mat.name.lowercase())) {
             return
@@ -50,6 +54,7 @@ class EffectSpelunking: Effect(
         if (event.items.isEmpty()) {
             return
         }
+
 
         val level = player.getEffectLevel(this)
 

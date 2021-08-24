@@ -37,3 +37,8 @@ fun Block.isPlayerPlaced(): Boolean {
     val chunk = this.chunk
     return chunk.persistentDataContainer.has(NamespacedKeyUtils.create("ecoskills", this.location.hashCode().toString(16)), PersistentDataType.INTEGER)
 }
+
+fun Block.removeEcoPlacedMetadata() {
+    val chunk = this.chunk
+    chunk.persistentDataContainer.remove(NamespacedKeyUtils.create("ecoskills", this.location.hashCode().toString(16)))
+}
