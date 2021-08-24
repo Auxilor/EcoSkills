@@ -1,9 +1,10 @@
 package com.willfp.ecoskills.skills.skills
 
+import com.willfp.ecoskills.data.isPlayerPlaced
 import com.willfp.ecoskills.giveSkillExperience
 import com.willfp.ecoskills.skills.Skill
+import org.bukkit.GameMode
 import org.bukkit.Material
-import org.bukkit.enchantments.Enchantment
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.block.BlockBreakEvent
@@ -32,9 +33,13 @@ class SkillMining : Skill(
         val type = event.block.type
         val player = event.player
 
+        if (player.gameMode == GameMode.CREATIVE || player.gameMode == GameMode.SPECTATOR) {
+            return
+        }
+
         val toGive = rewards[type] ?: return
 
-        if (player.inventory.itemInMainHand.getEnchantmentLevel(Enchantment.SILK_TOUCH) != 0) {
+        if (event.block.isPlayerPlaced()) {
             return
         }
 

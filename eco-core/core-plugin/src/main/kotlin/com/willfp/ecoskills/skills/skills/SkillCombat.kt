@@ -3,6 +3,7 @@ package com.willfp.ecoskills.skills.skills
 import com.willfp.eco.core.events.EntityDeathByEntityEvent
 import com.willfp.ecoskills.giveSkillExperience
 import com.willfp.ecoskills.skills.Skill
+import org.bukkit.GameMode
 import org.bukkit.attribute.Attribute
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
@@ -25,6 +26,10 @@ class SkillCombat : Skill(
         }
 
         if (player !is Player) {
+            return
+        }
+
+        if (player.gameMode == GameMode.CREATIVE || player.gameMode == GameMode.SPECTATOR) {
             return
         }
 

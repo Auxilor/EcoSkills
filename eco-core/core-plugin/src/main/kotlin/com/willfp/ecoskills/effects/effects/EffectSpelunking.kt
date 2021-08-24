@@ -5,7 +5,6 @@ import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.data.isPlayerPlaced
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.getEffectLevel
-import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.event.EventHandler
@@ -63,26 +62,17 @@ class EffectSpelunking : Effect(
 
         val multiplier = getMultiplier(level)
 
-        val dropEvent = BlockDropItemEvent(block, block.state, player, event.items)
-        noRepeat.add(dropEvent)
-        this.plugin.scheduler.runLater({ noRepeat.remove(dropEvent) }, 2)
-        Bukkit.getPluginManager().callEvent(dropEvent)
-
-        if (dropEvent.items.isEmpty()) {
-            return
-        }
-
         if (multiplier >= 2) {
             for (i in 2..multiplier) {
                 DropQueue(player)
-                    .addItems(*dropEvent.items.map { item -> item.itemStack })
+                    .addItems(*event.items.map { item -> item.itemStack })
                     .push()
             }
         }
 
         if (NumberUtils.randFloat(0.0, 100.0) < chance) {
             DropQueue(player)
-                .addItems(*dropEvent.items.map { item -> item.itemStack })
+                .addItems(*event.items.map { item -> item.itemStack })
                 .push()
         }
     }

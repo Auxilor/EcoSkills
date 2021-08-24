@@ -3,6 +3,7 @@ package com.willfp.ecoskills.skills.skills
 import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.giveSkillExperience
 import com.willfp.ecoskills.skills.Skill
+import org.bukkit.GameMode
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -15,6 +16,10 @@ class SkillExploration : Skill(
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handleLevelling(event: PlayerMoveEvent) {
         val player = event.player
+
+        if (player.gameMode == GameMode.CREATIVE || player.gameMode == GameMode.SPECTATOR) {
+            return
+        }
 
         val from = event.from
         val to = event.to ?: return
