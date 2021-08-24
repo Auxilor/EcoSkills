@@ -5,6 +5,7 @@ import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.data.isPlayerPlaced
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.getEffectLevel
+import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.event.EventHandler
@@ -12,10 +13,11 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockDropItemEvent
 
-class EffectSpelunking: Effect(
+class EffectSpelunking : Effect(
     "spelunking"
 ) {
     private val blockMap = HashMap<Location, Material>()
+    private val noRepeat = ArrayList<BlockDropItemEvent>()
 
     override fun formatDescription(string: String, level: Int): String {
         return string.replace("%chance%", NumberUtils.format(this.getChance(level)))
@@ -33,6 +35,10 @@ class EffectSpelunking: Effect(
 
     @EventHandler(ignoreCancelled = true)
     fun handle(event: BlockDropItemEvent) {
+        if (noRepeat.contains(event)) {
+            return
+        }
+
         val mat = blockMap[event.block.location] ?: return
 
         val player = event.player
@@ -57,17 +63,26 @@ class EffectSpelunking: Effect(
 
         val multiplier = getMultiplier(level)
 
+        val dropEvent = BlockDropItemEvent(block, block.state, player, event.items)
+        noRepeat.add(dropEvent)
+        this.plugin.scheduler.runLater({ noRepeat.remove(dropEvent) }, 2)
+        Bukkit.getPluginManager().callEvent(dropEvent)
+
+        if (dropEvent.items.isEmpty()) {
+            return
+        }
+
         if (multiplier >= 2) {
             for (i in 2..multiplier) {
                 DropQueue(player)
-                    .addItems(*event.items.map { item -> item.itemStack })
+                    .addItems(*dropEvent.items.map { item -> item.itemStack })
                     .push()
             }
         }
 
         if (NumberUtils.randFloat(0.0, 100.0) < chance) {
             DropQueue(player)
-                .addItems(*event.items.map { item -> item.itemStack })
+                .addItems(*dropEvent.items.map { item -> item.itemStack })
                 .push()
         }
     }
