@@ -2,29 +2,7 @@ package com.willfp.ecoskills.effects;
 
 import com.google.common.collect.ImmutableSet;
 import com.willfp.eco.core.config.updating.ConfigUpdater;
-import com.willfp.ecoskills.effects.effects.EffectAcceleratedEscape;
-import com.willfp.ecoskills.effects.effects.EffectBountifulHarvest;
-import com.willfp.ecoskills.effects.effects.EffectBravery;
-import com.willfp.ecoskills.effects.effects.EffectDynamicMining;
-import com.willfp.ecoskills.effects.effects.EffectEndangering;
-import com.willfp.ecoskills.effects.effects.EffectInfernalResistance;
-import com.willfp.ecoskills.effects.effects.EffectCraftsmanship;
-import com.willfp.ecoskills.effects.effects.EffectDazzle;
-import com.willfp.ecoskills.effects.effects.EffectDodging;
-import com.willfp.ecoskills.effects.effects.EffectEfficientBrewing;
-import com.willfp.ecoskills.effects.effects.EffectEyeOfTheDepths;
-import com.willfp.ecoskills.effects.effects.EffectGoldenYield;
-import com.willfp.ecoskills.effects.effects.EffectMysticResilience;
-import com.willfp.ecoskills.effects.effects.EffectPotionmaster;
-import com.willfp.ecoskills.effects.effects.EffectReimbursement;
-import com.willfp.ecoskills.effects.effects.EffectSatiation;
-import com.willfp.ecoskills.effects.effects.EffectSeamlessMovement;
-import com.willfp.ecoskills.effects.effects.EffectSecondChance;
-import com.willfp.ecoskills.effects.effects.EffectSerratedStrikes;
-import com.willfp.ecoskills.effects.effects.EffectShamanism;
-import com.willfp.ecoskills.effects.effects.EffectSpelunking;
-import com.willfp.ecoskills.effects.effects.EffectStrongImpact;
-import com.willfp.ecoskills.effects.effects.EffectVersatileTools;
+import com.willfp.ecoskills.effects.effects.*;
 import org.bukkit.NamespacedKey;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -63,6 +41,7 @@ public class Effects {
     public static final Effect SPELUNKING = new EffectSpelunking();
     public static final Effect DYNAMIC_MINING = new EffectDynamicMining();
     public static final Effect REIMBURSEMENT = new EffectReimbursement();
+    public static final Effect OVER_COMPENSATION = new EffectOverCompensation();
 
     @ApiStatus.Internal
     public static void registerNewEffect(@NotNull final Effect effect) {
