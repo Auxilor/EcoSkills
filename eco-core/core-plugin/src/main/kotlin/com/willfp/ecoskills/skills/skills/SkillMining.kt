@@ -1,5 +1,6 @@
 package com.willfp.ecoskills.skills.skills
 
+import com.willfp.ecoskills.data.isPlayerPlaced
 import com.willfp.ecoskills.giveSkillExperience
 import com.willfp.ecoskills.skills.Skill
 import org.bukkit.Material
@@ -31,12 +32,15 @@ class SkillMining : Skill(
     fun handleLevelling(event: BlockBreakEvent) {
         val type = event.block.type
         val player = event.player
+        val block = event.block
 
         val toGive = rewards[type] ?: return
 
-        if (player.inventory.itemInMainHand.getEnchantmentLevel(Enchantment.SILK_TOUCH) != 0) {
+        if (block.isPlayerPlaced()) {
             return
         }
+
+
 
         player.giveSkillExperience(this, toGive)
     }
