@@ -71,8 +71,6 @@ class CommandTop(plugin: EcoPlugin) :
 
                 line = line.replace("%playername%", name)
 
-                line = StringUtils.format(line)
-
                 lines.add(line)
 
                 rank++
@@ -85,7 +83,7 @@ class CommandTop(plugin: EcoPlugin) :
             }
 
             for (message in messages) {
-                sender.sendMessage(message)
+                sender.sendMessage(StringUtils.format(message))
             }
         }
     }

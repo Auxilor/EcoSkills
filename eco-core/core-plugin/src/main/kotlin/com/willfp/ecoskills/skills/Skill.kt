@@ -12,7 +12,6 @@ import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.getSkillLevel
 import com.willfp.ecoskills.stats.Stats
-import org.bukkit.Bukkit
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
@@ -100,7 +99,7 @@ abstract class Skill(
 
     fun getCumulativeLevelUpReward(skillObject: SkillObject, to: Int): Int {
         var levels = 0
-        for (i in 0..to) {
+        for (i in 1..to) {
             levels += getLevelUpReward(skillObject, i)
         }
 
@@ -165,7 +164,7 @@ abstract class Skill(
                     s = s.replace("%ecoskills_${skillObject.id}_numeral%", NumberUtils.toNumeral(objLevel))
 
                     if (skillObject is Effect) {
-                        s = s.replace("%ecoskills_${skillObject.id}_description%", skillObject.getDescription(level))
+                        s = s.replace("%ecoskills_${skillObject.id}_description%", skillObject.getDescription(objLevel))
                     }
                 }
 
