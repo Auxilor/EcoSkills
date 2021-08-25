@@ -4,14 +4,14 @@ import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.CommandHandler
 import com.willfp.eco.core.command.TabCompleteHandler
 import com.willfp.eco.core.command.impl.Subcommand
-import com.willfp.eco.core.config.updating.ConfigUpdater
-import com.willfp.ecoskills.*
-import com.willfp.ecoskills.effects.Effects
+import com.willfp.ecoskills.getStatLevel
+import com.willfp.ecoskills.giveSkillExperience
+import com.willfp.ecoskills.setStatLevel
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.stats.Stat
 import com.willfp.ecoskills.stats.Stats
-import com.willfp.ecoskills.util.CommandGiveHelper
+import com.willfp.ecoskills.util.TabCompleteHelper
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
@@ -101,7 +101,7 @@ class CommandGive(plugin: EcoPlugin) :
             if (args.size == 2) {
                 StringUtil.copyPartialMatches(
                     args[1],
-                    CommandGiveHelper.SKILL_NAMES union CommandGiveHelper.STAT_NAMES,
+                    TabCompleteHelper.SKILL_NAMES union TabCompleteHelper.STAT_NAMES,
                     completions
                 )
                 return@TabCompleteHandler completions
@@ -110,7 +110,7 @@ class CommandGive(plugin: EcoPlugin) :
             if (args.size == 3) {
                 StringUtil.copyPartialMatches(
                     args[2],
-                    CommandGiveHelper.AMOUNTS,
+                    TabCompleteHelper.AMOUNTS,
                     completions
                 )
                 return@TabCompleteHandler completions
