@@ -6,7 +6,6 @@ import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.data.LeaderboardHandler
 import com.willfp.ecoskills.getTotalSkillLevel
-import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -70,9 +69,9 @@ class CommandTop(plugin: EcoPlugin) :
                     name = player.displayName
                 }
 
-                Bukkit.getLogger().info("${player.uniqueId} HAS NAME $name")
+                line = line.replace("%playername%", name)
 
-                line = line.replace("%player%", name)
+                line = StringUtils.format(line)
 
                 lines.add(line)
 
@@ -86,7 +85,7 @@ class CommandTop(plugin: EcoPlugin) :
             }
 
             for (message in messages) {
-                sender.sendMessage(StringUtils.format(message))
+                sender.sendMessage(message)
             }
         }
     }

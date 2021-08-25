@@ -16,7 +16,7 @@ messages:
 
 line-wrap-color: "&8"
 
-top-line-format: "%rank%. %player% - %level%"
+top-line-format: "%rank%. %playername% - %level%"
 top:
   - "---- Skills Leaderboard ----"
   - "%lines%"
