@@ -71,21 +71,16 @@ class SkillGUI(
             val wrappedLore = mutableListOf<String>()
 
             for (line in lore) {
-                val whitespaceLen = line.length - line.trim().length
-                val whitespace = " ".repeat(whitespaceLen)
+                val indent = " ".repeat(line.length - line.trim().length)
                 val wrapped = WordUtils.wrap(
-                    line,
+                    line.trim(),
                     plugin.configYml.getInt("gui.line-wrap"),
                     "\n${plugin.langYml.getString("line-wrap-color")}", false
                 ).split("\n").toMutableList()
 
-                if (wrapped.size > 1) {
-                    wrapped.replaceAll { "$whitespace$it" }
-                }
+                wrapped.replaceAll { "$indent$it" }
 
-                wrappedLore.addAll(
-                    wrapped
-                )
+                wrappedLore.addAll(wrapped)
             }
 
             wrappedLore
@@ -259,21 +254,16 @@ class SkillGUI(
                                     val wrappedLore = ArrayList<String>()
 
                                     for (line in lore) {
-                                        val whitespaceLen = line.length - line.trim().length
-                                        val whitespace = " ".repeat(whitespaceLen)
+                                        val indent = " ".repeat(line.length - line.trim().length)
                                         val wrapped = WordUtils.wrap(
-                                            line,
+                                            line.trim(),
                                             plugin.configYml.getInt("gui.line-wrap"),
                                             "\n${plugin.langYml.getString("line-wrap-color")}", false
                                         ).split("\n").toMutableList()
 
-                                        if (wrapped.size > 1) {
-                                            wrapped.replaceAll { "$whitespace$it" }
-                                        }
+                                        wrapped.replaceAll { "$indent$it" }
 
-                                        wrappedLore.addAll(
-                                            wrapped
-                                        )
+                                        wrappedLore.addAll(wrapped)
                                     }
 
                                     meta.lore = wrappedLore
