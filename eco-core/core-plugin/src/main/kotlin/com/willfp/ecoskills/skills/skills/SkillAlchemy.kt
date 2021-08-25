@@ -2,6 +2,7 @@ package com.willfp.ecoskills.skills.skills
 
 import com.willfp.ecoskills.giveSkillExperience
 import com.willfp.ecoskills.skills.Skill
+import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -40,6 +41,10 @@ class SkillAlchemy : Skill(
         }
 
         if (player == null) {
+            return
+        }
+
+        if (player.gameMode == GameMode.CREATIVE || player.gameMode == GameMode.SPECTATOR) {
             return
         }
 

@@ -14,10 +14,11 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockDropItemEvent
 
-class EffectSpelunking: Effect(
+class EffectSpelunking : Effect(
     "spelunking"
 ) {
     private val blockMap = HashMap<Location, Material>()
+    private val noRepeat = ArrayList<BlockDropItemEvent>()
 
     override fun formatDescription(string: String, level: Int): String {
         return string.replace("%chance%", NumberUtils.format(this.getChance(level)))
@@ -35,6 +36,10 @@ class EffectSpelunking: Effect(
 
     @EventHandler(ignoreCancelled = true)
     fun handle(event: BlockDropItemEvent) {
+        if (noRepeat.contains(event)) {
+            return
+        }
+
         val mat = blockMap[event.block.location] ?: return
 
         val player = event.player

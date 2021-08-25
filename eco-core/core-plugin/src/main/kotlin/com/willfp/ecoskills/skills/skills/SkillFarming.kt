@@ -2,6 +2,7 @@ package com.willfp.ecoskills.skills.skills
 
 import com.willfp.ecoskills.giveSkillExperience
 import com.willfp.ecoskills.skills.Skill
+import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.block.data.Ageable
 import org.bukkit.event.EventHandler
@@ -31,6 +32,10 @@ class SkillFarming : Skill(
     fun handleLevelling(event: BlockBreakEvent) {
         val type = event.block.type
         val player = event.player
+
+        if (player.gameMode == GameMode.CREATIVE || player.gameMode == GameMode.SPECTATOR) {
+            return
+        }
 
         if (event.block.blockData is Ageable) {
             val data = event.block.blockData as Ageable
