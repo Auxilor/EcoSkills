@@ -102,7 +102,7 @@ fun Player.giveSkillExperience(skill: Skill, experience: Double, isOvershoot: Bo
 
     this.setSkillProgress(skill, this.getSkillProgress(skill) + exp)
 
-    if (this.getSkillProgress(skill) >= skill.getExpForLevel(level + 1)) {
+    if (this.getSkillProgress(skill) >= skill.getExpForLevel(level + 1) && level + 1 <= skill.maxLevel) {
         val overshoot = this.getSkillProgress(skill) - skill.getExpForLevel(level + 1);
         this.setSkillProgress(skill, 0.0)
         this.setSkillLevel(skill, level + 1)

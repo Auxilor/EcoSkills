@@ -6,10 +6,10 @@ import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.data.LeaderboardHandler
 import com.willfp.ecoskills.getTotalSkillLevel
+import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
-import kotlin.collections.ArrayList
 import kotlin.math.ceil
 
 
@@ -69,6 +69,8 @@ class CommandTop(plugin: EcoPlugin) :
                 if (useDisplayName && player is Player) {
                     name = player.displayName
                 }
+
+                Bukkit.getLogger().info("${player.uniqueId} HAS NAME $name")
 
                 line = line.replace("%player%", name)
 
