@@ -125,8 +125,13 @@ abstract class Skill(
             for (string in this.config.getStrings("rewards.chat-messages.$highestLevel", false)) {
                 var msg = string
 
-                for (effect in Effects.values()) {
-                    msg = msg.replace("%ecoskills_${effect.id}_description%", effect.getDescription(level))
+                for (levelUpReward in this.getLevelUpRewards()) {
+                    val skillObject = levelUpReward.obj
+
+                    if (skillObject is Effect) {
+                        val objLevel = this.getCumulativeLevelUpReward(skillObject, level)
+                        msg = msg.replace("%ecoskills_${skillObject.id}_description%", skillObject.getDescription(objLevel))
+                    }
                 }
                 messages.add(msg)
             }
