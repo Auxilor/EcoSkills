@@ -13,6 +13,7 @@ import com.willfp.ecoskills.getSkillProgress
 import com.willfp.ecoskills.getSkillProgressRequired
 import com.willfp.ecoskills.getSkillProgressToNextLevel
 import com.willfp.ecoskills.gui.SkillGUI
+import org.apache.commons.lang.WordUtils
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
@@ -66,7 +67,19 @@ class SkillGUI(
                 lore.removeAt(skillSpecificIndex)
                 lore.addAll(skillSpecificIndex, skill.getGUILore(player))
             }
-            lore
+
+            val wrappedLore = ArrayList<String>()
+
+            for (s in lore) {
+                wrappedLore.addAll(
+                    WordUtils.wrap(
+                        s,
+                        plugin.configYml.getInt("gui.line-wrap"),
+                        "\n${plugin.langYml.getString("line-wrap-color")}", false
+                    ).split("\\r?\\n")
+                )
+            }
+            wrappedLore
         }.build()
     }.onLeftClick { event, _, _ ->
         levels.open(event.whoClicked as Player)
@@ -233,7 +246,20 @@ class SkillGUI(
                                         skill.getGUIRewardsMessages(player, slotLevel) // scary
                                         lore.addAll(skillSpecificIndex, skill.getGUIRewardsMessages(player, slotLevel))
                                     }
-                                    meta.lore = lore
+
+                                    val wrappedLore = ArrayList<String>()
+
+                                    for (s in lore) {
+                                        wrappedLore.addAll(
+                                            WordUtils.wrap(
+                                                s,
+                                                plugin.configYml.getInt("gui.line-wrap"),
+                                                "\n${plugin.langYml.getString("line-wrap-color")}", false
+                                            ).split("\\r?\\n")
+                                        )
+                                    }
+
+                                    meta.lore = wrappedLore
                                     item.itemMeta = meta
                                 }
                             }

@@ -3,7 +3,7 @@ messages:
   no-permission: "&cYou don't have permission to do this!"
   not-player: "&cThis command must be run by a player"
   invalid-command: "&cUnknown subcommand!"
-  reloaded: "Reloaded! (Restart if you're removed weapons!)"
+  reloaded: "Reloaded!"
   requires-player: "&cYou must specify a player!"
   invalid-player: "&cInvalid player!"
   reset-player: "&fReset player!"
@@ -13,6 +13,8 @@ messages:
   invalid-amount: "&cInvalid amount!"
   gave-skill-xp: "Gave %player% %amount% %skill% experience!"
   gave-stat: "Gave %player% %amount% %stat%&r!"
+
+line-wrap-color: "&8"
 
 top-line-format: "%rank%. %player% - %level%"
 top:
