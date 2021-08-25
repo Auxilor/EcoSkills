@@ -68,17 +68,26 @@ class SkillGUI(
                 lore.addAll(skillSpecificIndex, skill.getGUILore(player))
             }
 
-            val wrappedLore = ArrayList<String>()
+            val wrappedLore = mutableListOf<String>()
 
-            for (s in lore) {
+            for (line in lore) {
+                val whitespaceLen = line.length - line.trim().length
+                val whitespace = " ".repeat(whitespaceLen)
+                val wrapped = WordUtils.wrap(
+                    line,
+                    plugin.configYml.getInt("gui.line-wrap"),
+                    "\n${plugin.langYml.getString("line-wrap-color")}", false
+                ).split("\n").toMutableList()
+
+                if (wrapped.size > 1) {
+                    wrapped.replaceAll { "$whitespace$it" }
+                }
+
                 wrappedLore.addAll(
-                    WordUtils.wrap(
-                        s,
-                        plugin.configYml.getInt("gui.line-wrap"),
-                        "\n${plugin.langYml.getString("line-wrap-color")}", false
-                    ).split("\\r?\\n")
+                    wrapped
                 )
             }
+
             wrappedLore
         }.build()
     }.onLeftClick { event, _, _ ->
@@ -249,13 +258,21 @@ class SkillGUI(
 
                                     val wrappedLore = ArrayList<String>()
 
-                                    for (s in lore) {
+                                    for (line in lore) {
+                                        val whitespaceLen = line.length - line.trim().length
+                                        val whitespace = " ".repeat(whitespaceLen)
+                                        val wrapped = WordUtils.wrap(
+                                            line,
+                                            plugin.configYml.getInt("gui.line-wrap"),
+                                            "\n${plugin.langYml.getString("line-wrap-color")}", false
+                                        ).split("\n").toMutableList()
+
+                                        if (wrapped.size > 1) {
+                                            wrapped.replaceAll { "$whitespace$it" }
+                                        }
+
                                         wrappedLore.addAll(
-                                            WordUtils.wrap(
-                                                s,
-                                                plugin.configYml.getInt("gui.line-wrap"),
-                                                "\n${plugin.langYml.getString("line-wrap-color")}", false
-                                            ).split("\\r?\\n")
+                                            wrapped
                                         )
                                     }
 
