@@ -63,27 +63,33 @@ class EffectSpelunking : Effect(
             return
         }
 
-        val dropEvent = BlockDropItemEvent(block, block.state, player, event.items)
+        var amount = 0
+
+        if (multiplier > 2) {
+            for (i in 2 until multiplier) {
+                amount++
+            }
+        }
+        if (NumberUtils.randFloat(0.0, 100.0) < chance) {
+            amount++
+        }
+
+        val dropEvent = BlockDropItemEvent(block, block.state, player, event.items.map { item ->
+            val stack = item.itemStack
+            stack.amount = stack.amount * amount
+            item.itemStack = stack
+            item
+        }.toList())
         noRepeat.add(dropEvent)
-        Bukkit.getPluginManager().callEvent(dropEvent)
 
         if (dropEvent.items.isEmpty() || dropEvent.isCancelled) {
             return
         }
+        Bukkit.getPluginManager().callEvent(dropEvent)
 
-        if (multiplier > 2) {
-            for (i in 2 until multiplier) {
-                DropQueue(player)
-                    .addItems(*dropEvent.items.map { item -> item.itemStack })
-                    .push()
-            }
-        }
-
-        if (NumberUtils.randFloat(0.0, 100.0) < chance) {
-            DropQueue(player)
-                .addItems(*dropEvent.items.map { item -> item.itemStack })
-                .push()
-        }
+        DropQueue(player)
+            .addItems(*dropEvent.items.map { item -> item.itemStack })
+            .push()
     }
 
     private fun getMultiplier(level: Int): Int {
