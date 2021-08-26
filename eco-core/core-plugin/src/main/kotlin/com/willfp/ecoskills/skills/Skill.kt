@@ -34,7 +34,7 @@ abstract class Skill(
 
     init {
         config = SkillConfig(this.id, this.javaClass, plugin)
-        rewards = ArrayList()
+        rewards = mutableListOf()
 
         Skills.registerNewSkill(this)
     }

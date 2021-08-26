@@ -44,7 +44,7 @@ class SkillGUI(
         ).addLoreLines {
             val currentXP = player.getSkillProgress(skill)
             val requiredXP = skill.getExpForLevel(player.getSkillLevel(skill) + 1)
-            val lore: MutableList<String> = ArrayList()
+            val lore = mutableListOf<String>()
             for (string in plugin.configYml.getStrings("gui.skill-icon.lore", false)) {
                 lore.add(
                     StringUtils.format(
@@ -169,8 +169,8 @@ class SkillGUI(
                                 val slotLevel = ((page - 1) * levelsPerPage) + level
 
                                 val meta = item.itemMeta!!
-                                meta.lore = ArrayList()
-                                val lore: MutableList<String> = ArrayList()
+                                meta.lore = emptyList()
+                                val lore = mutableListOf<String>()
 
                                 item.amount = 1
 

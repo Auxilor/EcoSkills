@@ -63,7 +63,7 @@ class CommandReset(plugin: EcoPlugin) :
                 return@TabCompleteHandler completions
             }
 
-            return@TabCompleteHandler mutableListOf<String>()
+            return@TabCompleteHandler emptyList<String>()
         }
     }
 }

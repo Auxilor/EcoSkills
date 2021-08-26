@@ -87,7 +87,7 @@ class CommandGive(plugin: EcoPlugin) :
 
     override fun getTabCompleter(): TabCompleteHandler {
         return TabCompleteHandler { _, args ->
-            val completions: MutableList<String> = ArrayList()
+            val completions = mutableListOf<String>()
 
             if (args.size == 1) {
                 StringUtil.copyPartialMatches(
@@ -116,7 +116,7 @@ class CommandGive(plugin: EcoPlugin) :
                 return@TabCompleteHandler completions
             }
 
-            return@TabCompleteHandler mutableListOf<String>()
+            return@TabCompleteHandler emptyList<String>()
         }
     }
 }
