@@ -117,12 +117,12 @@ class EffectPotionmaster : Effect(
             effects[data.type.effectType!!] = if (data.type.isUpgradeable) 2 else 1
         }
 
-        for (entry in effects.entries) {
+        for ((k, v) in effects) {
             player.addPotionEffect(
                 PotionEffect(
-                    entry.key,
+                    k,
                     PotionUtils.getDuration(data) + delta,
-                    entry.value
+                    v
                 )
             )
         }
@@ -154,12 +154,12 @@ class EffectPotionmaster : Effect(
         }
 
         for (entity in entities) {
-            for (entry in effects.entries) {
+            for ((key, value) in effects) {
                 entity.addPotionEffect(
                     PotionEffect(
-                        entry.key,
+                        key,
                         ((PotionUtils.getDuration(data) + delta) * event.getIntensity(entity)).toInt(),
-                        entry.value
+                        value
                     )
                 )
             }

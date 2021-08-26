@@ -52,7 +52,7 @@ class CommandReset(plugin: EcoPlugin) :
 
     override fun getTabCompleter(): TabCompleteHandler {
         return TabCompleteHandler { _, args ->
-            val completions: MutableList<String> = ArrayList()
+            val completions = mutableListOf<String>()
 
             if (args.size == 1) {
                 StringUtil.copyPartialMatches(
@@ -63,7 +63,7 @@ class CommandReset(plugin: EcoPlugin) :
                 return@TabCompleteHandler completions
             }
 
-            return@TabCompleteHandler  ArrayList<String>(0)
+            return@TabCompleteHandler mutableListOf<String>()
         }
     }
 }

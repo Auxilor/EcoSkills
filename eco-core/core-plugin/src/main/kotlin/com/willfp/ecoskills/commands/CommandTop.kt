@@ -21,11 +21,7 @@ class CommandTop(plugin: EcoPlugin) :
     ) {
     override fun getHandler(): CommandHandler {
         return CommandHandler { sender: CommandSender, args: List<String> ->
-            var page = 1
-
-            if (args.isNotEmpty()) {
-                page = args[0].toIntOrNull() ?: 1
-            }
+            var page = args.firstOrNull()?.toIntOrNull() ?: 1
 
             val top = LeaderboardHandler.sortedLeaderboard
 
@@ -38,7 +34,7 @@ class CommandTop(plugin: EcoPlugin) :
                 page = 1
             }
 
-            val pagePlayers = ArrayList<OfflinePlayer>()
+            val pagePlayers = mutableListOf<OfflinePlayer>()
 
             val start = (page - 1) * 10
             val end = start + 9
@@ -52,7 +48,7 @@ class CommandTop(plugin: EcoPlugin) :
             }
 
             val messages = plugin.langYml.getStrings("top", false)
-            val lines = ArrayList<String>()
+            val lines = mutableListOf<String>()
 
             val useDisplayName = plugin.configYml.getBool("commands.top.use-display-name");
 

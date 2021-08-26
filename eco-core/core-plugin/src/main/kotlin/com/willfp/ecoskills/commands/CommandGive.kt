@@ -116,7 +116,7 @@ class CommandGive(plugin: EcoPlugin) :
                 return@TabCompleteHandler completions
             }
 
-            return@TabCompleteHandler  ArrayList<String>(0)
+            return@TabCompleteHandler mutableListOf<String>()
         }
     }
 }

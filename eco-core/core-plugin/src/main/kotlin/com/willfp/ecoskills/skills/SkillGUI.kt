@@ -154,12 +154,10 @@ class SkillGUI(
                 )
             )
             .modfiy { builder ->
-                for (entry in progressionSlots.entries) {
-                    val level = entry.key
-
+                for ((level, value) in progressionSlots) {
                     builder.setSlot(
-                        entry.value.first,
-                        entry.value.second,
+                        value.first,
+                        value.second,
                         Slot.builder(ItemStack(Material.BLACK_STAINED_GLASS_PANE))
                             .setModifier { player, menu, item ->
                                 var page = menu.readData(player, pageKey, PersistentDataType.INTEGER)
@@ -251,7 +249,7 @@ class SkillGUI(
                                         lore.addAll(skillSpecificIndex, skill.getGUIRewardsMessages(player, slotLevel))
                                     }
 
-                                    val wrappedLore = ArrayList<String>()
+                                    val wrappedLore = mutableListOf<String>()
 
                                     for (line in lore) {
                                         val indent = " ".repeat(line.length - line.trim().length)

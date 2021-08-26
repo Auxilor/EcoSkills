@@ -107,7 +107,7 @@ abstract class Skill(
     }
 
     fun getRewardsMessages(player: Player?, level: Int, useCache: Boolean = true): MutableList<String> {
-        val messages = ArrayList<String>()
+        val messages = mutableListOf<String>()
         if (messagesCache.containsKey(level) && useCache) {
             messages.addAll(messagesCache[level]!!)
         } else {
@@ -143,7 +143,7 @@ abstract class Skill(
     }
 
     fun getGUIRewardsMessages(player: Player?, level: Int, useCache: Boolean = true): MutableList<String> {
-        val lore = ArrayList<String>()
+        val lore = mutableListOf<String>()
         if (guiLoreCache.containsKey(level) && useCache) {
             lore.addAll(guiLoreCache[level]!!)
         } else {
@@ -183,7 +183,7 @@ abstract class Skill(
     }
 
     fun getGUILore(player: Player): MutableList<String> {
-        val lore = ArrayList<String>()
+        val lore = mutableListOf<String>()
         for (string in this.config.getStrings("gui.lore", false)) {
             lore.add(StringUtils.format(string, player))
         }

@@ -74,7 +74,7 @@ class SkillDisplayListener(
         }
 
         if (this.plugin.configYml.getBool("skills.level-up.message.enabled")) {
-            val messages = ArrayList<String>()
+            val messages = mutableListOf<String>()
             val levelName = if (this.plugin.configYml.getBool("skills.level-up.message.level-as-numeral")) NumberUtils.toNumeral(level) else level.toString()
 
             for (string in this.plugin.configYml.getStrings("skills.level-up.message.message")) {
