@@ -1,7 +1,9 @@
 package com.willfp.ecoskills.skills.skills
 
+import com.willfp.ecoskills.data.getBrewingStandOwner
 import com.willfp.ecoskills.giveSkillExperience
 import com.willfp.ecoskills.skills.Skill
+import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -31,7 +33,7 @@ class SkillAlchemy : Skill(
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handleLevelling(event: BrewEvent) {
-        val player = event.contents.viewers.filterIsInstance<Player>().firstOrNull() ?: return
+        val player = event.contents.viewers.filterIsInstance<Player>().firstOrNull() ?: Bukkit.getPlayer(UUID.fromString( if (event.block.getBrewingStandOwner() !is String) return else event.block.getBrewingStandOwner())) ?: return
 
         if (player.gameMode == GameMode.CREATIVE || player.gameMode == GameMode.SPECTATOR) {
             return
