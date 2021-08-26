@@ -15,7 +15,7 @@ import org.bukkit.event.block.BlockDropItemEvent
 class EffectBountifulHarvest: Effect(
     "bountiful_harvest"
 ) {
-    private val blockMap = HashMap<Location, Material>()
+    private val blockMap = mutableMapOf<Location, Material>()
 
     override fun formatDescription(string: String, level: Int): String {
         return string.replace("%chance%", NumberUtils.format(this.getChance(level)))
@@ -92,7 +92,7 @@ class EffectBountifulHarvest: Effect(
     private fun getChance(level: Int): Double {
         var chance = config.getDouble("chance-per-level") * level
 
-        chance -= ((getMultiplier(level) - 2) * 100)
+        chance -= (getMultiplier(level) - 2) * 100
         if (chance == 0.0) {
             chance = 100.0
         }

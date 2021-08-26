@@ -16,7 +16,7 @@ import org.bukkit.entity.Projectile
 import org.bukkit.persistence.PersistentDataType
 import java.util.*
 
-val expMultiplierCache = HashMap<UUID, Double>()
+val expMultiplierCache = mutableMapOf<UUID, Double>()
 val plugin: EcoSkillsPlugin = EcoSkillsPlugin.getInstance()
 
 fun Player.getSkillExperienceMultiplier(): Double {

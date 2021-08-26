@@ -93,7 +93,7 @@ class EffectPotionmaster : Effect(
 
         val data = meta.basePotionData
 
-        val effects = HashMap<PotionEffectType, Int>()
+        val effects = mutableMapOf<PotionEffectType, Int>()
 
         if (data.type == PotionType.TURTLE_MASTER) {
             effects[PotionEffectType.SLOW] = 4
@@ -129,7 +129,7 @@ class EffectPotionmaster : Effect(
 
         val data = meta.basePotionData
 
-        val effects = HashMap<PotionEffectType, Int>()
+        val effects = mutableMapOf<PotionEffectType, Int>()
 
         if (data.type == PotionType.TURTLE_MASTER) {
             effects[PotionEffectType.SLOW] = 4

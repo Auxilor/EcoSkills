@@ -27,7 +27,7 @@ class StatFerocity : Stat(
             return
         }
 
-        this.plugin.run {
+        this.plugin.scheduler.run {
             victim.setMetadata("ferocity", plugin.metadataValueFactory.create(true))
             victim.noDamageTicks = 0
             victim.damage(event.damage, player)

@@ -28,7 +28,7 @@ class EffectEndangering : Effect(
             return
         }
 
-        this.plugin.run {
+        this.plugin.scheduler.run {
             victim.noDamageTicks = 0
         }
     }

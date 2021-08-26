@@ -112,10 +112,10 @@ public class EcoSkillsPlugin extends EcoPlugin {
     @Override
     protected List<Listener> loadListeners() {
         return Arrays.asList(
-                new SkillLevellingListener(this),
+                new SkillLevellingListener(),
                 new SkillDisplayListener(this),
-                new StatModifierListener(this),
-                new DataListener(this),
+                new StatModifierListener(),
+                new DataListener(),
                 new PlayerBlockListener(this),
                 new EcoSkillsEventModifierHandler(this)
         );

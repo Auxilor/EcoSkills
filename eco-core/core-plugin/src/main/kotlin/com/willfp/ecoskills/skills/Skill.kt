@@ -26,13 +26,12 @@ abstract class Skill(
     lateinit var description: String
     lateinit var gui: SkillGUI
     var maxLevel: Int = 50
-    private val rewards: MutableList<SkillObjectReward>
-    private val guiLoreCache = HashMap<Int, List<String>>()
-    private val messagesCache = HashMap<Int, List<String>>()
+    private val rewards = mutableListOf<SkillObjectReward>()
+    private val guiLoreCache = mutableMapOf<Int, List<String>>()
+    private val messagesCache = mutableMapOf<Int, List<String>>()
 
     init {
         config = SkillConfig(this.id, this.javaClass, plugin)
-        rewards = mutableListOf()
 
         Skills.registerNewSkill(this)
     }

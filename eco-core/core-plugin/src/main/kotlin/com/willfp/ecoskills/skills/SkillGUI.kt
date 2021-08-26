@@ -103,7 +103,7 @@ class SkillGUI(
         val progressionOrder = "123456789abcdefghijklmnopqrstuvwxyz"
         val progressionPattern = plugin.configYml.getStrings("level-gui.progression-slots.pattern", false)
 
-        val progressionSlots: MutableMap<Int, Pair<Int, Int>> = HashMap()
+        val progressionSlots = mutableMapOf<Int, Pair<Int, Int>>()
 
         var x = 0
         for (row in progressionPattern) {
