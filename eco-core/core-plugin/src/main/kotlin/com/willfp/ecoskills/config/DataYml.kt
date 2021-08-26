@@ -9,5 +9,4 @@ class DataYml(
     "data",
     false,
     plugin
-) {
-}
+)

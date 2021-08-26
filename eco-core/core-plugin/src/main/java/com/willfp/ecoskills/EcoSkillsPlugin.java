@@ -117,7 +117,7 @@ public class EcoSkillsPlugin extends EcoPlugin {
                 new StatModifierListener(this),
                 new DataListener(this),
                 new PlayerBlockListener(this),
-                EcoSkillsEventModifierHandler.INSTANCE
+                new EcoSkillsEventModifierHandler(this)
         );
     }
 

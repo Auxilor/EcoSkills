@@ -4,5 +4,4 @@ import com.willfp.ecoskills.stats.Stat
 
 class StatCritDamage : Stat(
     "crit_damage"
-) {
-}
+)

@@ -1,6 +1,5 @@
 package com.willfp.ecoskills.effects
 
-import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.integrations.placeholder.PlaceholderEntry
 import com.willfp.eco.util.NumberUtils
@@ -10,7 +9,6 @@ import com.willfp.ecoskills.SkillObject
 import com.willfp.ecoskills.getEffectLevel
 import org.bukkit.NamespacedKey
 import org.bukkit.event.Listener
-import java.util.*
 
 abstract class Effect(
     id: String
@@ -18,13 +16,11 @@ abstract class Effect(
     protected val plugin: EcoSkillsPlugin = EcoSkillsPlugin.getInstance()
 
     val key: NamespacedKey
-    val uuid: UUID
     val config: Config
 
     init {
         update()
         key = plugin.namespacedKeyFactory.create(id)
-        uuid = UUID.nameUUIDFromBytes(id.toByteArray())
         config = plugin.effectsYml.getSubsection(id)
 
         Effects.registerNewEffect(this)

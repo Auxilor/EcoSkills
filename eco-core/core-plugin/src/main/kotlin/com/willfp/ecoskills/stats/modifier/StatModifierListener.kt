@@ -1,6 +1,5 @@
 package com.willfp.ecoskills.stats.modifier
 
-import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.events.ArmorChangeEvent
 import com.willfp.ecoskills.addStatModifier
 import com.willfp.ecoskills.getStatModifiers
@@ -12,9 +11,7 @@ import org.bukkit.event.player.PlayerItemHeldEvent
 import org.bukkit.event.player.PlayerSwapHandItemsEvent
 import org.bukkit.inventory.EquipmentSlot
 
-class StatModifierListener(
-    private val plugin: EcoPlugin
-): Listener {
+class StatModifierListener : Listener {
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun onHold(event: PlayerItemHeldEvent) {
         val player = event.player

@@ -50,7 +50,7 @@ class CommandTop(plugin: EcoPlugin) :
             val messages = plugin.langYml.getStrings("top", false)
             val lines = mutableListOf<String>()
 
-            val useDisplayName = plugin.configYml.getBool("commands.top.use-display-name");
+            val useDisplayName = plugin.configYml.getBool("commands.top.use-display-name")
 
             var rank = start + 1
 

@@ -3,9 +3,8 @@ package com.willfp.ecoskills.effects.effects
 import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.getEffectLevel
+import com.willfp.ecoskills.tryAsPlayer
 import org.bukkit.entity.LivingEntity
-import org.bukkit.entity.Player
-import org.bukkit.entity.Projectile
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.entity.EntityDamageByEntityEvent
@@ -20,24 +19,8 @@ class EffectEndangering : Effect(
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: EntityDamageByEntityEvent) {
-        var player = event.damager
-        val victim = event.entity
-
-        if (victim !is LivingEntity) {
-            return
-        }
-
-        if (player is Projectile) {
-            if (player.shooter !is Player) {
-                return
-            } else {
-                player = player.shooter as Player
-            }
-        }
-
-        if (player !is Player) {
-            return
-        }
+        val player = event.damager.tryAsPlayer() ?: return
+        val victim = if (event.entity is LivingEntity) event.entity as LivingEntity else return
 
         val level = player.getEffectLevel(this)
 

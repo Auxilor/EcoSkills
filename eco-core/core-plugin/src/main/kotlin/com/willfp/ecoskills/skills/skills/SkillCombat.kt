@@ -3,10 +3,9 @@ package com.willfp.ecoskills.skills.skills
 import com.willfp.eco.core.events.EntityDeathByEntityEvent
 import com.willfp.ecoskills.giveSkillExperience
 import com.willfp.ecoskills.skills.Skill
+import com.willfp.ecoskills.tryAsPlayer
 import org.bukkit.GameMode
 import org.bukkit.attribute.Attribute
-import org.bukkit.entity.Player
-import org.bukkit.entity.Projectile
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 
@@ -15,19 +14,7 @@ class SkillCombat : Skill(
 ) {
     @EventHandler(priority = EventPriority.HIGH)
     fun handleLevelling(event: EntityDeathByEntityEvent) {
-        var player = event.killer
-
-        if (player is Projectile) {
-            if (player.shooter !is Player) {
-                return
-            } else {
-                player = player.shooter as Player
-            }
-        }
-
-        if (player !is Player) {
-            return
-        }
+        val player = event.killer.tryAsPlayer() ?: return
 
         if (player.gameMode == GameMode.CREATIVE || player.gameMode == GameMode.SPECTATOR) {
             return

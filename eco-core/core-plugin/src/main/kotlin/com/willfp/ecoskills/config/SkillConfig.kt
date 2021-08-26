@@ -15,5 +15,4 @@ class SkillConfig(
     "skills/",
     "rewards.chat-messages",
     "rewards.progression-lore"
-) {
-}
+)

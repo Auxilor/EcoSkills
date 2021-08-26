@@ -9,5 +9,4 @@ class EffectsYml(
     "effects",
     true,
     plugin
-) {
-}
+)

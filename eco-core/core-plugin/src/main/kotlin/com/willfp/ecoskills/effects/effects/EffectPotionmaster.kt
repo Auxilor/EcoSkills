@@ -27,18 +27,7 @@ class EffectPotionmaster : Effect(
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: BrewEvent) {
-        var player: Player? = null
-
-        for (viewer in event.contents.viewers) {
-            if (viewer is Player) {
-                player = viewer
-                break
-            }
-        }
-
-        if (player == null) {
-            return
-        }
+        val player = event.contents.viewers.filterIsInstance<Player>().firstOrNull() ?: return
 
         if (player.getEffectLevel(this) == 0) {
             return
@@ -48,11 +37,7 @@ class EffectPotionmaster : Effect(
 
         this.plugin.scheduler.runLater({
             for (i in 0..2) {
-                val item = event.contents.getItem(i)
-
-                if (item == null) {
-                    continue
-                }
+                val item = event.contents.getItem(i) ?: continue
 
                 val meta = item.itemMeta
 

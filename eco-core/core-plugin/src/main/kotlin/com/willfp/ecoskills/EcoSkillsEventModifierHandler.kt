@@ -5,12 +5,14 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 
-object EcoSkillsEventModifierHandler: Listener {
-    val critMap: MutableMap<EntityDamageByEntityEvent, Boolean> = HashMap()
+private val critMap = mutableMapOf<EntityDamageByEntityEvent, Boolean>()
 
+class EcoSkillsEventModifierHandler(
+    private val plugin: EcoSkillsPlugin
+) : Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     fun preventLeak(event: EntityDamageByEntityEvent) {
-        EcoSkillsPlugin.getInstance().scheduler.runLater({
+        plugin.scheduler.runLater({
             critMap.remove(event)
         }, 1)
     }
@@ -18,8 +20,8 @@ object EcoSkillsEventModifierHandler: Listener {
 
 var EntityDamageByEntityEvent.isCrit: Boolean
     get() {
-        return EcoSkillsEventModifierHandler.critMap[this] ?: false
+        return critMap[this] ?: false
     }
     set(isCrit) {
-        EcoSkillsEventModifierHandler.critMap[this] = isCrit
+        critMap[this] = isCrit
     }

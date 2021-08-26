@@ -31,24 +31,13 @@ class SkillAlchemy : Skill(
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handleLevelling(event: BrewEvent) {
-        var player: Player? = null
-
-        for (viewer in event.contents.viewers) {
-            if (viewer is Player) {
-                player = viewer
-                break
-            }
-        }
-
-        if (player == null) {
-            return
-        }
+        val player = event.contents.viewers.filterIsInstance<Player>().firstOrNull() ?: return
 
         if (player.gameMode == GameMode.CREATIVE || player.gameMode == GameMode.SPECTATOR) {
             return
         }
 
-        var mult = 0;
+        var mult = 0
 
         for (i in 0..2) {
             if (event.contents.getItem(i)?.itemMeta is PotionMeta) {

@@ -1,13 +1,10 @@
 package com.willfp.ecoskills.data
 
-import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.getTotalSkillLevel
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 
-class LeaderboardHandler (
-    private val plugin: EcoSkillsPlugin
-) {
+class LeaderboardHandler {
     companion object {
         val sortedLeaderboard = mutableListOf<OfflinePlayer>()
     }

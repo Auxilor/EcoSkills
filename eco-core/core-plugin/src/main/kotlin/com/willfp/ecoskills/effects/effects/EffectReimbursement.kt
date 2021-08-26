@@ -3,12 +3,9 @@ package com.willfp.ecoskills.effects.effects
 import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.getEffectLevel
-import com.willfp.ecoskills.giveSkillExperience
-import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.enchantment.EnchantItemEvent
-import org.bukkit.event.entity.EntityDamageEvent
 
 class EffectReimbursement : Effect(
     "reimbursement"

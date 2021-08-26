@@ -3,12 +3,10 @@ package com.willfp.ecoskills.effects.effects
 import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.getEffectLevel
-import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.enchantment.EnchantItemEvent
-import org.bukkit.inventory.EnchantingInventory
 import org.bukkit.inventory.ItemStack
 
 
