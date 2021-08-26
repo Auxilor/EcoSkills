@@ -13,8 +13,8 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockDropItemEvent
 
-class EffectSpelunking : Effect(
-    "spelunking"
+class EffectMasterLumberjack : Effect(
+    "master_lumberjack"
 ) {
     private val blockMap = mutableMapOf<Location, Material>()
     private val noRepeat = mutableListOf<BlockDropItemEvent>()

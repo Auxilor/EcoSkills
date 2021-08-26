@@ -15,6 +15,8 @@ gui:
     - "&fEffects:"
     - "&8» &r&6Craftsmanship %ecoskills_craftsmanship_numeral%"
     - "   %ecoskills_craftsmanship_description%"
+    - "&8» &r&6Master Lumberjack %ecoskills_master_lumberjack_numeral%"
+    - "   %ecoskills_master_lumberjack_description%"
 
 rewards:
   # The actual rewards to be given
@@ -22,6 +24,7 @@ rewards:
     - "strength::2"
     - "crit_damage::1"
     - "craftsmanship::1"
+    - "master_lumberjack::1"
 
   # The chat messages to send on level up
   chat-messages:
@@ -30,6 +33,8 @@ rewards:
       - " &8» &r&f+1 %ecoskills_crit_damage_name%"
       - " &8» &r&6Craftsmanship %ecoskills_craftsmanship_numeral%"
       - "    %ecoskills_craftsmanship_description%"
+      - " &8» &r&6Master Lumberjack %ecoskills_master_lumberjack_numeral%"
+      - "    %ecoskills_master_lumberjack_description%"
 
   # The lore to show in the levels gui
   progression-lore:
@@ -38,6 +43,8 @@ rewards:
       - " &8» &r&f+1 %ecoskills_crit_damage_name%"
       - " &8» &r&6Craftsmanship %ecoskills_craftsmanship_numeral%"
       - "    %ecoskills_craftsmanship_description%"
+      - " &8» &r&6Master Lumberjack %ecoskills_master_lumberjack_numeral%"
+      - "    %ecoskills_master_lumberjack_description%"
 
 # The xp rewards for each crop type
 # Specify with type:xp
@@ -48,5 +55,11 @@ xp-rewards:
   - "jungle_log:6"
   - "acacia_log:6"
   - "dark_oak_log:6"
+  - "oak_wood:6"
+  - "birch_wood:6"
+  - "spruce_wood:6"
+  - "jungle_wood:6"
+  - "acacia_wood:6"
+  - "dark_oak_wood:6"
   - "crimson_stem:14"
   - "warped_stem:14"

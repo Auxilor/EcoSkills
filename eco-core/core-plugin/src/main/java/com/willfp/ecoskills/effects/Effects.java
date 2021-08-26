@@ -42,6 +42,7 @@ public class Effects {
     public static final Effect DYNAMIC_MINING = new EffectDynamicMining();
     public static final Effect REIMBURSEMENT = new EffectReimbursement();
     public static final Effect OVERCOMPENSATION = new EffectOvercompensation();
+    public static final Effect MASTER_LUMBERJACK = new EffectMasterLumberjack();
 
     @ApiStatus.Internal
     public static void registerNewEffect(@NotNull final Effect effect) {
