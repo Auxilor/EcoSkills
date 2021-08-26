@@ -63,7 +63,7 @@ class EffectBountifulHarvest: Effect(
         val multiplier = getMultiplier(level)
 
         if (multiplier >= 2) {
-            for (i in 2..multiplier) {
+            for (i in 2 until multiplier) {
                 DropQueue(player)
                     .addItems(*event.items.map { item -> item.itemStack })
                     .push()

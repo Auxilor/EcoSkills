@@ -27,6 +27,8 @@ abstract class Skill(
     lateinit var gui: SkillGUI
     var maxLevel: Int = 50
     private val rewards = mutableListOf<SkillObjectReward>()
+
+    // Cached values
     private val guiLoreCache = mutableMapOf<Int, List<String>>()
     private val messagesCache = mutableMapOf<Int, List<String>>()
 

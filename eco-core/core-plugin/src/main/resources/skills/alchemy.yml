@@ -8,17 +8,17 @@ gui:
     row: 4
     column: 4
   lore:
-  - "&fImproves Stats:"
-  - "&8» &r%ecoskills_crit_chance_name%"
-  - "&8» &r%ecoskills_wisdom_name%"
-  - "&f"
-  - "&fEffects:"
-  - "&8» &r&6Potionmaster %ecoskills_potionmaster_numeral%"
-  - "   %ecoskills_potionmaster_description%"
-  - "&8» &r&6Efficient Brewing %ecoskills_efficient_brewing_numeral%"
-  - "   %ecoskills_efficient_brewing_description%"
-  - "&8» &r&6Mystic Resilience %ecoskills_mystic_resilience_numeral%"
-  - "   %ecoskills_mystic_resilience_description%"
+    - "&fImproves Stats:"
+    - "&8» &r%ecoskills_crit_chance_name%"
+    - "&8» &r%ecoskills_wisdom_name%"
+    - "&f"
+    - "&fEffects:"
+    - "&8» &r&6Potionmaster %ecoskills_potionmaster_numeral%"
+    - "   %ecoskills_potionmaster_description%"
+    - "&8» &r&6Efficient Brewing %ecoskills_efficient_brewing_numeral%"
+    - "   %ecoskills_efficient_brewing_description%"
+    - "&8» &r&6Mystic Resilience %ecoskills_mystic_resilience_numeral%"
+    - "   %ecoskills_mystic_resilience_description%"
 
 rewards:
   # The actual rewards to be given

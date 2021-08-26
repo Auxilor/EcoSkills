@@ -5,6 +5,7 @@ import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.data.isPlayerPlaced
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.getEffectLevel
+import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.event.EventHandler
@@ -32,7 +33,7 @@ class EffectSpelunking : Effect(
         }, 1)
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     fun handle(event: BlockDropItemEvent) {
         if (noRepeat.contains(event)) {
             return
@@ -52,10 +53,6 @@ class EffectSpelunking : Effect(
             return
         }
 
-        if (event.items.isEmpty()) {
-            return
-        }
-
         val level = player.getEffectLevel(this)
 
         val chance = getChance(level)
@@ -66,17 +63,24 @@ class EffectSpelunking : Effect(
             return
         }
 
+        val dropEvent = BlockDropItemEvent(block, block.state, player, event.items)
+        Bukkit.getPluginManager().callEvent(dropEvent)
+
+        if (dropEvent.items.isEmpty()) {
+            return
+        }
+
         if (multiplier > 2) {
             for (i in 2 until multiplier) {
                 DropQueue(player)
-                    .addItems(*event.items.map { item -> item.itemStack })
+                    .addItems(*dropEvent.items.map { item -> item.itemStack })
                     .push()
             }
         }
 
         if (NumberUtils.randFloat(0.0, 100.0) < chance) {
             DropQueue(player)
-                .addItems(*event.items.map { item -> item.itemStack })
+                .addItems(*dropEvent.items.map { item -> item.itemStack })
                 .push()
         }
     }
