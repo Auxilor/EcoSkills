@@ -66,7 +66,7 @@ class EffectSpelunking : Effect(
         val dropEvent = BlockDropItemEvent(block, block.state, player, event.items)
         Bukkit.getPluginManager().callEvent(dropEvent)
 
-        if (dropEvent.items.isEmpty()) {
+        if (dropEvent.items.isEmpty() || dropEvent.isCancelled) {
             return
         }
 
