@@ -13,7 +13,7 @@ class LeaderboardHandler {
 
         fun getPage(page: Int): MutableMap<Int, OfflinePlayer> {
             val maxPage = ceil(sortedLeaderboard.size / 10.0).toInt()
-            val finalPage = max(1, max(page, maxPage))
+            val finalPage = max(1, min(page, maxPage))
 
             val startIndex = (finalPage - 1) * 10
             val endIndex = min(startIndex + 9, sortedLeaderboard.size - 1)
