@@ -79,7 +79,7 @@ class EffectSpelunking : Effect(
             stack.amount = stack.amount * amount
             item.itemStack = stack
             item
-        }.toList())
+        }.toMutableList())
         noRepeat.add(dropEvent)
 
         if (dropEvent.items.isEmpty() || dropEvent.isCancelled) {
