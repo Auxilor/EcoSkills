@@ -2,7 +2,6 @@ package com.willfp.ecoskills.stats.stats
 
 import com.willfp.ecoskills.getStatLevel
 import com.willfp.ecoskills.stats.Stat
-import org.bukkit.Bukkit
 import org.bukkit.attribute.Attribute
 import org.bukkit.attribute.AttributeModifier
 import org.bukkit.entity.Player
@@ -19,7 +18,6 @@ class StatSpeed : Stat(
         )
         val instance = player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED) ?: return
         instance.removeModifier(modifier)
-        Bukkit.getLogger().info(instance.modifiers.toString())
 
         plugin.scheduler.run {
             instance.removeModifier(modifier)
