@@ -9,7 +9,6 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.entity.EntityDamageEvent
-import java.util.*
 
 class EffectAcceleratedEscape: Effect(
     "accelerated_escape"
@@ -29,14 +28,15 @@ class EffectAcceleratedEscape: Effect(
         val level = player.getEffectLevel(this)
 
         val modifier = AttributeModifier(
-            UUID.randomUUID(),
-            NumberUtils.randFloat(0.0, 1.0).toString(),
-            (config.getDouble("percent-faster-per-level") * level) / 100,
+            this.uuid,
+            this.id,
+            (config.getDouble("percent-faster-per-level") * level) / 100.0,
             AttributeModifier.Operation.MULTIPLY_SCALAR_1
         )
 
         val inst = player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)!!
 
+        inst.removeModifier(modifier)
         inst.addModifier(modifier)
 
         plugin.scheduler.runLater({

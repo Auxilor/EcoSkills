@@ -9,6 +9,7 @@ import com.willfp.ecoskills.SkillObject
 import com.willfp.ecoskills.getEffectLevel
 import org.bukkit.NamespacedKey
 import org.bukkit.event.Listener
+import java.util.*
 
 abstract class Effect(
     id: String
@@ -17,9 +18,11 @@ abstract class Effect(
 
     val key: NamespacedKey
     val config: Config
+    val uuid: UUID
 
     init {
         update()
+        uuid = UUID.nameUUIDFromBytes(id.toByteArray())
         key = plugin.namespacedKeyFactory.create(id)
         config = plugin.effectsYml.getSubsection(id)
 

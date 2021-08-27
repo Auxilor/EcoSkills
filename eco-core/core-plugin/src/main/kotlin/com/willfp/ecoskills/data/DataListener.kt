@@ -5,11 +5,13 @@ import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.getSkillLevel
 import com.willfp.ecoskills.setEffectLevel
 import com.willfp.ecoskills.skills.Skills
+import com.willfp.ecoskills.stats.Stats
+import org.bukkit.attribute.Attribute
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 
-class DataListener: Listener {
+class DataListener : Listener {
     @EventHandler
     fun onJoin(event: PlayerJoinEvent) {
         event.player.convertPersistentToYml()
@@ -20,8 +22,26 @@ class DataListener: Listener {
                 if (obj !is Effect) {
                     continue
                 }
-                event.player.setEffectLevel(obj, skill.getCumulativeLevelUpReward(obj, event.player.getSkillLevel(skill)))
+                event.player.setEffectLevel(
+                    obj,
+                    skill.getCumulativeLevelUpReward(obj, event.player.getSkillLevel(skill))
+                )
             }
+        }
+
+        for (attribute in Attribute.values()) {
+            val player = event.player
+
+            val inst = player.getAttribute(attribute) ?: continue
+            for (modifier in inst.modifiers.toMutableList()) {
+                if (modifier.amount == 0.0) {
+                    inst.removeModifier(modifier)
+                }
+            }
+        }
+
+        for (stat in Stats.values()) {
+            stat.updateStatLevel(event.player)
         }
     }
 }
