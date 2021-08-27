@@ -13,13 +13,13 @@ class StatSpeed : Stat(
         val modifier = AttributeModifier(
             this.uuid,
             this.name,
-            (this.config.getDouble("percent-faster-per-level") * player.getStatLevel(this)) / 100,
+            (this.config.getDouble("percent-faster-per-level") * player.getStatLevel(this)) / 100.0,
             AttributeModifier.Operation.MULTIPLY_SCALAR_1
         )
-        val instance = player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED) ?: return
-        instance.removeModifier(modifier)
-        plugin.scheduler.runLater({
+        plugin.scheduler.run {
+            val instance = player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED) ?: return@run
+            instance.removeModifier(modifier)
             instance.addModifier(modifier)
-        }, 1)
+        }
     }
 }
