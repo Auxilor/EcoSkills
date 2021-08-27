@@ -37,6 +37,13 @@ class DataListener : Listener {
                 if (modifier.amount == 0.0) {
                     inst.removeModifier(modifier)
                 }
+
+                if (attribute == Attribute.GENERIC_MOVEMENT_SPEED) {
+                    val name = modifier.name.toDoubleOrNull() ?: continue
+                    if (name < 1.0 && name > 0.0) {
+                        inst.removeModifier(modifier)
+                    }
+                }
             }
         }
 
