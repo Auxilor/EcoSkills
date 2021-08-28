@@ -12,6 +12,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockDropItemEvent
+import java.util.*
 
 class EffectSpelunking : Effect(
     "spelunking"
@@ -78,8 +79,8 @@ class EffectSpelunking : Effect(
             val stack = item.itemStack
             stack.amount = stack.amount * amount
             item.itemStack = stack
-            item
-        }.toMutableList())
+            if(stack.type == Material.AIR) null else item
+        }.filter { Objects.nonNull(it) }.toMutableList())
         noRepeat.add(dropEvent)
 
         if (dropEvent.items.isEmpty() || dropEvent.isCancelled) {
