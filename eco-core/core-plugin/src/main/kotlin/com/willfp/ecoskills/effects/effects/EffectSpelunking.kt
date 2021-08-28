@@ -78,6 +78,7 @@ class EffectSpelunking : Effect(
         val dropEvent = BlockDropItemEvent(block, block.state, player, event.items.map { item ->
             val stack = item.itemStack
             stack.amount = stack.amount * amount
+            if (stack.type == Material.AIR) return@map null
             item.itemStack = stack
             if(stack.type == Material.AIR) null else item
         }.filter { Objects.nonNull(it) }.toMutableList())
