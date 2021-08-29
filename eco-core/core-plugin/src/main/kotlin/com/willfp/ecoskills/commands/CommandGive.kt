@@ -74,7 +74,7 @@ class CommandGive(plugin: EcoPlugin) :
 
             if (obj is Stat) {
                 player.setStatLevel(obj, player.getStatLevel(obj) + amount)
-                player.sendMessage(
+                sender.sendMessage(
                     this.plugin.langYml.getMessage("gave-stat")
                         .replace("%player%", player.name)
                         .replace("%amount%", amount.toString())
