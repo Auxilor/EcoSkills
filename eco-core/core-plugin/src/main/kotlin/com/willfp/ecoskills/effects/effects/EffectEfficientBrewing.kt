@@ -33,7 +33,7 @@ class EffectEfficientBrewing : Effect(
             return
         }
 
-        val ticksLess = player.getEffectLevel(this) * this.config.getInt("ticks-less-per-level")
+        val ticksLess = player.getEffectLevel(this) * this.config.getDouble("ticks-less-per-level")
 
         this.plugin.scheduler.runLater({
             val stand = player.openInventory.topInventory.holder
@@ -41,7 +41,7 @@ class EffectEfficientBrewing : Effect(
                 return@runLater
             }
             if (stand.brewingTime == 400) {
-                stand.brewingTime = 400 - ticksLess
+                stand.brewingTime = (400 - ticksLess).toInt()
                 stand.update()
                 player.updateInventory()
             }
