@@ -31,8 +31,7 @@ class EffectSerratedStrikes : Effect(
 
         val bleedDamage = config.getDouble("bleed-tick-damage")
 
-        var bleedCount = config.getInt("bleed-ticks")
-        bleedCount *= level
+        val bleedCount = config.getInt("bleed-ticks")
 
         var currentBleedCount = 0
 
