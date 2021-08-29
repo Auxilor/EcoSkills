@@ -6,6 +6,7 @@ import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.data.LeaderboardHandler
 import com.willfp.ecoskills.getTotalSkillLevel
+import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
@@ -20,6 +21,7 @@ class CommandTop(plugin: EcoPlugin) :
     override fun getHandler(): CommandHandler {
         return CommandHandler { sender: CommandSender, args: List<String> ->
             val page = args.firstOrNull()?.toIntOrNull() ?: 1
+            Bukkit.getLogger().info("page raw $page")
 
             val top = LeaderboardHandler.getPage(page)
 

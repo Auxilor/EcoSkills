@@ -66,5 +66,9 @@ rewards:
       - "    %ecoskills_reimbursement_description%"
       - " &8» &r&6Overcompensation %ecoskills_over_compensation_numeral%"
       - "    %ecoskills_overcompensation_description%"
+
 # The experience to give for each level cost of enchanting
 xp-per-level: 4
+
+ecoenchants: #Config for EcoEnchants integration
+  xp-for-special: 2500

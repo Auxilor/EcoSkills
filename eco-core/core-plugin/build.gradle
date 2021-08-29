@@ -5,4 +5,5 @@ dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.16.4-R0.1-SNAPSHOT'
     compileOnly 'com.gmail.filoghost.holographicdisplays:holographicdisplays-api:2.4.0'
     compileOnly 'com.comphenix.protocol:ProtocolLib:4.7.0'
+    compileOnly 'com.willfp:EcoEnchants:8.2.0'
 }
