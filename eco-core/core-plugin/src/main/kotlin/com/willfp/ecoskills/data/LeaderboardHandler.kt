@@ -14,10 +14,9 @@ class LeaderboardHandler {
         fun getPage(page: Int): MutableMap<Int, OfflinePlayer> {
             val maxPage = ceil(sortedLeaderboard.size / 10.0).toInt()
             val finalPage = max(1, min(page, maxPage))
-            Bukkit.getLogger().info("page final $finalPage")
 
             val startIndex = (finalPage - 1) * 10
-            val endIndex = min(startIndex + 9, sortedLeaderboard.size - 1)
+            val endIndex = min(startIndex + 10, sortedLeaderboard.size - 1)
 
             val players = sortedLeaderboard.subList(startIndex, endIndex)
             val withRank = mutableMapOf<Int, OfflinePlayer>()
