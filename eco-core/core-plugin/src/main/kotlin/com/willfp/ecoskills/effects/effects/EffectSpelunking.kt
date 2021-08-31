@@ -12,7 +12,6 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockDropItemEvent
-import java.util.*
 
 class EffectSpelunking : Effect(
     "spelunking"
@@ -58,41 +57,33 @@ class EffectSpelunking : Effect(
 
         val chance = getChance(level)
 
-        val multiplier = getMultiplier(level)
+        var bonus = getMultiplier(level) - 2
 
-        if (multiplier == 1) {
+        if (bonus <= 0) {
             return
         }
 
-        var amount = 0
-
-        if (multiplier > 2) {
-            for (i in 2 until multiplier) {
-                amount++
-            }
-        }
         if (NumberUtils.randFloat(0.0, 100.0) < chance) {
-            amount++
+            bonus++
         }
 
-        val dropEvent = BlockDropItemEvent(block, block.state, player, event.items.map { item ->
-            val stack = item.itemStack
-            stack.amount = stack.amount * amount
-            if (stack.type == Material.AIR || stack.amount <= 0) {
-                return@map null
+        val dropEvent = BlockDropItemEvent(block, block.state, player, event.items.map {
+            it.itemStack = it.itemStack.apply {
+                this.amount *= bonus
             }
-            item.itemStack = stack
-            item
-        }.filter { Objects.nonNull(it) }.toMutableList())
-        noRepeat.add(dropEvent)
+            it
+        })
+
+        Bukkit.getPluginManager().callEvent(dropEvent)
 
         if (dropEvent.items.isEmpty() || dropEvent.isCancelled) {
             return
         }
-        Bukkit.getPluginManager().callEvent(dropEvent)
+
+        noRepeat.add(dropEvent)
 
         DropQueue(player)
-            .addItems(*dropEvent.items.map { item -> item.itemStack })
+            .addItems(*dropEvent.items.map { it.itemStack })
             .push()
     }
 
