@@ -74,13 +74,13 @@ class EffectSpelunking : Effect(
             it
         })
 
+        noRepeat.add(dropEvent)
+
         Bukkit.getPluginManager().callEvent(dropEvent)
 
         if (dropEvent.items.isEmpty() || dropEvent.isCancelled) {
             return
         }
-
-        noRepeat.add(dropEvent)
 
         DropQueue(player)
             .addItems(*dropEvent.items.map { it.itemStack })
