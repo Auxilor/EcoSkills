@@ -5,9 +5,9 @@ import com.willfp.eco.core.command.CommandHandler
 import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.data.LeaderboardHandler
+import com.willfp.ecoskills.getSavedDisplayName
 import com.willfp.ecoskills.getTotalSkillLevel
 import org.bukkit.command.CommandSender
-import org.bukkit.entity.Player
 
 
 class CommandTop(plugin: EcoPlugin) :
@@ -22,7 +22,7 @@ class CommandTop(plugin: EcoPlugin) :
             val page = args.firstOrNull()?.toIntOrNull() ?: 1
             val top = LeaderboardHandler.getPage(page)
 
-            val messages = plugin.langYml.getStrings("top", false).toMutableList()
+            val messages = plugin.langYml.getStrings("top", false)
             val lines = mutableListOf<String>()
 
             val useDisplayName = plugin.configYml.getBool("commands.top.use-display-name")
@@ -34,8 +34,8 @@ class CommandTop(plugin: EcoPlugin) :
 
                 var name = player.name!!
 
-                if (useDisplayName && player is Player) {
-                    name = player.displayName
+                if (useDisplayName) {
+                    name = player.getSavedDisplayName()
                 }
 
                 line = line.replace("%playername%", name)

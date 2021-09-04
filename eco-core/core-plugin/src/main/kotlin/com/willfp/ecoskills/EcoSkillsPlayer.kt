@@ -55,6 +55,14 @@ private fun Player.cacheSkillExperienceMultiplier(): Double {
     return 1.0
 }
 
+fun OfflinePlayer.getSavedDisplayName(): String {
+    if (this is Player) {
+        plugin.dataYml.set("player.${this.uniqueId}.name", this.displayName)
+    }
+
+    return plugin.dataYml.getStringOrNull("player.${this.uniqueId}.name") ?: this.name ?: "Unknown Player"
+}
+
 fun OfflinePlayer.getTotalSkillLevel(): Int {
     var total = 0
     for (skill in Skills.values()) {

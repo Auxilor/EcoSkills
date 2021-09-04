@@ -1,11 +1,9 @@
 package com.willfp.ecoskills.data
 
 import com.willfp.ecoskills.getSkillLevel
-import com.willfp.ecoskills.getStatLevel
 import com.willfp.ecoskills.getTotalSkillLevel
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.skills.Skills
-import com.willfp.ecoskills.stats.Stats
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import kotlin.math.ceil
@@ -14,15 +12,11 @@ import kotlin.math.min
 
 class LeaderboardHandler {
     companion object {
-        val sortedLeaderboard = mutableListOf<OfflinePlayer>()
-        val sortedLeaderboardPerSkillStat = mutableMapOf<String, MutableList<OfflinePlayer>>()
+        private val sortedLeaderboard = mutableListOf<OfflinePlayer>()
+        private val skillLeaderboards = mutableMapOf<Skill, MutableList<OfflinePlayer>>()
 
         fun getPage(page: Int, skill: Skill? = null): MutableMap<Int, OfflinePlayer> {
-            var selectedLeaderboard = sortedLeaderboard
-
-            if (skill is Skill) {
-                selectedLeaderboard = sortedLeaderboardPerSkillStat.getOrDefault(skill.toString(), mutableListOf<OfflinePlayer>())
-            }
+            val selectedLeaderboard = if (skill == null) sortedLeaderboard else skillLeaderboards[skill]!!
 
             val maxPage = ceil(selectedLeaderboard.size / 10.0).toInt()
             val finalPage = max(1, min(page, maxPage))
@@ -41,54 +35,41 @@ class LeaderboardHandler {
 
             return withRank
         }
-
-        fun totalPages(): Int {
-            return ceil(sortedLeaderboard.size / 10.0).toInt()
-        }
     }
 
     class Runnable : java.lang.Runnable {
         override fun run() {
-            val playerScoresTop = mutableMapOf<OfflinePlayer, Int>()
+            for (skill in Skills.values()) {
+                val temp = mutableMapOf<OfflinePlayer, Int>()
+                val top = mutableListOf<OfflinePlayer>()
+
+                for (player in Bukkit.getOfflinePlayers()) {
+                    temp[player] = 10000 - player.getSkillLevel(skill)
+                }
+
+                val temp2 = temp.toList().sortedBy { (_, value) -> value }.toMap()
+                for (key in temp2.keys) {
+                    top.add(key)
+                }
+
+                skillLeaderboards[skill]?.clear()
+                skillLeaderboards[skill] = top
+            }
+
+            val temp = mutableMapOf<OfflinePlayer, Int>()
             val top = mutableListOf<OfflinePlayer>()
-            val playerScoresSkillsTop = mutableMapOf<String, MutableList<OfflinePlayer>>()
-            val playerScoresSkills = mutableMapOf<String, MutableMap<OfflinePlayer, Int>>()
 
             for (player in Bukkit.getOfflinePlayers()) {
-                playerScoresTop[player] = 10000 - player.getTotalSkillLevel()
-                for (skill in Skills.values()) {
-                    val skillMap = playerScoresSkills.getOrDefault(skill.toString(), mutableMapOf<OfflinePlayer, Int>())
-                    skillMap[player] = 10000 - player.getSkillLevel(skill)
-
-                    playerScoresSkills.put(skill.toString(), skillMap)
-                }
+                temp[player] = 10000 - player.getTotalSkillLevel()
             }
 
-            val playerRankedTop = playerScoresTop.toList().sortedBy { (_, value) -> value }.toMap()
-            val playerScoresSkillsRanked = mutableMapOf<String, Map<OfflinePlayer, Int>>()
-
-            for (s in playerScoresSkills.keys) {
-                playerScoresSkillsRanked.put(s, playerScoresSkills.get(s)!!.toList().sortedBy { (_, value) -> value }.toMap())
-            }
-
-//            val playerRankedTop = playerScoresTop.toList().sortedBy { (_, value) -> value }.toMap()
-            for (key in playerRankedTop.keys) {
+            val temp2 = temp.toList().sortedBy { (_, value) -> value }.toMap()
+            for (key in temp2.keys) {
                 top.add(key)
-            }
-
-            for (key in playerScoresSkillsRanked.keys) {
-                val currentList = mutableListOf<OfflinePlayer>()
-                for (qey in playerScoresSkillsRanked.get(key)!!) {
-                    currentList.add(qey.key)
-                }
-                playerScoresSkillsTop.put(key, currentList)
             }
 
             sortedLeaderboard.clear()
             sortedLeaderboard.addAll(top)
-
-            sortedLeaderboardPerSkillStat.clear()
-            sortedLeaderboardPerSkillStat.putAll(playerScoresSkillsTop)
         }
     }
 }
