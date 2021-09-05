@@ -63,9 +63,13 @@ private fun Player.convertFromLegacyData() {
     }
     for (skill in Skills.values()) {
         plugin.dataYml.set("player.${this.uniqueId}.${skill.id}", this.getSkillLevel(skill))
-        plugin.dataYml.set(
-            "player.${this.uniqueId}.${skill.xpKey.key}",
-            this.persistentDataContainer.getOrDefault(skill.xpKey, PersistentDataType.DOUBLE, 0.0)
-        )
+        val prog = this.persistentDataContainer.get(skill.xpKey, PersistentDataType.DOUBLE)
+        if (prog != null) {
+            plugin.dataYml.set(
+                "player.${this.uniqueId}.${skill.xpKey.key}",
+                prog
+            )
+            this.persistentDataContainer.remove(skill.xpKey)
+        }
     }
 }
