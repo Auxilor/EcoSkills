@@ -6,7 +6,7 @@ import com.willfp.eco.core.command.TabCompleteHandler
 import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.data.LeaderboardHandler
-import com.willfp.ecoskills.getSavedDisplayName
+import com.willfp.ecoskills.data.savedDisplayName
 import com.willfp.ecoskills.getSkillLevel
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.util.TabCompleteHelper
@@ -53,7 +53,7 @@ class CommandRank(plugin: EcoPlugin) :
                 var name = player.name!!
 
                 if (useDisplayName) {
-                    name = player.getSavedDisplayName()
+                    name = player.savedDisplayName
                 }
 
                 line = line.replace("%playername%", name)

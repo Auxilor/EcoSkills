@@ -43,7 +43,7 @@ public interface EcoSkillsAPI {
      * @param skill  The skill.
      * @return The progress.
      */
-    double getSkillProgressToNextLevel(@NotNull Player player,
+    double getSkillProgressToNextLevel(@NotNull OfflinePlayer player,
                                        @NotNull Skill skill);
 
     /**
@@ -53,7 +53,7 @@ public interface EcoSkillsAPI {
      * @param skill  The skill.
      * @return The experience required.
      */
-    int getSkillProgressRequired(@NotNull Player player,
+    int getSkillProgressRequired(@NotNull OfflinePlayer player,
                                  @NotNull Skill skill);
 
     /**
@@ -63,7 +63,7 @@ public interface EcoSkillsAPI {
      * @param skill  The skill.
      * @return The experience.
      */
-    double getSkillProgress(@NotNull Player player,
+    double getSkillProgress(@NotNull OfflinePlayer player,
                             @NotNull Skill skill);
 
     /**
