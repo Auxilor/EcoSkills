@@ -32,6 +32,8 @@ rewards:
     - "strong_impact::1:10:100"
     - "endangering::1:20:100"
 
+  level-commands: []
+
   # The chat messages to send on level up
   chat-messages:
     1:

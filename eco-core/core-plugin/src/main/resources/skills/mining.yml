@@ -29,6 +29,8 @@ rewards:
     - "spelunking::1:10:100"
     - "dynamic_mining::1"
 
+  level-commands: []
+
   # The chat messages to send on level up
   chat-messages:
     1:

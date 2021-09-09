@@ -26,6 +26,8 @@ rewards:
     - "craftsmanship::1"
     - "master_lumberjack::1"
 
+  level-commands: []
+
   # The chat messages to send on level up
   chat-messages:
     1:

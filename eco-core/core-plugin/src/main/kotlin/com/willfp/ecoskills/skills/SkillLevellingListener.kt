@@ -31,5 +31,7 @@ class SkillLevellingListener : Listener {
                 }
             }
         }
+
+        skill.executeLevelCommands(player, to)
     }
 }

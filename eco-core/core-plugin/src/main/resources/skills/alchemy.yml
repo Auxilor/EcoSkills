@@ -29,6 +29,8 @@ rewards:
     - "efficient_brewing::1:10:100"
     - "mystic_resilience::1"
 
+  level-commands: []
+
   # The chat messages to send on level up
   chat-messages:
     1:
