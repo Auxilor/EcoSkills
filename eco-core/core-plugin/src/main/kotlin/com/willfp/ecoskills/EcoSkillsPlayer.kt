@@ -3,17 +3,14 @@ package com.willfp.ecoskills
 import com.willfp.ecoskills.api.PlayerSkillExpGainEvent
 import com.willfp.ecoskills.api.PlayerSkillLevelUpEvent
 import com.willfp.ecoskills.effects.Effect
-import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.stats.Stat
-import com.willfp.ecoskills.stats.Stats
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
-import org.bukkit.persistence.PersistentDataType
 import java.util.*
 
 val expMultiplierCache = mutableMapOf<UUID, Double>()
@@ -99,31 +96,31 @@ fun OfflinePlayer.getSkillLevel(skill: Skill): Int {
     return plugin.dataYml.getInt("player.${this.uniqueId}.${skill.id}", 0)
 }
 
-fun Player.setSkillLevel(skill: Skill, level: Int) {
+fun OfflinePlayer.setSkillLevel(skill: Skill, level: Int) {
     plugin.dataYml.set("player.${this.uniqueId}.${skill.id}", level)
 }
 
-fun Player.getSkillProgressToNextLevel(skill: Skill): Double {
+fun OfflinePlayer.getSkillProgressToNextLevel(skill: Skill): Double {
     return this.getSkillProgress(skill) / this.getSkillProgressRequired(skill)
 }
 
-fun Player.getSkillProgressRequired(skill: Skill): Int {
+fun OfflinePlayer.getSkillProgressRequired(skill: Skill): Int {
     return skill.getExpForLevel(this.getSkillLevel(skill) + 1)
 }
 
-fun Player.getSkillProgress(skill: Skill): Double {
-    return this.persistentDataContainer.getOrDefault(skill.xpKey, PersistentDataType.DOUBLE, 0.0)
+fun OfflinePlayer.getSkillProgress(skill: Skill): Double {
+    return plugin.dataYml.getDoubleOrNull("player.${this.uniqueId}.${skill.xpKey.key}") ?: 0.0
 }
 
-fun Player.setSkillProgress(skill: Skill, level: Double) {
-    this.persistentDataContainer.set(skill.xpKey, PersistentDataType.DOUBLE, level)
+fun OfflinePlayer.setSkillProgress(skill: Skill, level: Double) {
+    plugin.dataYml.set("player.${this.uniqueId}.${skill.xpKey.key}", level)
 }
 
 fun OfflinePlayer.getEffectLevel(effect: Effect): Int {
     return plugin.dataYml.getInt("player.${this.uniqueId}.${effect.id}", 0)
 }
 
-fun Player.setEffectLevel(effect: Effect, level: Int) {
+fun OfflinePlayer.setEffectLevel(effect: Effect, level: Int) {
     plugin.dataYml.set("player.${this.uniqueId}.${effect.id}", level)
 }
 
@@ -134,18 +131,6 @@ fun OfflinePlayer.getStatLevel(stat: Stat): Int {
 fun Player.setStatLevel(stat: Stat, level: Int) {
     plugin.dataYml.set("player.${this.uniqueId}.${stat.id}", level)
     stat.updateStatLevel(this)
-}
-
-fun Player.convertPersistentToYml() {
-    for (effect in Effects.values()) {
-        plugin.dataYml.set("player.${this.uniqueId}.${effect.id}", this.getEffectLevel(effect))
-    }
-    for (stat in Stats.values()) {
-        plugin.dataYml.set("player.${this.uniqueId}.${stat.id}", this.getStatLevel(stat))
-    }
-    for (skill in Skills.values()) {
-        plugin.dataYml.set("player.${this.uniqueId}.${skill.id}", this.getSkillLevel(skill))
-    }
 }
 
 fun Entity.tryAsPlayer(): Player? {

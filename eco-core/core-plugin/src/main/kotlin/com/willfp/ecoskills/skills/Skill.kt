@@ -10,6 +10,7 @@ import com.willfp.ecoskills.config.SkillConfig
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.stats.Stats
+import org.bukkit.Bukkit
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
@@ -27,6 +28,7 @@ abstract class Skill(
     lateinit var gui: SkillGUI
     var maxLevel: Int = 50
     private val rewards = mutableListOf<SkillObjectReward>()
+    private val levelCommands = mutableMapOf<Int, MutableList<String>>()
 
     // Cached values
     private val guiLoreCache = mutableMapOf<Int, List<String>>()
@@ -53,6 +55,17 @@ abstract class Skill(
             if (asStat != null) {
                 rewards.add(SkillObjectReward(asStat, SkillObjectOptions(split[1])))
             }
+        }
+
+        levelCommands.clear()
+        for (string in config.getStrings("rewards.level-commands", false)) {
+            val split = string.split(":")
+            val level = split[0].toInt()
+            val command = split[1]
+
+            val commands = levelCommands[level] ?: mutableListOf()
+            commands.add(command)
+            levelCommands[level] = commands
         }
 
         PlaceholderEntry(
@@ -199,6 +212,14 @@ abstract class Skill(
             lore.add(StringUtils.format(string, player))
         }
         return lore
+    }
+
+    fun executeLevelCommands(player: Player, level: Int) {
+        val commands = levelCommands[level] ?: emptyList()
+
+        for (command in commands) {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", player.name))
+        }
     }
 
     open fun postUpdate() {

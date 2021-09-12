@@ -137,4 +137,9 @@ public class EcoSkillsPlugin extends EcoPlugin {
                 new IntegrationLoader("EcoEnchants", () -> this.getEventManager().registerListener(new EcoEnchantsEnchantingLeveller(this)))
         );
     }
+
+    @Override
+    public String getMinimumEcoVersion() {
+        return "6.6.0";
+    }
 }

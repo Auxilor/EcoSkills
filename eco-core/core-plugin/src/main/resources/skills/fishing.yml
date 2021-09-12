@@ -23,6 +23,8 @@ rewards:
     - "wisdom::1"
     - "eye_of_the_depths::1"
 
+  level-commands: []
+
   # The chat messages to send on level up
   chat-messages:
     1:

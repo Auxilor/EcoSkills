@@ -29,6 +29,8 @@ rewards:
     - "reimbursement::1"
     - "overcompensation::1:10:100"
 
+  level-commands: []
+
   # The chat messages to send on level up
   chat-messages:
     1:

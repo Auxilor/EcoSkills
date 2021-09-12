@@ -20,15 +20,15 @@ object EcoSkillsAPIImpl: EcoSkillsAPI {
         player.giveSkillExperience(skill, amount)
     }
 
-    override fun getSkillProgressToNextLevel(player: Player, skill: Skill): Double {
+    override fun getSkillProgressToNextLevel(player: OfflinePlayer, skill: Skill): Double {
         return player.getSkillProgressToNextLevel(skill)
     }
 
-    override fun getSkillProgressRequired(player: Player, skill: Skill): Int {
+    override fun getSkillProgressRequired(player: OfflinePlayer, skill: Skill): Int {
         return player.getSkillProgressRequired(skill)
     }
 
-    override fun getSkillProgress(player: Player, skill: Skill): Double {
+    override fun getSkillProgress(player: OfflinePlayer, skill: Skill): Double {
         return player.getSkillProgress(skill)
     }
 
