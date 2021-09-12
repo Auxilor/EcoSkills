@@ -45,12 +45,15 @@ class DamageIndicatorListener(
         }
 
         text = text.replace("%damage%", NumberUtils.format(event.damage))
-        text = StringUtils.format(text)
 
-        hologram.appendTextLine(text)
+        try {
+            text = StringUtils.format(text)
 
-        plugin.scheduler.runLater({
-            hologram.delete()
-        }, 30)
+            hologram.appendTextLine(text)
+
+            plugin.scheduler.runLater({
+                hologram.delete()
+            }, 30)
+        } catch (ignored: Exception) {}
     }
 }
