@@ -13,6 +13,7 @@ public class PotionUtils {
     public static int getDuration(@NotNull final PotionData data) {
         if (data.isExtended()) {
             return switch (data.getType()) {
+                case INSTANT_DAMAGE, INSTANT_HEAL -> 0;
                 case POISON, REGEN -> 1800;
                 case SLOW_FALLING, WEAKNESS, SLOWNESS -> 4800;
                 case TURTLE_MASTER -> 800;
@@ -20,6 +21,7 @@ public class PotionUtils {
             };
         } else if (data.isUpgraded()) {
             return switch (data.getType()) {
+                case INSTANT_DAMAGE, INSTANT_HEAL -> 0;
                 case POISON -> 420;
                 case REGEN -> 440;
                 case TURTLE_MASTER, SLOWNESS -> 400;
@@ -27,6 +29,7 @@ public class PotionUtils {
             };
         } else {
             return switch (data.getType()) {
+                case INSTANT_DAMAGE, INSTANT_HEAL -> 0;
                 case POISON, REGEN -> 900;
                 case TURTLE_MASTER -> 400;
                 case SLOW_FALLING, WEAKNESS, SLOWNESS -> 1800;
