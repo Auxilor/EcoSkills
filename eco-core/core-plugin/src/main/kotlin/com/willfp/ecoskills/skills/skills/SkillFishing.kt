@@ -1,6 +1,7 @@
 package com.willfp.ecoskills.skills.skills
 
 import com.willfp.ecoskills.giveSkillExperience
+import com.willfp.ecoskills.integrations.afk.isAfk
 import com.willfp.ecoskills.skills.Skill
 import org.bukkit.GameMode
 import org.bukkit.event.EventHandler
@@ -15,6 +16,10 @@ class SkillFishing : Skill(
         val player = event.player
 
         if (player.gameMode == GameMode.CREATIVE || player.gameMode == GameMode.SPECTATOR) {
+            return
+        }
+
+        if (plugin.configYml.getBool("skills.prevent-levelling-while-afk") && player.isAfk) {
             return
         }
 

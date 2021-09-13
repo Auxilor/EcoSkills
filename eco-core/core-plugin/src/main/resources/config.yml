@@ -228,6 +228,8 @@ skills:
     - 3700000
     - 4000000
 
+  prevent-levelling-while-afk: true # If the player is afk (Essentials) then don't give xp
+
   # Ways to tell the player about skill progress
   progress:
     action-bar:

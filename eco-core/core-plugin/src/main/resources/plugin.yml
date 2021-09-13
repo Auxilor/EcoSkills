@@ -10,6 +10,7 @@ depend:
   - PlaceholderAPI
 softdepend:
   - HolographicDisplays
+  - Essentials
 libraries:
   - org.jetbrains.kotlin:kotlin-stdlib:1.5.21
 

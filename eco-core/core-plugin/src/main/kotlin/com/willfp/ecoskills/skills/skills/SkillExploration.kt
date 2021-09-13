@@ -2,6 +2,7 @@ package com.willfp.ecoskills.skills.skills
 
 import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.giveSkillExperience
+import com.willfp.ecoskills.integrations.afk.isAfk
 import com.willfp.ecoskills.skills.Skill
 import org.bukkit.GameMode
 import org.bukkit.entity.Player
@@ -34,6 +35,10 @@ class SkillExploration : Skill(
             xp *= speed
         }
 
+        if (plugin.configYml.getBool("skills.prevent-levelling-while-afk") && player.isAfk) {
+            return
+        }
+
         if (NumberUtils.randFloat(0.0, 100.0) < this.config.getDouble("xp-on-move-chance")) {
             player.giveSkillExperience(this, xp)
         }
@@ -41,7 +46,9 @@ class SkillExploration : Skill(
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handleLevelling(event: EntityDamageEvent) {
-        if (event.entity !is Player) {
+        val player = event.entity
+
+        if (player !is Player) {
             return
         }
 
@@ -49,7 +56,9 @@ class SkillExploration : Skill(
             return
         }
 
-        val player = event.entity as Player
+        if (plugin.configYml.getBool("skills.prevent-levelling-while-afk") && player.isAfk) {
+            return
+        }
 
         val xp = this.config.getDouble("fall-damage-xp-per-hp") * event.finalDamage
         player.giveSkillExperience(this, xp)
