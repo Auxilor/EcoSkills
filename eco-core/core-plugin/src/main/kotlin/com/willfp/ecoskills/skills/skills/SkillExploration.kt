@@ -60,6 +60,10 @@ class SkillExploration : Skill(
             return
         }
 
+        if (event.finalDamage > player.health && !this.config.getBool("give-xp-on-fatal-fall")) {
+            return
+        }
+
         val xp = this.config.getDouble("fall-damage-xp-per-hp") * event.finalDamage
         player.giveSkillExperience(this, xp)
     }

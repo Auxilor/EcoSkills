@@ -78,3 +78,5 @@ base-xp-to-give: 20
 multiply-xp-by-speed: true
 # The amount of experience to give for each point of fall damage taken
 fall-damage-xp-per-hp: 16
+# If experience should be given when the player dies of fall damage
+give-xp-on-fatal-fall: false
