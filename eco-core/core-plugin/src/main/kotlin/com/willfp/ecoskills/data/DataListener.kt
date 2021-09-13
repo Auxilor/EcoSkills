@@ -39,6 +39,10 @@ class DataListener : Listener {
                     inst.removeModifier(modifier)
                 }
 
+                if (modifier.uniqueId == Effects.ACCELERATED_ESCAPE.uuid) {
+                    inst.removeModifier(modifier)
+                }
+
                 if (attribute == Attribute.GENERIC_MOVEMENT_SPEED) {
                     val name = modifier.name.toDoubleOrNull() ?: continue
                     if (name < 1.0 && name > 0.0) {
