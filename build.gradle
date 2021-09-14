@@ -89,11 +89,3 @@ compileJava.options.encoding = 'UTF-8'
 
 build.dependsOn shadowJar
 build.dependsOn publishToMavenLocal
-
-publishing {
-    publications {
-        maven(MavenPublication) {
-            from(components.java)
-        }
-    }
-}
