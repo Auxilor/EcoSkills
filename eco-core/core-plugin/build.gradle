@@ -9,6 +9,8 @@ dependencies {
     compileOnly 'net.essentialsx:EssentialsX:2.19.0'
 }
 
+build.dependsOn publishToMavenLocal
+
 publishing {
     publications {
         maven(MavenPublication) {
