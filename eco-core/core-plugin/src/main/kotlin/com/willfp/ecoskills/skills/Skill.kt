@@ -160,7 +160,7 @@ abstract class Skill(
                 messages.add(msg)
             }
 
-            guiLoreCache[level] = messages
+            messagesCache[level] = messages
         }
 
         return StringUtils.formatList(messages, player)
