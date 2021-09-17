@@ -16,6 +16,7 @@ import com.willfp.ecoskills.gui.SkillGUI
 import org.apache.commons.lang.WordUtils
 import org.bukkit.Material
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 import org.bukkit.persistence.PersistentDataType
 import java.util.*
@@ -30,6 +31,8 @@ class SkillGUI(
             Material.getMaterial(
                 skill.config.getString("gui.item").uppercase()
             )!!
+        ).addItemFlag(
+            ItemFlag.HIDE_ATTRIBUTES
         ).setDisplayName(
             plugin.configYml.getString("gui.skill-icon.name")
                 .replace("%skill%", skill.name)
