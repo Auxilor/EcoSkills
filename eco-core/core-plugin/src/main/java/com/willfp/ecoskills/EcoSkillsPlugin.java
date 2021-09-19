@@ -50,7 +50,7 @@ public class EcoSkillsPlugin extends EcoPlugin {
      * Internal constructor called by bukkit on plugin load.
      */
     public EcoSkillsPlugin() {
-        super(0, 12205, "&#ff00ae");
+        super(1351, 12205, "&#ff00ae");
         instance = this;
         dataYml = new DataYml(this);
         effectsYml = new EffectsYml(this);
