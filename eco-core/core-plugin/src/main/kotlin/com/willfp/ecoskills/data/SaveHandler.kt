@@ -13,7 +13,7 @@ class SaveHandler {
             if (plugin.configYml.getBool("log-autosaves")) {
                 plugin.logger.info("Auto-Saving player data!")
             }
-            plugin.dataYml.save()
+            plugin.dataHandler.save()
             expMultiplierCache.clear()
             if (plugin.configYml.getBool("log-autosaves")) {
                 plugin.logger.info("Saved data!")

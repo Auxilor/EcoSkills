@@ -5,12 +5,13 @@ import com.willfp.eco.core.command.impl.PluginCommand;
 import com.willfp.eco.core.integrations.IntegrationLoader;
 import com.willfp.ecoskills.commands.CommandEcoskills;
 import com.willfp.ecoskills.commands.CommandSkills;
+import com.willfp.ecoskills.config.EffectsYml;
+import com.willfp.ecoskills.data.DataListener;
+import com.willfp.ecoskills.data.LeaderboardHandler;
 import com.willfp.ecoskills.data.PlayerBlockListener;
 import com.willfp.ecoskills.data.SaveHandler;
-import com.willfp.ecoskills.data.DataListener;
-import com.willfp.ecoskills.config.DataYml;
-import com.willfp.ecoskills.config.EffectsYml;
-import com.willfp.ecoskills.data.LeaderboardHandler;
+import com.willfp.ecoskills.data.storage.DataHandler;
+import com.willfp.ecoskills.data.storage.YamlDataHandler;
 import com.willfp.ecoskills.effects.Effect;
 import com.willfp.ecoskills.effects.Effects;
 import com.willfp.ecoskills.integrations.EcoEnchantsEnchantingLeveller;
@@ -26,7 +27,6 @@ import com.willfp.ecoskills.stats.Stats;
 import com.willfp.ecoskills.stats.modifier.StatModifierListener;
 import org.bukkit.event.Listener;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,7 +39,7 @@ public class EcoSkillsPlugin extends EcoPlugin {
     /**
      * data.yml.
      */
-    private final DataYml dataYml;
+    private final DataHandler dataHandler;
 
     /**
      * effects.yml.
@@ -52,7 +52,7 @@ public class EcoSkillsPlugin extends EcoPlugin {
     public EcoSkillsPlugin() {
         super(1351, 12205, "&#ff00ae");
         instance = this;
-        dataYml = new DataYml(this);
+        dataHandler = new YamlDataHandler(this);
         effectsYml = new EffectsYml(this);
     }
 
@@ -78,20 +78,16 @@ public class EcoSkillsPlugin extends EcoPlugin {
 
     @Override
     protected void handleDisable() {
-        try {
-            dataYml.save();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        dataHandler.save();
     }
 
     /**
-     * Get data.yml.
+     * Get data handler.
      *
-     * @return data.yml.
+     * @return data handler.
      */
-    public DataYml getDataYml() {
-        return dataYml;
+    public DataHandler getDataHandler() {
+        return dataHandler;
     }
 
     /**

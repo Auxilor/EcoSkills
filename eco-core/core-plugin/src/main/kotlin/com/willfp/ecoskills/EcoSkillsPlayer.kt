@@ -93,11 +93,11 @@ fun Player.giveSkillExperience(skill: Skill, experience: Double, isOvershoot: Bo
 }
 
 fun OfflinePlayer.getSkillLevel(skill: Skill): Int {
-    return plugin.dataYml.getInt("player.${this.uniqueId}.${skill.id}", 0)
+    return plugin.dataHandler.readInt(this.uniqueId, skill.id)
 }
 
 fun OfflinePlayer.setSkillLevel(skill: Skill, level: Int) {
-    plugin.dataYml.set("player.${this.uniqueId}.${skill.id}", level)
+    plugin.dataHandler.write(this.uniqueId, skill.id, level)
 }
 
 fun OfflinePlayer.getSkillProgressToNextLevel(skill: Skill): Double {
@@ -109,27 +109,27 @@ fun OfflinePlayer.getSkillProgressRequired(skill: Skill): Int {
 }
 
 fun OfflinePlayer.getSkillProgress(skill: Skill): Double {
-    return plugin.dataYml.getDoubleOrNull("player.${this.uniqueId}.${skill.xpKey.key}") ?: 0.0
+    return plugin.dataHandler.readDouble(this.uniqueId, skill.xpKey.key)
 }
 
 fun OfflinePlayer.setSkillProgress(skill: Skill, level: Double) {
-    plugin.dataYml.set("player.${this.uniqueId}.${skill.xpKey.key}", level)
+    plugin.dataHandler.write(this.uniqueId, skill.xpKey.key, level)
 }
 
 fun OfflinePlayer.getEffectLevel(effect: Effect): Int {
-    return plugin.dataYml.getInt("player.${this.uniqueId}.${effect.id}", 0)
+    return plugin.dataHandler.readInt(this.uniqueId, effect.id)
 }
 
 fun OfflinePlayer.setEffectLevel(effect: Effect, level: Int) {
-    plugin.dataYml.set("player.${this.uniqueId}.${effect.id}", level)
+    plugin.dataHandler.write(this.uniqueId, effect.id, level)
 }
 
 fun OfflinePlayer.getStatLevel(stat: Stat): Int {
-    return plugin.dataYml.getInt("player.${this.uniqueId}.${stat.id}", 0)
+    return plugin.dataHandler.readInt(this.uniqueId, stat.id)
 }
 
 fun Player.setStatLevel(stat: Stat, level: Int) {
-    plugin.dataYml.set("player.${this.uniqueId}.${stat.id}", level)
+    plugin.dataHandler.write(this.uniqueId, stat.id, level)
     stat.updateStatLevel(this)
 }
 
