@@ -3,8 +3,8 @@
 # by Auxilor
 #
 
-database:
-  use-db: false # If database storage should be used. Set to false, data.yml will be used instead.
+mysql:
+  enabled: false # Set to false, data.yml will be used instead.
   host: localhost
   port: 3306
   database: db
