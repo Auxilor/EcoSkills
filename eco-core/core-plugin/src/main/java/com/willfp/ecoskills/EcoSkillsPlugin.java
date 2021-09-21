@@ -53,9 +53,9 @@ public class EcoSkillsPlugin extends EcoPlugin {
     public EcoSkillsPlugin() {
         super(1351, 12205, "&#ff00ae");
         instance = this;
+        effectsYml = new EffectsYml(this);
         dataHandler = this.getConfigYml().getBool("mysql.enabled") ?
                 new MySQLDataHandler(this) : new YamlDataHandler(this);
-        effectsYml = new EffectsYml(this);
     }
 
     @Override
