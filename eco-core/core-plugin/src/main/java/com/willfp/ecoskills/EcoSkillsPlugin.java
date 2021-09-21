@@ -11,6 +11,7 @@ import com.willfp.ecoskills.data.LeaderboardHandler;
 import com.willfp.ecoskills.data.PlayerBlockListener;
 import com.willfp.ecoskills.data.SaveHandler;
 import com.willfp.ecoskills.data.storage.DataHandler;
+import com.willfp.ecoskills.data.storage.MySQLDataHandler;
 import com.willfp.ecoskills.data.storage.YamlDataHandler;
 import com.willfp.ecoskills.effects.Effect;
 import com.willfp.ecoskills.effects.Effects;
@@ -52,7 +53,8 @@ public class EcoSkillsPlugin extends EcoPlugin {
     public EcoSkillsPlugin() {
         super(1351, 12205, "&#ff00ae");
         instance = this;
-        dataHandler = new YamlDataHandler(this);
+        dataHandler = this.getConfigYml().getBool("mysql.enabled") ?
+                new MySQLDataHandler(this) : new YamlDataHandler(this);
         effectsYml = new EffectsYml(this);
     }
 
