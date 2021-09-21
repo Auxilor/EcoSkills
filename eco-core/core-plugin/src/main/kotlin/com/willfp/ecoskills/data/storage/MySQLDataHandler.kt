@@ -24,20 +24,26 @@ class MySQLDataHandler(
             password = plugin.configYml.getString("mysql.password")
         )
 
-        for (skill in Skills.values()) {
-            Players.registerColumn<IntegerColumnType>(skill.id, IntegerColumnType())
-            Players.registerColumn<DoubleColumnType>(skill.xpKey.key, DoubleColumnType())
-        }
-
-        for (stat in Stats.values()) {
-            Players.registerColumn<IntegerColumnType>(stat.id, IntegerColumnType())
-        }
-
-        for (effect in Effects.values()) {
-            Players.registerColumn<IntegerColumnType>(effect.id, IntegerColumnType())
-        }
-
         transaction {
+            Players.apply {
+                for (skill in Skills.values()) {
+                    registerColumn<Int>(skill.id, IntegerColumnType())
+                        .default(0)
+                    registerColumn<Double>(skill.xpKey.key, DoubleColumnType())
+                        .default(0.0)
+                }
+
+                for (stat in Stats.values()) {
+                    registerColumn<Int>(stat.id, IntegerColumnType())
+                        .default(0)
+                }
+
+                for (effect in Effects.values()) {
+                    registerColumn<Int>(effect.id, IntegerColumnType())
+                        .default(0)
+                }
+            }
+
             SchemaUtils.create(Players)
         }
     }
