@@ -1,10 +1,11 @@
 package com.willfp.ecoskills.data.storage
 
 import com.willfp.ecoskills.EcoSkillsPlugin
-import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.SchemaUtils
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.insert
+import com.willfp.ecoskills.effects.Effects
+import com.willfp.ecoskills.skills.Skills
+import com.willfp.ecoskills.stats.Stats
+import org.jetbrains.exposed.dao.id.UUIDTable
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
@@ -23,37 +24,66 @@ class MySQLDataHandler(
             password = plugin.configYml.getString("mysql.password")
         )
 
+        for (skill in Skills.values()) {
+            Players.registerColumn<IntegerColumnType>(skill.id, IntegerColumnType())
+            Players.registerColumn<DoubleColumnType>(skill.xpKey.key, DoubleColumnType())
+        }
+
+        for (stat in Stats.values()) {
+            Players.registerColumn<IntegerColumnType>(stat.id, IntegerColumnType())
+        }
+
+        for (effect in Effects.values()) {
+            Players.registerColumn<IntegerColumnType>(effect.id, IntegerColumnType())
+        }
+
         transaction {
             SchemaUtils.create(Players)
         }
     }
 
     override fun save() {
-        TODO()
+        // Do nothing
     }
 
     override fun <T> write(uuid: UUID, key: String, value: T) {
         transaction {
-            Players.insert {
-                it[id] = id.toString()
-            }
+            val player = Players.select { Players.id eq uuid }.firstOrNull() ?: return@transaction
+            player[Players.columns.stream().filter { it.name == key }.findFirst().get()] = value
         }
-        TODO()
     }
 
     override fun readInt(uuid: UUID, key: String): Int {
-        TODO()
+        var value = 0
+        transaction {
+            val player = Players.select { Players.id eq uuid }.firstOrNull() ?: return@transaction
+            value = player[Players.columns.stream().filter { it.name == key }.findFirst().get()] as Int? ?: 0
+        }
+        return value
     }
 
     override fun readDouble(uuid: UUID, key: String): Double {
-        TODO()
+        var value = 0.0
+        transaction {
+            val player = Players.select { Players.id eq uuid }.firstOrNull() ?: return@transaction
+            value = player[Players.columns.stream().filter { it.name == key }.findFirst().get()] as Double? ?: 0.0
+        }
+        return value
     }
 
     override fun readString(uuid: UUID, key: String, default: String): String {
-        TODO()
+        var value = ""
+        transaction {
+            val player = Players.select { Players.id eq uuid }.firstOrNull() ?: return@transaction
+            value = player[Players.columns.stream().filter { it.name == key }.findFirst().get()] as String? ?: ""
+        }
+        return value
     }
 
-    object Players: Table() {
-        val id = varchar("uuid", 36)
+    object Players : UUIDTable("EcoSkills_Players") {
+        override val id = uuid("id")
+            .entityId()
+        val name = varchar("name", 50)
+            .default("Unknown Player")
     }
 }
