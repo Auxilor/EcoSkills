@@ -67,31 +67,25 @@ class MySQLDataHandler(
         }
     }
 
-    override fun readInt(uuid: UUID, key: String): Int {
-        var value = 0
+    private inline fun <reified T> read(uuid: UUID, key: String, default: T): T {
+        var value = default
         transaction {
             val player = Players.select { Players.id eq uuid }.firstOrNull() ?: return@transaction
-            value = player[Players.columns.stream().filter { it.name == key }.findFirst().get()] as Int? ?: 0
+            value = player[Players.columns.stream().filter { it.name == key }.findFirst().get()] as T? ?: default
         }
         return value
+    }
+
+    override fun readInt(uuid: UUID, key: String): Int {
+        return read(uuid, key, 0)
     }
 
     override fun readDouble(uuid: UUID, key: String): Double {
-        var value = 0.0
-        transaction {
-            val player = Players.select { Players.id eq uuid }.firstOrNull() ?: return@transaction
-            value = player[Players.columns.stream().filter { it.name == key }.findFirst().get()] as Double? ?: 0.0
-        }
-        return value
+        return read(uuid, key, 0.0)
     }
 
     override fun readString(uuid: UUID, key: String, default: String): String {
-        var value = ""
-        transaction {
-            val player = Players.select { Players.id eq uuid }.firstOrNull() ?: return@transaction
-            value = player[Players.columns.stream().filter { it.name == key }.findFirst().get()] as String? ?: ""
-        }
-        return value
+        return read(uuid, key, default)
     }
 
     object Players : UUIDTable("EcoSkills_Players") {
