@@ -4,7 +4,8 @@ import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.stats.Stats
-import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.dao.id.EntityID
+import org.jetbrains.exposed.dao.id.UUIDTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
@@ -54,13 +55,13 @@ class MySQLDataHandler(
 
     override fun <T> write(uuid: UUID, key: String, value: T) {
         transaction {
-            Players.select { Players.uuid eq uuid }.firstOrNull() ?: run {
+            Players.select { Players.id eq uuid }.firstOrNull() ?: run {
                 Players.insert {
-                    it[this.uuid] = uuid
+                    it[this.id] = uuid
                 }
             }
             val column: Column<T> = Players.columns.stream().filter { it.name == key }.findFirst().get() as Column<T>
-            Players.update ({ Players.uuid eq uuid }) {
+            Players.update ({ Players.id eq uuid }) {
                 it[column] = value
             }
         }
@@ -69,7 +70,7 @@ class MySQLDataHandler(
     override fun readInt(uuid: UUID, key: String): Int {
         var value = 0
         transaction {
-            val player = Players.select { Players.uuid eq uuid }.firstOrNull() ?: return@transaction
+            val player = Players.select { Players.id eq uuid }.firstOrNull() ?: return@transaction
             value = player[Players.columns.stream().filter { it.name == key }.findFirst().get()] as Int? ?: 0
         }
         return value
@@ -78,7 +79,7 @@ class MySQLDataHandler(
     override fun readDouble(uuid: UUID, key: String): Double {
         var value = 0.0
         transaction {
-            val player = Players.select { Players.uuid eq uuid }.firstOrNull() ?: return@transaction
+            val player = Players.select { Players.id eq uuid }.firstOrNull() ?: return@transaction
             value = player[Players.columns.stream().filter { it.name == key }.findFirst().get()] as Double? ?: 0.0
         }
         return value
@@ -87,14 +88,15 @@ class MySQLDataHandler(
     override fun readString(uuid: UUID, key: String, default: String): String {
         var value = ""
         transaction {
-            val player = Players.select { Players.uuid eq uuid }.firstOrNull() ?: return@transaction
+            val player = Players.select { Players.id eq uuid }.firstOrNull() ?: return@transaction
             value = player[Players.columns.stream().filter { it.name == key }.findFirst().get()] as String? ?: ""
         }
         return value
     }
 
-    object Players : IntIdTable("EcoSkills_Players") {
-        val uuid = uuid("uuid")
+    object Players : UUIDTable("EcoSkills_Players") {
+        override val id: Column<EntityID<UUID>> = uuid("uuid")
+            .entityId()
         val name = varchar("name", 50)
             .default("Unknown Player")
     }
