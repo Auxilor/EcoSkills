@@ -43,7 +43,7 @@ class CommandRank(plugin: EcoPlugin) :
             val messages = plugin.langYml.getStrings("top", false)
             val lines = mutableListOf<String>()
 
-            val useDisplayName = plugin.configYml.getBool("commands.rank.use-display-name")
+            val useDisplayName = plugin.configYml.getBool("commands.top.use-display-name")
 
             for ((rank, player) in top) {
                 var line = plugin.langYml.getString("top-line-format", false)
