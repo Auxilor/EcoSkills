@@ -59,8 +59,10 @@ class MySQLDataHandler(
                     it[this.uuid] = uuid
                 }
             }
-            val player = Players.select { Players.uuid eq uuid }.first()
-            player[Players.columns.stream().filter { it.name == key }.findFirst().get()] = value
+            val column: Column<T> = Players.columns.stream().filter { it.name == key }.findFirst().get() as Column<T>
+            Players.update ({ Players.uuid eq uuid }) {
+                it[column] = value
+            }
         }
     }
 
