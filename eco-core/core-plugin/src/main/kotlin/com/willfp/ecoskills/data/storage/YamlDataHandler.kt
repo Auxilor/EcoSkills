@@ -15,7 +15,7 @@ class YamlDataHandler(
     }
 
     override fun <T> write(uuid: UUID, key: String, value: T) {
-        dataYml.set("player.$uuid.key", value)
+        dataYml.set("player.$uuid.$key", value)
     }
 
     override fun readInt(uuid: UUID, key: String): Int {
