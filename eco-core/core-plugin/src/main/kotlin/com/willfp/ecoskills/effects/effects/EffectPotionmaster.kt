@@ -99,7 +99,8 @@ class EffectPotionmaster : Effect(
             effects[PotionEffectType.SLOW] = 4
             effects[PotionEffectType.DAMAGE_RESISTANCE] = 2
         } else {
-            effects[data.type.effectType!!] = if (data.type.isUpgradeable) 2 else 1
+            val effectType = data.type.effectType ?: return
+            effects[effectType] = if (data.type.isUpgradeable) 2 else 1
         }
 
         for ((k, v) in effects) {
