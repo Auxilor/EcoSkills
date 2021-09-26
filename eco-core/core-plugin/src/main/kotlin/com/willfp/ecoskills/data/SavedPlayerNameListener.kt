@@ -26,11 +26,11 @@ class SavedPlayerNameListener(
 var OfflinePlayer.savedDisplayName: String
     get() {
         if (this is Player) {
-            plugin.dataYml.set("player.${this.uniqueId}.name", this.displayName)
+            plugin.dataHandler.write(this.uniqueId, "name", this.displayName)
         }
 
-        return plugin.dataYml.getStringOrNull("player.${this.uniqueId}.name") ?: this.name ?: "Unknown Player"
+        return plugin.dataHandler.readString(this.uniqueId, "name", this.name ?: "Unknown Player")
     }
     set(value) {
-        plugin.dataYml.set("player.${this.uniqueId}.name", value)
+        plugin.dataHandler.write(this.uniqueId, "name", value)
     }

@@ -60,17 +60,18 @@ class DataListener : Listener {
 
 private fun Player.convertFromLegacyData() {
     for (effect in Effects.values()) {
-        plugin.dataYml.set("player.${this.uniqueId}.${effect.id}", this.getEffectLevel(effect))
+        plugin.dataHandler.write(this.uniqueId, effect.id, this.getEffectLevel(effect))
     }
     for (stat in Stats.values()) {
-        plugin.dataYml.set("player.${this.uniqueId}.${stat.id}", this.getStatLevel(stat))
+        plugin.dataHandler.write(this.uniqueId, stat.id, this.getStatLevel(stat))
     }
     for (skill in Skills.values()) {
-        plugin.dataYml.set("player.${this.uniqueId}.${skill.id}", this.getSkillLevel(skill))
+        plugin.dataHandler.write(this.uniqueId, skill.id, this.getSkillLevel(skill))
         val prog = this.persistentDataContainer.get(skill.xpKey, PersistentDataType.DOUBLE)
         if (prog != null) {
-            plugin.dataYml.set(
-                "player.${this.uniqueId}.${skill.xpKey.key}",
+            plugin.dataHandler.write(
+                this.uniqueId,
+                skill.xpKey.key,
                 prog
             )
             this.persistentDataContainer.remove(skill.xpKey)

@@ -17,7 +17,7 @@ class CommandReload(plugin: EcoPlugin) :
     override fun getHandler(): CommandHandler {
         return CommandHandler { sender: CommandSender, _: List<String> ->
             try {
-                (plugin as EcoSkillsPlugin).dataYml.save()
+                (plugin as EcoSkillsPlugin).dataHandler.save()
             } catch (e: IOException) {
                 e.printStackTrace()
             }
