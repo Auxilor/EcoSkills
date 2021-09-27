@@ -4,6 +4,7 @@ import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.stats.Stats
+import org.bukkit.OfflinePlayer
 import java.util.*
 
 class PlayerProfile private constructor(
@@ -30,7 +31,7 @@ class PlayerProfile private constructor(
         private val loaded = mutableMapOf<UUID, PlayerProfile>()
         private val keys = mutableMapOf<String, Type>()
 
-        fun load(uuid: UUID): PlayerProfile {
+        private fun load(uuid: UUID): PlayerProfile {
             val found = loaded[uuid]
             if (found != null) {
                 return found
@@ -63,6 +64,11 @@ class PlayerProfile private constructor(
 
             handler.save()
         }
+
+        val OfflinePlayer.profile: PlayerProfile
+            get() {
+                return PlayerProfile.load(this.uniqueId)
+            }
 
         init {
             keys["name"] = Type.STRING

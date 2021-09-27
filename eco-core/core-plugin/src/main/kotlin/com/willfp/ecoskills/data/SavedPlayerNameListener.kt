@@ -1,7 +1,7 @@
 package com.willfp.ecoskills.data
 
 import com.willfp.eco.core.EcoPlugin
-import com.willfp.ecoskills.profile
+import com.willfp.ecoskills.data.storage.PlayerProfile.Companion.profile
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
