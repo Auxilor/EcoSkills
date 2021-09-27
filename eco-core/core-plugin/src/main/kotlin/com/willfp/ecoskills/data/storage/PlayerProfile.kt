@@ -67,7 +67,7 @@ class PlayerProfile private constructor(
 
         val OfflinePlayer.profile: PlayerProfile
             get() {
-                return PlayerProfile.load(this.uniqueId)
+                return load(this.uniqueId)
             }
 
         init {
