@@ -27,6 +27,7 @@ var OfflinePlayer.savedDisplayName: String
     get() {
         if (this is Player) {
             profile.write("name", this.displayName)
+            return this.displayName
         }
 
         return profile.readString("name", this.name ?: "Unknown Player")
