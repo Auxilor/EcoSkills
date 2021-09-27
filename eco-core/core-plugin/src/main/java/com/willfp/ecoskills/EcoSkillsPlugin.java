@@ -80,7 +80,7 @@ public class EcoSkillsPlugin extends EcoPlugin {
 
     @Override
     protected void handleDisable() {
-        dataHandler.save();
+        SaveHandler.Companion.save(this);
     }
 
     /**

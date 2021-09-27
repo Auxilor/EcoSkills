@@ -2,6 +2,7 @@ package com.willfp.ecoskills
 
 import com.willfp.ecoskills.api.PlayerSkillExpGainEvent
 import com.willfp.ecoskills.api.PlayerSkillLevelUpEvent
+import com.willfp.ecoskills.data.storage.PlayerProfile
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.skills.Skills
@@ -15,6 +16,11 @@ import java.util.*
 
 val expMultiplierCache = mutableMapOf<UUID, Double>()
 val plugin: EcoSkillsPlugin = EcoSkillsPlugin.getInstance()
+
+val OfflinePlayer.profile: PlayerProfile
+    get() {
+        return PlayerProfile.load(this.uniqueId)
+    }
 
 fun Player.getSkillExperienceMultiplier(): Double {
     if (expMultiplierCache.containsKey(this.uniqueId)) {
@@ -93,11 +99,11 @@ fun Player.giveSkillExperience(skill: Skill, experience: Double, isOvershoot: Bo
 }
 
 fun OfflinePlayer.getSkillLevel(skill: Skill): Int {
-    return plugin.dataHandler.readInt(this.uniqueId, skill.id)
+    return profile.readInt(skill.id)
 }
 
 fun OfflinePlayer.setSkillLevel(skill: Skill, level: Int) {
-    plugin.dataHandler.write(this.uniqueId, skill.id, level)
+    return profile.write(skill.id, level)
 }
 
 fun OfflinePlayer.getSkillProgressToNextLevel(skill: Skill): Double {
@@ -109,32 +115,32 @@ fun OfflinePlayer.getSkillProgressRequired(skill: Skill): Int {
 }
 
 fun OfflinePlayer.getSkillProgress(skill: Skill): Double {
-    return plugin.dataHandler.readDouble(this.uniqueId, skill.xpKey.key)
+    return profile.readDouble(skill.xpKey.key)
 }
 
 fun OfflinePlayer.setSkillProgress(skill: Skill, level: Double) {
-    plugin.dataHandler.write(this.uniqueId, skill.xpKey.key, level)
+    profile.write(skill.xpKey.key, level)
 }
 
 fun OfflinePlayer.getEffectLevel(effect: Effect): Int {
-    return plugin.dataHandler.readInt(this.uniqueId, effect.id)
+    return profile.readInt(effect.id)
 }
 
 fun OfflinePlayer.setEffectLevel(effect: Effect, level: Int) {
-    plugin.dataHandler.write(this.uniqueId, effect.id, level)
+    profile.write(effect.id, level)
 }
 
 fun OfflinePlayer.getStatLevel(stat: Stat): Int {
-    return plugin.dataHandler.readInt(this.uniqueId, stat.id)
+    return profile.readInt(stat.id)
 }
 
 fun Player.setStatLevel(stat: Stat, level: Int) {
-    plugin.dataHandler.write(this.uniqueId, stat.id, level)
+    profile.write(stat.id, level)
     stat.updateStatLevel(this)
 }
 
 fun Entity.tryAsPlayer(): Player? {
-    return when(this) {
+    return when (this) {
         is Projectile -> {
             val shooter = this.shooter
             if (shooter is Player) shooter else null

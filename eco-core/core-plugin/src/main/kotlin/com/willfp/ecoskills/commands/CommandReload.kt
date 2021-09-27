@@ -3,9 +3,8 @@ package com.willfp.ecoskills.commands
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.CommandHandler
 import com.willfp.eco.core.command.impl.Subcommand
-import com.willfp.ecoskills.EcoSkillsPlugin
+import com.willfp.ecoskills.data.storage.PlayerProfile
 import org.bukkit.command.CommandSender
-import java.io.IOException
 
 class CommandReload(plugin: EcoPlugin) :
     Subcommand(
@@ -16,11 +15,7 @@ class CommandReload(plugin: EcoPlugin) :
     ) {
     override fun getHandler(): CommandHandler {
         return CommandHandler { sender: CommandSender, _: List<String> ->
-            try {
-                (plugin as EcoSkillsPlugin).dataHandler.save()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
+            PlayerProfile.saveAll()
             plugin.reload()
             sender.sendMessage(plugin.langYml.getMessage("reloaded"))
         }

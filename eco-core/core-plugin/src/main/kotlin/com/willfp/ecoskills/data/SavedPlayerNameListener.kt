@@ -1,7 +1,7 @@
 package com.willfp.ecoskills.data
 
 import com.willfp.eco.core.EcoPlugin
-import com.willfp.ecoskills.plugin
+import com.willfp.ecoskills.profile
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -26,11 +26,11 @@ class SavedPlayerNameListener(
 var OfflinePlayer.savedDisplayName: String
     get() {
         if (this is Player) {
-            plugin.dataHandler.write(this.uniqueId, "name", this.displayName)
+            profile.write("name", this.displayName)
         }
 
-        return plugin.dataHandler.readString(this.uniqueId, "name", this.name ?: "Unknown Player")
+        return profile.readString("name", this.name ?: "Unknown Player")
     }
     set(value) {
-        plugin.dataHandler.write(this.uniqueId, "name", value)
+        return profile.write("name", value)
     }

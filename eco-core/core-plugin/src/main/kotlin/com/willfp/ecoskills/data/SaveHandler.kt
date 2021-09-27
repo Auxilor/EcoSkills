@@ -1,6 +1,7 @@
 package com.willfp.ecoskills.data
 
 import com.willfp.ecoskills.EcoSkillsPlugin
+import com.willfp.ecoskills.data.storage.PlayerProfile
 import com.willfp.ecoskills.expMultiplierCache
 import org.bukkit.Bukkit
 
@@ -13,7 +14,7 @@ class SaveHandler {
             if (plugin.configYml.getBool("log-autosaves")) {
                 plugin.logger.info("Auto-Saving player data!")
             }
-            plugin.dataHandler.save()
+            PlayerProfile.saveAll()
             expMultiplierCache.clear()
             if (plugin.configYml.getBool("log-autosaves")) {
                 plugin.logger.info("Saved data!")
