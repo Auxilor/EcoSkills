@@ -37,6 +37,19 @@ public interface EcoSkillsAPI {
                              double amount);
 
     /**
+     * Give skill experience to a player.
+     *
+     * @param player           The player.
+     * @param skill            The skill.
+     * @param amount           The amount of experience to give.
+     * @param applyMultipliers If multipliers should be applied.
+     */
+    void giveSkillExperience(@NotNull Player player,
+                             @NotNull Skill skill,
+                             double amount,
+                             boolean applyMultipliers);
+
+    /**
      * Get progress to next level between 0 and 1, where 0 is none and 1 is complete.
      *
      * @param player The player.

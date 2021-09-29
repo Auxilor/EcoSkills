@@ -20,6 +20,10 @@ object EcoSkillsAPIImpl: EcoSkillsAPI {
         player.giveSkillExperience(skill, amount)
     }
 
+    override fun giveSkillExperience(player: Player, skill: Skill, amount: Double, applyMultipliers: Boolean) {
+        player.giveSkillExperience(skill, amount, noMultiply = !applyMultipliers)
+    }
+
     override fun getSkillProgressToNextLevel(player: OfflinePlayer, skill: Skill): Double {
         return player.getSkillProgressToNextLevel(skill)
     }

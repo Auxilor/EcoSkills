@@ -62,7 +62,7 @@ class CommandGive(plugin: EcoPlugin) :
             }
 
             if (obj is Skill) {
-                player.giveSkillExperience(obj, amount.toDouble())
+                player.giveSkillExperience(obj, amount.toDouble(), noMultiply = true)
                 player.sendMessage(
                     this.plugin.langYml.getMessage("gave-skill-xp")
                         .replace("%player%", player.name)
