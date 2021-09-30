@@ -318,4 +318,4 @@ commands:
 
 autosave:
   log: true # If auto-save messages should be sent to console
-  async: true # If saves should be performed asynchronously. Disable if you get errors.
+  async: false # If saves should be performed asynchronously. May cause bugs without MySQL
