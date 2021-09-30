@@ -11,12 +11,12 @@ class SaveHandler {
             if (Bukkit.getOnlinePlayers().isEmpty()) {
                 return
             }
-            if (plugin.configYml.getBool("log-autosaves")) {
+            if (plugin.configYml.getBool("autosave.log")) {
                 plugin.logger.info("Auto-Saving player data!")
             }
-            PlayerProfile.saveAll()
+            PlayerProfile.saveAll(plugin.configYml.getBool("autosave.async"))
             expMultiplierCache.clear()
-            if (plugin.configYml.getBool("log-autosaves")) {
+            if (plugin.configYml.getBool("autosave.log")) {
                 plugin.logger.info("Saved data!")
             }
         }

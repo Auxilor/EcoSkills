@@ -2,6 +2,7 @@ package com.willfp.ecoskills.data.storage
 
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.effects.Effects
+import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.stats.Stats
 import org.bukkit.OfflinePlayer
@@ -51,18 +52,26 @@ class PlayerProfile private constructor(
             return profile
         }
 
-        fun saveAll() {
-            for ((uuid, profile) in loaded) {
-                for ((key, type) in keys) {
-                    when (type) {
-                        Type.INT -> handler.write(uuid, key, profile.readInt(key))
-                        Type.DOUBLE -> handler.write(uuid, key, profile.readDouble(key))
-                        Type.STRING -> handler.write(uuid, key, profile.readString(key, "Unknown Value"))
+        fun saveAll(async: Boolean) {
+            val saver = {
+                for ((uuid, profile) in loaded) {
+                    for ((key, type) in keys) {
+                        when (type) {
+                            Type.INT -> handler.write(uuid, key, profile.readInt(key))
+                            Type.DOUBLE -> handler.write(uuid, key, profile.readDouble(key))
+                            Type.STRING -> handler.write(uuid, key, profile.readString(key, "Unknown Value"))
+                        }
                     }
                 }
+
+                handler.save()
             }
 
-            handler.save()
+            if (async) {
+                plugin.scheduler.runAsync(saver)
+            } else {
+                saver.invoke()
+            }
         }
 
         val OfflinePlayer.profile: PlayerProfile
