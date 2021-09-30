@@ -15,7 +15,7 @@ class CommandReload(plugin: EcoPlugin) :
     ) {
     override fun getHandler(): CommandHandler {
         return CommandHandler { sender: CommandSender, _: List<String> ->
-            PlayerProfile.saveAll()
+            PlayerProfile.saveAll(false)
             plugin.reload()
             sender.sendMessage(plugin.langYml.getMessage("reloaded"))
         }
