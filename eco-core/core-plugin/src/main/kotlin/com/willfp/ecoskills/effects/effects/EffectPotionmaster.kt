@@ -2,9 +2,9 @@ package com.willfp.ecoskills.effects.effects
 
 import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.StringUtils
+import com.willfp.ecoskills.duration
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.getEffectLevel
-import com.willfp.ecoskills.util.PotionUtils
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -54,7 +54,7 @@ class EffectPotionmaster : Effect(
                     }
                 }
 
-                val duration = PotionUtils.getDuration(potionData)
+                val duration = potionData.duration
                 val delta = (duration * multiplier).toInt() - duration
                 val secondsDelta = NumberUtils.format(delta / 20.0)
 
@@ -107,7 +107,7 @@ class EffectPotionmaster : Effect(
             player.addPotionEffect(
                 PotionEffect(
                     k,
-                    PotionUtils.getDuration(data) + delta,
+                    data.duration + delta,
                     v
                 )
             )
@@ -144,7 +144,7 @@ class EffectPotionmaster : Effect(
                 entity.addPotionEffect(
                     PotionEffect(
                         key,
-                        ((PotionUtils.getDuration(data) + delta) * event.getIntensity(entity)).toInt(),
+                        ((data.duration + delta) * event.getIntensity(entity)).toInt(),
                         value
                     )
                 )
