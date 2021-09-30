@@ -32,14 +32,18 @@ class PlayerBlockListener(
     fun onBreak(event: BlockBreakEvent) {
         val block = event.block
 
-        this.plugin.scheduler.runLater({
+        this.plugin.scheduler.run {
             removeKey(block)
-        }, 1)
+        }
     }
 
     private fun writeKey(block: Block) {
         val loc = block.location.hashCode().toString(16)
-        block.chunk.persistentDataContainer.set(NamespacedKeyUtils.create("ecoskills", loc.lowercase()), PersistentDataType.INTEGER, 1)
+        block.chunk.persistentDataContainer.set(
+            NamespacedKeyUtils.create("ecoskills", loc.lowercase()),
+            PersistentDataType.INTEGER,
+            1
+        )
     }
 
     private fun removeKey(block: Block) {
@@ -50,5 +54,10 @@ class PlayerBlockListener(
 
 fun Block.isPlayerPlaced(): Boolean {
     val chunk = this.chunk
-    return chunk.persistentDataContainer.has(NamespacedKeyUtils.create("ecoskills", this.location.hashCode().toString(16)), PersistentDataType.INTEGER)
+    return chunk.persistentDataContainer.has(
+        NamespacedKeyUtils.create(
+            "ecoskills",
+            this.location.hashCode().toString(16)
+        ), PersistentDataType.INTEGER
+    )
 }

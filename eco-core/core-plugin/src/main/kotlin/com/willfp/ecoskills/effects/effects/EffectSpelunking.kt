@@ -28,9 +28,9 @@ class EffectSpelunking : Effect(
     fun onBreak(event: BlockBreakEvent) {
         blockMap[event.block.location] = event.block.type
 
-        this.plugin.scheduler.runLater({
+        this.plugin.scheduler.run {
             blockMap.remove(event.block.location)
-        }, 1)
+        }
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)

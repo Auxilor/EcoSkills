@@ -12,9 +12,9 @@ class EcoSkillsEventModifierHandler(
 ) : Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     fun preventLeak(event: EntityDamageByEntityEvent) {
-        plugin.scheduler.runLater({
+        plugin.scheduler.run {
             critMap.remove(event)
-        }, 1)
+        }
     }
 }
 

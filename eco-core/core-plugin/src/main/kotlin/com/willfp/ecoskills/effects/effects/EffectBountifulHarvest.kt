@@ -12,7 +12,7 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockDropItemEvent
 
-class EffectBountifulHarvest: Effect(
+class EffectBountifulHarvest : Effect(
     "bountiful_harvest"
 ) {
     private val blockMap = mutableMapOf<Location, Material>()
@@ -26,9 +26,9 @@ class EffectBountifulHarvest: Effect(
     fun onBreak(event: BlockBreakEvent) {
         blockMap[event.block.location] = event.block.type
 
-        this.plugin.scheduler.runLater({
+        this.plugin.scheduler.run {
             blockMap.remove(event.block.location)
-        }, 1)
+        }
     }
 
     @EventHandler(ignoreCancelled = true)

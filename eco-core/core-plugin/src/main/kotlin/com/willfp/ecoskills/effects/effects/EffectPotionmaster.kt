@@ -35,7 +35,7 @@ class EffectPotionmaster : Effect(
 
         val multiplier = ((player.getEffectLevel(this) * this.config.getDouble("percent-more-per-level")) / 100) + 1
 
-        this.plugin.scheduler.runLater({
+        this.plugin.scheduler.run {
             for (i in 0..2) {
                 val item = event.contents.getItem(i) ?: continue
 
@@ -74,7 +74,7 @@ class EffectPotionmaster : Effect(
 
                 item.itemMeta = meta
             }
-        }, 1)
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
