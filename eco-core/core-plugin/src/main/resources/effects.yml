@@ -175,12 +175,12 @@ spelunking:
 dynamic_mining:
   description: "&a%chance%%&8 chance to get Haste III for &a%seconds%&8 seconds when breaking blocks"
 
-  # The base ticks to give nausea for
+  # The base ticks to give haste for
   base-ticks: 18
-  # The extra ticks to give nausea for per level
+  # The extra ticks to give haste for per level
   ticks-per-level: 2
-  # The chance to give nausea per level, as a percentage
-  chance-per-level: 1.5
+  # The chance to give haste per level, as a percentage
+  chance-per-level: 0.1
   # The level of haste to give
   level: 3
 reimbursement:
