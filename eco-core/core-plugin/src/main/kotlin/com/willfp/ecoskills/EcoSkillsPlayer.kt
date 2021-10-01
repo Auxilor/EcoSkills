@@ -13,6 +13,7 @@ import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
 import java.util.*
+import kotlin.math.abs
 
 val expMultiplierCache = mutableMapOf<UUID, Double>()
 val plugin: EcoSkillsPlugin = EcoSkillsPlugin.getInstance()
@@ -70,7 +71,7 @@ fun OfflinePlayer.getAverageSkillLevel(): Double {
 }
 
 fun Player.giveSkillExperience(skill: Skill, experience: Double, noMultiply: Boolean = false) {
-    val exp = if (noMultiply) experience else experience * this.getSkillExperienceMultiplier()
+    val exp = abs(if (noMultiply) experience else experience * this.getSkillExperienceMultiplier())
 
     val gainEvent = PlayerSkillExpGainEvent(this, skill, exp)
     Bukkit.getPluginManager().callEvent(gainEvent)
