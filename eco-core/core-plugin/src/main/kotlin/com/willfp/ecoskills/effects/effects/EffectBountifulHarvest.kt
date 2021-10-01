@@ -4,6 +4,7 @@ import com.willfp.eco.core.drops.DropQueue
 import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.getEffectLevel
+import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.data.Ageable
@@ -16,6 +17,7 @@ class EffectBountifulHarvest : Effect(
     "bountiful_harvest"
 ) {
     private val blockMap = mutableMapOf<Location, Material>()
+    private val noRepeat = mutableListOf<BlockDropItemEvent>()
 
     override fun formatDescription(string: String, level: Int): String {
         return string.replace("%chance%", NumberUtils.format(this.getChance(level)))
@@ -31,12 +33,17 @@ class EffectBountifulHarvest : Effect(
         }
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     fun handle(event: BlockDropItemEvent) {
+        if (noRepeat.contains(event)) {
+            return
+        }
+
         val mat = blockMap[event.block.location] ?: return
 
-        val block = event.block
         val player = event.player
+
+        val block = event.block
 
         val data = block.blockData
 
@@ -52,7 +59,7 @@ class EffectBountifulHarvest : Effect(
             return
         }
 
-        if (event.items.isEmpty()) {
+        if (!config.getStrings("on-blocks").contains(mat.name.lowercase())) {
             return
         }
 
@@ -60,21 +67,34 @@ class EffectBountifulHarvest : Effect(
 
         val chance = getChance(level)
 
-        val multiplier = getMultiplier(level)
+        var bonus = getMultiplier(level) - 2
 
-        if (multiplier >= 2) {
-            for (i in 2 until multiplier) {
-                DropQueue(player)
-                    .addItems(*event.items.map { item -> item.itemStack })
-                    .push()
-            }
+        if (bonus <= 0) {
+            return
         }
 
         if (NumberUtils.randFloat(0.0, 100.0) < chance) {
-            DropQueue(player)
-                .addItems(*event.items.map { item -> item.itemStack })
-                .push()
+            bonus++
         }
+
+        val dropEvent = BlockDropItemEvent(block, block.state, player, event.items.map {
+            it.itemStack = it.itemStack.apply {
+                this.amount *= bonus
+            }
+            it
+        })
+
+        noRepeat.add(dropEvent)
+
+        Bukkit.getPluginManager().callEvent(dropEvent)
+
+        if (dropEvent.items.isEmpty() || dropEvent.isCancelled) {
+            return
+        }
+
+        DropQueue(player)
+            .addItems(*dropEvent.items.map { it.itemStack })
+            .push()
     }
 
     private fun getMultiplier(level: Int): Int {
@@ -92,7 +112,7 @@ class EffectBountifulHarvest : Effect(
     private fun getChance(level: Int): Double {
         var chance = config.getDouble("chance-per-level") * level
 
-        chance -= (getMultiplier(level) - 2) * 100
+        chance -= ((getMultiplier(level) - 2) * 100)
         if (chance == 0.0) {
             chance = 100.0
         }

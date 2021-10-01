@@ -57,33 +57,34 @@ class EffectMasterLumberjack : Effect(
 
         val chance = getChance(level)
 
-        val multiplier = getMultiplier(level)
+        var bonus = getMultiplier(level) - 2
 
-        if (multiplier == 1) {
+        if (bonus <= 0) {
             return
         }
 
-        val dropEvent = BlockDropItemEvent(block, block.state, player, event.items)
+        if (NumberUtils.randFloat(0.0, 100.0) < chance) {
+            bonus++
+        }
+
+        val dropEvent = BlockDropItemEvent(block, block.state, player, event.items.map {
+            it.itemStack = it.itemStack.apply {
+                this.amount *= bonus
+            }
+            it
+        })
+
         noRepeat.add(dropEvent)
+
         Bukkit.getPluginManager().callEvent(dropEvent)
 
         if (dropEvent.items.isEmpty() || dropEvent.isCancelled) {
             return
         }
 
-        if (multiplier > 2) {
-            for (i in 2 until multiplier) {
-                DropQueue(player)
-                    .addItems(*dropEvent.items.map { item -> item.itemStack })
-                    .push()
-            }
-        }
-
-        if (NumberUtils.randFloat(0.0, 100.0) < chance) {
-            DropQueue(player)
-                .addItems(*dropEvent.items.map { item -> item.itemStack })
-                .push()
-        }
+        DropQueue(player)
+            .addItems(*dropEvent.items.map { it.itemStack })
+            .push()
     }
 
     private fun getMultiplier(level: Int): Int {
