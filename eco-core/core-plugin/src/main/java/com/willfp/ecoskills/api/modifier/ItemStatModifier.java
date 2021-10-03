@@ -41,7 +41,7 @@ public class ItemStatModifier implements StatModifier {
         this.key = key;
         this.stat = stat;
         this.amount = amount;
-        this.slots = slot;
+        this.slots = slot.length == 0 ? EquipmentSlot.values() : slot;
     }
 
     @Override
