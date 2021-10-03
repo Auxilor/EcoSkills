@@ -57,7 +57,7 @@ class CommandReset(plugin: EcoPlugin) :
             if (args.size == 1) {
                 StringUtil.copyPartialMatches(
                     args[0],
-                    Bukkit.getOnlinePlayers().map { player -> player.name }.toCollection(ArrayList()),
+                    Bukkit.getOnlinePlayers().map { player -> player.name }.toMutableList(),
                     completions
                 )
                 return@TabCompleteHandler completions
