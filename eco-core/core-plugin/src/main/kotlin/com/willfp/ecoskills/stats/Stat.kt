@@ -19,7 +19,7 @@ abstract class Stat(
 
     val key: NamespacedKey
     val uuid: UUID
-    val config: Config
+    open val config: Config
     lateinit var name: String
 
     init {
