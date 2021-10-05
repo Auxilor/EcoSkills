@@ -127,7 +127,15 @@ fun OfflinePlayer.setEffectLevel(effect: Effect, level: Int) {
 }
 
 fun OfflinePlayer.getStatLevel(stat: Stat): Int {
-    return profile.readInt(stat.id)
+    var base = profile.readInt(stat.id)
+    if (this is Player) {
+        for (modifier in this.getStatModifiers()) {
+            if (modifier.stat == stat) {
+                base += modifier.amount
+            }
+        }
+    }
+    return base
 }
 
 fun Player.setStatLevel(stat: Stat, level: Int) {
