@@ -22,7 +22,7 @@ abstract class Skill(
 
     val key: NamespacedKey = plugin.namespacedKeyFactory.create(id)
     val xpKey: NamespacedKey = plugin.namespacedKeyFactory.create(id + "_progress")
-    open val config: Config
+    lateinit var config: Config
     lateinit var name: String
     lateinit var description: String
     lateinit var gui: SkillGUI
@@ -35,9 +35,17 @@ abstract class Skill(
     private val messagesCache = mutableMapOf<Int, List<String>>()
 
     init {
-        config = SkillConfig(this.id, this.javaClass, plugin)
+        finishLoading()
+    }
+
+    private fun finishLoading() {
+        config = loadConfig()
 
         Skills.registerNewSkill(this)
+    }
+
+    open fun loadConfig(): Config {
+        return SkillConfig(this.id, this.javaClass, plugin)
     }
 
     fun update() {

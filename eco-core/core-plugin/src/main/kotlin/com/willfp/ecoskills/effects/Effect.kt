@@ -13,20 +13,29 @@ import java.util.*
 
 abstract class Effect(
     id: String
-): SkillObject(id), Listener {
+) : SkillObject(id), Listener {
     protected val plugin: EcoSkillsPlugin = EcoSkillsPlugin.getInstance()
 
     val key: NamespacedKey
-    open val config: Config
     val uuid: UUID
+    lateinit var config: Config
 
     init {
         update()
         uuid = UUID.nameUUIDFromBytes(id.toByteArray())
         key = plugin.namespacedKeyFactory.create(id)
-        config = plugin.effectsYml.getSubsection(id)
+
+        finishLoading()
+    }
+
+    private fun finishLoading() {
+        config = loadConfig()
 
         Effects.registerNewEffect(this)
+    }
+
+    open fun loadConfig(): Config {
+        return plugin.effectsYml.getSubsection(id)
     }
 
     abstract fun formatDescription(string: String, level: Int): String

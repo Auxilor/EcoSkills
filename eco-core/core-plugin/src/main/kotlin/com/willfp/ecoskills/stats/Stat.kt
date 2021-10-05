@@ -19,16 +19,25 @@ abstract class Stat(
 
     val key: NamespacedKey
     val uuid: UUID
-    open val config: Config
+    lateinit var config: Config
     lateinit var name: String
 
     init {
         update()
         key = plugin.namespacedKeyFactory.create(id)
         uuid = UUID.nameUUIDFromBytes(id.toByteArray())
-        config = plugin.configYml.getSubsection("stats.$id")
+
+        finishLoading()
+    }
+
+    private fun finishLoading() {
+        config = loadConfig()
 
         Stats.registerNewStat(this)
+    }
+
+    open fun loadConfig(): Config {
+        return plugin.configYml.getSubsection("stats.$id")
     }
 
     fun update() {
