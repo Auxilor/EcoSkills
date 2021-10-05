@@ -18,6 +18,10 @@ private val statKey: NamespacedKey = NamespacedKeyUtils.create("ecoskills", "sta
 private val amountKey: NamespacedKey = NamespacedKeyUtils.create("ecoskills", "amount")
 private val slotsKey: NamespacedKey = NamespacedKeyUtils.create("ecoskills", "slots")
 
+private fun PersistentDataContainer.applyModifiers(tag: PersistentDataContainer) {
+    this.set(modifierKey, PersistentDataType.TAG_CONTAINER, tag)
+}
+
 private fun getModifiersTag(meta: ItemMeta): PersistentDataContainer {
     val container = meta.persistentDataContainer
     val context = container.adapterContext
@@ -43,6 +47,8 @@ fun ItemStack.addStatModifier(modifier: ItemStatModifier) {
     modifierTag.set(slotsKey, PersistentDataType.STRING, modifier.slots.map { slot -> slot.name }.toTypedArray().joinToString { "," })
 
     modifiers.set(modifier.key, PersistentDataType.TAG_CONTAINER, modifierTag)
+
+    meta.persistentDataContainer.applyModifiers(modifiers)
 
     this.itemMeta = meta
 }
@@ -107,6 +113,8 @@ fun Player.addStatModifier(modifier: StatModifier) {
     modifierTag.set(amountKey, PersistentDataType.INTEGER, modifier.amount)
 
     modifiers.set(modifier.key, PersistentDataType.TAG_CONTAINER, modifierTag)
+
+    this.persistentDataContainer.applyModifiers(modifiers)
 
     for (stat in Stats.values()) {
         stat.updateStatLevel(this)
