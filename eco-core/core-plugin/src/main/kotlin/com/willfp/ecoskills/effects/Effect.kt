@@ -17,7 +17,7 @@ abstract class Effect(
     protected val plugin: EcoSkillsPlugin = EcoSkillsPlugin.getInstance()
 
     val key: NamespacedKey
-    val config: Config
+    open val config: Config
     val uuid: UUID
 
     init {

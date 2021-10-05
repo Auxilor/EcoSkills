@@ -22,7 +22,7 @@ abstract class Skill(
 
     val key: NamespacedKey = plugin.namespacedKeyFactory.create(id)
     val xpKey: NamespacedKey = plugin.namespacedKeyFactory.create(id + "_progress")
-    val config: Config
+    open val config: Config
     lateinit var name: String
     lateinit var description: String
     lateinit var gui: SkillGUI
