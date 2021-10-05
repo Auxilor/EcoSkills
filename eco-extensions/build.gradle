@@ -1,0 +1,15 @@
+group 'com.willfp'
+description = 'Extension Parent'
+
+subprojects {
+    dependencies {
+        compileOnly project(":eco-core:core-plugin")
+        compileOnly 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
+    }
+
+    tasks.withType(Jar) {
+        destinationDirectory = file("$rootDir/bin/")
+    }
+
+    tasks.jar.enabled = false
+}

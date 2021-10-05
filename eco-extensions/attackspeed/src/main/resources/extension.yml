@@ -1,0 +1,4 @@
+name: Attack Speed
+main: com.willfp.ecoskills.attackspeed.AttackSpeedMain
+version: ${projectVersion}
+author: Auxilor
