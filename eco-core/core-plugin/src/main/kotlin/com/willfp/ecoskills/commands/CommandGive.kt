@@ -4,7 +4,7 @@ import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.CommandHandler
 import com.willfp.eco.core.command.TabCompleteHandler
 import com.willfp.eco.core.command.impl.Subcommand
-import com.willfp.ecoskills.getStatLevel
+import com.willfp.ecoskills.getBaseStatLevel
 import com.willfp.ecoskills.giveSkillExperience
 import com.willfp.ecoskills.setStatLevel
 import com.willfp.ecoskills.skills.Skill
@@ -73,7 +73,7 @@ class CommandGive(plugin: EcoPlugin) :
             }
 
             if (obj is Stat) {
-                player.setStatLevel(obj, player.getStatLevel(obj) + amount)
+                player.setStatLevel(obj, player.getBaseStatLevel(obj) + amount)
                 sender.sendMessage(
                     this.plugin.langYml.getMessage("gave-stat")
                         .replace("%player%", player.name)

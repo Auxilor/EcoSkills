@@ -116,6 +116,16 @@ public interface EcoSkillsAPI {
                      @NotNull Stat stat);
 
     /**
+     * Get the stat level for a player before any modifiers are applied.
+     *
+     * @param player The player.
+     * @param stat   The stat.
+     * @return The stat level.
+     */
+    int getBaseStatLevel(@NotNull OfflinePlayer player,
+                         @NotNull Stat stat);
+
+    /**
      * Add a stat modifier to an item.
      *
      * @param itemStack The item.
@@ -203,7 +213,7 @@ public interface EcoSkillsAPI {
      */
     @Nullable
     PlayerStatModifier getStatModifier(@NotNull Player player,
-                                 @NotNull NamespacedKey key);
+                                       @NotNull NamespacedKey key);
 
     /**
      * Get the instance of the API.

@@ -44,6 +44,10 @@ object EcoSkillsAPIImpl: EcoSkillsAPI {
         return player.getStatLevel(stat)
     }
 
+    override fun getBaseStatLevel(player: OfflinePlayer, stat: Stat): Int {
+        return player.getBaseStatLevel(stat)
+    }
+
     override fun addStatModifier(itemStack: ItemStack, modifier: ItemStatModifier) {
         itemStack.addStatModifier(modifier)
     }
