@@ -51,11 +51,11 @@ public class EcoSkillsPlugin extends EcoPlugin {
      * Internal constructor called by bukkit on plugin load.
      */
     public EcoSkillsPlugin() {
-        super(1351, 12205, "&#ff00ae");
+        super(1351, 12205, "&#ff00ae", true);
         instance = this;
         effectsYml = new EffectsYml(this);
-        dataHandler = this.getConfigYml().getBool("mysql.enabled") ?
-                new MySQLDataHandler(this) : new YamlDataHandler(this);
+        dataHandler = this.getConfigYml().getBool("mysql.enabled")
+                ? new MySQLDataHandler(this) : new YamlDataHandler(this);
     }
 
     @Override
