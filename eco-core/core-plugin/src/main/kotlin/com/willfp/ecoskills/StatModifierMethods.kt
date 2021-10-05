@@ -127,8 +127,8 @@ fun Player.getStatModifierKeys(): MutableSet<NamespacedKey> {
     return modifiers.keys
 }
 
-fun Player.getStatModifiers(): MutableSet<StatModifier> {
-    val keys = HashSet<StatModifier>()
+fun Player.getStatModifiers(): MutableSet<PlayerStatModifier> {
+    val keys = HashSet<PlayerStatModifier>()
     for (modifier in this.getStatModifierKeys().stream().map { key -> this.getStatModifier(key) }) {
         if (modifier != null) {
             keys.add(modifier)
@@ -137,7 +137,7 @@ fun Player.getStatModifiers(): MutableSet<StatModifier> {
     return keys
 }
 
-fun Player.getStatModifier(key: NamespacedKey): StatModifier? {
+fun Player.getStatModifier(key: NamespacedKey): PlayerStatModifier? {
     val modifiers = getModifiersTag(this)
 
     return if (modifiers.has(key, PersistentDataType.TAG_CONTAINER)) {

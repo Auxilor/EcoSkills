@@ -1,7 +1,7 @@
 package com.willfp.ecoskills.api;
 
 import com.willfp.ecoskills.api.modifier.ItemStatModifier;
-import com.willfp.ecoskills.api.modifier.StatModifier;
+import com.willfp.ecoskills.api.modifier.PlayerStatModifier;
 import com.willfp.ecoskills.effects.Effect;
 import com.willfp.ecoskills.skills.Skill;
 import com.willfp.ecoskills.stats.Stat;
@@ -161,13 +161,22 @@ public interface EcoSkillsAPI {
                                      @NotNull NamespacedKey key);
 
     /**
+     * Add a stat modifier to a player.
+     *
+     * @param player   The player.
+     * @param modifier The modifier.
+     */
+    void addStatModifier(@NotNull Player player,
+                         @NotNull PlayerStatModifier modifier);
+
+    /**
      * Remove a stat modifier from a player.
      *
      * @param player   The player.
      * @param modifier The modifier.
      */
     void removeStatModifier(@NotNull Player player,
-                            @NotNull ItemStatModifier modifier);
+                            @NotNull PlayerStatModifier modifier);
 
     /**
      * Get stat modifier keys on a player.
@@ -183,7 +192,7 @@ public interface EcoSkillsAPI {
      * @param player The player.
      * @return The modifiers.
      */
-    Set<StatModifier> getStatModifiers(@NotNull Player player);
+    Set<PlayerStatModifier> getStatModifiers(@NotNull Player player);
 
     /**
      * Get stat modifier on a player.
@@ -193,7 +202,7 @@ public interface EcoSkillsAPI {
      * @return The modifier.
      */
     @Nullable
-    StatModifier getStatModifier(@NotNull Player player,
+    PlayerStatModifier getStatModifier(@NotNull Player player,
                                  @NotNull NamespacedKey key);
 
     /**

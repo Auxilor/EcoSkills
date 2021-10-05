@@ -2,7 +2,7 @@ package com.willfp.ecoskills.api
 
 import com.willfp.ecoskills.*
 import com.willfp.ecoskills.api.modifier.ItemStatModifier
-import com.willfp.ecoskills.api.modifier.StatModifier
+import com.willfp.ecoskills.api.modifier.PlayerStatModifier
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.stats.Stat
@@ -52,7 +52,11 @@ object EcoSkillsAPIImpl: EcoSkillsAPI {
         itemStack.removeStatModifier(modifier)
     }
 
-    override fun removeStatModifier(player: Player, modifier: ItemStatModifier) {
+    override fun addStatModifier(player: Player, modifier: PlayerStatModifier) {
+        player.addStatModifier(modifier)
+    }
+
+    override fun removeStatModifier(player: Player, modifier: PlayerStatModifier) {
         player.removeStatModifier(modifier)
     }
 
@@ -68,7 +72,7 @@ object EcoSkillsAPIImpl: EcoSkillsAPI {
         return itemStack.getStatModifiers()
     }
 
-    override fun getStatModifiers(player: Player): MutableSet<StatModifier> {
+    override fun getStatModifiers(player: Player): MutableSet<PlayerStatModifier> {
         return player.getStatModifiers()
     }
 
@@ -76,7 +80,7 @@ object EcoSkillsAPIImpl: EcoSkillsAPI {
         return itemStack.getStatModifier(key)
     }
 
-    override fun getStatModifier(player: Player, key: NamespacedKey): StatModifier? {
+    override fun getStatModifier(player: Player, key: NamespacedKey): PlayerStatModifier? {
         return player.getStatModifier(key)
     }
 
