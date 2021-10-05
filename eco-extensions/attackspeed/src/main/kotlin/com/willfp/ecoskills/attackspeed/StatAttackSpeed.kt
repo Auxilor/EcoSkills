@@ -13,7 +13,7 @@ class StatAttackSpeed : Stat(
         val modifier = AttributeModifier(
             this.uuid,
             this.name,
-            (this.config.getDouble("percent-faster-per-level") * player.getStatLevel(this)) / 100.0,
+            (1 * player.getStatLevel(this)) / 100.0,
             AttributeModifier.Operation.MULTIPLY_SCALAR_1
         )
         val instance = player.getAttribute(Attribute.GENERIC_ATTACK_SPEED) ?: return
