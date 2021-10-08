@@ -41,7 +41,7 @@ abstract class Stat(
     }
 
     fun update() {
-        name = plugin.langYml.getString("stats.$id.name")
+        name = config.getString("name")
 
         PlaceholderEntry(
             id,

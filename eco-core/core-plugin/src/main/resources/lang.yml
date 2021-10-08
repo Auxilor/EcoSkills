@@ -25,17 +25,3 @@ menu:
   title: "Your Skills"
 
 stats:
-  defense:
-    name: "&#e884b0🛡 Defense"
-  strength:
-    name: "&#db0000🗡 Strength"
-  crit_chance:
-    name: "&#f7ff85☣ Crit Chance"
-  crit_damage:
-    name: "&9☠ Crit Damage"
-  speed:
-    name: "&#40ffe6✦ Speed"
-  wisdom:
-    name: "&#42f566✎ Wisdom"
-  ferocity:
-    name: "&#6b0000⫽ Ferocity"

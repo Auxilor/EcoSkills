@@ -277,27 +277,34 @@ skills:
 
 stats:
   defense:
+    name: "&#e884b0🛡 Defense"
     # 100% halves the incoming damage
     percent-less-damage-per-level: 1
   strength:
+    name: "&#db0000🗡 Strength"
     # 100% is double damage
     percent-more-damage-per-level: 1
   crit_chance:
+    name: "&#f7ff85☣ Crit Chance"
     # Nothing happens above 100%, 200% is the same as it.
     chance-per-level: 1
   crit_damage:
+    name: "&9☠ Crit Damage"
     # The percent more damage to deal on crits for each level.
     percent-more-damage-per-level: 2
     # The amount more damage to deal on crits by default.
     base-percent-more: 50
   speed:
+    name: "&#40ffe6✦ Speed"
     # The percent more speed to give for the speed attribute (internal in the game)
     # for each level
     percent-faster-per-level: 1
   wisdom:
+    name: "&#42f566✎ Wisdom"
     # The percent more xp to gain from orbs for each level of the stat.
     percent-more-xp-gain: 1
   ferocity:
+    name: "&#6b0000⫽ Ferocity"
     # The percent chance to deal damage twice
     chance-per-level: 0.5
 
