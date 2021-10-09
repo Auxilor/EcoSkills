@@ -21,6 +21,7 @@ public class Effects {
     public static final Effect BOUNTIFUL_HARVEST = new EffectBountifulHarvest();
     public static final Effect CRAFTSMANSHIP = new EffectCraftsmanship();
     public static final Effect EYE_OF_THE_DEPTHS = new EffectEyeOfTheDepths();
+    public static final Effect ARCANE_LURE = new EffectArcaneLure();
     public static final Effect POTIONMASTER = new EffectPotionmaster();
     public static final Effect SEAMLESS_MOVEMENT = new EffectSeamlessMovement();
     public static final Effect SECOND_CHANCE = new EffectSecondChance();
