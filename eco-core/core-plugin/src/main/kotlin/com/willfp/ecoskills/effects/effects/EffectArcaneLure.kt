@@ -26,7 +26,6 @@ class EffectArcaneLure: Effect(
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: PlayerFishEvent){
         val player = event.player
-        val playerInv = player.inventory
 
         if (event.state != PlayerFishEvent.State.CAUGHT_FISH) {
             return
