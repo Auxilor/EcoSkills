@@ -32,6 +32,13 @@ eye_of_the_depths:
     - ecoarmor:set_miner_leggings
     - ecoarmor:set_miner_boots
     - reforges:dynamic
+arcane_lure:
+  # Ancient Potions are a custom potion with a random potion effect that lasts 5 minutes, use at your own risk!
+  description: "&a%chance%%&8 chance to get an &d&lAncient Potion&r&8 from fishing"
+
+  # Chance is as a percentage
+  chance-per-level: 0.5
+
 serrated_strikes:
   description: "&a%chance%%&8 chance to make your opponent bleed"
 
