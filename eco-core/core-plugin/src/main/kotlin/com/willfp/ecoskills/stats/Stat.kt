@@ -17,16 +17,12 @@ abstract class Stat(
 ) : SkillObject(id), Listener {
     protected val plugin: EcoPlugin = EcoSkillsPlugin.getInstance()
 
-    val key: NamespacedKey
-    val uuid: UUID
+    val key: NamespacedKey = plugin.namespacedKeyFactory.create(id)
+    val uuid: UUID = UUID.nameUUIDFromBytes(id.toByteArray())
     lateinit var config: Config
     lateinit var name: String
 
     init {
-        update()
-        key = plugin.namespacedKeyFactory.create(id)
-        uuid = UUID.nameUUIDFromBytes(id.toByteArray())
-
         finishLoading()
     }
 
@@ -34,6 +30,8 @@ abstract class Stat(
         config = loadConfig()
 
         Stats.registerNewStat(this)
+
+        update()
     }
 
     open fun loadConfig(): Config {
