@@ -11,7 +11,7 @@ import org.bukkit.event.enchantment.EnchantItemEvent
 class SkillEnchanting : Skill(
     "enchanting"
 ) {
-    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun handleLevelling(event: EnchantItemEvent) {
         val player = event.enchanter
         val cost = event.expLevelCost

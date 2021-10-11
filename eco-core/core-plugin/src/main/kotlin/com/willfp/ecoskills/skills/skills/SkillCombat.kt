@@ -13,7 +13,7 @@ import org.bukkit.event.EventPriority
 class SkillCombat : Skill(
     "combat"
 ) {
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.MONITOR)
     fun handleLevelling(event: EntityDeathByEntityEvent) {
         val player = event.killer.tryAsPlayer() ?: return
 

@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerFishEvent
 class SkillFishing : Skill(
     "fishing"
 ) {
-    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun handleLevelling(event: PlayerFishEvent) {
         val player = event.player
 
