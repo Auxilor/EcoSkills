@@ -1,13 +1,11 @@
 package com.willfp.ecoskills.attackspeed;
 
 import com.willfp.eco.core.config.interfaces.Config;
-import com.willfp.eco.core.config.yaml.YamlTransientConfig;
 import com.willfp.ecoskills.api.EcoSkillsAPI;
 import com.willfp.ecoskills.stats.Stat;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.attribute.AttributeModifier;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -22,7 +20,7 @@ public class StatAttackSpeed extends Stat {
     @NotNull
     @Override
     public Config loadConfig() {
-        return new YamlTransientConfig(new YamlConfiguration());
+        return AttackSpeedMain.getInstance().getConfig();
     }
 
     @Override
@@ -30,7 +28,10 @@ public class StatAttackSpeed extends Stat {
         AttributeModifier modifier = new AttributeModifier(
                 this.getUuid(),
                 this.getName(),
-                EcoSkillsAPI.getInstance().getStatLevel(player, this) / 100D,
+                (
+                        this.config.getDouble("percent-faster-per-level")
+                                * EcoSkillsAPI.getInstance().getStatLevel(player, this)
+                ) / 100.0,
                 AttributeModifier.Operation.MULTIPLY_SCALAR_1
         );
 

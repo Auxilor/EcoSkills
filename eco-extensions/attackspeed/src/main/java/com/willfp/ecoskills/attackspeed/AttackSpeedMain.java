@@ -1,15 +1,20 @@
 package com.willfp.ecoskills.attackspeed;
 
 import com.willfp.eco.core.EcoPlugin;
+import com.willfp.eco.core.config.interfaces.Config;
 import com.willfp.eco.core.extensions.Extension;
-import com.willfp.ecoskills.stats.Stat;
 import org.jetbrains.annotations.NotNull;
 
 public class AttackSpeedMain extends Extension {
     /**
-     * Attack Speed.
+     * The instance.
      */
-    public static final Stat ATTACK_SPEED = new StatAttackSpeed();
+    private static AttackSpeedMain instance;
+
+    /**
+     * attackspeed.yml.
+     */
+    private Config config = new AttackSpeedConfig(this);
 
     /**
      * Create a new extension for a plugin.
@@ -18,15 +23,34 @@ public class AttackSpeedMain extends Extension {
      */
     public AttackSpeedMain(@NotNull final EcoPlugin plugin) {
         super(plugin);
+        instance = this;
     }
 
     @Override
     protected void onEnable() {
-
+        new StatAttackSpeed();
     }
 
     @Override
     protected void onDisable() {
 
+    }
+
+    /**
+     * Get attackspeed.yml.
+     *
+     * @return The config.
+     */
+    public Config getConfig() {
+        return config;
+    }
+
+    /**
+     * Get instance.
+     *
+     * @return The instance.
+     */
+    public static AttackSpeedMain getInstance() {
+        return instance;
     }
 }
