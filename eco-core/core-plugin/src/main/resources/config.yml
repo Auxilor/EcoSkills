@@ -46,7 +46,7 @@ gui:
       - "&f"
       - " %ecoskills_defense_name%&f %ecoskills_defense_base% &e%ecoskills_defense_bonus%"
       - " %ecoskills_strength_name%&f %ecoskills_strength_base% &e%ecoskills_strength_bonus%"
-      - " %ecoskills_crit_chance_name%&f %ecoskills_crit_chance_base%% &e%ecoskills_crit_chance_bonus%%"
+      - " %ecoskills_crit_chance_name%&f %ecoskills_crit_chance_base%% &e%ecoskills_crit_chance_bonus%"
       - " %ecoskills_crit_damage_name%&f %ecoskills_crit_damage_base% &e%ecoskills_crit_damage_bonus%"
       - " %ecoskills_speed_name%&f %ecoskills_speed_base% &e%ecoskills_speed_bonus%"
       - " %ecoskills_wisdom_name%&f %ecoskills_wisdom_base% &e%ecoskills_wisdom_bonus%"
