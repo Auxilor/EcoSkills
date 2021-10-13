@@ -11,7 +11,7 @@ import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
-object EcoSkillsAPIImpl: EcoSkillsAPI {
+object EcoSkillsAPIImpl : EcoSkillsAPI {
     override fun getSkillLevel(player: OfflinePlayer, skill: Skill): Int {
         return player.getSkillLevel(skill)
     }
@@ -46,6 +46,10 @@ object EcoSkillsAPIImpl: EcoSkillsAPI {
 
     override fun getBaseStatLevel(player: OfflinePlayer, stat: Stat): Int {
         return player.getBaseStatLevel(stat)
+    }
+
+    override fun getBonusStatLevel(player: Player, stat: Stat): Int {
+        return player.getBonusStatLevel(stat)
     }
 
     override fun addStatModifier(itemStack: ItemStack, modifier: ItemStatModifier) {
