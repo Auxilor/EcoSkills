@@ -61,31 +61,19 @@ class MySQLDataHandler(
                 }
             }
             val column: Column<T> = Players.columns.stream().filter { it.name == key }.findFirst().get() as Column<T>
-            Players.update ({ Players.id eq uuid }) {
+            Players.update({ Players.id eq uuid }) {
                 it[column] = value
             }
         }
     }
 
-    private inline fun <reified T> read(uuid: UUID, key: String, default: T): T {
+    override fun <T> read(uuid: UUID, key: String, default: T): T {
         var value = default
         transaction {
             val player = Players.select { Players.id eq uuid }.firstOrNull() ?: return@transaction
             value = player[Players.columns.stream().filter { it.name == key }.findFirst().get()] as T? ?: default
         }
         return value
-    }
-
-    override fun readInt(uuid: UUID, key: String): Int {
-        return read(uuid, key, 0)
-    }
-
-    override fun readDouble(uuid: UUID, key: String): Double {
-        return read(uuid, key, 0.0)
-    }
-
-    override fun readString(uuid: UUID, key: String, default: String): String {
-        return read(uuid, key, default)
     }
 
     object Players : UUIDTable("EcoSkills_Players") {

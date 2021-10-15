@@ -30,7 +30,7 @@ var OfflinePlayer.savedDisplayName: String
             return this.displayName
         }
 
-        return profile.readString("name", this.name ?: "Unknown Player")
+        return profile.read("name", this.name ?: "Unknown Player")
     }
     set(value) {
         return profile.write("name", value)

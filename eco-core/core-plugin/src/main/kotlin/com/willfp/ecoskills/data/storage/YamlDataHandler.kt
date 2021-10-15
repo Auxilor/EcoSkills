@@ -18,16 +18,12 @@ class YamlDataHandler(
         dataYml.set("player.$uuid.$key", value)
     }
 
-    override fun readInt(uuid: UUID, key: String): Int {
-        return dataYml.getInt("player.$uuid.$key", 0)
-    }
-
-    override fun readDouble(uuid: UUID, key: String): Double {
-        return dataYml.getDoubleOrNull("player.$uuid.$key") ?: 0.0
-    }
-
-    override fun readString(uuid: UUID, key: String, default: String): String {
-        return dataYml.getStringOrNull("player.$uuid.$key") ?: default
+    override fun <T> read(uuid: UUID, key: String, default: T): T {
+        return if (dataYml.has("player.$uuid.$key")) {
+            dataYml.get("player.$uuid.$key") as T
+        } else {
+            default
+        }
     }
 
     class DataYml(
