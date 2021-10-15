@@ -126,6 +126,16 @@ public interface EcoSkillsAPI {
                          @NotNull Stat stat);
 
     /**
+     * Get the added stat levels for a player from modifiers.
+     *
+     * @param player The player.
+     * @param stat   The stat.
+     * @return The stat level.
+     */
+    int getBonusStatLevel(@NotNull Player player,
+                          @NotNull Stat stat);
+
+    /**
      * Add a stat modifier to an item.
      *
      * @param itemStack The item.

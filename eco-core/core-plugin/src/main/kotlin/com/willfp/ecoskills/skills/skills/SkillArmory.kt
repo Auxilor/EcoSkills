@@ -12,7 +12,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 class SkillArmory : Skill(
     "armory"
 ) {
-    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun handleLevelling(event: EntityDamageByEntityEvent) {
         val player = event.entity
         if (player !is Player) {

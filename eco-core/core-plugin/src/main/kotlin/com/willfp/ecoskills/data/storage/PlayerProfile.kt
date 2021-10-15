@@ -8,6 +8,7 @@ import com.willfp.ecoskills.stats.Stats
 import org.bukkit.OfflinePlayer
 import java.util.*
 
+@Suppress("UNCHECKED_CAST")
 class PlayerProfile private constructor(
     private val data: MutableMap<String, Any>
 ) {
@@ -15,16 +16,8 @@ class PlayerProfile private constructor(
         data[key] = value
     }
 
-    fun readInt(key: String): Int {
-        return data[key] as Int? ?: 0
-    }
-
-    fun readDouble(key: String): Double {
-        return data[key] as Double? ?: 0.0
-    }
-
-    fun readString(key: String, default: String): String {
-        return data[key] as String? ?: default
+    fun <T : Any> read(key: String, default: T): T {
+        return data[key] as T? ?: default
     }
 
     companion object {
@@ -41,9 +34,9 @@ class PlayerProfile private constructor(
             val data = mutableMapOf<String, Any>()
             for ((key, type) in keys) {
                 when (type) {
-                    Type.INT -> data[key] = handler.readInt(uuid, key)
-                    Type.DOUBLE -> data[key] = handler.readDouble(uuid, key)
-                    Type.STRING -> data[key] = handler.readString(uuid, key)
+                    Type.INT -> data[key] = handler.read(uuid, key, 0)
+                    Type.DOUBLE -> data[key] = handler.read(uuid, key, 0.0)
+                    Type.STRING -> data[key] = handler.read(uuid, key, "Unknown")
                 }
             }
 
@@ -57,9 +50,9 @@ class PlayerProfile private constructor(
                 for ((uuid, profile) in loaded) {
                     for ((key, type) in keys) {
                         when (type) {
-                            Type.INT -> handler.write(uuid, key, profile.readInt(key))
-                            Type.DOUBLE -> handler.write(uuid, key, profile.readDouble(key))
-                            Type.STRING -> handler.write(uuid, key, profile.readString(key, "Unknown Value"))
+                            Type.INT -> handler.write(uuid, key, profile.read(key, 0))
+                            Type.DOUBLE -> handler.write(uuid, key, profile.read(key, 0.0))
+                            Type.STRING -> handler.write(uuid, key, profile.read(key, "Unknown Value"))
                         }
                     }
                 }

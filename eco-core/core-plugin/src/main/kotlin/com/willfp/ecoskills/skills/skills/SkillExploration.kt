@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerMoveEvent
 class SkillExploration : Skill(
     "exploration"
 ) {
-    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun handleLevelling(event: PlayerMoveEvent) {
         val player = event.player
 

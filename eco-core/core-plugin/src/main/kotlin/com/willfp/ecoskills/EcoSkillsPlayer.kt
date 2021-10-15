@@ -95,7 +95,7 @@ fun Player.giveSkillExperience(skill: Skill, experience: Double, noMultiply: Boo
 }
 
 fun OfflinePlayer.getSkillLevel(skill: Skill): Int {
-    return profile.readInt(skill.id)
+    return profile.read(skill.id, 0)
 }
 
 fun OfflinePlayer.setSkillLevel(skill: Skill, level: Int) {
@@ -111,7 +111,7 @@ fun OfflinePlayer.getSkillProgressRequired(skill: Skill): Int {
 }
 
 fun OfflinePlayer.getSkillProgress(skill: Skill): Double {
-    return profile.readDouble(skill.xpKey.key)
+    return profile.read(skill.xpKey.key, 0.0)
 }
 
 fun OfflinePlayer.setSkillProgress(skill: Skill, level: Double) {
@@ -119,7 +119,7 @@ fun OfflinePlayer.setSkillProgress(skill: Skill, level: Double) {
 }
 
 fun OfflinePlayer.getEffectLevel(effect: Effect): Int {
-    return profile.readInt(effect.id)
+    return profile.read(effect.id, 0)
 }
 
 fun OfflinePlayer.setEffectLevel(effect: Effect, level: Int) {
@@ -129,17 +129,23 @@ fun OfflinePlayer.setEffectLevel(effect: Effect, level: Int) {
 fun OfflinePlayer.getStatLevel(stat: Stat): Int {
     var base = this.getBaseStatLevel(stat)
     if (this is Player) {
-        for (modifier in this.getStatModifiers()) {
-            if (modifier.stat == stat) {
-                base += modifier.amount
-            }
-        }
+        base += this.getBonusStatLevel(stat)
     }
     return base
 }
 
+fun Player.getBonusStatLevel(stat: Stat): Int {
+    var i = 0
+    for (modifier in this.getStatModifiers()) {
+        if (modifier.stat == stat) {
+            i += modifier.amount
+        }
+    }
+    return i
+}
+
 fun OfflinePlayer.getBaseStatLevel(stat: Stat): Int {
-    return profile.readInt(stat.id)
+    return profile.read(stat.id, 0)
 }
 
 fun Player.setStatLevel(stat: Stat, level: Int) {

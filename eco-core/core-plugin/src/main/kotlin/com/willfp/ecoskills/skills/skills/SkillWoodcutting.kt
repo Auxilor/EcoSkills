@@ -29,7 +29,7 @@ class SkillWoodcutting : Skill(
         }
     }
 
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGH)
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     fun handleLevelling(event: BlockBreakEvent) {
         val type = event.block.type
         val player = event.player
