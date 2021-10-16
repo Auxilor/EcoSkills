@@ -18,12 +18,8 @@ class YamlDataHandler(
         dataYml.set("player.$uuid.$key", value)
     }
 
-    override fun <T : Any> read(uuid: UUID, key: String, default: T): T {
-        return if (dataYml.has("player.$uuid.$key")) {
-            dataYml.get("player.$uuid.$key") as T
-        } else {
-            default
-        }
+    override fun <T> read(uuid: UUID, key: String): T? {
+        return dataYml.get("player.$uuid.$key") as T?
     }
 
     class DataYml(
