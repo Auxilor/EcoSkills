@@ -67,11 +67,11 @@ class MySQLDataHandler(
         }
     }
 
-    override fun <T : Any> read(uuid: UUID, key: String, default: T): T {
-        var value = default
+    override fun <T> read(uuid: UUID, key: String): T? {
+        var value: T? = null
         transaction {
             val player = Players.select { Players.id eq uuid }.firstOrNull() ?: return@transaction
-            value = player[Players.columns.stream().filter { it.name == key }.findFirst().get()] as T? ?: default
+            value = player[Players.columns.stream().filter { it.name == key }.findFirst().get()] as T?
         }
         return value
     }

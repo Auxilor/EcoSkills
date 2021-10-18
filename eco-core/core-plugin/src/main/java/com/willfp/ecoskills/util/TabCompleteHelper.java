@@ -35,6 +35,17 @@ public class TabCompleteHelper {
     );
 
     /**
+     * Numbers.
+     */
+    public static final List<String> NUMBERS = Arrays.asList(
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+    );
+
+    /**
      * Update lists.
      */
     @ConfigUpdater

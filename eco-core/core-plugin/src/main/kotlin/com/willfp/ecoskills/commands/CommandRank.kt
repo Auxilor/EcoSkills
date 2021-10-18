@@ -86,6 +86,15 @@ class CommandRank(plugin: EcoPlugin) :
                 return@TabCompleteHandler completions
             }
 
+            if (args.size == 2) {
+                StringUtil.copyPartialMatches(
+                    args[1],
+                    TabCompleteHelper.NUMBERS,
+                    completions
+                )
+                return@TabCompleteHandler completions
+            }
+
             return@TabCompleteHandler emptyList()
         }
     }
