@@ -51,7 +51,7 @@ class EffectBountifulHarvest : Effect(
             return
         }
 
-        if (mat == Material.SUGAR_CANE || mat == Material.SWEET_BERRY_BUSH || mat == Material.CACTUS) {
+        if (mat == Material.SUGAR_CANE || mat == Material.SWEET_BERRY_BUSH || mat == Material.CACTUS || mat == Material.BAMBOO) {
             return
         }
 
