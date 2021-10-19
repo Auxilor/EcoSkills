@@ -11,7 +11,6 @@ import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.stats.Stat
 import com.willfp.ecoskills.stats.Stats
-import com.willfp.ecoskills.util.TabCompleteHelper
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil

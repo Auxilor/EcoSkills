@@ -8,7 +8,6 @@ import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.data.LeaderboardHandler
 import com.willfp.ecoskills.data.savedDisplayName
 import com.willfp.ecoskills.getTotalSkillLevel
-import com.willfp.ecoskills.util.TabCompleteHelper
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
 
