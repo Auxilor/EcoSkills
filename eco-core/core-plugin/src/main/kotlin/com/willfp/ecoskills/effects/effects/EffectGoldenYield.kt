@@ -28,7 +28,7 @@ class EffectGoldenYield: Effect(
             return
         }
 
-        if (block.type == Material.SUGAR_CANE || block.type == Material.SWEET_BERRY_BUSH || block.type == Material.CACTUS) {
+        if (block.type == Material.SUGAR_CANE || block.type == Material.SWEET_BERRY_BUSH || block.type == Material.CACTUS || block.type == Material.BAMBOO) {
             return
         }
 

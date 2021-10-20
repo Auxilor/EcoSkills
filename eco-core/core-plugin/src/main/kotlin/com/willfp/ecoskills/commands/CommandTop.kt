@@ -2,12 +2,14 @@ package com.willfp.ecoskills.commands
 
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.CommandHandler
+import com.willfp.eco.core.command.TabCompleteHandler
 import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.data.LeaderboardHandler
 import com.willfp.ecoskills.data.savedDisplayName
 import com.willfp.ecoskills.getTotalSkillLevel
 import org.bukkit.command.CommandSender
+import org.bukkit.util.StringUtil
 
 
 class CommandTop(plugin: EcoPlugin) :
@@ -52,6 +54,23 @@ class CommandTop(plugin: EcoPlugin) :
             for (message in messages) {
                 sender.sendMessage(StringUtils.format(message))
             }
+        }
+    }
+
+    override fun getTabCompleter(): TabCompleteHandler {
+        return TabCompleteHandler { _, args ->
+            val completions = mutableListOf<String>()
+
+            if (args.size == 1) {
+                StringUtil.copyPartialMatches(
+                    args[0],
+                    TabCompleteHelper.NUMBERS,
+                    completions
+                )
+                return@TabCompleteHandler completions
+            }
+
+            return@TabCompleteHandler emptyList()
         }
     }
 }

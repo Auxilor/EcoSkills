@@ -9,7 +9,6 @@ import com.willfp.ecoskills.data.LeaderboardHandler
 import com.willfp.ecoskills.data.savedDisplayName
 import com.willfp.ecoskills.getSkillLevel
 import com.willfp.ecoskills.skills.Skills
-import com.willfp.ecoskills.util.TabCompleteHelper
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
 
@@ -81,6 +80,15 @@ class CommandRank(plugin: EcoPlugin) :
                 StringUtil.copyPartialMatches(
                     args[0],
                     TabCompleteHelper.SKILL_NAMES,
+                    completions
+                )
+                return@TabCompleteHandler completions
+            }
+
+            if (args.size == 2) {
+                StringUtil.copyPartialMatches(
+                    args[1],
+                    TabCompleteHelper.NUMBERS,
                     completions
                 )
                 return@TabCompleteHandler completions

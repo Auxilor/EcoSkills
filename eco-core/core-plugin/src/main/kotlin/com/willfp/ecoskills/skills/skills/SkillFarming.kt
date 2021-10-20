@@ -42,7 +42,7 @@ class SkillFarming : Skill(
             return
         }
 
-        if (event.block.blockData is Ageable && event.block.type != Material.SUGAR_CANE) {
+        if (event.block.blockData is Ageable && event.block.type != Material.SUGAR_CANE && event.block.type != Material.BAMBOO) {
             val data = event.block.blockData as Ageable
             if (data.age < data.maximumAge) {
                 return
