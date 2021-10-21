@@ -5,6 +5,7 @@ import com.willfp.eco.core.gui.menu.Menu
 import com.willfp.eco.core.gui.slot.FillerMask
 import com.willfp.eco.core.gui.slot.MaskMaterials
 import com.willfp.eco.core.gui.slot.Slot
+import com.willfp.eco.core.items.Items
 import com.willfp.eco.core.items.builder.ItemStackBuilder
 import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.StringUtils
@@ -28,9 +29,7 @@ class SkillGUI(
 ) {
     val slot: Slot = Slot.builder { player: Player ->
         ItemStackBuilder(
-            Material.getMaterial(
-                skill.config.getString("gui.item").uppercase()
-            )!!
+            Items.lookup(skill.config.getString("gui.item")).item
         ).addItemFlag(
             ItemFlag.HIDE_ATTRIBUTES
         ).setDisplayName(
@@ -131,18 +130,9 @@ class SkillGUI(
         val pages = ceil(skill.maxLevel / progressionSlots.size.toDouble()).toInt()
         val levelsPerPage = progressionSlots.size
 
-        val closeMaterial =
-            Material.getMaterial(
-                plugin.configYml.getString("level-gui.progression-slots.close.material", false).uppercase()
-            )!!
-        val homeMaterial =
-            Material.getMaterial(
-                plugin.configYml.getString("level-gui.progression-slots.prev-page.material", false).uppercase()
-            )!!
-        val nextMaterial =
-            Material.getMaterial(
-                plugin.configYml.getString("level-gui.progression-slots.next-page.material", false).uppercase()
-            )!!
+        val closeMaterial = Items.lookup(plugin.configYml.getString("level-gui.progression-slots.close.material", false)).item
+        val homeMaterial = Items.lookup(plugin.configYml.getString("level-gui.progression-slots.prev-page.material", false)).item
+        val nextMaterial = Items.lookup(plugin.configYml.getString("level-gui.progression-slots.next-page.material", false)).item
 
         val pageKey = plugin.namespacedKeyFactory.create("page")
 

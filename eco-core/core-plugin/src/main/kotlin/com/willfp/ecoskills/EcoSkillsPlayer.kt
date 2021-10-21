@@ -99,7 +99,7 @@ fun OfflinePlayer.getSkillLevel(skill: Skill): Int {
 }
 
 fun OfflinePlayer.setSkillLevel(skill: Skill, level: Int) {
-    return profile.write(skill.id, level)
+    profile.write(skill.id, level)
 }
 
 fun OfflinePlayer.getSkillProgressToNextLevel(skill: Skill): Double {

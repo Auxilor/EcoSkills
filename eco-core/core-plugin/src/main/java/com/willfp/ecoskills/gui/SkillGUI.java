@@ -5,6 +5,7 @@ import com.willfp.eco.core.gui.menu.Menu;
 import com.willfp.eco.core.gui.slot.FillerMask;
 import com.willfp.eco.core.gui.slot.MaskMaterials;
 import com.willfp.eco.core.gui.slot.Slot;
+import com.willfp.eco.core.items.Items;
 import com.willfp.eco.core.items.builder.ItemStackBuilder;
 import com.willfp.eco.core.items.builder.SkullBuilder;
 import com.willfp.eco.util.StringUtils;
@@ -57,8 +58,7 @@ public class SkillGUI {
                 .toArray(Material[]::new);
 
 
-        Material closeMaterial = Material.getMaterial(plugin.getConfigYml().getString("gui.close.material", false).toUpperCase());
-        assert closeMaterial != null;
+        ItemStack closeItem = Items.lookup(plugin.getConfigYml().getString("gui.close.material", false)).getItem();
 
         Function<Player, ItemStack> playerHeadItemBuilder = player -> {
             ItemStack itemStack = new SkullBuilder()
@@ -108,7 +108,7 @@ public class SkillGUI {
                 .setSlot(plugin.getConfigYml().getInt("gui.close.location.row"),
                         plugin.getConfigYml().getInt("gui.close.location.column"),
                         Slot.builder(
-                                new ItemStackBuilder(closeMaterial)
+                                new ItemStackBuilder(closeItem)
                                         .setDisplayName(plugin.getConfigYml().getString("gui.close.name"))
                                         .build()
                         ).onLeftClick((event, slot) -> {
