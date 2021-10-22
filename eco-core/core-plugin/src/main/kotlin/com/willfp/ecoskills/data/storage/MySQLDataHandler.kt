@@ -12,7 +12,7 @@ import java.util.*
 
 @Suppress("UNCHECKED_CAST")
 class MySQLDataHandler(
-    private val plugin: EcoSkillsPlugin
+    plugin: EcoSkillsPlugin
 ) : DataHandler {
     init {
         Database.connect(
