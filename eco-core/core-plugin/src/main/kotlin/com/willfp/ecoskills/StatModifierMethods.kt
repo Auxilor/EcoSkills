@@ -59,6 +59,8 @@ fun ItemStack.removeStatModifier(modifier: ItemStatModifier) {
 
     modifiers.remove(modifier.key)
 
+    meta.persistentDataContainer.applyModifiers(modifiers)
+
     this.itemMeta = meta
 }
 
@@ -124,6 +126,8 @@ fun Player.addStatModifier(modifier: StatModifier) {
 fun Player.removeStatModifier(modifier: StatModifier) {
     val modifiers = getModifiersTag(this)
     modifiers.remove(modifier.key)
+
+    this.persistentDataContainer.applyModifiers(modifiers)
 
     for (stat in Stats.values()) {
         stat.updateStatLevel(this)
