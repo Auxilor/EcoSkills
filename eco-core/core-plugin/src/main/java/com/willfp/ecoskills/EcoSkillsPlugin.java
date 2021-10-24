@@ -18,6 +18,10 @@ import com.willfp.ecoskills.effects.Effects;
 import com.willfp.ecoskills.integrations.EcoEnchantsEnchantingLeveller;
 import com.willfp.ecoskills.integrations.afk.AFKHandlerKt;
 import com.willfp.ecoskills.integrations.afk.impl.AFKIntegrationEssentials;
+import com.willfp.ecoskills.integrations.hologram.HologramManager;
+import com.willfp.ecoskills.integrations.hologram.wrappers.CMIWrapper;
+import com.willfp.ecoskills.integrations.hologram.wrappers.GHoloWrapper;
+import com.willfp.ecoskills.integrations.hologram.wrappers.HolographicDisplaysWrapper;
 import com.willfp.ecoskills.skills.Skill;
 import com.willfp.ecoskills.skills.SkillDisplayListener;
 import com.willfp.ecoskills.skills.SkillLevellingListener;
@@ -117,7 +121,8 @@ public class EcoSkillsPlugin extends EcoPlugin {
                 new SkillDisplayListener(this),
                 new StatModifierListener(),
                 new DataListener(),
-                new PlayerBlockListener(this)
+                new PlayerBlockListener(this),
+                new DamageIndicatorListener(this)
         );
     }
 
@@ -132,7 +137,9 @@ public class EcoSkillsPlugin extends EcoPlugin {
     @Override
     protected List<IntegrationLoader> loadIntegrationLoaders() {
         return Arrays.asList(
-                new IntegrationLoader("HolographicDisplays", () -> this.getEventManager().registerListener(new DamageIndicatorListener(this))),
+                new IntegrationLoader("HolographicDisplays", () -> HologramManager.Companion.register(new HolographicDisplaysWrapper())),
+                new IntegrationLoader("GHolo", () -> HologramManager.Companion.register(new GHoloWrapper())),
+                new IntegrationLoader("CMI", () -> HologramManager.Companion.register(new CMIWrapper())),
                 new IntegrationLoader("EcoEnchants", () -> this.getEventManager().registerListener(new EcoEnchantsEnchantingLeveller(this))),
                 new IntegrationLoader("Essentials", () -> AFKHandlerKt.registerIntegration(new AFKIntegrationEssentials()))
         );

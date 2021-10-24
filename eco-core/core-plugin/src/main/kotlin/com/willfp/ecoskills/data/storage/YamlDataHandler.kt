@@ -6,7 +6,7 @@ import java.util.*
 
 @Suppress("UNCHECKED_CAST")
 class YamlDataHandler(
-    private val plugin: EcoSkillsPlugin
+    plugin: EcoSkillsPlugin
 ) : DataHandler {
     private val dataYml = DataYml(plugin)
 

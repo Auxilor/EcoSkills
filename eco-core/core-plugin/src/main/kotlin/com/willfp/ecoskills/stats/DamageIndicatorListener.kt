@@ -1,9 +1,9 @@
 package com.willfp.ecoskills.stats
 
-import com.gmail.filoghost.holographicdisplays.api.HologramsAPI
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.StringUtils
+import com.willfp.ecoskills.integrations.hologram.HologramManager
 import com.willfp.ecoskills.isCrit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -36,8 +36,6 @@ class DamageIndicatorListener(
             NumberUtils.randFloat(-z, z)
         )
 
-        val hologram = HologramsAPI.createHologram(plugin, location)
-
         var text: String = if (event.isCrit) {
             plugin.configYml.getString("damage-indicators.format.crit", false)
         } else {
@@ -46,14 +44,8 @@ class DamageIndicatorListener(
 
         text = text.replace("%damage%", NumberUtils.format(event.damage))
 
-        try {
-            text = StringUtils.format(text)
+        text = StringUtils.format(text)
 
-            hologram.appendTextLine(text)
-
-            plugin.scheduler.runLater({
-                hologram.delete()
-            }, 30)
-        } catch (ignored: Exception) {}
+        HologramManager.spawnHolo(location, listOf(text), 30);
     }
 }
