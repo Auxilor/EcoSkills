@@ -2,20 +2,16 @@ package com.willfp.ecoskills.integrations.hologram
 
 import org.bukkit.Location
 
-class HologramManager {
+object HologramManager {
+    private val hologramWrappers = mutableListOf<HologramWrapper>()
 
-    companion object {
-
-        private var hologramWrappers: MutableList<HologramWrapper> = ArrayList()
-
-        fun register(wrapper: HologramWrapper) {
-            hologramWrappers.add(wrapper)
-        }
-
-        fun spawnHolo(loc: Location, contents: List<String>, removeAfter: Int) {
-            if (hologramWrappers.isEmpty()) return
-            hologramWrappers[0].spawnHolo(loc, contents, removeAfter)
-        }
+    @JvmStatic
+    fun register(wrapper: HologramWrapper) {
+        hologramWrappers.add(wrapper)
     }
 
+    @JvmStatic
+    fun spawnHolo(location: Location, contents: List<String>, lifespan: Int) {
+        hologramWrappers.firstOrNull()?.spawnHolo(location, contents, lifespan)
+    }
 }
