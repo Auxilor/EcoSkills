@@ -15,14 +15,6 @@ plugins {
     id 'java'
 }
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            from(components.java)
-        }
-    }
-}
-
 dependencies {
     implementation project(":eco-core").getSubprojects()
 }
@@ -51,6 +43,8 @@ allprojects {
     dependencies {
         compileOnly 'com.willfp:eco:6.11.0'
         compileOnly fileTree(dir: '../../lib', include: ['*.jar'])
+
+
         compileOnly 'org.jetbrains:annotations:19.0.0'
         compileOnly 'org.jetbrains.kotlin:kotlin-stdlib:1.5.21'
     }
@@ -85,7 +79,7 @@ shadowJar {
 }
 
 jar {
-    archiveFileName = findProperty("plugin-name") + " v" + findProperty("version") + ".jar"
+    archiveFileName = findProperty("plugin-name") + " v" + findProperty("version") + " " + "unshaded" + ".jar"
 }
 
 group = 'com.willfp'
