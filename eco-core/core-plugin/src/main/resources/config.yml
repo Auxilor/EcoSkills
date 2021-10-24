@@ -309,7 +309,7 @@ stats:
     chance-per-level: 0.5
 
 damage-indicators:
-  # Requires HolographicDisplays/GHolo to be installed
+  # Requires HolographicDisplays/GHolo/CMI to be installed
   enabled: true
   format:
     normal: "&7%damage%"
