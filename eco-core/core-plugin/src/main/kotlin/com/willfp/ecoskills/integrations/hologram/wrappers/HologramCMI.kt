@@ -8,6 +8,7 @@ import net.Zrips.CMILib.Container.CMILocation
 import org.bukkit.Location
 import java.util.*
 
+@Suppress("DEPRECATION")
 class HologramCMI(
     private val plugin: EcoPlugin
 ) : HologramWrapper {
