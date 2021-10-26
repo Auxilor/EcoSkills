@@ -1,10 +1,10 @@
 package com.willfp.ecoskills.integrations.hologram.wrappers
 
 import com.Zrips.CMI.CMI
-import com.Zrips.CMI.Containers.CMILocation
 import com.Zrips.CMI.Modules.Holograms.CMIHologram
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.ecoskills.integrations.hologram.HologramWrapper
+import net.Zrips.CMILib.Container.CMILocation
 import org.bukkit.Location
 import java.util.*
 
