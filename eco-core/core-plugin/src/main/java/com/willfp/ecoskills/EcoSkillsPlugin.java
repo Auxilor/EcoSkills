@@ -78,7 +78,11 @@ public class EcoSkillsPlugin extends EcoPlugin {
         }
         SaveHandler.Companion.save(this);
 
-        this.getScheduler().runTimer(new SaveHandler.Runnable(this), 20000, 20000);
+        this.getScheduler().runTimer(
+                new SaveHandler.Runnable(this),
+                this.getConfigYml().getInt("autosave.ticks"),
+                this.getConfigYml().getInt("autosave.ticks")
+        );
         this.getScheduler().runTimer(new LeaderboardHandler.Runnable(), 50, 2400);
     }
 
