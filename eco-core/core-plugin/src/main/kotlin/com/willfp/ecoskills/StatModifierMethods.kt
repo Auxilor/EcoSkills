@@ -1,7 +1,5 @@
 package com.willfp.ecoskills
 
-import com.willfp.eco.core.config.interfaces.JSONConfig
-import com.willfp.eco.core.config.json.JSONTransientConfig
 import com.willfp.eco.util.NamespacedKeyUtils
 import com.willfp.ecoskills.api.modifier.ItemStatModifier
 import com.willfp.ecoskills.api.modifier.PlayerStatModifier
@@ -111,25 +109,21 @@ private const val META_MODIFIERS = "ecoskills_modifiers"
 private const val META_STAT_KEY = "stat"
 private const val META_AMOUNT_KEY = "amount"
 
-private fun Player.applyModifiers(meta: JSONConfig) {
+private fun Player.applyModifiers(meta: MutableMap<String, Any>) {
     this.setMetadata(META_MODIFIERS, plugin.metadataValueFactory.create(meta))
 }
 
 @Suppress("UNCHECKED_CAST")
-private fun getModifiersTag(player: Player): JSONConfig {
-    return player.getMetadata(META_MODIFIERS).getOrNull(0)?.value() as JSONConfig? ?: JSONTransientConfig(emptyMap())
+private fun getModifiersTag(player: Player): MutableMap<String, Any> {
+    return player.getMetadata(META_MODIFIERS).getOrNull(0)?.value() as MutableMap<String, Any>? ?: mutableMapOf()
 }
 
 fun Player.addStatModifier(modifier: StatModifier) {
     val modifiers = getModifiersTag(this)
 
-    modifiers.set(
-        modifier.key.toString(), JSONTransientConfig(
-            mapOf(
-                Pair(META_STAT_KEY, modifier.stat.id),
-                Pair(META_AMOUNT_KEY, modifier.amount)
-            )
-        )
+    modifiers[modifier.key.toString()] = mapOf(
+        Pair(META_STAT_KEY, modifier.stat.id),
+        Pair(META_AMOUNT_KEY, modifier.amount)
     )
 
     this.applyModifiers(modifiers)
@@ -142,7 +136,7 @@ fun Player.addStatModifier(modifier: StatModifier) {
 fun Player.removeStatModifier(modifier: StatModifier) {
     val modifiers = getModifiersTag(this)
 
-    modifiers.set(modifier.key.toString(), null)
+    modifiers.remove(modifier.key.toString())
 
     this.applyModifiers(modifiers)
 
@@ -153,7 +147,7 @@ fun Player.removeStatModifier(modifier: StatModifier) {
 
 fun Player.getStatModifierKeys(): MutableSet<NamespacedKey> {
     val modifiers = getModifiersTag(this)
-    return modifiers.getKeys(false).mapNotNull { NamespacedKey.fromString(it) }.toMutableSet()
+    return modifiers.keys.mapNotNull { NamespacedKey.fromString(it) }.toMutableSet()
 }
 
 fun Player.getStatModifiers(): MutableSet<PlayerStatModifier> {
@@ -166,14 +160,15 @@ fun Player.getStatModifiers(): MutableSet<PlayerStatModifier> {
     return keys
 }
 
+@Suppress("UNCHECKED_CAST")
 fun Player.getStatModifier(key: NamespacedKey): PlayerStatModifier? {
     val modifiers = getModifiersTag(this)
 
-    return if (modifiers.has(key.toString())) {
-        val modifier = modifiers.getSubsection(key.toString())
+    return if (modifiers.containsKey(key.toString())) {
+        val modifier = modifiers[key.toString()] as Map<String, Any>
 
-        val stat = Stats.getByID(modifier.getString(META_STAT_KEY))!!
-        val amount = modifier.getInt(META_AMOUNT_KEY)
+        val stat = Stats.getByID(modifier[META_STAT_KEY] as String)!!
+        val amount = modifier[META_AMOUNT_KEY] as Int
 
         PlayerStatModifier(key, stat, amount)
     } else {
