@@ -54,6 +54,12 @@ allprojects {
         options.encoding = 'UTF-8'
     }
 
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions {
+            jvmTarget = "16"
+        }
+    }
+
     processResources {
         filesNotMatching(["**/*.png", "**/models/**", "**/textures/**"]) {
             expand projectVersion: project.version
