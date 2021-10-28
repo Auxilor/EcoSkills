@@ -16,15 +16,11 @@ abstract class Effect(
 ) : SkillObject(id), Listener {
     protected val plugin: EcoSkillsPlugin = EcoSkillsPlugin.getInstance()
 
-    val key: NamespacedKey
-    val uuid: UUID
+    val key: NamespacedKey = plugin.namespacedKeyFactory.create(id)
+    val uuid: UUID = UUID.nameUUIDFromBytes(id.toByteArray())
     lateinit var config: Config
 
     init {
-        update()
-        uuid = UUID.nameUUIDFromBytes(id.toByteArray())
-        key = plugin.namespacedKeyFactory.create(id)
-
         finishLoading()
     }
 
@@ -32,6 +28,7 @@ abstract class Effect(
         config = loadConfig()
 
         Effects.registerNewEffect(this)
+        update()
     }
 
     open fun loadConfig(): Config {
