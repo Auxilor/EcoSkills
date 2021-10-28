@@ -1,5 +1,7 @@
 package com.willfp.ecoskills
 
+import com.willfp.eco.core.config.interfaces.JSONConfig
+import com.willfp.eco.core.config.json.JSONTransientConfig
 import com.willfp.eco.util.NamespacedKeyUtils
 import com.willfp.ecoskills.api.modifier.ItemStatModifier
 import com.willfp.ecoskills.api.modifier.PlayerStatModifier
@@ -12,6 +14,10 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.persistence.PersistentDataContainer
 import org.bukkit.persistence.PersistentDataType
+
+/*
+Item Modifiers
+ */
 
 private val modifierKey: NamespacedKey = NamespacedKeyUtils.create("ecoskills", "modifiers")
 private val statKey: NamespacedKey = NamespacedKeyUtils.create("ecoskills", "stat")
@@ -28,12 +34,6 @@ private fun getModifiersTag(meta: ItemMeta): PersistentDataContainer {
     return container.getOrDefault(modifierKey, PersistentDataType.TAG_CONTAINER, context.newPersistentDataContainer())
 }
 
-private fun getModifiersTag(player: Player): PersistentDataContainer {
-    val container = player.persistentDataContainer
-    val context = container.adapterContext
-    return container.getOrDefault(modifierKey, PersistentDataType.TAG_CONTAINER, context.newPersistentDataContainer())
-}
-
 fun ItemStack.addStatModifier(modifier: ItemStatModifier) {
     val meta = this.itemMeta ?: return
     val modifiers = getModifiersTag(meta)
@@ -44,7 +44,10 @@ fun ItemStack.addStatModifier(modifier: ItemStatModifier) {
 
     modifierTag.set(statKey, PersistentDataType.STRING, modifier.stat.id)
     modifierTag.set(amountKey, PersistentDataType.INTEGER, modifier.amount)
-    modifierTag.set(slotsKey, PersistentDataType.STRING, modifier.slots.map { slot -> slot.name }.toTypedArray().joinToString { "," })
+    modifierTag.set(
+        slotsKey,
+        PersistentDataType.STRING,
+        modifier.slots.map { slot -> slot.name }.toTypedArray().joinToString { "," })
 
     modifiers.set(modifier.key, PersistentDataType.TAG_CONTAINER, modifierTag)
 
@@ -104,19 +107,32 @@ fun ItemStack.getStatModifier(key: NamespacedKey): ItemStatModifier? {
 Player Modifiers
  */
 
+private const val META_MODIFIERS = "ecoskills_modifiers"
+private const val META_STAT_KEY = "stat"
+private const val META_AMOUNT_KEY = "amount"
+
+private fun Player.applyModifiers(meta: JSONConfig) {
+    this.setMetadata(META_MODIFIERS, plugin.metadataValueFactory.create(meta))
+}
+
+@Suppress("UNCHECKED_CAST")
+private fun getModifiersTag(player: Player): JSONConfig {
+    return player.getMetadata(META_MODIFIERS).getOrNull(0)?.value() as JSONConfig? ?: JSONTransientConfig(emptyMap())
+}
+
 fun Player.addStatModifier(modifier: StatModifier) {
     val modifiers = getModifiersTag(this)
 
-    modifiers.remove(modifier.key)
+    modifiers.set(
+        modifier.key.toString(), JSONTransientConfig(
+            mapOf(
+                Pair(META_STAT_KEY, modifier.stat.id),
+                Pair(META_AMOUNT_KEY, modifier.amount)
+            )
+        )
+    )
 
-    val modifierTag = modifiers.adapterContext.newPersistentDataContainer()
-
-    modifierTag.set(statKey, PersistentDataType.STRING, modifier.stat.id)
-    modifierTag.set(amountKey, PersistentDataType.INTEGER, modifier.amount)
-
-    modifiers.set(modifier.key, PersistentDataType.TAG_CONTAINER, modifierTag)
-
-    this.persistentDataContainer.applyModifiers(modifiers)
+    this.applyModifiers(modifiers)
 
     for (stat in Stats.values()) {
         stat.updateStatLevel(this)
@@ -125,9 +141,10 @@ fun Player.addStatModifier(modifier: StatModifier) {
 
 fun Player.removeStatModifier(modifier: StatModifier) {
     val modifiers = getModifiersTag(this)
-    modifiers.remove(modifier.key)
 
-    this.persistentDataContainer.applyModifiers(modifiers)
+    modifiers.set(modifier.key.toString(), null)
+
+    this.applyModifiers(modifiers)
 
     for (stat in Stats.values()) {
         stat.updateStatLevel(this)
@@ -136,7 +153,7 @@ fun Player.removeStatModifier(modifier: StatModifier) {
 
 fun Player.getStatModifierKeys(): MutableSet<NamespacedKey> {
     val modifiers = getModifiersTag(this)
-    return modifiers.keys
+    return modifiers.getKeys(false).mapNotNull { NamespacedKey.fromString(it) }.toMutableSet()
 }
 
 fun Player.getStatModifiers(): MutableSet<PlayerStatModifier> {
@@ -152,11 +169,11 @@ fun Player.getStatModifiers(): MutableSet<PlayerStatModifier> {
 fun Player.getStatModifier(key: NamespacedKey): PlayerStatModifier? {
     val modifiers = getModifiersTag(this)
 
-    return if (modifiers.has(key, PersistentDataType.TAG_CONTAINER)) {
-        val modifierTag = modifiers.get(key, PersistentDataType.TAG_CONTAINER)!!
+    return if (modifiers.has(key.toString())) {
+        val modifier = modifiers.getSubsection(key.toString())
 
-        val stat = Stats.getByID(modifierTag.get(statKey, PersistentDataType.STRING)!!)!!
-        val amount = modifierTag.get(amountKey, PersistentDataType.INTEGER)!!
+        val stat = Stats.getByID(modifier.getString(META_STAT_KEY))!!
+        val amount = modifier.getInt(META_AMOUNT_KEY)
 
         PlayerStatModifier(key, stat, amount)
     } else {
