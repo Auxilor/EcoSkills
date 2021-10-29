@@ -1,5 +1,6 @@
 package com.willfp.ecoskills.skills.skills
 
+import com.willfp.ecoskills.data.isPlayerPlaced
 import com.willfp.ecoskills.giveSkillExperience
 import com.willfp.ecoskills.integrations.afk.isAfk
 import com.willfp.ecoskills.skills.Skill
@@ -47,6 +48,10 @@ class SkillFarming : Skill(
             if (data.age < data.maximumAge) {
                 return
             }
+        }
+
+        if (event.block.isPlayerPlaced()) {
+            return
         }
 
         val toGive = rewards[type] ?: return
