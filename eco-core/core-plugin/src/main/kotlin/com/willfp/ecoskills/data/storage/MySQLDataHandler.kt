@@ -79,7 +79,7 @@ class MySQLDataHandler(
     object Players : UUIDTable("EcoSkills_Players") {
         override val id: Column<EntityID<UUID>> = uuid("uuid")
             .entityId()
-        val name = varchar("name", 50)
+        val name = varchar("name", 100)
             .default("Unknown Player")
     }
 }
