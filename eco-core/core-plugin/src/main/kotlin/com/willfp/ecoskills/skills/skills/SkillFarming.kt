@@ -50,7 +50,9 @@ class SkillFarming : Skill(
             }
         }
 
-        if (event.block.isPlayerPlaced()) {
+        if (event.block.isPlayerPlaced() &&
+            (event.block.type == Material.PUMPKIN || event.block.type == Material.MELON || event.block.type == Material.SUGAR_CANE)
+        ) {
             return
         }
 
