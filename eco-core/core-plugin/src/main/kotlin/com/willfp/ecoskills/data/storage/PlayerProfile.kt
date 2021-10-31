@@ -45,19 +45,33 @@ class PlayerProfile private constructor(
             return profile
         }
 
+        fun savePlayer(uuid: UUID) {
+            writeToHandler(uuid)
+            saveToHandler()
+        }
+
+        private fun writeToHandler(uuid: UUID) {
+            val profile = loaded[uuid] ?: return
+            for ((key, type) in keys) {
+                when (type) {
+                    Type.INT -> handler.write(uuid, key, profile.read(key, 0))
+                    Type.DOUBLE -> handler.write(uuid, key, profile.read(key, 0.0))
+                    Type.STRING -> handler.write(uuid, key, profile.read(key, "Unknown Value"))
+                }
+            }
+        }
+
+        private fun saveToHandler() {
+            handler.save()
+        }
+
         fun saveAll(async: Boolean) {
             val saver = {
-                for ((uuid, profile) in loaded) {
-                    for ((key, type) in keys) {
-                        when (type) {
-                            Type.INT -> handler.write(uuid, key, profile.read(key, 0))
-                            Type.DOUBLE -> handler.write(uuid, key, profile.read(key, 0.0))
-                            Type.STRING -> handler.write(uuid, key, profile.read(key, "Unknown Value"))
-                        }
-                    }
+                for ((uuid, _) in loaded) {
+                    writeToHandler(uuid)
                 }
 
-                handler.save()
+                saveToHandler()
             }
 
             if (async) {
