@@ -1,9 +1,9 @@
 package com.willfp.ecoskills.stats
 
 import com.willfp.eco.core.EcoPlugin
+import com.willfp.eco.core.integrations.hologram.HologramManager
 import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.StringUtils
-import com.willfp.ecoskills.integrations.hologram.HologramManager
 import com.willfp.ecoskills.isCrit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -46,6 +46,10 @@ class DamageIndicatorListener(
 
         text = StringUtils.format(text)
 
-        HologramManager.spawnHolo(location, listOf(text), 30);
+        val holo = HologramManager.createHologram(location, listOf(text))
+
+        plugin.scheduler.runLater({
+            holo.remove()
+        }, 30)
     }
 }

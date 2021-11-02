@@ -8,7 +8,6 @@ import com.willfp.ecoskills.commands.CommandSkills;
 import com.willfp.ecoskills.config.EffectsYml;
 import com.willfp.ecoskills.data.DataListener;
 import com.willfp.ecoskills.data.LeaderboardHandler;
-import com.willfp.ecoskills.data.PlayerBlockListener;
 import com.willfp.ecoskills.data.SaveHandler;
 import com.willfp.ecoskills.data.storage.DataHandler;
 import com.willfp.ecoskills.data.storage.MySQLDataHandler;
@@ -16,12 +15,6 @@ import com.willfp.ecoskills.data.storage.YamlDataHandler;
 import com.willfp.ecoskills.effects.Effect;
 import com.willfp.ecoskills.effects.Effects;
 import com.willfp.ecoskills.integrations.EcoEnchantsEnchantingLeveller;
-import com.willfp.ecoskills.integrations.afk.AFKHandlerKt;
-import com.willfp.ecoskills.integrations.afk.impl.AFKIntegrationEssentials;
-import com.willfp.ecoskills.integrations.hologram.HologramManager;
-import com.willfp.ecoskills.integrations.hologram.wrappers.HologramCMI;
-import com.willfp.ecoskills.integrations.hologram.wrappers.HologramGHolo;
-import com.willfp.ecoskills.integrations.hologram.wrappers.HologramHolographicDisplays;
 import com.willfp.ecoskills.skills.Skill;
 import com.willfp.ecoskills.skills.SkillDisplayListener;
 import com.willfp.ecoskills.skills.SkillLevellingListener;
@@ -125,7 +118,6 @@ public class EcoSkillsPlugin extends EcoPlugin {
                 new SkillDisplayListener(this),
                 new StatModifierListener(),
                 new DataListener(),
-                new PlayerBlockListener(this),
                 new DamageIndicatorListener(this)
         );
     }
@@ -141,11 +133,7 @@ public class EcoSkillsPlugin extends EcoPlugin {
     @Override
     protected List<IntegrationLoader> loadIntegrationLoaders() {
         return Arrays.asList(
-                new IntegrationLoader("HolographicDisplays", () -> HologramManager.register(new HologramHolographicDisplays(this))),
-                new IntegrationLoader("GHolo", () -> HologramManager.register(new HologramGHolo(this))),
-                new IntegrationLoader("CMI", () -> HologramManager.register(new HologramCMI(this))),
-                new IntegrationLoader("EcoEnchants", () -> this.getEventManager().registerListener(new EcoEnchantsEnchantingLeveller(this))),
-                new IntegrationLoader("Essentials", () -> AFKHandlerKt.registerIntegration(new AFKIntegrationEssentials()))
+                new IntegrationLoader("EcoEnchants", () -> this.getEventManager().registerListener(new EcoEnchantsEnchantingLeveller(this)))
         );
     }
 
