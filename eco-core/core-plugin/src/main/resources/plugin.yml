@@ -9,10 +9,7 @@ depend:
   - eco
   - PlaceholderAPI
 softdepend:
-  - HolographicDisplays
-  - Essentials
-  - GHolo
-  - CMI
+  - EcoEnchants
 libraries:
   - 'org.jetbrains.kotlin:kotlin-stdlib:1.5.21'
   - 'org.jetbrains.exposed:exposed-core:0.34.1'
