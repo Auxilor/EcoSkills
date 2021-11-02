@@ -24,5 +24,6 @@ class CommandEcoskills(plugin: EcoPlugin) :
         addSubcommand(CommandReload(plugin))
             .addSubcommand(CommandReset(plugin))
             .addSubcommand(CommandGive(plugin))
+            .addSubcommand(CommandRecount(plugin))
     }
 }
