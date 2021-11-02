@@ -48,6 +48,7 @@ permissions:
       ecoskills.command.give: true
       ecoskills.command.top: true
       ecoskills.command.rank: true
+      ecoskills.command.recount: true
 
   ecoskills.command.reload:
     description: Allows reloading the config
@@ -69,6 +70,9 @@ permissions:
     default: true
   ecoskills.command.give:
     description: Allows the use of /ecoskills give.
+    default: op
+  ecoskills.command.recount:
+    description: Allows the use of /ecoskills recount.
     default: op
 
   ecoskills.xpmultiplier.50percent:
