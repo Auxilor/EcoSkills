@@ -1,8 +1,8 @@
 package com.willfp.ecoskills.effects.effects
 
 import com.willfp.eco.core.drops.DropQueue
+import com.willfp.eco.util.BlockUtils
 import com.willfp.eco.util.NumberUtils
-import com.willfp.ecoskills.data.isPlayerPlaced
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.getEffectLevel
 import org.bukkit.Bukkit
@@ -45,7 +45,7 @@ class EffectMasterLumberjack : Effect(
 
         val block = event.block
 
-        if (block.isPlayerPlaced()) {
+        if (BlockUtils.isPlayerPlaced(block)) {
             return
         }
 

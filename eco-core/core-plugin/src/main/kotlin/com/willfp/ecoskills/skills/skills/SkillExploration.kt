@@ -1,8 +1,8 @@
 package com.willfp.ecoskills.skills.skills
 
+import com.willfp.eco.core.integrations.afk.AFKManager
 import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.giveSkillExperience
-import com.willfp.ecoskills.integrations.afk.isAfk
 import com.willfp.ecoskills.skills.Skill
 import org.bukkit.GameMode
 import org.bukkit.entity.Player
@@ -22,6 +22,10 @@ class SkillExploration : Skill(
             return
         }
 
+        if (!this.config.getBool("allow-flying") && player.isFlying) {
+            return;
+        }
+
         val from = event.from
         val to = event.to ?: return
 
@@ -35,7 +39,7 @@ class SkillExploration : Skill(
             xp *= speed
         }
 
-        if (plugin.configYml.getBool("skills.prevent-levelling-while-afk") && player.isAfk) {
+        if (plugin.configYml.getBool("skills.prevent-levelling-while-afk") && AFKManager.isAfk(player)) {
             return
         }
 
@@ -56,7 +60,7 @@ class SkillExploration : Skill(
             return
         }
 
-        if (plugin.configYml.getBool("skills.prevent-levelling-while-afk") && player.isAfk) {
+        if (plugin.configYml.getBool("skills.prevent-levelling-while-afk") && AFKManager.isAfk(player)) {
             return
         }
 

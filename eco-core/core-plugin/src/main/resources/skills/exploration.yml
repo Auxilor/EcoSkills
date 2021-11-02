@@ -80,3 +80,5 @@ multiply-xp-by-speed: true
 fall-damage-xp-per-hp: 16
 # If experience should be given when the player dies of fall damage
 give-xp-on-fatal-fall: false
+# If experience should be given when the player is flying (/fly)
+allow-flying: true

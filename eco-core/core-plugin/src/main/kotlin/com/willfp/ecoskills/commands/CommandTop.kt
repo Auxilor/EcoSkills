@@ -4,9 +4,9 @@ import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.CommandHandler
 import com.willfp.eco.core.command.TabCompleteHandler
 import com.willfp.eco.core.command.impl.Subcommand
+import com.willfp.eco.util.PlayerUtils
 import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.data.LeaderboardHandler
-import com.willfp.ecoskills.data.savedDisplayName
 import com.willfp.ecoskills.getTotalSkillLevel
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
@@ -37,7 +37,7 @@ class CommandTop(plugin: EcoPlugin) :
                 var name = player.name!!
 
                 if (useDisplayName) {
-                    name = player.savedDisplayName
+                    name = PlayerUtils.getSavedDisplayName(player)
                 }
 
                 line = line.replace("%playername%", name)

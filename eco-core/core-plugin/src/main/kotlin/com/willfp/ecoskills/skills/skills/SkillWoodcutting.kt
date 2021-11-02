@@ -1,8 +1,8 @@
 package com.willfp.ecoskills.skills.skills
 
-import com.willfp.ecoskills.data.isPlayerPlaced
+import com.willfp.eco.core.integrations.afk.AFKManager
+import com.willfp.eco.util.BlockUtils
 import com.willfp.ecoskills.giveSkillExperience
-import com.willfp.ecoskills.integrations.afk.isAfk
 import com.willfp.ecoskills.skills.Skill
 import org.bukkit.GameMode
 import org.bukkit.Material
@@ -40,11 +40,11 @@ class SkillWoodcutting : Skill(
 
         val toGive = rewards[type] ?: return
 
-        if (event.block.isPlayerPlaced()) {
+        if (BlockUtils.isPlayerPlaced(event.block)) {
             return
         }
 
-        if (plugin.configYml.getBool("skills.prevent-levelling-while-afk") && player.isAfk) {
+        if (plugin.configYml.getBool("skills.prevent-levelling-while-afk") && AFKManager.isAfk(player)) {
             return
         }
 

@@ -1,8 +1,8 @@
 package com.willfp.ecoskills.skills.skills
 
 import com.willfp.eco.core.events.EntityDeathByEntityEvent
+import com.willfp.eco.core.integrations.afk.AFKManager
 import com.willfp.ecoskills.giveSkillExperience
-import com.willfp.ecoskills.integrations.afk.isAfk
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.tryAsPlayer
 import org.bukkit.GameMode
@@ -21,7 +21,7 @@ class SkillCombat : Skill(
             return
         }
 
-        if (plugin.configYml.getBool("skills.prevent-levelling-while-afk") && player.isAfk) {
+        if (plugin.configYml.getBool("skills.prevent-levelling-while-afk") && AFKManager.isAfk(player)) {
             return
         }
 

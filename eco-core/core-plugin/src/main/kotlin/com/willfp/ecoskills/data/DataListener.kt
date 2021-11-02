@@ -1,5 +1,6 @@
 package com.willfp.ecoskills.data
 
+import com.willfp.ecoskills.data.storage.PlayerProfile
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.getSkillLevel
@@ -10,6 +11,7 @@ import org.bukkit.attribute.Attribute
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
+import org.bukkit.event.player.PlayerQuitEvent
 
 class DataListener : Listener {
     @EventHandler
@@ -52,5 +54,10 @@ class DataListener : Listener {
         for (stat in Stats.values()) {
             stat.updateStatLevel(event.player)
         }
+    }
+
+    @EventHandler
+    fun onLeave(event: PlayerQuitEvent) {
+        PlayerProfile.savePlayer(event.player.uniqueId)
     }
 }

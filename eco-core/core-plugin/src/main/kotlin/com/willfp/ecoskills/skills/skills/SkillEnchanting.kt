@@ -1,7 +1,7 @@
 package com.willfp.ecoskills.skills.skills
 
+import com.willfp.eco.core.integrations.afk.AFKManager
 import com.willfp.ecoskills.giveSkillExperience
-import com.willfp.ecoskills.integrations.afk.isAfk
 import com.willfp.ecoskills.skills.Skill
 import org.bukkit.GameMode
 import org.bukkit.event.EventHandler
@@ -20,7 +20,7 @@ class SkillEnchanting : Skill(
             return
         }
 
-        if (plugin.configYml.getBool("skills.prevent-levelling-while-afk") && player.isAfk) {
+        if (plugin.configYml.getBool("skills.prevent-levelling-while-afk") && AFKManager.isAfk(player)) {
             return
         }
 
