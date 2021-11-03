@@ -1,5 +1,6 @@
 package com.willfp.ecoskills.data.legacy
 
+import com.willfp.eco.core.Eco
 import com.willfp.eco.core.data.PlayerProfile
 import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.ecoskills.EcoSkillsPlugin
@@ -54,12 +55,17 @@ class LegacyPlayerProfile private constructor(
             plugin.logger.info("so there's no need to worry about how long it takes. Once this is complete,")
             plugin.logger.info("feel free to delete data.yml as it won't be used anymore")
             plugin.logger.info("-----------------------------------------")
+            Bukkit.getLogger().info(keys.toString())
+            Bukkit.getLogger().info(mappedKeys.toString())
             for (offlinePlayer in Bukkit.getServer().offlinePlayers) {
                 plugin.logger.info("Migrating player ${offlinePlayer.uniqueId}...")
                 migrate(offlinePlayer)
             }
-            plugin.logger.info("Migration complete!")
+            plugin.logger.info("Saving...")
             plugin.configYml.set("mysql.migrated", true)
+            plugin.configYml.save()
+            Eco.getHandler().playerProfileHandler.saveAll(false)
+            plugin.logger.info("Migration complete!")
         }
 
         private fun migrate(player: OfflinePlayer) {

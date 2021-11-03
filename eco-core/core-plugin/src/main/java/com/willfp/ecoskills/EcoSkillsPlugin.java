@@ -53,7 +53,10 @@ public class EcoSkillsPlugin extends EcoPlugin {
         effectsYml = new EffectsYml(this);
         dataHandler = this.getConfigYml().getBool("mysql.enabled")
                 ? new MySQLDataHandler(this) : new YamlDataHandler(this);
+    }
 
+    @Override
+    protected void handleEnable() {
         LegacyPlayerProfile.Companion.migrateAll();
     }
 

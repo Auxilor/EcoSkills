@@ -8,7 +8,7 @@
 # This exists purely to be able to migrate player data
 # Go to /plugins/eco/config.yml to change MySQL settings
 mysql:
-  migrated: false # Internal value - DO NOT CHANGE
+  migrated: false # Internal value - DO NOT CHANGE, YOU RISK LOSING PLAYER DATA
   enabled: false # Set to false, data.yml will be used instead.
   host: localhost
   port: 3306
