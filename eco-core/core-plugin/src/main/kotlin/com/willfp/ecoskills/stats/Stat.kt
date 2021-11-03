@@ -2,6 +2,8 @@ package com.willfp.ecoskills.stats
 
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.config.interfaces.Config
+import com.willfp.eco.core.data.keys.PersistentDataKey
+import com.willfp.eco.core.data.keys.PersistentDataKeyType
 import com.willfp.eco.core.integrations.placeholder.PlaceholderEntry
 import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.*
@@ -17,6 +19,11 @@ abstract class Stat(
 
     val key: NamespacedKey = plugin.namespacedKeyFactory.create(id)
     val uuid: UUID = UUID.nameUUIDFromBytes(id.toByteArray())
+    val dataKey = PersistentDataKey<Int>(
+        plugin.namespacedKeyFactory.create(id),
+        PersistentDataKeyType.INT,
+        0
+    )
     lateinit var config: Config
     lateinit var name: String
 

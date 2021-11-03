@@ -1,8 +1,8 @@
 package com.willfp.ecoskills
 
+import com.willfp.eco.core.data.PlayerProfile
 import com.willfp.ecoskills.api.PlayerSkillExpGainEvent
 import com.willfp.ecoskills.api.PlayerSkillLevelUpEvent
-import com.willfp.ecoskills.data.storage.PlayerProfile.Companion.profile
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.skills.Skills
@@ -95,11 +95,11 @@ fun Player.giveSkillExperience(skill: Skill, experience: Double, noMultiply: Boo
 }
 
 fun OfflinePlayer.getSkillLevel(skill: Skill): Int {
-    return profile.read(skill.id, 0)
+    return PlayerProfile.load(this).read(skill.dataKey)
 }
 
 fun OfflinePlayer.setSkillLevel(skill: Skill, level: Int) {
-    profile.write(skill.id, level)
+    PlayerProfile.load(this).write(skill.dataKey, level)
 }
 
 fun OfflinePlayer.getSkillProgressToNextLevel(skill: Skill): Double {
@@ -111,19 +111,19 @@ fun OfflinePlayer.getSkillProgressRequired(skill: Skill): Int {
 }
 
 fun OfflinePlayer.getSkillProgress(skill: Skill): Double {
-    return profile.read(skill.xpKey.key, 0.0)
+    return PlayerProfile.load(this).read(skill.dataXPKey)
 }
 
 fun OfflinePlayer.setSkillProgress(skill: Skill, level: Double) {
-    profile.write(skill.xpKey.key, level)
+    PlayerProfile.load(this).write(skill.dataXPKey, level)
 }
 
 fun OfflinePlayer.getEffectLevel(effect: Effect): Int {
-    return profile.read(effect.id, 0)
+    return PlayerProfile.load(this).read(effect.dataKey)
 }
 
 fun OfflinePlayer.setEffectLevel(effect: Effect, level: Int) {
-    profile.write(effect.id, level)
+    PlayerProfile.load(this).write(effect.dataKey, level)
 }
 
 fun OfflinePlayer.getStatLevel(stat: Stat): Int {
@@ -145,11 +145,11 @@ fun Player.getBonusStatLevel(stat: Stat): Int {
 }
 
 fun OfflinePlayer.getBaseStatLevel(stat: Stat): Int {
-    return profile.read(stat.id, 0)
+    return PlayerProfile.load(this).read(stat.dataKey)
 }
 
 fun Player.setStatLevel(stat: Stat, level: Int) {
-    profile.write(stat.id, level)
+    PlayerProfile.load(this).write(stat.dataKey, level)
     stat.updateStatLevel(this)
 }
 

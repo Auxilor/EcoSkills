@@ -1,6 +1,8 @@
 package com.willfp.ecoskills.effects
 
 import com.willfp.eco.core.config.interfaces.Config
+import com.willfp.eco.core.data.keys.PersistentDataKey
+import com.willfp.eco.core.data.keys.PersistentDataKeyType
 import com.willfp.eco.core.integrations.placeholder.PlaceholderEntry
 import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.StringUtils
@@ -17,6 +19,11 @@ abstract class Effect(
     protected val plugin: EcoSkillsPlugin = EcoSkillsPlugin.getInstance()
 
     val key: NamespacedKey = plugin.namespacedKeyFactory.create(id)
+    val dataKey = PersistentDataKey<Int>(
+        plugin.namespacedKeyFactory.create(id),
+        PersistentDataKeyType.INT,
+        0
+    )
     val uuid: UUID = UUID.nameUUIDFromBytes(id.toByteArray())
     lateinit var config: Config
 

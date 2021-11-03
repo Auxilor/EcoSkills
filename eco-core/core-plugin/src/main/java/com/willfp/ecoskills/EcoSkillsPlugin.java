@@ -8,10 +8,10 @@ import com.willfp.ecoskills.commands.CommandSkills;
 import com.willfp.ecoskills.config.EffectsYml;
 import com.willfp.ecoskills.data.DataListener;
 import com.willfp.ecoskills.data.LeaderboardHandler;
-import com.willfp.ecoskills.data.SaveHandler;
-import com.willfp.ecoskills.data.storage.DataHandler;
-import com.willfp.ecoskills.data.storage.MySQLDataHandler;
-import com.willfp.ecoskills.data.storage.YamlDataHandler;
+import com.willfp.ecoskills.data.legacy.DataHandler;
+import com.willfp.ecoskills.data.legacy.LegacyPlayerProfile;
+import com.willfp.ecoskills.data.legacy.MySQLDataHandler;
+import com.willfp.ecoskills.data.legacy.YamlDataHandler;
 import com.willfp.ecoskills.effects.Effect;
 import com.willfp.ecoskills.effects.Effects;
 import com.willfp.ecoskills.integrations.EcoEnchantsEnchantingLeveller;
@@ -53,6 +53,8 @@ public class EcoSkillsPlugin extends EcoPlugin {
         effectsYml = new EffectsYml(this);
         dataHandler = this.getConfigYml().getBool("mysql.enabled")
                 ? new MySQLDataHandler(this) : new YamlDataHandler(this);
+
+        LegacyPlayerProfile.Companion.migrateAll();
     }
 
     @Override
@@ -69,19 +71,8 @@ public class EcoSkillsPlugin extends EcoPlugin {
             this.getEventManager().unregisterListener(skill);
             this.getEventManager().registerListener(skill);
         }
-        SaveHandler.Companion.save(this);
 
-        this.getScheduler().runTimer(
-                new SaveHandler.Runnable(this),
-                this.getConfigYml().getInt("autosave.ticks"),
-                this.getConfigYml().getInt("autosave.ticks")
-        );
         this.getScheduler().runTimer(new LeaderboardHandler.Runnable(), 50, 2400);
-    }
-
-    @Override
-    protected void handleDisable() {
-        SaveHandler.Companion.save(this);
     }
 
     /**

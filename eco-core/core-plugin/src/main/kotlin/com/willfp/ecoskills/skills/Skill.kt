@@ -2,6 +2,8 @@ package com.willfp.ecoskills.skills
 
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.config.interfaces.Config
+import com.willfp.eco.core.data.keys.PersistentDataKey
+import com.willfp.eco.core.data.keys.PersistentDataKeyType
 import com.willfp.eco.core.integrations.placeholder.PlaceholderEntry
 import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.StringUtils
@@ -21,7 +23,16 @@ abstract class Skill(
     protected val plugin: EcoPlugin = EcoSkillsPlugin.getInstance()
 
     val key: NamespacedKey = plugin.namespacedKeyFactory.create(id)
-    val xpKey: NamespacedKey = plugin.namespacedKeyFactory.create(id + "_progress")
+    val dataKey = PersistentDataKey<Int>(
+        plugin.namespacedKeyFactory.create(id),
+        PersistentDataKeyType.INT,
+        0
+    )
+    val dataXPKey = PersistentDataKey<Double>(
+        plugin.namespacedKeyFactory.create("${id}_xp"),
+        PersistentDataKeyType.DOUBLE,
+        0.0
+    )
     lateinit var config: Config
     lateinit var name: String
     lateinit var description: String

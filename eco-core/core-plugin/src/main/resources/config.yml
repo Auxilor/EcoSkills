@@ -3,7 +3,12 @@
 # by Auxilor
 #
 
+
+# EcoSkills now uses eco's data storage system, this section will be removed in the future
+# This exists purely to be able to migrate player data
+# Go to /plugins/eco/config.yml to change MySQL settings
 mysql:
+  migrated: false # Internal value - DO NOT CHANGE
   enabled: false # Set to false, data.yml will be used instead.
   host: localhost
   port: 3306

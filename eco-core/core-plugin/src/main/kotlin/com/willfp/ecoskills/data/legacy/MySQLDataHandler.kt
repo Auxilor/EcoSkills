@@ -1,4 +1,4 @@
-package com.willfp.ecoskills.data.storage
+package com.willfp.ecoskills.data.legacy
 
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.effects.Effects
@@ -30,7 +30,7 @@ class MySQLDataHandler(
                 for (skill in Skills.values()) {
                     registerColumn<Int>(skill.id, IntegerColumnType())
                         .default(0)
-                    registerColumn<Double>(skill.xpKey.key, DoubleColumnType())
+                    registerColumn<Double>(skill.id + "_progress", DoubleColumnType())
                         .default(0.0)
                 }
 
@@ -49,24 +49,6 @@ class MySQLDataHandler(
         }
     }
 
-    override fun save() {
-        // Do nothing
-    }
-
-    override fun <T> write(uuid: UUID, key: String, value: T) {
-        transaction {
-            Players.select { Players.id eq uuid }.firstOrNull() ?: run {
-                Players.insert {
-                    it[this.id] = uuid
-                }
-            }
-            val column: Column<T> = Players.columns.stream().filter { it.name == key }.findFirst().get() as Column<T>
-            Players.update({ Players.id eq uuid }) {
-                it[column] = value
-            }
-        }
-    }
-
     override fun <T> read(uuid: UUID, key: String): T? {
         var value: T? = null
         transaction {
@@ -79,7 +61,5 @@ class MySQLDataHandler(
     object Players : UUIDTable("EcoSkills_Players") {
         override val id: Column<EntityID<UUID>> = uuid("uuid")
             .entityId()
-        val name = varchar("name", 100)
-            .default("Unknown Player")
     }
 }
