@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableSet;
 import com.willfp.eco.core.config.updating.ConfigUpdater;
 import com.willfp.eco.core.integrations.placeholder.PlaceholderEntry;
 import com.willfp.ecoskills.EcoSkillsPlayerKt;
-import com.willfp.ecoskills.api.EcoSkillsAPI;
 import com.willfp.ecoskills.skills.skills.SkillAlchemy;
 import com.willfp.ecoskills.skills.skills.SkillArmory;
 import com.willfp.ecoskills.skills.skills.SkillCombat;
@@ -65,6 +64,7 @@ public class Skills {
                 (player -> Double.toString(EcoSkillsPlayerKt.getSkillExperienceMultiplier(player))),
                 true
         ).register();
+
         for (Skill skill : Skills.values()) {
             skill.update();
         }
