@@ -58,6 +58,7 @@ public class EcoSkillsPlugin extends EcoPlugin {
     @Override
     protected void handleEnable() {
         LegacyPlayerProfile.Companion.migrateAll();
+        Skills.update();
     }
 
     @Override

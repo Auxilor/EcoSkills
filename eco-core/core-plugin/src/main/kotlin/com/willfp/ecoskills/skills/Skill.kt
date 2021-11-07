@@ -33,7 +33,7 @@ abstract class Skill(
         PersistentDataKeyType.DOUBLE,
         0.0
     )
-    lateinit var config: Config
+    val config: Config = SkillConfig(this.id, this.javaClass, plugin)
     lateinit var name: String
     lateinit var description: String
     lateinit var gui: SkillGUI
@@ -50,11 +50,7 @@ abstract class Skill(
     }
 
     private fun finishLoading() {
-        config = SkillConfig(this.id, this.javaClass, plugin)
-
         Skills.registerNewSkill(this)
-
-        update()
     }
 
     fun update() {
