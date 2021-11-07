@@ -60,7 +60,7 @@ public class Skills {
     @ConfigUpdater
     public static void update() {
         new PlaceholderEntry(
-               "skill_multiplier",
+                "skill_multiplier",
                 (player -> Double.toString(EcoSkillsPlayerKt.getSkillExperienceMultiplier(player))),
                 true
         ).register();

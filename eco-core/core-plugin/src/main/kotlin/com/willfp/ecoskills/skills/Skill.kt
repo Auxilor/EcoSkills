@@ -50,13 +50,11 @@ abstract class Skill(
     }
 
     private fun finishLoading() {
-        config = loadConfig()
+        config = SkillConfig(this.id, this.javaClass, plugin)
 
         Skills.registerNewSkill(this)
-    }
 
-    open fun loadConfig(): Config {
-        return SkillConfig(this.id, this.javaClass, plugin)
+        update()
     }
 
     fun update() {
