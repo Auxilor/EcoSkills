@@ -5,6 +5,9 @@ import com.willfp.eco.core.integrations.hologram.HologramManager
 import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.isCrit
+import org.bukkit.entity.LivingEntity
+import org.bukkit.entity.Player
+import org.bukkit.entity.Projectile
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -20,6 +23,18 @@ class DamageIndicatorListener(
         }
 
         if (event.entity == event.damager) {
+            return
+        }
+
+        if (event.damager is Projectile && (event.damager as Projectile).shooter == event.entity) {
+            return
+        }
+
+        if (event.damage == 0.0) {
+            return
+        }
+
+        if (event.entity is Player && (event.entity as Player).isBlocking) {
             return
         }
 
