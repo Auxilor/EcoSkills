@@ -217,3 +217,8 @@ master_lumberjack:
   # with a chance to get triple drops. Same goes if above 200, but then it will always be triple with a chance
   # for quadruple.
   chance-per-level: 6
+magnetic_rod:
+  description: "&8Increases fishing speed by &a%percentage%%"
+
+  # Speed is as a percentage.
+  speed-per-level: 5
