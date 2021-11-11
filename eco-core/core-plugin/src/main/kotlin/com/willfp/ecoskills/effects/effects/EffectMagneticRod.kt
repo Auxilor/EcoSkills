@@ -1,5 +1,6 @@
 package com.willfp.ecoskills.effects.effects
 
+import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.getEffectLevel
 import org.bukkit.event.EventHandler
@@ -10,7 +11,7 @@ class EffectMagneticRod : Effect(
     "magnetic_rod"
 ) {
     override fun formatDescription(string: String, level: Int): String {
-        return string.replace("%percentage%", (level * config.getDouble("speed-per-level")).toString())
+        return string.replace("%percentage%", NumberUtils.format(level * config.getDouble("speed-per-level")))
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
