@@ -15,6 +15,8 @@ gui:
     - "&fEffects:"
     - "&8» &r&6Eye of the Depths %ecoskills_eye_of_the_depths_numeral%"
     - "   %ecoskills_eye_of_the_depths_description%"
+    - "&8» &r&6Magnetic Rod %ecoskills_magnetic_rod_numeral%"
+    - "   %ecoskills_magnetic_rod_description%"
 
 rewards:
   # The actual rewards to be given
@@ -22,6 +24,7 @@ rewards:
     - "defense::2"
     - "wisdom::1"
     - "eye_of_the_depths::1"
+    - "magnetic_rod::1"
 
   level-commands: []
 
@@ -32,6 +35,8 @@ rewards:
       - " &8» &r&f+1 %ecoskills_wisdom_name%"
       - " &8» &r&6Eye of the Depths %ecoskills_eye_of_the_depths_numeral%"
       - "    %ecoskills_eye_of_the_depths_description%"
+      - " &8» &r&6Magnetic Rod %ecoskills_magnetic_rod_numeral%"
+      - "    %ecoskills_magnetic_rod_description%"
 
   # The lore to show in the levels gui
   progression-lore:
@@ -40,6 +45,8 @@ rewards:
       - " &8» &r&f+1 %ecoskills_wisdom_name%"
       - " &8» &r&6Eye of the Depths %ecoskills_eye_of_the_depths_numeral%"
       - "    %ecoskills_eye_of_the_depths_description%"
+      - " &8» &r&6Magnetic Rod %ecoskills_magnetic_rod_numeral%"
+      - "    %ecoskills_magnetic_rod_description%"
 
 # The experience to give for each in-game experience dropped
 xp-per-experience-dropped: 3.5
