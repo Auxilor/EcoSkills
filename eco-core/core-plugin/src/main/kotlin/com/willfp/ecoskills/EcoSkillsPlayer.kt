@@ -91,9 +91,7 @@ fun Player.giveSkillExperience(skill: Skill, experience: Double, noMultiply: Boo
         val levelUpEvent = PlayerSkillLevelUpEvent(this, skill, level + 1)
         Bukkit.getPluginManager().callEvent(levelUpEvent)
         this.giveSkillExperience(skill, overshoot, true)
-    }
-
-    else if (this.getSkillProgress(skill) < skill.getExpForLevel(level) && level >= 1) {
+    } else if (this.getSkillProgress(skill) < skill.getExpForLevel(level) && level >= 1) {
         val overshoot = 0.0
         this.setSkillProgress(skill, 0.0)
         this.setSkillLevel(skill, level - 1)
@@ -105,7 +103,6 @@ fun Player.giveSkillExperience(skill: Skill, experience: Double, noMultiply: Boo
     if (this.getSkillProgress(skill) < 0) {
         this.setSkillProgress(skill, 0.0)
     }
-
 }
 
 fun OfflinePlayer.getSkillLevel(skill: Skill): Int {
