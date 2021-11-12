@@ -49,7 +49,7 @@ class EffectMasterLumberjack : Effect(
             return
         }
 
-        if (!config.getStrings("on-blocks").contains(mat.name.lowercase())) {
+        if (!config.getStrings("on-blocks", false).contains(mat.name.lowercase())) {
             return
         }
 
