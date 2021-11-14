@@ -14,6 +14,11 @@ public class PlayerSkillExpGainEvent extends PlayerEvent implements Cancellable 
     private static final HandlerList HANDLERS = new HandlerList();
 
     /**
+     * If multiplier is used in this event
+     */
+    private final boolean multiply;
+
+    /**
      * The skill.
      */
     private final Skill skill;
@@ -37,10 +42,12 @@ public class PlayerSkillExpGainEvent extends PlayerEvent implements Cancellable 
      */
     public PlayerSkillExpGainEvent(@NotNull final Player who,
                                    @NotNull final Skill skill,
-                                   final double amount) {
+                                   final double amount,
+                                   final boolean multiply) {
         super(who);
         this.skill = skill;
         this.amount = amount;
+        this.multiply = multiply;
     }
 
     /**
@@ -59,6 +66,15 @@ public class PlayerSkillExpGainEvent extends PlayerEvent implements Cancellable 
      */
     public double getAmount() {
         return amount;
+    }
+
+    /**
+     * Get if EcoSkills multipliers are used in this event.
+     *
+     * @return The experience.
+     */
+    public boolean isMultiply() {
+        return multiply;
     }
 
     /**

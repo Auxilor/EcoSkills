@@ -73,7 +73,7 @@ fun OfflinePlayer.getAverageSkillLevel(): Double {
 fun Player.giveSkillExperience(skill: Skill, experience: Double, noMultiply: Boolean = false) {
     var exp = abs(if (noMultiply) experience else experience * this.getSkillExperienceMultiplier())
 
-    val gainEvent = PlayerSkillExpGainEvent(this, skill, exp)
+    val gainEvent = PlayerSkillExpGainEvent(this, skill, exp, !noMultiply)
     Bukkit.getPluginManager().callEvent(gainEvent)
 
     if (gainEvent.isCancelled) {
