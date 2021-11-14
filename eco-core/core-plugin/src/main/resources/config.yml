@@ -3,19 +3,6 @@
 # by Auxilor
 #
 
-
-# EcoSkills now uses eco's data storage system, this section will be removed in the future
-# This exists purely to be able to migrate player data
-# Go to /plugins/eco/config.yml to change MySQL settings
-mysql:
-  migrated: false # Internal value - DO NOT CHANGE, YOU RISK LOSING PLAYER DATA
-  enabled: false # Set to false, data.yml will be used instead.
-  host: localhost
-  port: 3306
-  database: database
-  user: username
-  password: passy
-
 gui:
   rows: 6
 
@@ -328,7 +315,19 @@ commands:
     # If displayname (including rank) should be used
     use-display-name: true
 
-autosave:
-  ticks: 20000 # The amount of ticks between autosaves
-  log: true # If auto-save messages should be sent to console
-  async: false # If saves should be performed asynchronously. May cause bugs without MySQL
+# Everything below this line is legacy configuration
+# Don't touch it - it will be removed soon.
+
+# EcoSkills now uses eco's data storage system, this section will be removed in the future
+# This exists purely to be able to migrate player data
+# Go to /plugins/eco/config.yml to change MySQL settings
+
+# If you didn't use EcoSkills before version 1.10.0 then ignore this.
+mysql:
+  migrated: false # Internal value - DO NOT CHANGE, YOU RISK LOSING PLAYER DATA
+  enabled: false # Set to false, data.yml will be used instead.
+  host: localhost
+  port: 3306
+  database: database
+  user: username
+  password: passy
