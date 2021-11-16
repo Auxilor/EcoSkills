@@ -10,7 +10,7 @@ import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.stats.Stats
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
-import java.util.*
+import java.util.UUID
 
 @Suppress("UNCHECKED_CAST", "DEPRECATED")
 class LegacyPlayerProfile private constructor(

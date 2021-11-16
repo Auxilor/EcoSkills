@@ -12,7 +12,7 @@ import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
-import java.util.*
+import java.util.UUID
 import kotlin.math.abs
 
 val expMultiplierCache = mutableMapOf<UUID, Double>()

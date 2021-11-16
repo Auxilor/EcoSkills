@@ -10,7 +10,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.inventory.BrewEvent
 import org.bukkit.inventory.meta.PotionMeta
-import java.util.*
+import java.util.EnumMap
 
 class SkillAlchemy : Skill(
     "alchemy"

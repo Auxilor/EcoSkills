@@ -2,7 +2,7 @@ package com.willfp.ecoskills.data.legacy
 
 import com.willfp.eco.core.config.yaml.YamlBaseConfig
 import com.willfp.ecoskills.EcoSkillsPlugin
-import java.util.*
+import java.util.UUID
 
 @Suppress("UNCHECKED_CAST")
 class YamlDataHandler(
