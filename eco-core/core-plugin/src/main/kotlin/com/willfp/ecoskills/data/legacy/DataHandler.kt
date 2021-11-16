@@ -1,6 +1,6 @@
 package com.willfp.ecoskills.data.legacy
 
-import java.util.*
+import java.util.UUID
 
 interface DataHandler {
     fun <T> read(uuid: UUID, key: String): T?

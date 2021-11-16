@@ -11,7 +11,7 @@ import com.willfp.ecoskills.SkillObject
 import com.willfp.ecoskills.getEffectLevel
 import org.bukkit.NamespacedKey
 import org.bukkit.event.Listener
-import java.util.*
+import java.util.UUID
 
 abstract class Effect(
     id: String

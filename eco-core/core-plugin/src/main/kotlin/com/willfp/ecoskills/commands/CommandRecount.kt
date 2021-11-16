@@ -4,9 +4,6 @@ import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.CommandHandler
 import com.willfp.eco.core.command.TabCompleteHandler
 import com.willfp.eco.core.command.impl.Subcommand
-import com.willfp.eco.util.PlayerUtils
-import com.willfp.eco.util.StringUtils
-import com.willfp.ecoskills.data.LeaderboardHandler
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.getSkillLevel

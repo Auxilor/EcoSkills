@@ -12,7 +12,7 @@ import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
-import java.util.*
+import java.util.UUID
 import kotlin.math.abs
 
 val expMultiplierCache = mutableMapOf<UUID, Double>()
@@ -71,14 +71,16 @@ fun OfflinePlayer.getAverageSkillLevel(): Double {
 }
 
 fun Player.giveSkillExperience(skill: Skill, experience: Double, noMultiply: Boolean = false) {
-    val exp = abs(if (noMultiply) experience else experience * this.getSkillExperienceMultiplier())
+    var exp = abs(if (noMultiply) experience else experience * this.getSkillExperienceMultiplier())
 
-    val gainEvent = PlayerSkillExpGainEvent(this, skill, exp)
+    val gainEvent = PlayerSkillExpGainEvent(this, skill, exp, !noMultiply)
     Bukkit.getPluginManager().callEvent(gainEvent)
 
     if (gainEvent.isCancelled) {
         return
     }
+
+    exp = gainEvent.amount
 
     val level = this.getSkillLevel(skill)
 

@@ -9,7 +9,7 @@ import org.bukkit.Material
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.block.BlockBreakEvent
-import java.util.*
+import java.util.EnumMap
 
 class SkillMining : Skill(
     "mining"
