@@ -5,13 +5,13 @@ import com.willfp.eco.core.integrations.hologram.HologramManager
 import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.isCrit
-import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
+import org.bukkit.event.entity.EntityRegainHealthEvent
 
 class DamageIndicatorListener(
     private val plugin: EcoPlugin
@@ -58,6 +58,39 @@ class DamageIndicatorListener(
         }
 
         text = text.replace("%damage%", NumberUtils.format(event.damage))
+
+        text = StringUtils.format(text)
+
+        val holo = HologramManager.createHologram(location, listOf(text))
+
+        plugin.scheduler.runLater({
+            holo.remove()
+        }, 30)
+    }
+
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    fun onHeal(event: EntityRegainHealthEvent) {
+        if (!plugin.configYml.getBool("damage-indicators.healing.enabled")) {
+            return
+        }
+
+        val location = event.entity.location
+
+        location.add(0.0, event.entity.height, 0.0)
+
+        val x = plugin.configYml.getDouble("damage-indicators.max-x-offset")
+        val y = plugin.configYml.getDouble("damage-indicators.max-y-offset")
+        val z = plugin.configYml.getDouble("damage-indicators.max-z-offset")
+        location.add(
+            NumberUtils.randFloat(-x, x),
+            NumberUtils.randFloat(-y, y),
+            NumberUtils.randFloat(-z, z)
+        )
+
+        var text = plugin.configYml.getString("damage-indicators.healing.format", false)
+
+        text = text.replace("%damage%", NumberUtils.format(event.amount))
 
         text = StringUtils.format(text)
 

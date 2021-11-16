@@ -306,6 +306,9 @@ damage-indicators:
   format:
     normal: "&7%damage%"
     crit: "&f✧ <gradient:#f953c6>%damage%</gradient:#b91d73> &f✧"
+  healing:
+    enabled: true
+    format: "&a+%damage%"
   max-x-offset: 0.6
   max-y-offset: 0.6
   max-z-offset: 0.6
