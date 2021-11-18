@@ -28,7 +28,7 @@ class SkillDisplayListener(
                 string = string.replace("%skill%", skill.name)
                 string = string.replace("%current_xp%", NumberUtils.format(player.getSkillProgress(skill)))
                 val nextLevel = skill.getExpForLevel(player.getSkillLevel(skill) + 1).toDouble()
-                val nextLevelMessage = if (nextLevel >= 2_000_000_000) "∞" else NumberUtils.format(nextLevel)
+                val nextLevelMessage = if (nextLevel >= 2_000_000_000) plugin.langYml.getString("infinity") else NumberUtils.format(nextLevel)
                 string = string.replace(
                     "%required_xp%",
                     nextLevelMessage

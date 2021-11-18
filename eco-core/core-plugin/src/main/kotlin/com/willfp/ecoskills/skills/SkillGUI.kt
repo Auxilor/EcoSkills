@@ -20,7 +20,7 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 import org.bukkit.persistence.PersistentDataType
-import java.util.*
+import java.util.Objects
 import kotlin.math.ceil
 
 class SkillGUI(
@@ -46,7 +46,7 @@ class SkillGUI(
         ).addLoreLines {
             val currentXP = player.getSkillProgress(skill)
             val requiredXP = skill.getExpForLevel(player.getSkillLevel(skill) + 1)
-            val requiredXPString = if (requiredXP == Int.MAX_VALUE) "∞" else NumberUtils.format(requiredXP.toDouble())
+            val requiredXPString = if (requiredXP == Int.MAX_VALUE) plugin.langYml.getString("infinity") else NumberUtils.format(requiredXP.toDouble())
             val lore = mutableListOf<String>()
             for (string in plugin.configYml.getStrings("gui.skill-icon.lore", false)) {
                 lore.add(
