@@ -10,7 +10,7 @@ import org.bukkit.block.data.Ageable
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.block.BlockBreakEvent
-import java.util.EnumMap
+import java.util.*
 
 class SkillFarming : Skill(
     "farming"
@@ -51,7 +51,8 @@ class SkillFarming : Skill(
         }
 
         if (BlockUtils.isPlayerPlaced(event.block) &&
-            (event.block.type == Material.PUMPKIN || event.block.type == Material.MELON || event.block.type == Material.SUGAR_CANE)
+            (event.block.type == Material.PUMPKIN || event.block.type == Material.MELON
+                    || event.block.type == Material.SUGAR_CANE || event.block.type == Material.COCOA)
         ) {
             return
         }
