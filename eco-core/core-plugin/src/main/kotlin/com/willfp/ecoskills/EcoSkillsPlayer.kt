@@ -15,8 +15,8 @@ import org.bukkit.entity.Projectile
 import java.util.UUID
 import kotlin.math.abs
 
-val expMultiplierCache = mutableMapOf<UUID, Double>()
-val plugin: EcoSkillsPlugin = EcoSkillsPlugin.getInstance()
+private val expMultiplierCache = mutableMapOf<UUID, Double>()
+private val plugin: EcoSkillsPlugin = EcoSkillsPlugin.getInstance()
 
 fun Player.getSkillExperienceMultiplier(): Double {
     if (expMultiplierCache.containsKey(this.uniqueId)) {
@@ -50,6 +50,10 @@ private fun Player.cacheSkillExperienceMultiplier(): Double {
             return ((permission.substring(permission.lastIndexOf(".") + 1).toDoubleOrNull() ?: 100.0) / 100) + 1
         }
     }
+
+    plugin.scheduler.runLater({
+        expMultiplierCache.remove(this.uniqueId)
+    }, 200)
 
     return 1.0
 }
