@@ -5,12 +5,13 @@ import com.willfp.eco.core.data.PlayerProfile
 import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.effects.Effects
-import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.stats.Stats
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import java.util.UUID
+
+private val plugin = EcoSkillsPlugin.getInstance()
 
 @Suppress("UNCHECKED_CAST", "DEPRECATED")
 class LegacyPlayerProfile private constructor(
