@@ -7,6 +7,7 @@ import com.willfp.eco.core.integrations.IntegrationLoader;
 import com.willfp.ecoskills.actionbar.ActionBarCompatChatMessage;
 import com.willfp.ecoskills.actionbar.ActionBarCompatSetActionBar;
 import com.willfp.ecoskills.actionbar.ActionBarUtils;
+import com.willfp.ecoskills.actionbar.HealthScaleListener;
 import com.willfp.ecoskills.commands.CommandEcoskills;
 import com.willfp.ecoskills.commands.CommandSkills;
 import com.willfp.ecoskills.config.EffectsYml;
@@ -121,7 +122,8 @@ public class EcoSkillsPlugin extends EcoPlugin {
                 new SkillDisplayListener(this),
                 new StatModifierListener(),
                 new DataListener(),
-                new DamageIndicatorListener(this)
+                new DamageIndicatorListener(this),
+                new HealthScaleListener(this)
         );
     }
 
