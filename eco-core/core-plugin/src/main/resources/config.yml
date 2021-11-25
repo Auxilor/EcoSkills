@@ -271,11 +271,11 @@ stats:
   defense:
     name: "&#e884b0🛡 Defense"
     # 100% halves the incoming damage
-    percent-less-damage-per-level: 1
+    percent-less-damage-per-level: 0.25
   strength:
     name: "&#db0000🗡 Strength"
     # 100% is double damage
-    percent-more-damage-per-level: 1
+    percent-more-damage-per-level: 0.25
   crit_chance:
     name: "&#f7ff85☣ Crit Chance"
     # Nothing happens above 100%, 200% is the same as it.
@@ -283,7 +283,7 @@ stats:
   crit_damage:
     name: "&9☠ Crit Damage"
     # The percent more damage to deal on crits for each level.
-    percent-more-damage-per-level: 2
+    percent-more-damage-per-level: 0.5
     # The amount more damage to deal on crits by default.
     base-percent-more: 50
   speed:
