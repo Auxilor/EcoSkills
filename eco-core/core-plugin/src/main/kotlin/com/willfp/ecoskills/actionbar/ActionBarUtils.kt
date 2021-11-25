@@ -8,7 +8,8 @@ import org.bukkit.Bukkit
 import java.util.UUID
 
 object ActionBarUtils {
-    private val blacklist = mutableSetOf<UUID>()
+    private val blacklist = mutableMapOf<UUID, Long>()
+    private val whitelist = mutableMapOf<UUID, Long>()
     private val plugin = EcoSkillsPlugin.getInstance()
 
     val ecoSkillsComponentSignature = StringUtils.toComponent(
@@ -16,18 +17,24 @@ object ActionBarUtils {
     )
 
     fun blacklist(uuid: UUID) {
-        blacklist.add(uuid)
-        plugin.scheduler.runLater({
-            unBlacklist(uuid)
-        }, 60)
+        if (isWhitelisted(uuid)) {
+            return
+        }
+        blacklist[uuid] = System.currentTimeMillis() + 3000
     }
 
-    fun unBlacklist(uuid: UUID) {
-        blacklist.remove(uuid)
+    private fun isBlacklisted(uuid: UUID): Boolean {
+        val endTime = blacklist[uuid] ?: return false
+        return endTime > System.currentTimeMillis()
     }
 
-    fun isBlacklisted(uuid: UUID): Boolean {
-        return blacklist.contains(uuid)
+    private fun whitelistTemp(uuid: UUID) {
+        whitelist[uuid] = System.currentTimeMillis() + 50
+    }
+
+    private fun isWhitelisted(uuid: UUID): Boolean {
+        val endTime = whitelist[uuid] ?: return false
+        return endTime > System.currentTimeMillis()
     }
 
     @JvmStatic
@@ -43,6 +50,7 @@ object ActionBarUtils {
                 val component = StringUtils.formatToComponent(message, player)
                     .append(ecoSkillsComponentSignature)
 
+                whitelistTemp(player.uniqueId)
                 player.spigot().sendMessage(
                     ChatMessageType.ACTION_BAR,
                     *TextComponent.fromLegacyText(StringUtils.toLegacy(component))

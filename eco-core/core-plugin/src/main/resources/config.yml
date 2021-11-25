@@ -318,7 +318,7 @@ persistent-action-bar:
   # If the persistent action bar should be enabled
   enabled: true
   # The format
-  format: "&c &f%player_health%/%player_max_health%      &#e884b0🛡 &f%ecoskills_defense% &8| &#db0000🗡 &f%ecoskills_strength%"
+  format: "&c❤ &f%player_health_rounded%/%player_max_health_rounded%      &#e884b0🛡 &f%ecoskills_defense% &8| &#db0000🗡 &f%ecoskills_strength%"
 
 commands:
   top:
