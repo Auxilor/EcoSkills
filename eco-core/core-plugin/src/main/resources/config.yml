@@ -313,6 +313,13 @@ damage-indicators:
   max-y-offset: 0.6
   max-z-offset: 0.6
 
+# A constant action bar showing health and any other information to all players online
+persistent-action-bar:
+  # If the persistent action bar should be enabled
+  enabled: true
+  # The format
+  format: "&c &f%player_health%/%player_max_health%      &#e884b0🛡 &f%ecoskills_defense% &8| &#db0000🗡 &f%ecoskills_strength%"
+
 commands:
   top:
     # If displayname (including rank) should be used

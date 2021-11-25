@@ -1,8 +1,12 @@
 package com.willfp.ecoskills;
 
+import com.willfp.eco.core.AbstractPacketAdapter;
 import com.willfp.eco.core.EcoPlugin;
 import com.willfp.eco.core.command.impl.PluginCommand;
 import com.willfp.eco.core.integrations.IntegrationLoader;
+import com.willfp.ecoskills.actionbar.ActionBarCompatChatMessage;
+import com.willfp.ecoskills.actionbar.ActionBarCompatSetActionBar;
+import com.willfp.ecoskills.actionbar.ActionBarUtils;
 import com.willfp.ecoskills.commands.CommandEcoskills;
 import com.willfp.ecoskills.commands.CommandSkills;
 import com.willfp.ecoskills.config.EffectsYml;
@@ -76,6 +80,10 @@ public class EcoSkillsPlugin extends EcoPlugin {
             this.getEventManager().registerListener(skill);
         }
 
+        if (this.getConfigYml().getBool("persistent-action-bar.enabled")) {
+            ActionBarUtils.startRunnable();
+        }
+
         this.getScheduler().runTimer(new LeaderboardHandler.Runnable(), 50, 2400);
     }
 
@@ -114,6 +122,14 @@ public class EcoSkillsPlugin extends EcoPlugin {
                 new StatModifierListener(),
                 new DataListener(),
                 new DamageIndicatorListener(this)
+        );
+    }
+
+    @Override
+    protected List<AbstractPacketAdapter> loadPacketAdapters() {
+        return Arrays.asList(
+                new ActionBarCompatChatMessage(this),
+                new ActionBarCompatSetActionBar(this)
         );
     }
 
