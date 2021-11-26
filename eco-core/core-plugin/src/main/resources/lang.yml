@@ -16,6 +16,9 @@ messages:
   invalid-amount: "&cInvalid amount!"
   gave-skill-xp: "Gave %player% %amount% %skill% experience!"
   gave-stat: "Gave %player% %amount% %stat%&r!"
+  enabled-descriptions: "&fYou have &aenabled &fthe action bar!"
+  disabled-descriptions: "&fYou have &cdisabled &fthe action bar!"
+  descriptions-disabled: "&cThe action bar disabled on this server."
 
 line-wrap-color: "&8"
 

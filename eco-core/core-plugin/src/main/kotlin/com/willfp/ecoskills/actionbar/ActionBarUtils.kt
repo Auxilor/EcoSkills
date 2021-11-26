@@ -1,7 +1,9 @@
 package com.willfp.ecoskills.actionbar
 
+import com.willfp.eco.core.data.PlayerProfile
 import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.EcoSkillsPlugin
+import com.willfp.ecoskills.commands.CommandToggleActionbar
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.Bukkit
@@ -42,6 +44,10 @@ object ActionBarUtils {
         plugin.scheduler.runTimer({
             for (player in Bukkit.getOnlinePlayers()) {
                 if (isBlacklisted(player.uniqueId)) {
+                    continue
+                }
+
+                if (!PlayerProfile.load(player).read(CommandToggleActionbar.DESCRIPTIONS_KEY)) {
                     continue
                 }
 

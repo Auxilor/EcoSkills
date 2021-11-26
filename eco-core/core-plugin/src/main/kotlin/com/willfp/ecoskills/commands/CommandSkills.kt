@@ -18,6 +18,7 @@ class CommandSkills(plugin: EcoPlugin) :
     init {
         this.addSubcommand(CommandTop(plugin))
             .addSubcommand(CommandRank(plugin))
+            .addSubcommand(CommandToggleActionbar(plugin))
     }
 
     override fun getHandler(): CommandHandler {
