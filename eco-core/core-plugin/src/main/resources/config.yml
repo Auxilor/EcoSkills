@@ -336,7 +336,7 @@ commands:
 
 # If you didn't use EcoSkills before version 1.10.0 then ignore this.
 mysql:
-  migrated: false # Internal value - DO NOT CHANGE, YOU RISK LOSING PLAYER DATA
+  migrated: true # Internal value - DO NOT CHANGE, YOU RISK LOSING PLAYER DATA
   enabled: false # Set to false, data.yml will be used instead.
   host: localhost
   port: 3306
