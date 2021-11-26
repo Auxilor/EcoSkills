@@ -13,10 +13,6 @@ import com.willfp.ecoskills.commands.CommandSkills;
 import com.willfp.ecoskills.config.EffectsYml;
 import com.willfp.ecoskills.data.DataListener;
 import com.willfp.ecoskills.data.LeaderboardHandler;
-import com.willfp.ecoskills.data.legacy.DataHandler;
-import com.willfp.ecoskills.data.legacy.LegacyPlayerProfile;
-import com.willfp.ecoskills.data.legacy.MySQLDataHandler;
-import com.willfp.ecoskills.data.legacy.YamlDataHandler;
 import com.willfp.ecoskills.effects.Effect;
 import com.willfp.ecoskills.effects.Effects;
 import com.willfp.ecoskills.integrations.EcoEnchantsEnchantingLeveller;
@@ -40,11 +36,6 @@ public class EcoSkillsPlugin extends EcoPlugin {
     private static EcoSkillsPlugin instance;
 
     /**
-     * data.yml.
-     */
-    private final DataHandler dataHandler;
-
-    /**
      * effects.yml.
      */
     private final EffectsYml effectsYml;
@@ -56,13 +47,10 @@ public class EcoSkillsPlugin extends EcoPlugin {
         super(1351, 13052, "&#ff00ae", true);
         instance = this;
         effectsYml = new EffectsYml(this);
-        dataHandler = this.getConfigYml().getBool("mysql.enabled")
-                ? new MySQLDataHandler(this) : new YamlDataHandler(this);
     }
 
     @Override
     protected void handleEnable() {
-        LegacyPlayerProfile.Companion.migrateAll();
         Skills.update();
     }
 
@@ -86,15 +74,6 @@ public class EcoSkillsPlugin extends EcoPlugin {
         }
 
         this.getScheduler().runTimer(new LeaderboardHandler.Runnable(), 50, 2400);
-    }
-
-    /**
-     * Get data handler.
-     *
-     * @return data handler.
-     */
-    public DataHandler getDataHandler() {
-        return dataHandler;
     }
 
     /**
@@ -152,6 +131,6 @@ public class EcoSkillsPlugin extends EcoPlugin {
 
     @Override
     public String getMinimumEcoVersion() {
-        return "6.6.0";
+        return "6.13.10";
     }
 }
