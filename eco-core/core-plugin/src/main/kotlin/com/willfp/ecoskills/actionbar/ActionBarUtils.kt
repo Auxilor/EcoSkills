@@ -7,7 +7,8 @@ import com.willfp.ecoskills.commands.CommandToggleActionbar
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.Bukkit
-import java.util.UUID
+import org.bukkit.GameMode
+import java.util.*
 
 object ActionBarUtils {
     private val blacklist = mutableMapOf<UUID, Long>()
@@ -48,6 +49,10 @@ object ActionBarUtils {
                 }
 
                 if (!PlayerProfile.load(player).read(CommandToggleActionbar.DESCRIPTIONS_KEY)) {
+                    continue
+                }
+
+                if (player.gameMode == GameMode.CREATIVE || player.gameMode == GameMode.SPECTATOR) {
                     continue
                 }
 
