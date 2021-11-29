@@ -10,6 +10,7 @@ depend:
   - PlaceholderAPI
 softdepend:
   - EcoEnchants
+  - ItemsAdder
 libraries:
   - 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
 
