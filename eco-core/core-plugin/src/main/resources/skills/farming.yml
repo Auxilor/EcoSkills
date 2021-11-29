@@ -73,7 +73,8 @@ rewards:
 # Specify with type:xp
 xp-rewards:
   - "wheat:4"
-  - "potato:4"
+  - "potatoes:5"
+  - "beetroots:5"
   - "carrots:4"
   - "melon:4"
   - "pumpkin:4.5"
