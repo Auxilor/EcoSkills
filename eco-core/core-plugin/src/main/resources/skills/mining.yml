@@ -116,3 +116,9 @@ xp-rewards:
   - "diamond_ore:10"
   - "deepslate_diamond_ore:15"
   - "ancient_debris:22"
+
+# Same as xp-rewards, but for ItemsAdder custom blocks.
+# namespace.name:xp
+xp-rewards-ia:
+  - "itemsadder.ruby_ore:25"
+  - "itemsadder.amethyst_ore:25"
