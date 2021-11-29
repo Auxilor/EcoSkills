@@ -4,15 +4,13 @@ import com.willfp.eco.core.integrations.afk.AFKManager
 import com.willfp.eco.util.BlockUtils
 import com.willfp.ecoskills.giveSkillExperience
 import com.willfp.ecoskills.skills.Skill
-import dev.lone.itemsadder.api.CustomBlock
 import dev.lone.itemsadder.api.Events.CustomBlockBreakEvent
-import dev.lone.itemsadder.api.ItemsAdder
 import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.block.BlockBreakEvent
-import java.util.*
+import java.util.EnumMap
 
 class SkillMining : Skill(
     "mining"
