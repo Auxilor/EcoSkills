@@ -21,7 +21,6 @@ class SkillMining : Skill(
         val iarewards: MutableMap<String, Double> = mutableMapOf()
     }
 
-
     init {
         rewards = EnumMap(Material::class.java)
     }
@@ -53,6 +52,28 @@ class SkillMining : Skill(
         val toGive = rewards[type] ?: return
 
         if (BlockUtils.isPlayerPlaced(event.block)) {
+            return
+        }
+
+        if (plugin.configYml.getBool("skills.prevent-levelling-while-afk") && AFKManager.isAfk(player)) {
+            return
+        }
+
+        player.giveSkillExperience(this, toGive)
+    }
+
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
+    fun handleLevelling(event: CustomBlockBreakEvent){
+        val type = event.namespacedID
+        val player = event.player
+
+        if(player.gameMode == GameMode.CREATIVE || player.gameMode == GameMode.SPECTATOR){
+            return
+        }
+
+        val toGive = iarewards[type] ?: return
+
+        if(BlockUtils.isPlayerPlaced(event.block)){
             return
         }
 
