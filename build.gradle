@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.0"
     }
 }
 
@@ -46,7 +46,7 @@ allprojects {
 
 
         compileOnly 'org.jetbrains:annotations:19.0.0'
-        compileOnly 'org.jetbrains.kotlin:kotlin-stdlib:1.5.21'
+        compileOnly 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
     }
 
     tasks.withType(JavaCompile) {
@@ -56,7 +56,7 @@ allprojects {
 
     tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
         kotlinOptions {
-            jvmTarget = "16"
+            jvmTarget = "17"
         }
     }
 
@@ -91,7 +91,7 @@ jar {
 group = 'com.willfp'
 archivesBaseName = project.name
 version = findProperty("version")
-java.sourceCompatibility = JavaVersion.VERSION_16
+java.sourceCompatibility = JavaVersion.VERSION_17
 
 compileJava.options.encoding = 'UTF-8'
 
