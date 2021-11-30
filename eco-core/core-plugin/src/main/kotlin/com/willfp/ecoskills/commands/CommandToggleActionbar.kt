@@ -7,6 +7,8 @@ import com.willfp.eco.core.data.PlayerProfile
 import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.eco.core.data.keys.PersistentDataKeyType
 import com.willfp.eco.util.NamespacedKeyUtils
+import net.md_5.bungee.api.ChatMessageType
+import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
@@ -32,6 +34,7 @@ class CommandToggleActionbar(plugin: EcoPlugin) : Subcommand(
             if (currentStatus) {
                 player.sendMessage(plugin.langYml.getMessage("enabled-actionbar"))
             } else {
+                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, *TextComponent.fromLegacyText(""))
                 player.sendMessage(plugin.langYml.getMessage("disabled-actionbar"))
             }
         }
