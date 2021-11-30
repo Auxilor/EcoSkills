@@ -47,7 +47,7 @@ class EffectGoldenYield: Effect(
         if (NumberUtils.randFloat(0.0, 100.0) < chance) {
             for (i in 1..this.config.getInt("drop-multiplier")) {
                 DropQueue(player)
-                    .addItems(*event.items.map { item -> item.itemStack })
+                    .addItems(event.items.map { item -> item.itemStack })
                     .push()
             }
         }

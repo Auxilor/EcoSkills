@@ -83,7 +83,7 @@ class EffectMasterLumberjack : Effect(
         }
 
         DropQueue(player)
-            .addItems(*dropEvent.items.map { it.itemStack })
+            .addItems(dropEvent.items.map { it.itemStack })
             .push()
     }
 
