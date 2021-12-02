@@ -42,7 +42,7 @@ allprojects {
 
     dependencies {
         compileOnly 'com.willfp:eco:6.12.1'
-        compileOnly 'com.github.loneDev6:API-ItemsAdder:2.4.21'
+
         compileOnly fileTree(dir: '../../lib', include: ['*.jar'])
 
 

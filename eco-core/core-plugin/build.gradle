@@ -8,6 +8,7 @@ dependencies {
     compileOnly 'com.willfp:EcoEnchants:8.2.0'
     compileOnly 'net.kyori:adventure-api:4.9.2'
     compileOnly 'net.essentialsx:EssentialsX:2.19.0'
+    compileOnly 'com.github.loneDev6:API-ItemsAdder:2.4.21'
 }
 
 build.dependsOn publishToMavenLocal
