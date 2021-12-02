@@ -21,7 +21,14 @@ public class PlayerStatModifier implements StatModifier {
     private final int amount;
 
     /**
+     * The operation.
+     */
+    private final ModifierOperation operation;
+
+    /**
      * Create a stat modifier.
+     * <p>
+     * Uses {@link ModifierOperation#ADD}.
      *
      * @param key    The key.
      * @param stat   The stat.
@@ -30,9 +37,25 @@ public class PlayerStatModifier implements StatModifier {
     public PlayerStatModifier(@NotNull final NamespacedKey key,
                               @NotNull final Stat stat,
                               final int amount) {
+        this(key, stat, amount, ModifierOperation.ADD);
+    }
+
+    /**
+     * Create a stat modifier.
+     *
+     * @param key       The key.
+     * @param stat      The stat.
+     * @param amount    The amount.
+     * @param operation The operation.
+     */
+    public PlayerStatModifier(@NotNull final NamespacedKey key,
+                              @NotNull final Stat stat,
+                              final int amount,
+                              @NotNull final ModifierOperation operation) {
         this.key = key;
         this.stat = stat;
         this.amount = amount;
+        this.operation = operation;
     }
 
     @Override
@@ -48,5 +71,10 @@ public class PlayerStatModifier implements StatModifier {
     @Override
     public int getAmount() {
         return amount;
+    }
+
+    @Override
+    public ModifierOperation getOperation() {
+        return operation;
     }
 }

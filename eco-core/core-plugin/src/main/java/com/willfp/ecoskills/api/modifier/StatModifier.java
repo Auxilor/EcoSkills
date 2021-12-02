@@ -24,4 +24,11 @@ public interface StatModifier {
      * @return The amount.
      */
     int getAmount();
+
+    /**
+     * Get the operation.
+     *
+     * @return The operation.
+     */
+    ModifierOperation getOperation();
 }

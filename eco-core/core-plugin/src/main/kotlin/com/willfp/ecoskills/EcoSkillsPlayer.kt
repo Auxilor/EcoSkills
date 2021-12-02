@@ -3,6 +3,7 @@ package com.willfp.ecoskills
 import com.willfp.eco.core.data.PlayerProfile
 import com.willfp.ecoskills.api.PlayerSkillExpGainEvent
 import com.willfp.ecoskills.api.PlayerSkillLevelUpEvent
+import com.willfp.ecoskills.api.modifier.ModifierOperation
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.skills.Skills
@@ -144,7 +145,16 @@ fun Player.getBonusStatLevel(stat: Stat): Int {
     var i = 0
     for (modifier in this.getStatModifiers()) {
         if (modifier.stat == stat) {
-            i += modifier.amount
+            if (modifier.operation == ModifierOperation.ADD) {
+                i += modifier.amount
+            }
+        }
+    }
+    for (modifier in this.getStatModifiers()) {
+        if (modifier.stat == stat) {
+            if (modifier.operation == ModifierOperation.MULTIPLY) {
+                i *= modifier.amount
+            }
         }
     }
     return i

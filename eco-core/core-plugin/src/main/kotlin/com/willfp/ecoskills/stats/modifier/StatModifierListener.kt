@@ -23,7 +23,7 @@ class StatModifierListener : Listener {
         val newMods = new?.getStatModifiers() ?: HashSet()
 
         for (oldMod in oldMods) {
-            player.removeStatModifier(oldMod)
+            player.removeStatModifier(oldMod.key)
         }
         for (newMod in newMods) {
             if (newMod.slots.contains(EquipmentSlot.HAND)) {
@@ -40,10 +40,10 @@ class StatModifierListener : Listener {
         val mainhandMods = event.mainHandItem?.getStatModifiers() ?: HashSet()
 
         for (offhandMod in offhandMods) {
-            player.removeStatModifier(offhandMod)
+            player.removeStatModifier(offhandMod.key)
         }
         for (mainhandMod in mainhandMods) {
-            player.removeStatModifier(mainhandMod)
+            player.removeStatModifier(mainhandMod.key)
         }
 
         for (mod in offhandMods) {
@@ -67,7 +67,7 @@ class StatModifierListener : Listener {
             }
             val mods = itemStack.getStatModifiers()
             for (mod in mods) {
-                event.player.removeStatModifier(mod)
+                event.player.removeStatModifier(mod.key)
             }
         }
         for (itemStack in event.after) {

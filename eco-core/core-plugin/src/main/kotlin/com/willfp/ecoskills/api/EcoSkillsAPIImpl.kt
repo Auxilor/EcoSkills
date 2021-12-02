@@ -72,7 +72,11 @@ object EcoSkillsAPIImpl : EcoSkillsAPI {
     }
 
     override fun removeStatModifier(itemStack: ItemStack, modifier: ItemStatModifier) {
-        itemStack.removeStatModifier(modifier)
+        itemStack.removeStatModifier(modifier.key)
+    }
+
+    override fun removeStatModifier(itemStack: ItemStack, key: NamespacedKey) {
+        itemStack.removeStatModifier(key)
     }
 
     override fun addStatModifier(player: Player, modifier: PlayerStatModifier) {
@@ -80,7 +84,11 @@ object EcoSkillsAPIImpl : EcoSkillsAPI {
     }
 
     override fun removeStatModifier(player: Player, modifier: PlayerStatModifier) {
-        player.removeStatModifier(modifier)
+        player.removeStatModifier(modifier.key)
+    }
+
+    override fun removeStatModifier(player: Player, key: NamespacedKey) {
+        player.removeStatModifier(key)
     }
 
     override fun getStatModifierKeys(itemStack: ItemStack): MutableSet<NamespacedKey> {

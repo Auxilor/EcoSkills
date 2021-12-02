@@ -154,6 +154,15 @@ public interface EcoSkillsAPI {
                             @NotNull ItemStatModifier modifier);
 
     /**
+     * Remove a stat modifier from an item.
+     *
+     * @param itemStack The item.
+     * @param key       The key.
+     */
+    void removeStatModifier(@NotNull ItemStack itemStack,
+                            @NotNull NamespacedKey key);
+
+    /**
      * Get stat modifier keys on an item.
      *
      * @param itemStack The item.
@@ -197,6 +206,15 @@ public interface EcoSkillsAPI {
      */
     void removeStatModifier(@NotNull Player player,
                             @NotNull PlayerStatModifier modifier);
+
+    /**
+     * Remove a stat modifier from a player.
+     *
+     * @param player The player.
+     * @param key    The key.
+     */
+    void removeStatModifier(@NotNull Player player,
+                            @NotNull NamespacedKey key);
 
     /**
      * Get stat modifier keys on a player.

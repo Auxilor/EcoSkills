@@ -2,6 +2,7 @@ package com.willfp.ecoskills
 
 import com.willfp.eco.util.NamespacedKeyUtils
 import com.willfp.ecoskills.api.modifier.ItemStatModifier
+import com.willfp.ecoskills.api.modifier.ModifierOperation
 import com.willfp.ecoskills.api.modifier.PlayerStatModifier
 import com.willfp.ecoskills.api.modifier.StatModifier
 import com.willfp.ecoskills.stats.Stats
@@ -23,6 +24,7 @@ private val modifierKey: NamespacedKey = NamespacedKeyUtils.create("ecoskills", 
 private val statKey: NamespacedKey = NamespacedKeyUtils.create("ecoskills", "stat")
 private val amountKey: NamespacedKey = NamespacedKeyUtils.create("ecoskills", "amount")
 private val slotsKey: NamespacedKey = NamespacedKeyUtils.create("ecoskills", "slots")
+private val operationKey: NamespacedKey = NamespacedKeyUtils.create("ecoskills", "operation")
 
 private fun PersistentDataContainer.applyModifiers(tag: PersistentDataContainer) {
     this.set(modifierKey, PersistentDataType.TAG_CONTAINER, tag)
@@ -48,7 +50,6 @@ fun ItemStack.addStatModifier(modifier: ItemStatModifier) {
         slotsKey,
         PersistentDataType.STRING,
         modifier.slots.map { slot -> slot.name }.toTypedArray().joinToString { "," })
-
     modifiers.set(modifier.key, PersistentDataType.TAG_CONTAINER, modifierTag)
 
     meta.persistentDataContainer.applyModifiers(modifiers)
@@ -56,11 +57,11 @@ fun ItemStack.addStatModifier(modifier: ItemStatModifier) {
     this.itemMeta = meta
 }
 
-fun ItemStack.removeStatModifier(modifier: ItemStatModifier) {
+fun ItemStack.removeStatModifier(key: NamespacedKey) {
     val meta = this.itemMeta ?: return
     val modifiers = getModifiersTag(meta)
 
-    modifiers.remove(modifier.key)
+    modifiers.remove(key)
 
     meta.persistentDataContainer.applyModifiers(modifiers)
 
@@ -96,8 +97,9 @@ fun ItemStack.getStatModifier(key: NamespacedKey): ItemStatModifier? {
         val slots = modifierTag.get(slotsKey, PersistentDataType.STRING)!!.split(",")
             .map { s -> EquipmentSlot.valueOf(s) }
             .toCollection(ArrayList())
+        val operation = ModifierOperation.valueOf(modifierTag.get(operationKey, PersistentDataType.STRING)!!)
 
-        ItemStatModifier(key, stat, amount, *slots.toTypedArray())
+        ItemStatModifier(key, stat, amount, operation, *slots.toTypedArray())
     } else {
         null
     }
@@ -110,6 +112,7 @@ Player Modifiers
 private const val META_MODIFIERS = "ecoskills_modifiers"
 private const val META_STAT_KEY = "stat"
 private const val META_AMOUNT_KEY = "amount"
+private const val META_OPERATION_KEY = "operation"
 
 private fun Player.applyModifiers(meta: MutableMap<String, Any>) {
     this.setMetadata(META_MODIFIERS, plugin.metadataValueFactory.create(meta))
@@ -125,7 +128,8 @@ fun Player.addStatModifier(modifier: StatModifier) {
 
     modifiers[modifier.key.toString()] = mapOf(
         Pair(META_STAT_KEY, modifier.stat.id),
-        Pair(META_AMOUNT_KEY, modifier.amount)
+        Pair(META_AMOUNT_KEY, modifier.amount),
+        Pair(META_OPERATION_KEY, modifier.operation.name)
     )
 
     this.applyModifiers(modifiers)
@@ -135,10 +139,10 @@ fun Player.addStatModifier(modifier: StatModifier) {
     }
 }
 
-fun Player.removeStatModifier(modifier: StatModifier) {
+fun Player.removeStatModifier(key: NamespacedKey) {
     val modifiers = getModifiersTag(this)
 
-    modifiers.remove(modifier.key.toString())
+    modifiers.remove(key.toString())
 
     this.applyModifiers(modifiers)
 
@@ -171,8 +175,9 @@ fun Player.getStatModifier(key: NamespacedKey): PlayerStatModifier? {
 
         val stat = Stats.getByID(modifier[META_STAT_KEY] as String)!!
         val amount = modifier[META_AMOUNT_KEY] as Int
+        val operation = ModifierOperation.valueOf(modifier[META_OPERATION_KEY] as String)
 
-        PlayerStatModifier(key, stat, amount)
+        PlayerStatModifier(key, stat, amount, operation)
     } else {
         null
     }

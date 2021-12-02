@@ -27,7 +27,14 @@ public class ItemStatModifier implements StatModifier {
     private final EquipmentSlot[] slots;
 
     /**
+     * The operation.
+     */
+    private final ModifierOperation operation;
+
+    /**
      * Create a stat modifier.
+     * <p>
+     * Uses {@link ModifierOperation#ADD}.
      *
      * @param key    The key.
      * @param stat   The stat.
@@ -38,9 +45,27 @@ public class ItemStatModifier implements StatModifier {
                             @NotNull final Stat stat,
                             final int amount,
                             @NotNull final EquipmentSlot... slot) {
+        this(key, stat, amount, ModifierOperation.ADD, slot);
+    }
+
+    /**
+     * Create a stat modifier.
+     *
+     * @param key       The key.
+     * @param stat      The stat.
+     * @param amount    The amount.
+     * @param operation The operation.
+     * @param slot      The slots. (Empty is the same as all).
+     */
+    public ItemStatModifier(@NotNull final NamespacedKey key,
+                            @NotNull final Stat stat,
+                            final int amount,
+                            @NotNull final ModifierOperation operation,
+                            @NotNull final EquipmentSlot... slot) {
         this.key = key;
         this.stat = stat;
         this.amount = amount;
+        this.operation = operation;
         this.slots = slot.length == 0 ? EquipmentSlot.values() : slot;
     }
 
@@ -66,5 +91,10 @@ public class ItemStatModifier implements StatModifier {
      */
     public EquipmentSlot[] getSlots() {
         return slots;
+    }
+
+    @Override
+    public ModifierOperation getOperation() {
+        return operation;
     }
 }
