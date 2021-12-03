@@ -142,7 +142,7 @@ fun OfflinePlayer.getStatLevel(stat: Stat): Int {
 }
 
 fun Player.getBonusStatLevel(stat: Stat): Int {
-    var i = 0
+    var i = 0.0
     for (modifier in this.getStatModifiers()) {
         if (modifier.stat == stat) {
             if (modifier.operation == ModifierOperation.ADD) {
@@ -157,7 +157,7 @@ fun Player.getBonusStatLevel(stat: Stat): Int {
             }
         }
     }
-    return i
+    return i.toInt()
 }
 
 fun OfflinePlayer.getBaseStatLevel(stat: Stat): Int {

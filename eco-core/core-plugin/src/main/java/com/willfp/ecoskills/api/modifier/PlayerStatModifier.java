@@ -18,7 +18,7 @@ public class PlayerStatModifier implements StatModifier {
     /**
      * The amount.
      */
-    private final int amount;
+    private final double amount;
 
     /**
      * The operation.
@@ -50,7 +50,7 @@ public class PlayerStatModifier implements StatModifier {
      */
     public PlayerStatModifier(@NotNull final NamespacedKey key,
                               @NotNull final Stat stat,
-                              final int amount,
+                              final double amount,
                               @NotNull final ModifierOperation operation) {
         this.key = key;
         this.stat = stat;
@@ -69,7 +69,7 @@ public class PlayerStatModifier implements StatModifier {
     }
 
     @Override
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 

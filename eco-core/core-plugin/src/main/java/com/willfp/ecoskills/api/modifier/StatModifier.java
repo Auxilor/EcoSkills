@@ -23,7 +23,7 @@ public interface StatModifier {
      *
      * @return The amount.
      */
-    int getAmount();
+    double getAmount();
 
     /**
      * Get the operation.

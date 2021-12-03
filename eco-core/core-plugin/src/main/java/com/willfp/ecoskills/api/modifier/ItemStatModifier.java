@@ -19,7 +19,7 @@ public class ItemStatModifier implements StatModifier {
     /**
      * The amount.
      */
-    private final int amount;
+    private final double amount;
 
     /**
      * The slots.
@@ -59,7 +59,7 @@ public class ItemStatModifier implements StatModifier {
      */
     public ItemStatModifier(@NotNull final NamespacedKey key,
                             @NotNull final Stat stat,
-                            final int amount,
+                            final double amount,
                             @NotNull final ModifierOperation operation,
                             @NotNull final EquipmentSlot... slot) {
         this.key = key;
@@ -80,7 +80,7 @@ public class ItemStatModifier implements StatModifier {
     }
 
     @Override
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
