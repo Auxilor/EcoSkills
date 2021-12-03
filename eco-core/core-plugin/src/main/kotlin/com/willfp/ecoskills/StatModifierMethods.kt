@@ -45,7 +45,7 @@ fun ItemStack.addStatModifier(modifier: ItemStatModifier) {
     val modifierTag = modifiers.adapterContext.newPersistentDataContainer()
 
     modifierTag.set(statKey, PersistentDataType.STRING, modifier.stat.id)
-    modifierTag.set(amountKey, PersistentDataType.INTEGER, modifier.amount)
+    modifierTag.set(amountKey, PersistentDataType.DOUBLE, modifier.amount)
     modifierTag.set(
         slotsKey,
         PersistentDataType.STRING,
@@ -93,7 +93,7 @@ fun ItemStack.getStatModifier(key: NamespacedKey): ItemStatModifier? {
         val modifierTag = modifiers.get(key, PersistentDataType.TAG_CONTAINER)!!
 
         val stat = Stats.getByID(modifierTag.get(statKey, PersistentDataType.STRING)!!)!!
-        val amount = modifierTag.get(amountKey, PersistentDataType.INTEGER)!!
+        val amount = modifierTag.get(amountKey, PersistentDataType.DOUBLE)!!
         val slots = modifierTag.get(slotsKey, PersistentDataType.STRING)!!.split(",")
             .map { s -> EquipmentSlot.valueOf(s) }
             .toCollection(ArrayList())
@@ -174,7 +174,7 @@ fun Player.getStatModifier(key: NamespacedKey): PlayerStatModifier? {
         val modifier = modifiers[key.toString()] as Map<String, Any>
 
         val stat = Stats.getByID(modifier[META_STAT_KEY] as String)!!
-        val amount = modifier[META_AMOUNT_KEY] as Int
+        val amount = modifier[META_AMOUNT_KEY] as Double
         val operation = ModifierOperation.valueOf(modifier[META_OPERATION_KEY] as String)
 
         PlayerStatModifier(key, stat, amount, operation)
