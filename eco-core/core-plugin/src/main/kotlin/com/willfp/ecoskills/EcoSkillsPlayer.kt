@@ -171,10 +171,7 @@ fun Player.setStatLevel(stat: Stat, level: Int) {
 
 fun Entity.tryAsPlayer(): Player? {
     return when (this) {
-        is Projectile -> {
-            val shooter = this.shooter
-            if (shooter is Player) shooter else null
-        }
+        is Projectile -> this.shooter as? Player
         is Player -> this
         else -> null
     }
