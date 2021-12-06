@@ -323,6 +323,11 @@ persistent-action-bar:
   scale-health: true
   # The format
   format: "&c❤ &f%player_health_rounded%&8/&f%player_max_health_rounded%                 &#e884b0🛡 &f%ecoskills_defense% &8| &#db0000🗡 &f%ecoskills_strength% &8| &#40ffe6✦ &f%ecoskills_speed%"
+  # Time from blacklist -> unblacklist (in milliseconds). Action bar messages are 2000 + 1000 fade,
+  # you can set it to a lower value to last for less of the fade.
+  reset-time: 3000
+  # Time between action bar updates (in ticks).
+  update-time: 5
 
 commands:
   top:

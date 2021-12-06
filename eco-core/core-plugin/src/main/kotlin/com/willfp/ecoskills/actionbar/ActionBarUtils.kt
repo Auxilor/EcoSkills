@@ -8,7 +8,7 @@ import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
-import java.util.*
+import java.util.UUID
 
 object ActionBarUtils {
     private val blacklist = mutableMapOf<UUID, Long>()
@@ -23,7 +23,7 @@ object ActionBarUtils {
         if (isWhitelisted(uuid)) {
             return
         }
-        blacklist[uuid] = System.currentTimeMillis() + 3000
+        blacklist[uuid] = System.currentTimeMillis() + plugin.configYml.getInt("persistent-action-bar.reset-time")
     }
 
     private fun isBlacklisted(uuid: UUID): Boolean {
@@ -42,31 +42,35 @@ object ActionBarUtils {
 
     @JvmStatic
     fun startRunnable() {
-        plugin.scheduler.runTimer({
-            for (player in Bukkit.getOnlinePlayers()) {
-                if (isBlacklisted(player.uniqueId)) {
-                    continue
+        plugin.scheduler.runTimer(
+            {
+                for (player in Bukkit.getOnlinePlayers()) {
+                    if (isBlacklisted(player.uniqueId)) {
+                        continue
+                    }
+
+                    if (!PlayerProfile.load(player).read(CommandToggleActionbar.DESCRIPTIONS_KEY)) {
+                        continue
+                    }
+
+                    if (player.gameMode == GameMode.CREATIVE || player.gameMode == GameMode.SPECTATOR) {
+                        continue
+                    }
+
+                    val message = plugin.configYml
+                        .getString("persistent-action-bar.format", false)
+                    val component = StringUtils.formatToComponent(message, player)
+                        .append(ecoSkillsComponentSignature)
+
+                    whitelistTemp(player.uniqueId)
+                    player.spigot().sendMessage(
+                        ChatMessageType.ACTION_BAR,
+                        *TextComponent.fromLegacyText(StringUtils.toLegacy(component))
+                    )
                 }
-
-                if (!PlayerProfile.load(player).read(CommandToggleActionbar.DESCRIPTIONS_KEY)) {
-                    continue
-                }
-
-                if (player.gameMode == GameMode.CREATIVE || player.gameMode == GameMode.SPECTATOR) {
-                    continue
-                }
-
-                val message = plugin.configYml
-                    .getString("persistent-action-bar.format", false)
-                val component = StringUtils.formatToComponent(message, player)
-                    .append(ecoSkillsComponentSignature)
-
-                whitelistTemp(player.uniqueId)
-                player.spigot().sendMessage(
-                    ChatMessageType.ACTION_BAR,
-                    *TextComponent.fromLegacyText(StringUtils.toLegacy(component))
-                )
-            }
-        }, 5, 5)
+            },
+            plugin.configYml.getInt("persistent-action-bar.update-time").toLong(),
+            plugin.configYml.getInt("persistent-action-bar.update-time").toLong()
+        )
     }
 }
