@@ -8,16 +8,12 @@ import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
-import java.util.UUID
+import java.util.*
 
 object ActionBarUtils {
     private val blacklist = mutableMapOf<UUID, Long>()
     private val whitelist = mutableMapOf<UUID, Long>()
     private val plugin = EcoSkillsPlugin.getInstance()
-
-    val ecoSkillsComponentSignature = StringUtils.toComponent(
-        "§t" // Literally a random character
-    )
 
     fun blacklist(uuid: UUID) {
         if (isWhitelisted(uuid)) {
@@ -59,13 +55,12 @@ object ActionBarUtils {
 
                     val message = plugin.configYml
                         .getString("persistent-action-bar.format", false)
-                    val component = StringUtils.formatToComponent(message, player)
-                        .append(ecoSkillsComponentSignature)
+                    val component = StringUtils.format(message, player)
 
                     whitelistTemp(player.uniqueId)
                     player.spigot().sendMessage(
                         ChatMessageType.ACTION_BAR,
-                        *TextComponent.fromLegacyText(StringUtils.toLegacy(component))
+                        *TextComponent.fromLegacyText(component)
                     )
                 }
             },
