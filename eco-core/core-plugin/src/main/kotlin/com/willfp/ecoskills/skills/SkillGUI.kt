@@ -279,7 +279,7 @@ class SkillGUI(
                     page--
                     menu.writeData(player, pageKey, PersistentDataType.INTEGER, page)
                     if (page == 0) {
-                        SkillGUI.getHomeMenu().open(event.whoClicked as Player)
+                        SkillGUI.homeMenu.open(event.whoClicked as Player)
                     }
                 }.build()
             )

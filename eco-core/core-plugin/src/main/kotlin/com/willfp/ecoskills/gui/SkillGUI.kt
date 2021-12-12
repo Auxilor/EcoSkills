@@ -1,120 +1,91 @@
-package com.willfp.ecoskills.gui;
+package com.willfp.ecoskills.gui
 
-import com.willfp.eco.core.config.updating.ConfigUpdater;
-import com.willfp.eco.core.gui.menu.Menu;
-import com.willfp.eco.core.gui.slot.FillerMask;
-import com.willfp.eco.core.gui.slot.MaskMaterials;
-import com.willfp.eco.core.gui.slot.Slot;
-import com.willfp.eco.core.items.Items;
-import com.willfp.eco.core.items.builder.ItemStackBuilder;
-import com.willfp.eco.core.items.builder.SkullBuilder;
-import com.willfp.eco.util.StringUtils;
-import com.willfp.ecoskills.EcoSkillsPlugin;
-import com.willfp.ecoskills.skills.Skill;
-import com.willfp.ecoskills.skills.Skills;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
-import org.jetbrains.annotations.NotNull;
+import com.willfp.eco.core.config.updating.ConfigUpdater
+import com.willfp.eco.core.gui.menu.Menu
+import com.willfp.eco.core.gui.slot.FillerMask
+import com.willfp.eco.core.gui.slot.MaskMaterials
+import com.willfp.eco.core.gui.slot.Slot
+import com.willfp.eco.core.items.Items
+import com.willfp.eco.core.items.builder.ItemStackBuilder
+import com.willfp.eco.core.items.builder.SkullBuilder
+import com.willfp.eco.util.StringUtils
+import com.willfp.ecoskills.EcoSkillsPlugin
+import com.willfp.ecoskills.skills.Skills
+import org.bukkit.Material
+import org.bukkit.entity.Player
+import org.bukkit.inventory.meta.SkullMeta
+import java.util.Locale
+import java.util.function.Function
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.function.Function;
+object SkillGUI {
+    lateinit var homeMenu: Menu
 
-public class SkillGUI {
-    /**
-     * The home menu.
-     */
-    private static Menu homeMenu;
-
-    /**
-     * Get the home menu.
-     *
-     * @return The home menu.
-     */
-    public static Menu getHomeMenu() {
-        return homeMenu;
-    }
-
-    /**
-     * Update the menus.
-     *
-     * @param plugin The plugin.
-     */
     @ConfigUpdater
-    public static void update(@NotNull final EcoSkillsPlugin plugin) {
-        homeMenu = buildHomeMenu(plugin);
+    fun update(plugin: EcoSkillsPlugin) {
+        homeMenu = buildHomeMenu(plugin)
     }
 
-    private static Menu buildHomeMenu(@NotNull final EcoSkillsPlugin plugin) {
-        String[] maskPattern = plugin.getConfigYml().getStrings("gui.mask.pattern", false).toArray(new String[0]);
-        Material[] maskMaterials = plugin.getConfigYml()
-                .getStrings("gui.mask.materials", false)
-                .stream()
-                .map(string -> Material.getMaterial(string.toUpperCase()))
-                .filter(Objects::nonNull)
-                .toArray(Material[]::new);
-
-
-        ItemStack closeItem = Items.lookup(plugin.getConfigYml().getString("gui.close.material", false)).getItem();
-
-        Function<Player, ItemStack> playerHeadItemBuilder = player -> {
-            ItemStack itemStack = new SkullBuilder()
-                    .setDisplayName(StringUtils.format(plugin.getConfigYml().getString("gui.player-info.name", false).replace("%player%", player.getDisplayName()), player))
-                    .addLoreLines(() -> {
-                        List<String> lore = new ArrayList<>();
-
-                        for (String string : plugin.getConfigYml().getStrings("gui.player-info.lore", false)) {
-                            lore.add(StringUtils.format(string, player));
-                        }
-
-                        return lore;
-                    })
-                    .build();
-            SkullMeta meta = (SkullMeta) itemStack.getItemMeta();
-            assert meta != null;
-            meta.setOwningPlayer(player);
-            itemStack.setItemMeta(meta);
-
-            return itemStack;
-        };
-
-        return Menu.builder(plugin.getConfigYml().getInt("gui.rows"))
-                .setTitle(plugin.getLangYml().getString("menu.title"))
-                .setMask(
-                        new FillerMask(
-                                new MaskMaterials(
-                                        maskMaterials
-                                ),
-                                maskPattern
-                        )
+    private fun buildHomeMenu(plugin: EcoSkillsPlugin): Menu {
+        val maskPattern = plugin.configYml.getStrings("gui.mask.pattern", false).toTypedArray()
+        val maskMaterials = plugin.configYml
+            .getStrings("gui.mask.materials", false)
+            .mapNotNull { Material.getMaterial(it.uppercase(Locale.getDefault())) }
+            .toTypedArray()
+        val closeItem = Items.lookup(plugin.configYml.getString("gui.close.material", false)).item
+        val playerHeadItemBuilder = Function { player: Player ->
+            val itemStack = SkullBuilder()
+                .setDisplayName(
+                    StringUtils.format(
+                        plugin.configYml.getString("gui.player-info.name", false)
+                            .replace("%player%", player.displayName), player
+                    )
                 )
-                .setSlot(
-                        plugin.getConfigYml().getInt("gui.player-info.row"),
-                        plugin.getConfigYml().getInt("gui.player-info.column"),
-                        Slot.builder(playerHeadItemBuilder).build()
-                )
-                .modfiy(menuBuilder -> {
-                    for (Skill skill : Skills.values()) {
-                        menuBuilder.setSlot(
-                                skill.getConfig().getInt("gui.position.row"),
-                                skill.getConfig().getInt("gui.position.column"),
-                                skill.getGui().getSlot()
-                        );
+                .addLoreLines {
+                    val lore: MutableList<String> = ArrayList()
+                    for (string in plugin.configYml.getStrings("gui.player-info.lore", false)) {
+                        lore.add(StringUtils.format(string!!, player))
                     }
-                })
-                .setSlot(plugin.getConfigYml().getInt("gui.close.location.row"),
-                        plugin.getConfigYml().getInt("gui.close.location.column"),
-                        Slot.builder(
-                                new ItemStackBuilder(closeItem)
-                                        .setDisplayName(plugin.getConfigYml().getString("gui.close.name"))
-                                        .build()
-                        ).onLeftClick((event, slot) -> {
-                            event.getWhoClicked().closeInventory();
-                        }).build()
+                    lore
+                }
+                .build()
+            val meta = itemStack.itemMeta as SkullMeta
+            meta.owningPlayer = player
+            itemStack.itemMeta = meta
+            itemStack
+        }
+        return Menu.builder(plugin.configYml.getInt("gui.rows"))
+            .setTitle(plugin.langYml.getString("menu.title"))
+            .setMask(
+                FillerMask(
+                    MaskMaterials(
+                        *maskMaterials
+                    ),
+                    *maskPattern
                 )
-                .build();
+            )
+            .setSlot(
+                plugin.configYml.getInt("gui.player-info.row"),
+                plugin.configYml.getInt("gui.player-info.column"),
+                Slot.builder(playerHeadItemBuilder).build()
+            )
+            .modfiy { menuBuilder ->
+                for (skill in Skills.values()) {
+                    menuBuilder.setSlot(
+                        skill.config.getInt("gui.position.row"),
+                        skill.config.getInt("gui.position.column"),
+                        skill.gui.slot
+                    )
+                }
+            }
+            .setSlot(plugin.configYml.getInt("gui.close.location.row"),
+                plugin.configYml.getInt("gui.close.location.column"),
+                Slot.builder(
+                    ItemStackBuilder(closeItem)
+                        .setDisplayName(plugin.configYml.getString("gui.close.name"))
+                        .build()
+                ).onLeftClick { event, _ -> event.whoClicked.closeInventory() }
+                    .build()
+            )
+            .build()
     }
 }
