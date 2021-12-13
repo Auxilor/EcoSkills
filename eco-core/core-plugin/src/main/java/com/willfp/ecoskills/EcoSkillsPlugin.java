@@ -4,6 +4,7 @@ import com.willfp.eco.core.AbstractPacketAdapter;
 import com.willfp.eco.core.EcoPlugin;
 import com.willfp.eco.core.command.impl.PluginCommand;
 import com.willfp.eco.core.integrations.IntegrationLoader;
+import com.willfp.ecoskills.actionbar.ActionBarClearOnGamemode;
 import com.willfp.ecoskills.actionbar.ActionBarCompatChatMessage;
 import com.willfp.ecoskills.actionbar.ActionBarCompatSetActionBar;
 import com.willfp.ecoskills.actionbar.ActionBarUtils;
@@ -102,7 +103,8 @@ public class EcoSkillsPlugin extends EcoPlugin {
                 new StatModifierListener(),
                 new DataListener(),
                 new DamageIndicatorListener(this),
-                new HealthScaleListener(this)
+                new HealthScaleListener(this),
+                new ActionBarClearOnGamemode()
         );
     }
 

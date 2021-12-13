@@ -7,7 +7,12 @@ import com.comphenix.protocol.events.PacketEvent
 import com.comphenix.protocol.wrappers.EnumWrappers
 import com.willfp.eco.core.AbstractPacketAdapter
 import com.willfp.eco.core.EcoPlugin
+import net.md_5.bungee.api.ChatMessageType
+import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.entity.Player
+import org.bukkit.event.EventHandler
+import org.bukkit.event.Listener
+import org.bukkit.event.player.PlayerGameModeChangeEvent
 
 class ActionBarCompatSetActionBar(
     plugin: EcoPlugin
@@ -37,5 +42,12 @@ class ActionBarCompatChatMessage(
         }
 
         ActionBarUtils.blacklist(player.uniqueId)
+    }
+}
+
+class ActionBarClearOnGamemode: Listener {
+    @EventHandler
+    fun handle(event: PlayerGameModeChangeEvent) {
+        event.player.spigot().sendMessage(ChatMessageType.ACTION_BAR, *TextComponent.fromLegacyText(""))
     }
 }
