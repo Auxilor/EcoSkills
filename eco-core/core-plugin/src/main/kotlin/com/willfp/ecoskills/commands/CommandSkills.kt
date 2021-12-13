@@ -28,7 +28,7 @@ class CommandSkills(plugin: EcoPlugin) :
                 return@CommandHandler
             }
 
-            SkillGUI.getHomeMenu().open(sender)
+            SkillGUI.homeMenu.open(sender)
         }
     }
 }
