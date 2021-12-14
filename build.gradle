@@ -41,7 +41,7 @@ allprojects {
     }
 
     dependencies {
-        compileOnly 'com.willfp:eco:6.12.1'
+        compileOnly 'com.willfp:eco:6.17.0'
         compileOnly fileTree(dir: '../../lib', include: ['*.jar'])
 
 
