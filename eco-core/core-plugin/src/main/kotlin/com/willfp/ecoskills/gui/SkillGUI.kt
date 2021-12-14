@@ -18,13 +18,16 @@ import java.util.Locale
 import java.util.function.Function
 
 object SkillGUI {
+    @JvmStatic
     lateinit var homeMenu: Menu
 
+    @JvmStatic
     @ConfigUpdater
     fun update(plugin: EcoSkillsPlugin) {
         homeMenu = buildHomeMenu(plugin)
     }
 
+    @JvmStatic
     private fun buildHomeMenu(plugin: EcoSkillsPlugin): Menu {
         val maskPattern = plugin.configYml.getStrings("gui.mask.pattern", false).toTypedArray()
         val maskMaterials = plugin.configYml
