@@ -1,7 +1,6 @@
 package com.willfp.ecoskills.commands
 
 import com.willfp.eco.core.EcoPlugin
-import com.willfp.eco.core.command.CommandHandler
 import com.willfp.eco.core.command.impl.PluginCommand
 import com.willfp.ecoskills.gui.SkillGUI
 import org.bukkit.command.CommandSender
@@ -21,14 +20,12 @@ class CommandSkills(plugin: EcoPlugin) :
             .addSubcommand(CommandToggleActionbar(plugin))
     }
 
-    override fun getHandler(): CommandHandler {
-        return CommandHandler { sender: CommandSender, _: List<String> ->
-            if (sender !is Player) {
-                sender.sendMessage(this.plugin.langYml.getMessage("not-player"))
-                return@CommandHandler
-            }
-
-            SkillGUI.homeMenu.open(sender)
+    override fun onExecute(sender: CommandSender, args: List<String>) {
+        if (sender !is Player) {
+            sender.sendMessage(this.plugin.langYml.getMessage("not-player"))
+            return
         }
+
+        SkillGUI.homeMenu.open(sender)
     }
 }

@@ -1,8 +1,6 @@
 package com.willfp.ecoskills.commands
 
 import com.willfp.eco.core.EcoPlugin
-import com.willfp.eco.core.command.CommandHandler
-import com.willfp.eco.core.command.TabCompleteHandler
 import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.effects.Effects
@@ -21,81 +19,75 @@ class CommandRecount(plugin: EcoPlugin): Subcommand(
     false
 ) {
 
-    override fun getHandler(): CommandHandler {
-        return CommandHandler { sender: CommandSender, args: List<String> ->
+    override fun onExecute(sender: CommandSender, args: List<String>) {
+        if (args.isEmpty()) {
+            sender.sendMessage(plugin.langYml.getMessage("requires-player"))
+            return
+        }
 
-            if (args.isEmpty()) {
-                sender.sendMessage(plugin.langYml.getMessage("requires-player"))
-                return@CommandHandler
-            }
+        val player = Bukkit.getPlayer(args[0])
 
-            val player = Bukkit.getPlayer(args[0])
+        if (player == null) {
+            sender.sendMessage(plugin.langYml.getMessage("invalid-player"))
+            return
+        }
 
-            if (player == null) {
-                sender.sendMessage(plugin.langYml.getMessage("invalid-player"))
-                return@CommandHandler
-            }
+        if (args.size < 2) {
+            sender.sendMessage(plugin.langYml.getMessage("requires-effect"))
+            return
+        }
 
-            if (args.size < 2) {
-                sender.sendMessage(plugin.langYml.getMessage("requires-effect"))
-                return@CommandHandler
-            }
+        val effect = Effects.getByID(args[1].lowercase())
 
-            val effect = Effects.getByID(args[1].lowercase())
-
-            if (effect == null) {
-                if (args[1].lowercase().contentEquals("all")) {
-                    var total = 0;
-                    for (ceffect in Effects.values()) {
-                        total+=recount(player, ceffect)
-                    }
-                    sender.sendMessage(
-                        plugin.langYml.getMessage("recounted-player")
-                            .replace("%player%", player.displayName)
-                            .replace("%effect%", "&6ALL")
-                            .replace("%level%", total.toString())
-                    )
-                } else {
-                    sender.sendMessage(plugin.langYml.getMessage("invalid-effect"))
-                    return@CommandHandler
+        if (effect == null) {
+            if (args[1].lowercase().contentEquals("all")) {
+                var total = 0;
+                for (ceffect in Effects.values()) {
+                    total+=recount(player, ceffect)
                 }
-            } else {
                 sender.sendMessage(
                     plugin.langYml.getMessage("recounted-player")
                         .replace("%player%", player.displayName)
-                        .replace("%effect%", effect.id)
-                        .replace("%level%", recount(player, effect).toString())
+                        .replace("%effect%", "&6ALL")
+                        .replace("%level%", total.toString())
                 )
+            } else {
+                sender.sendMessage(plugin.langYml.getMessage("invalid-effect"))
+                return
             }
-
+        } else {
+            sender.sendMessage(
+                plugin.langYml.getMessage("recounted-player")
+                    .replace("%player%", player.displayName)
+                    .replace("%effect%", effect.id)
+                    .replace("%level%", recount(player, effect).toString())
+            )
         }
     }
 
-    override fun getTabCompleter(): TabCompleteHandler {
-        return TabCompleteHandler { _, args ->
-            val completions = mutableListOf<String>()
+    override fun tabComplete(sender: CommandSender, args: List<String>): List<String> {
+        val completions = mutableListOf<String>()
 
-            if (args.size == 1) {
-                StringUtil.copyPartialMatches(
-                    args[0],
-                    Bukkit.getOnlinePlayers().map { player -> player.name }.toMutableList(),
-                    completions
-                )
-                return@TabCompleteHandler completions
-            }
-
-            if (args.size == 2) {
-                completions.add("all")
-                StringUtil.copyPartialMatches(
-                    args[1],
-                    Effects.values().map { effect -> effect.id }.toMutableList(),
-                    completions
-                )
-                return@TabCompleteHandler completions
-            }
-
-            return@TabCompleteHandler emptyList<String>()
+        if (args.size == 1) {
+            StringUtil.copyPartialMatches(
+                args[0],
+                Bukkit.getOnlinePlayers().map { player -> player.name }.toMutableList(),
+                completions
+            )
+            return completions
         }
+
+        if (args.size == 2) {
+            completions.add("all")
+            StringUtil.copyPartialMatches(
+                args[1],
+                Effects.values().map { effect -> effect.id }.toMutableList(),
+                completions
+            )
+            return completions
+        }
+
+        return emptyList()
     }
 
     private fun recount(player: Player, effect: Effect): Int {

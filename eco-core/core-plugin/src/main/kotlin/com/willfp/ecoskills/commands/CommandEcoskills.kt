@@ -1,7 +1,6 @@
 package com.willfp.ecoskills.commands
 
 import com.willfp.eco.core.EcoPlugin
-import com.willfp.eco.core.command.CommandHandler
 import com.willfp.eco.core.command.impl.PluginCommand
 import org.bukkit.command.CommandSender
 
@@ -12,12 +11,11 @@ class CommandEcoskills(plugin: EcoPlugin) :
         "ecoskills.command.ecoskills",
         false
     ) {
-    override fun getHandler(): CommandHandler {
-        return CommandHandler { sender: CommandSender, _: List<String> ->
-            sender.sendMessage(
-                plugin.langYml.getMessage("invalid-command")
-            )
-        }
+
+    override fun onExecute(sender: CommandSender, args: List<String>) {
+        sender.sendMessage(
+            plugin.langYml.getMessage("invalid-command")
+        )
     }
 
     init {

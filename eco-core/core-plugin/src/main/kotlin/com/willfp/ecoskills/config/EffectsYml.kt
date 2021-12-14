@@ -1,12 +1,14 @@
 package com.willfp.ecoskills.config
 
 import com.willfp.eco.core.EcoPlugin
-import com.willfp.eco.core.config.yaml.YamlBaseConfig
+import com.willfp.eco.core.config.BaseConfig
+import com.willfp.eco.core.config.ConfigType
 
 class EffectsYml(
     plugin: EcoPlugin
-): YamlBaseConfig(
+): BaseConfig(
     "effects",
+    plugin,
     true,
-    plugin
+    ConfigType.YAML
 )
