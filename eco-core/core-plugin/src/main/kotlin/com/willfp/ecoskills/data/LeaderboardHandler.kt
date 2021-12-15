@@ -40,11 +40,13 @@ class LeaderboardHandler {
 
     class Runnable : java.lang.Runnable {
         override fun run() {
+            val slice = Bukkit.getOfflinePlayers().slice(1..100)
+
             for (skill in Skills.values()) {
                 val temp = mutableMapOf<OfflinePlayer, Int>()
                 val top = mutableListOf<OfflinePlayer>()
 
-                for (player in Bukkit.getOfflinePlayers()) {
+                for (player in slice) {
                     temp[player] = 10000 - player.getSkillLevel(skill)
                 }
 
@@ -60,7 +62,7 @@ class LeaderboardHandler {
             val temp = mutableMapOf<OfflinePlayer, Int>()
             val top = mutableListOf<OfflinePlayer>()
 
-            for (player in Bukkit.getOfflinePlayers()) {
+            for (player in slice) {
                 temp[player] = 10000 - player.getTotalSkillLevel()
             }
 
