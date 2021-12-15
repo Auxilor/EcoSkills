@@ -6,7 +6,7 @@ import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.skills.Skills
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
-import java.util.Collections
+import java.util.*
 import kotlin.math.ceil
 import kotlin.math.max
 import kotlin.math.min
@@ -40,7 +40,8 @@ class LeaderboardHandler {
 
     class Runnable : java.lang.Runnable {
         override fun run() {
-            val slice = Bukkit.getOfflinePlayers().slice(1..100)
+            val players = Bukkit.getOfflinePlayers();
+            val slice = players.slice(0..min(players.lastIndex, 100))
 
             for (skill in Skills.values()) {
                 val temp = mutableMapOf<OfflinePlayer, Int>()
