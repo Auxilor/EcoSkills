@@ -6,14 +6,15 @@ import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.skills.Skills
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
+import java.util.Collections
 import kotlin.math.ceil
 import kotlin.math.max
 import kotlin.math.min
 
 class LeaderboardHandler {
     companion object {
-        private val sortedLeaderboard = mutableListOf<OfflinePlayer>()
-        private val skillLeaderboards = mutableMapOf<Skill, MutableList<OfflinePlayer>>()
+        private val sortedLeaderboard = Collections.synchronizedList(mutableListOf<OfflinePlayer>())
+        private val skillLeaderboards = Collections.synchronizedMap(mutableMapOf<Skill, MutableList<OfflinePlayer>>())
 
         fun getPage(page: Int, skill: Skill? = null): MutableMap<Int, OfflinePlayer> {
             val selectedLeaderboard = if (skill == null) sortedLeaderboard else skillLeaderboards[skill]!!

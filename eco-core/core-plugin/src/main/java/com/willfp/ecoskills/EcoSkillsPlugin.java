@@ -74,7 +74,7 @@ public class EcoSkillsPlugin extends EcoPlugin {
             ActionBarUtils.startRunnable();
         }
 
-        this.getScheduler().runTimer(new LeaderboardHandler.Runnable(), 50, 2400);
+        this.getScheduler().runAsyncTimer(new LeaderboardHandler.Runnable(), 50, 2400);
     }
 
     /**
