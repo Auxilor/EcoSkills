@@ -33,6 +33,10 @@ class SkillExploration : Skill(
             return
         }
 
+        if (from.distance(to) > 100) {
+            return
+        }
+
         val speed = from.distance(to) / 0.2158
         var xp = this.config.getDouble("base-xp-to-give")
         if (this.config.getBool("multiply-xp-by-speed")) {
