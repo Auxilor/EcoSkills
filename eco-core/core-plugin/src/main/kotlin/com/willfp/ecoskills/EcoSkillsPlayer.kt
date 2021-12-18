@@ -15,7 +15,6 @@ import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
 import java.util.*
 import kotlin.math.abs
-import kotlin.math.ceil
 
 private val expMultiplierCache = mutableMapOf<UUID, Double>()
 private val plugin: EcoSkillsPlugin = EcoSkillsPlugin.getInstance()
@@ -163,7 +162,7 @@ fun Player.getBonusStatLevel(stat: Stat): Int {
     }
     toMultiply -= base
 
-    return ceil(toMultiply).toInt()
+    return toMultiply.toInt()
 }
 
 fun OfflinePlayer.getBaseStatLevel(stat: Stat): Int {
