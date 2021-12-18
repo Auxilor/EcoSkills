@@ -13,8 +13,9 @@ import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
-import java.util.UUID
+import java.util.*
 import kotlin.math.abs
+import kotlin.math.ceil
 
 private val expMultiplierCache = mutableMapOf<UUID, Double>()
 private val plugin: EcoSkillsPlugin = EcoSkillsPlugin.getInstance()
@@ -142,22 +143,27 @@ fun OfflinePlayer.getStatLevel(stat: Stat): Int {
 }
 
 fun Player.getBonusStatLevel(stat: Stat): Int {
-    var i = 0.0
+    var added = 0.0
     for (modifier in this.getStatModifiers()) {
         if (modifier.stat == stat) {
             if (modifier.operation == ModifierOperation.ADD) {
-                i += modifier.amount
+                added += modifier.amount
             }
         }
     }
+    val base = this.getBaseStatLevel(stat)
+    var toMultiply = base + added
+
     for (modifier in this.getStatModifiers()) {
         if (modifier.stat == stat) {
             if (modifier.operation == ModifierOperation.MULTIPLY) {
-                i *= modifier.amount
+                toMultiply *= modifier.amount
             }
         }
     }
-    return i.toInt()
+    toMultiply -= base
+
+    return ceil(toMultiply).toInt()
 }
 
 fun OfflinePlayer.getBaseStatLevel(stat: Stat): Int {
