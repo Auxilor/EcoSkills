@@ -53,6 +53,11 @@ object ActionBarUtils {
                         continue
                     }
 
+                    if (plugin.configYml.getBool("persistent-action-bar.scale-health")) {
+                        player.isHealthScaled = true
+                        player.healthScale = 20.0
+                    }
+
                     val message = plugin.configYml
                         .getString("persistent-action-bar.format", false)
                     val component = StringUtils.format(message, player)
