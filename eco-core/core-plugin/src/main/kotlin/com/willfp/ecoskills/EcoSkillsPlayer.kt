@@ -13,7 +13,7 @@ import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
-import java.util.*
+import java.util.UUID
 import kotlin.math.abs
 
 private val expMultiplierCache = mutableMapOf<UUID, Double>()
@@ -169,9 +169,11 @@ fun OfflinePlayer.getBaseStatLevel(stat: Stat): Int {
     return PlayerProfile.load(this).read(stat.dataKey)
 }
 
-fun Player.setStatLevel(stat: Stat, level: Int) {
+fun OfflinePlayer.setStatLevel(stat: Stat, level: Int) {
     PlayerProfile.load(this).write(stat.dataKey, level)
-    stat.updateStatLevel(this)
+    if (this is Player) {
+        stat.updateStatLevel(this)
+    }
 }
 
 fun Entity.tryAsPlayer(): Player? {

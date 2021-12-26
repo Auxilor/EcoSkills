@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.willfp.ecoskills.commands
 
 import com.willfp.eco.core.EcoPlugin
@@ -13,7 +15,6 @@ import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
 
-
 class CommandReset(plugin: EcoPlugin) :
     Subcommand(
         plugin,
@@ -28,8 +29,8 @@ class CommandReset(plugin: EcoPlugin) :
             return
         }
 
-        val player = Bukkit.getPlayer(args[0])
-        if (player == null) {
+        val player = Bukkit.getOfflinePlayer(args[0])
+        if (!player.hasPlayedBefore()) {
             sender.sendMessage(plugin.langYml.getMessage("invalid-player"))
             return
         }
