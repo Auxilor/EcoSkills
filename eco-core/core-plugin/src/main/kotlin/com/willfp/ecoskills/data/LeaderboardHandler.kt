@@ -6,7 +6,7 @@ import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.skills.Skills
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
-import java.util.*
+import java.util.Collections
 import kotlin.math.ceil
 import kotlin.math.max
 import kotlin.math.min
@@ -14,7 +14,7 @@ import kotlin.math.min
 class LeaderboardHandler {
     companion object {
         private val sortedLeaderboard = Collections.synchronizedList(mutableListOf<OfflinePlayer>())
-        private val skillLeaderboards = Collections.synchronizedMap(mutableMapOf<Skill, MutableList<OfflinePlayer>>())
+        private val skillLeaderboards = Collections.synchronizedMap(mutableMapOf<Skill, List<OfflinePlayer>>())
 
         fun getPage(page: Int, skill: Skill? = null): MutableMap<Int, OfflinePlayer> {
             val selectedLeaderboard = if (skill == null) sortedLeaderboard else skillLeaderboards[skill]!!
@@ -40,40 +40,14 @@ class LeaderboardHandler {
 
     class Runnable : java.lang.Runnable {
         override fun run() {
-            val players = Bukkit.getOfflinePlayers();
-            val slice = players.slice(0..min(players.lastIndex, 100))
+            val players = Bukkit.getOfflinePlayers()
 
             for (skill in Skills.values()) {
-                val temp = mutableMapOf<OfflinePlayer, Int>()
-                val top = mutableListOf<OfflinePlayer>()
-
-                for (player in slice) {
-                    temp[player] = 10000 - player.getSkillLevel(skill)
-                }
-
-                val temp2 = temp.toList().sortedBy { (_, value) -> value }.toMap()
-                for (key in temp2.keys) {
-                    top.add(key)
-                }
-
-                skillLeaderboards[skill]?.clear()
-                skillLeaderboards[skill] = top
-            }
-
-            val temp = mutableMapOf<OfflinePlayer, Int>()
-            val top = mutableListOf<OfflinePlayer>()
-
-            for (player in slice) {
-                temp[player] = 10000 - player.getTotalSkillLevel()
-            }
-
-            val temp2 = temp.toList().sortedBy { (_, value) -> value }.toMap()
-            for (key in temp2.keys) {
-                top.add(key)
+                skillLeaderboards[skill] = players.sortedByDescending { it.getSkillLevel(skill) }
             }
 
             sortedLeaderboard.clear()
-            sortedLeaderboard.addAll(top)
+            sortedLeaderboard.addAll(players.toList().sortedByDescending { it.getTotalSkillLevel() })
         }
     }
 }
