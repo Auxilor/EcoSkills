@@ -9,7 +9,7 @@ versatile_tools:
   description: "&8Deal &a%percent_more%%&8 more damage with pickaxes"
 
   # The percent (%) more damage to deal with a pickaxe for each level of the effect.
-  percent-more-per-level: 8
+  percent-more-per-level: 4
 eye_of_the_depths:
   description: "&a%chance%%&8 chance to get rare drops from fishing"
 
