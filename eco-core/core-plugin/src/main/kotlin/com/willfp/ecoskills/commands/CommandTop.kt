@@ -32,10 +32,17 @@ class CommandTop(plugin: EcoPlugin) :
                 .replace("%rank%", rank.toString())
                 .replace("%level%", player.getTotalSkillLevel().toString())
 
-            var name = player.name ?: "Unknown Player"
+            var name: String
 
-            if (useDisplayName) {
-                name = PlayerUtils.getSavedDisplayName(player)
+            @Suppress("SENSELESS_COMPARISON")
+            if (player == null) {
+                name = "Unknown Player"
+            } else {
+                name = player.name ?: "Unknown Player"
+
+                if (useDisplayName) {
+                    name = PlayerUtils.getSavedDisplayName(player)
+                }
             }
 
             line = line.replace("%playername%", name)
