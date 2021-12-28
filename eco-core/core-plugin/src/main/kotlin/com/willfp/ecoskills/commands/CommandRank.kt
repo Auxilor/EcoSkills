@@ -46,10 +46,18 @@ class CommandRank(plugin: EcoPlugin) :
                 .replace("%rank%", rank.toString())
                 .replace("%level%", player.getSkillLevel(skill).toString())
 
-            var name = player.name!!
 
-            if (useDisplayName) {
-                name = PlayerUtils.getSavedDisplayName(player)
+            var name: String
+
+            @Suppress("SENSELESS_COMPARISON")
+            if (player == null) {
+                name = "Unknown Player"
+            } else {
+                name = player.name ?: "Unknown Player"
+
+                if (useDisplayName) {
+                    name = PlayerUtils.getSavedDisplayName(player)
+                }
             }
 
             line = line.replace("%playername%", name)
