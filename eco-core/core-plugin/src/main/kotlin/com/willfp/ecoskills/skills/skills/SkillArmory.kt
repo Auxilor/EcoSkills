@@ -27,6 +27,10 @@ class SkillArmory : Skill(
             return
         }
 
+        if (player.isBlocking) {
+            return
+        }
+
         val xp = event.damage * this.config.getDouble("xp-per-hp")
         player.giveSkillExperience(this, xp)
     }
