@@ -8,7 +8,10 @@ import com.willfp.ecoskills.getSkillLevel
 import com.willfp.ecoskills.getSkillProgress
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.TextComponent
+import org.bukkit.Bukkit
 import org.bukkit.Sound
+import org.bukkit.boss.BarColor
+import org.bukkit.boss.BarStyle
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -22,13 +25,16 @@ class SkillDisplayListener(
         val skill = event.skill
         val amount = event.amount
 
-        plugin.scheduler.run{
+        plugin.scheduler.run {
             if (this.plugin.configYml.getBool("skills.progress.action-bar.enabled")) {
                 var string = this.plugin.configYml.getString("skills.progress.action-bar.format")
                 string = string.replace("%skill%", skill.name)
                 string = string.replace("%current_xp%", NumberUtils.format(player.getSkillProgress(skill)))
                 val nextLevel = skill.getExpForLevel(player.getSkillLevel(skill) + 1).toDouble()
-                val nextLevelMessage = if (nextLevel >= 2_000_000_000) plugin.langYml.getString("infinity") else NumberUtils.format(nextLevel)
+                val nextLevelMessage =
+                    if (nextLevel >= 2_000_000_000) plugin.langYml.getString("infinity") else NumberUtils.format(
+                        nextLevel
+                    )
                 string = string.replace(
                     "%required_xp%",
                     nextLevelMessage
@@ -38,6 +44,37 @@ class SkillDisplayListener(
                     ChatMessageType.ACTION_BAR,
                     *TextComponent.fromLegacyText(string)
                 )
+            }
+
+            if (this.plugin.configYml.getBool("skills.progress.boss-bar.enabled")) {
+                var string = this.plugin.configYml.getString("skills.progress.boss-bar.format")
+                val currentXp = player.getSkillProgress(skill)
+                string = string.replace("%skill%", skill.name)
+                string = string.replace("%current_xp%", NumberUtils.format(currentXp))
+                val nextLevel = skill.getExpForLevel(player.getSkillLevel(skill) + 1).toDouble()
+                val nextLevelMessage =
+                    if (nextLevel >= 2_000_000_000) plugin.langYml.getString("infinity") else NumberUtils.format(
+                        nextLevel
+                    )
+                string = string.replace(
+                    "%required_xp%",
+                    nextLevelMessage
+                )
+                string = string.replace("%gained_xp%", NumberUtils.format(amount))
+                val ratio = currentXp / nextLevel
+
+                val bossBar = Bukkit.createBossBar(
+                    string,
+                    BarColor.valueOf(this.plugin.configYml.getString("skills.progress.boss-bar.color").uppercase()),
+                    BarStyle.valueOf(this.plugin.configYml.getString("skills.progress.boss-bar.style").uppercase())
+                )
+
+                bossBar.progress = ratio
+
+                bossBar.addPlayer(player)
+                this.plugin.scheduler.runLater(this.plugin.configYml.getInt("skills.progress.boss-bar.duration").toLong()) {
+                    bossBar.removePlayer(player)
+                }
             }
 
             if (this.plugin.configYml.getBool("skills.progress.sound.enabled")) {
@@ -52,7 +89,6 @@ class SkillDisplayListener(
                 )
             }
         }
-
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -75,7 +111,10 @@ class SkillDisplayListener(
 
         if (this.plugin.configYml.getBool("skills.level-up.message.enabled")) {
             val messages = mutableListOf<String>()
-            val levelName = if (this.plugin.configYml.getBool("skills.level-up.message.level-as-numeral")) NumberUtils.toNumeral(level) else level.toString()
+            val levelName =
+                if (this.plugin.configYml.getBool("skills.level-up.message.level-as-numeral")) NumberUtils.toNumeral(
+                    level
+                ) else level.toString()
 
             for (string in this.plugin.configYml.getStrings("skills.level-up.message.message")) {
                 messages.add(

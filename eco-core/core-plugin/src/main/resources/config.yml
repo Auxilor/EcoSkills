@@ -239,6 +239,15 @@ skills:
       enabled: true
       # The actionbar message that should be sent
       format: "&f%skill% &8| &9(%current_xp%/%required_xp%) &e+%gained_xp%"
+    boss-bar:
+      # If the boss bar should be used
+      enabled: false
+      # The boss bar message that should be sent
+      format: "&f%skill% &8| &9(%current_xp%/%required_xp%) &e+%gained_xp%"
+      # The color of the boss bar (from https://hub.spigotmc.org/javadocs/spigot/org/bukkit/boss/BarColor.html)
+      color: pink
+      # The style of the boss bar (from https://hub.spigotmc.org/javadocs/spigot/org/bukkit/boss/BarStyle.html)
+      style: solid
     sound:
       # If a sound should be played
       enabled: true
