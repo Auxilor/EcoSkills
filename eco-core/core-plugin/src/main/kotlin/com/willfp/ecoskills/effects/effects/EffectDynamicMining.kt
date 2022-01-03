@@ -22,7 +22,7 @@ class EffectDynamicMining : Effect(
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: BlockBreakEvent) {
-        if (this.config.getStrings("disabled-in-worlds").contains(event.block.world.name)) {
+        if (this.config.getStrings("disabled-worlds").contains(event.block.world.name)) {
             return
         }
 

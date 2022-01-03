@@ -16,7 +16,7 @@ class EffectMagneticRod : Effect(
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: PlayerFishEvent) {
-        if (this.config.getStrings("disabled-in-worlds").contains(event.player.world.name)) {
+        if (this.config.getStrings("disabled-worlds").contains(event.player.world.name)) {
             return
         }
 
