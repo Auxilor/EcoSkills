@@ -74,6 +74,7 @@ public class EcoSkillsPlugin extends EcoPlugin {
             ActionBarUtils.startRunnable();
         }
 
+        SkillDisplayListener.tickBossBars(this);
         this.getScheduler().runAsyncTimer(new LeaderboardHandler.Runnable(), 50, 2400);
     }
 

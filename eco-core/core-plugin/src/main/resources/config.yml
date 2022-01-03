@@ -245,11 +245,11 @@ skills:
       # The boss bar message that should be sent
       format: "&f%skill% &8| &9(%current_xp%/%required_xp%)"
       # The color of the boss bar (from https://hub.spigotmc.org/javadocs/spigot/org/bukkit/boss/BarColor.html)
-      color: pink
+      color: blue
       # The style of the boss bar (from https://hub.spigotmc.org/javadocs/spigot/org/bukkit/boss/BarStyle.html)
       style: solid
-      # How long the boss bar should last (in ticks)
-      duration: 60
+      # How long the boss bar should last (in milliseconds)
+      duration: 3000
     sound:
       # If a sound should be played
       enabled: true

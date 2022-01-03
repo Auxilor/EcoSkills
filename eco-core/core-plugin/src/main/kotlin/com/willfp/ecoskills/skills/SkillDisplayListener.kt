@@ -9,6 +9,7 @@ import com.willfp.ecoskills.getSkillProgress
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.Bukkit
+import org.bukkit.NamespacedKey
 import org.bukkit.Sound
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle
@@ -63,7 +64,7 @@ class SkillDisplayListener(
                 string = string.replace("%gained_xp%", NumberUtils.format(amount))
                 val ratio = currentXp / nextLevel
 
-                val key = plugin.namespacedKeyFactory.create("${player.name.substring(0, 2)}${skill.id}")
+                val key = plugin.namespacedKeyFactory.create("${player.name.substring(0, 3)}${skill.id}")
 
                 val bossBar = Bukkit.getBossBar(key) ?: Bukkit.createBossBar(
                     key,
@@ -74,13 +75,10 @@ class SkillDisplayListener(
 
                 bossBar.setTitle(string)
                 bossBar.progress = ratio
-
                 bossBar.addPlayer(player)
-                this.plugin.scheduler.runLater(
-                    this.plugin.configYml.getInt("skills.progress.boss-bar.duration").toLong()
-                ) {
-                    bossBar.removePlayer(player)
-                }
+
+                bossBarRemoves[key] =
+                    System.currentTimeMillis() + this.plugin.configYml.getInt("skills.progress.boss-bar.duration")
             }
 
             if (this.plugin.configYml.getBool("skills.progress.sound.enabled")) {
@@ -137,6 +135,24 @@ class SkillDisplayListener(
 
             for (message in messages) {
                 player.sendMessage(message)
+            }
+        }
+    }
+
+    companion object {
+        private val bossBarRemoves = mutableMapOf<NamespacedKey, Long>()
+
+        @JvmStatic
+        fun tickBossBars(plugin: EcoPlugin) {
+            plugin.scheduler.runTimer(5, 5) {
+                for ((key, time) in bossBarRemoves.toMap()) {
+                    if (time <= System.currentTimeMillis()) {
+                        val bossBar = Bukkit.getBossBar(key) ?: continue
+                        bossBar.removeAll()
+                        Bukkit.removeBossBar(key)
+                        bossBarRemoves.remove(key)
+                    }
+                }
             }
         }
     }
