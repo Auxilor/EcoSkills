@@ -249,7 +249,7 @@ skills:
       # The style of the boss bar (from https://hub.spigotmc.org/javadocs/spigot/org/bukkit/boss/BarStyle.html)
       style: solid
       # How long the boss bar should last (in milliseconds)
-      duration: 3000
+      duration: 2500
     sound:
       # If a sound should be played
       enabled: true
