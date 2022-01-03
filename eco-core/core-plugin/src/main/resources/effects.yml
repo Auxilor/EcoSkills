@@ -6,14 +6,14 @@ bountiful_harvest:
   # for quadruple.
   chance-per-level: 8
   # Disabled worlds
-  disabled-worlds: []
+  disabled-in-worlds: []
 versatile_tools:
   description: "&8Deal &a%percent_more%%&8 more damage with pickaxes"
 
   # The percent (%) more damage to deal with a pickaxe for each level of the effect.
   percent-more-per-level: 4
   # Disabled worlds
-  disabled-worlds: []
+  disabled-in-worlds: []
 eye_of_the_depths:
   description: "&a%chance%%&8 chance to get rare drops from fishing"
 
@@ -29,7 +29,7 @@ eye_of_the_depths:
   # ecoweapons:reaper_scythe razor:4 criticals:3
 
   # Disabled worlds
-  disabled-worlds: []
+  disabled-in-worlds: []
   rare-loot-items:
     - enchanted_book confusion:1
     - enchanted_book confusion:2
@@ -51,14 +51,14 @@ serrated_strikes:
   # The amount of bleed ticks to give
   bleed-ticks: 4
   # Disabled worlds
-  disabled-worlds: []
+  disabled-in-worlds: []
 seamless_movement:
   description: "&a%chance%%&8 chance to ignore fall damage"
 
   # The chance to ignore fall damage, as a percentage
   chance-per-level: 2
   # Disabled worlds
-  disabled-worlds: []
+  disabled-in-worlds: []
 potionmaster:
   description: "&8Brewed potions last &a%percent_more%%&8 longer"
 
@@ -72,7 +72,7 @@ potionmaster:
     - "&8» &f+&e%seconds%&f Seconds"
 
   # Disabled worlds
-  disabled-worlds: []
+  disabled-in-worlds: []
 shamanism:
   description: "&8Heal &a%percent_faster%%&8 faster"
 
@@ -80,7 +80,7 @@ shamanism:
   percent-faster-per-level: 4
 
   # Disabled worlds
-  disabled-worlds: []
+  disabled-in-worlds: []
 craftsmanship:
   description: "&8Axes take &a%percent_less%%&8 less durability damage"
 
@@ -88,7 +88,7 @@ craftsmanship:
   percent-less-per-level: 2
 
   # Disabled worlds
-  disabled-worlds: []
+  disabled-in-worlds: []
 second_chance:
   description: "&8Items have a &a%chance%%&8 chance to instantly repair below &a30&8 durability"
 
@@ -100,7 +100,7 @@ second_chance:
   chance-per-level: 0.1
 
   # Disabled worlds
-  disabled-worlds: []
+  disabled-in-worlds: []
 efficient_brewing:
   description: "&8Potions take &a%seconds_less%&8 less seconds to brew"
 
@@ -108,7 +108,7 @@ efficient_brewing:
   ticks-less-per-level: 6
 
   # Disabled worlds
-  disabled-worlds: []
+  disabled-in-worlds: []
 mystic_resilience:
   description: "&a%chance%%&8 chance to ignore negative potion effects"
 
@@ -116,7 +116,7 @@ mystic_resilience:
   chance-per-level: 0.1
 
   # Disabled worlds
-  disabled-worlds: []
+  disabled-in-worlds: []
 satiation:
   description: "&8Lose &a%percent_less%%&8 less hunger"
 
@@ -124,7 +124,7 @@ satiation:
   percent-less-hunger-per-level: 2
 
   # Disabled worlds
-  disabled-worlds: []
+  disabled-in-worlds: []
 golden_yield:
   description: "&a%chance%%&8 chance to get &a5x&8 drops"
 
@@ -135,7 +135,7 @@ golden_yield:
   drop-multiplier: 5
 
   # Disabled worlds
-  disabled-worlds: []
+  disabled-in-worlds: []
 dodging:
   description: "&a%chance%%&8 chance to ignore incoming damage"
 
@@ -143,7 +143,7 @@ dodging:
   chance-per-level: 0.5
 
   # Disabled worlds
-  disabled-worlds: []
+  disabled-in-worlds: []
 accelerated_escape:
   description: "&8Run &a%percent_faster%%&8 faster for &a1.5&8 seconds after taking damage"
 
@@ -154,7 +154,7 @@ accelerated_escape:
   ticks: 30
 
   # Disabled worlds
-  disabled-worlds: []
+  disabled-in-worlds: []
 infernal_resistance:
   description: "&a%chance%%&8 chance to ignore fire damage"
 
@@ -162,7 +162,7 @@ infernal_resistance:
   chance-per-level: 2
 
   # Disabled worlds
-  disabled-worlds: []
+  disabled-in-worlds: []
 bravery:
   description: "&8Take &a%percent_less%%&8 less damage from bosses"
 
@@ -170,7 +170,7 @@ bravery:
   percent-less-per-level: 1.5
 
   # Disabled worlds
-  disabled-worlds: []
+  disabled-in-worlds: []
 dazzle:
   description: "&a%chance%%&8 chance to give your opponent nausea for &a%seconds%&8 seconds"
 
@@ -181,7 +181,7 @@ dazzle:
   # The chance to give nausea per level, as a percentage
   chance-per-level: 1.5
   # Disabled worlds
-  disabled-worlds: []
+  disabled-in-worlds: []
 strong_impact:
   description: "&a%chance%%&8 chance to deal &a3x&8 damage"
 
@@ -190,14 +190,14 @@ strong_impact:
   # The chance to deal 3x damage, per level
   chance-per-level: 0.2
   # Disabled worlds
-  disabled-worlds: []
+  disabled-in-worlds: []
 endangering:
   description: "&a%chance%%&8 chance to remove your opponents invulnerability frame"
 
   # The chance as a percentage
   chance-per-level: 3
   # Disabled worlds
-  disabled-worlds: []
+  disabled-in-worlds: []
 spelunking:
   description: "&a%chance%%&8 to get &a%multiplier%x&8 drops from ores"
 
@@ -226,7 +226,7 @@ spelunking:
   # for quadruple.
   chance-per-level: 8
   # Disabled worlds
-  disabled-worlds: []
+  disabled-in-worlds: []
 dynamic_mining:
   description: "&a%chance%%&8 chance to get Haste III for &a%seconds%&8 seconds when breaking blocks"
 
@@ -239,21 +239,21 @@ dynamic_mining:
   # The level of haste to give
   level: 3
   # Disabled worlds
-  disabled-worlds: []
+  disabled-in-worlds: []
 reimbursement:
   description: "&a%chance%%&8 chance to get experience back after enchanting"
 
   # The chance to get experience back, as a percentage
   chance-per-level: 0.5
   # Disabled worlds
-  disabled-worlds: []
+  disabled-in-worlds: []
 overcompensation:
   description: "&a%chance%%&8 chance to get lapis back after enchanting"
 
   # The chance to get experience back, as a percentage
   chance-per-level: 0.75
   # Disabled worlds
-  disabled-worlds: []
+  disabled-in-worlds: []
 master_lumberjack:
   description: "&a%chance%%&8 to get &a%multiplier%x&8 drops from trees"
 
@@ -279,11 +279,11 @@ master_lumberjack:
   # for quadruple.
   chance-per-level: 6
   # Disabled worlds
-  disabled-worlds: []
+  disabled-in-worlds: []
 magnetic_rod:
   description: "&8Increases fishing speed by &a%percentage%%"
 
   # Speed is as a percentage.
   speed-per-level: 5
   # Disabled worlds
-  disabled-worlds: []
+  disabled-in-worlds: []

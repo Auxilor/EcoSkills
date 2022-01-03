@@ -18,7 +18,7 @@ class EffectMysticResilience : Effect(
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: EntityPotionEffectEvent) {
-        if (this.config.getStrings("disabled-worlds").contains(event.entity.world.name)) {
+        if (this.config.getStrings("disabled-in-worlds").contains(event.entity.world.name)) {
             return
         }
 

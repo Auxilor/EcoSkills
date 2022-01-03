@@ -19,7 +19,7 @@ class EffectOvercompensation : Effect(
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handleLevelling(event: EnchantItemEvent) {
-        if (this.config.getStrings("disabled-worlds").contains(event.enchanter.world.name)) {
+        if (this.config.getStrings("disabled-in-worlds").contains(event.enchanter.world.name)) {
             return
         }
 

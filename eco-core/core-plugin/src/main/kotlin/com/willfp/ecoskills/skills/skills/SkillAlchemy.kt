@@ -32,7 +32,7 @@ class SkillAlchemy : Skill(
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun handleLevelling(event: BrewEvent) {
-        if (this.config.getStrings("disabled-worlds").contains(event.block.world.name)) {
+        if (this.config.getStrings("disabled-in-worlds").contains(event.block.world.name)) {
             return
         }
 

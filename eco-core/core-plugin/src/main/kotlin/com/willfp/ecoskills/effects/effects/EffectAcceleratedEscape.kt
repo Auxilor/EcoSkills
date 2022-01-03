@@ -19,7 +19,7 @@ class EffectAcceleratedEscape: Effect(
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: EntityDamageEvent) {
-        if (this.config.getStrings("disabled-worlds").contains(event.entity.world.name)) {
+        if (this.config.getStrings("disabled-in-worlds").contains(event.entity.world.name)) {
             return
         }
 
