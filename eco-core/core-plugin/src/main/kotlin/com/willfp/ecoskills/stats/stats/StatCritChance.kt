@@ -17,6 +17,11 @@ class StatCritChance : Stat(
     fun handle(event: EntityDamageByEntityEvent) {
         val player = event.damager.tryAsPlayer() ?: return
 
+        if (this.config.getStrings("disabled-in-worlds").contains(player.world.name)
+            || Stats.CRIT_DAMAGE.config.getStrings("disabled-in-worlds").contains(player.world.name)) {
+            return
+        }
+
         if (NumberUtils.randFloat(0.0, 100.0) >= (this.config.getDouble("chance-per-level") * player.getStatLevel(this))) {
             return
         }

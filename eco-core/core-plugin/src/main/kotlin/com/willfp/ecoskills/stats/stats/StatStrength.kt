@@ -14,6 +14,10 @@ class StatStrength : Stat(
     fun handle(event: EntityDamageByEntityEvent) {
         val player = event.damager.tryAsPlayer() ?: return
 
+        if (this.config.getStrings("disabled-in-worlds").contains(player.world.name)) {
+            return
+        }
+
         var multiplier = this.config.getDouble("percent-more-damage-per-level") * player.getStatLevel(this)
         multiplier /= 100
         multiplier += 1

@@ -272,10 +272,14 @@ skills:
 stats:
   defense:
     name: "&#e884b0🛡 Defense"
+    # Disabled worlds
+    disabled-in-worlds: []
     # 100% halves the incoming damage
     percent-less-damage-per-level: 0.25
   strength:
     name: "&#db0000🗡 Strength"
+    # Disabled worlds
+    disabled-in-worlds: []
     # 100% is double damage
     percent-more-damage-per-level: 0.25
   crit_chance:
@@ -284,21 +288,29 @@ stats:
     chance-per-level: 1
   crit_damage:
     name: "&9☠ Crit Damage"
+    # Disabled worlds
+    disabled-in-worlds: []
     # The percent more damage to deal on crits for each level.
     percent-more-damage-per-level: 0.5
     # The amount more damage to deal on crits by default.
     base-percent-more: 50
   speed:
     name: "&#40ffe6✦ Speed"
+    # Disabled worlds
+    disabled-in-worlds: []
     # The percent more speed to give for the speed attribute (internal in the game)
     # for each level
     percent-faster-per-level: 1
   wisdom:
     name: "&#42f566✎ Wisdom"
+    # Disabled worlds
+    disabled-in-worlds: []
     # The percent more xp to gain from orbs for each level of the stat.
     percent-more-xp-gain: 1
   ferocity:
     name: "&#6b0000⫽ Ferocity"
+    # Disabled worlds
+    disabled-in-worlds: []
     # The percent chance to deal damage twice
     chance-per-level: 0.5
 

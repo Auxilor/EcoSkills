@@ -18,6 +18,10 @@ class StatDefense : Stat(
 
         val player = event.entity as Player
 
+        if (this.config.getStrings("disabled-in-worlds").contains(player.world.name)) {
+            return
+        }
+
         var multiplier = this.config.getDouble("percent-less-damage-per-level") * player.getStatLevel(this)
         multiplier /= 100
         multiplier += 1

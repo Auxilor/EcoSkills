@@ -15,6 +15,11 @@ class StatFerocity : Stat(
     @EventHandler(priority = EventPriority.LOW)
     fun handle(event: EntityDamageByEntityEvent) {
         val player = event.damager.tryAsPlayer() ?: return
+
+        if (this.config.getStrings("disabled-in-worlds").contains(player.world.name)) {
+            return
+        }
+
         val victim = if (event.entity is LivingEntity) event.entity as LivingEntity else return
 
         if (victim.hasMetadata("ferocity")) {

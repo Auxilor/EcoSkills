@@ -14,6 +14,10 @@ class StatWisdom : Stat(
     fun handle(event: NaturalExpGainEvent) {
         val player = event.expChangeEvent.player
 
+        if (this.config.getStrings("disabled-in-worlds").contains(player.world.name)) {
+            return
+        }
+
         var multiplier = this.config.getDouble("percent-more-xp-gain") * player.getStatLevel(this)
         multiplier /= 100
         multiplier += 1
