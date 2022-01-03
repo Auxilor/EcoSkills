@@ -63,16 +63,22 @@ class SkillDisplayListener(
                 string = string.replace("%gained_xp%", NumberUtils.format(amount))
                 val ratio = currentXp / nextLevel
 
-                val bossBar = Bukkit.createBossBar(
+                val key = plugin.namespacedKeyFactory.create("${player.name.substring(0, 2)}${skill.id}")
+
+                val bossBar = Bukkit.getBossBar(key) ?: Bukkit.createBossBar(
+                    key,
                     string,
                     BarColor.valueOf(this.plugin.configYml.getString("skills.progress.boss-bar.color").uppercase()),
                     BarStyle.valueOf(this.plugin.configYml.getString("skills.progress.boss-bar.style").uppercase())
                 )
 
+                bossBar.setTitle(string)
                 bossBar.progress = ratio
 
                 bossBar.addPlayer(player)
-                this.plugin.scheduler.runLater(this.plugin.configYml.getInt("skills.progress.boss-bar.duration").toLong()) {
+                this.plugin.scheduler.runLater(
+                    this.plugin.configYml.getInt("skills.progress.boss-bar.duration").toLong()
+                ) {
                     bossBar.removePlayer(player)
                 }
             }
