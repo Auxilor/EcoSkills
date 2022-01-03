@@ -27,6 +27,10 @@ class EffectPotionmaster : Effect(
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: BrewEvent) {
+        if (this.config.getStrings("disabled-worlds").contains(event.block.world.name)) {
+            return
+        }
+
         val player = event.contents.viewers.filterIsInstance<Player>().firstOrNull() ?: return
 
         if (player.getEffectLevel(this) == 0) {

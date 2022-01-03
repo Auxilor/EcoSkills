@@ -18,6 +18,10 @@ class EffectEyeOfTheDepths: Effect(
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: PlayerFishEvent) {
+        if (this.config.getStrings("disabled-worlds").contains(event.player.world.name)) {
+            return
+        }
+
         val player = event.player
 
         if (event.state != PlayerFishEvent.State.CAUGHT_FISH) {

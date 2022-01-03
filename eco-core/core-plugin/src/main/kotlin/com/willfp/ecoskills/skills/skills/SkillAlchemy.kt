@@ -32,6 +32,10 @@ class SkillAlchemy : Skill(
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun handleLevelling(event: BrewEvent) {
+        if (this.config.getStrings("disabled-worlds").contains(event.block.world.name)) {
+            return
+        }
+
         val player = event.contents.viewers.filterIsInstance<Player>().firstOrNull() ?: return
 
         if (player.gameMode == GameMode.CREATIVE || player.gameMode == GameMode.SPECTATOR) {

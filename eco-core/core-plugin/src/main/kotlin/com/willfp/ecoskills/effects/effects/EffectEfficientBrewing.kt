@@ -21,6 +21,10 @@ class EffectEfficientBrewing : Effect(
     fun handle(event: InventoryClickEvent) {
         val player = event.whoClicked
 
+        if (this.config.getStrings("disabled-worlds").contains(player.world.name)) {
+            return
+        }
+
         if (player !is Player) {
             return
         }

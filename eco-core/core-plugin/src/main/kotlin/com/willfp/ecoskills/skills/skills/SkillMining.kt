@@ -31,6 +31,10 @@ class SkillMining : Skill(
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     fun handleLevelling(event: BlockBreakEvent) {
+        if (this.config.getStrings("disabled-worlds").contains(event.block.world.name)) {
+            return
+        }
+
         val type = event.block.type
         val player = event.player
 

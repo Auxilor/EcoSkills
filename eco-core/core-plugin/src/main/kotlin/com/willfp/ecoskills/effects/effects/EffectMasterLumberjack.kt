@@ -35,6 +35,10 @@ class EffectMasterLumberjack : Effect(
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     fun handle(event: BlockDropItemEvent) {
+        if (this.config.getStrings("disabled-worlds").contains(event.block.world.name)) {
+            return
+        }
+
         if (noRepeat.contains(event)) {
             return
         }

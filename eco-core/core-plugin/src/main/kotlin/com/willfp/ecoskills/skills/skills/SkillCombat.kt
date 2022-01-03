@@ -15,6 +15,10 @@ class SkillCombat : Skill(
 ) {
     @EventHandler(priority = EventPriority.MONITOR)
     fun handleLevelling(event: EntityDeathByEntityEvent) {
+        if (this.config.getStrings("disabled-worlds").contains(event.killer.world.name)) {
+            return
+        }
+
         val player = event.killer.tryAsPlayer() ?: return
 
         if (player.gameMode == GameMode.CREATIVE || player.gameMode == GameMode.SPECTATOR) {
