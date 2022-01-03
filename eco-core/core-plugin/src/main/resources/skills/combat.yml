@@ -1,6 +1,8 @@
 name: "Combat"
 description: "Kill mobs to earn Combat XP"
 max-level: 50
+disabled-worlds: []
+disabled-worlds: []
 
 gui:
   item: 'player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGVlYmI4YjAzY2QyN2QzNDM1ZTExNTYxNmI4ZWQzNWRjYjQyN2FmNWIwYjFjYzUyNmQzMjY1YTcyZDQ5M2UifX19'

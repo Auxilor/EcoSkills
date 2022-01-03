@@ -13,6 +13,10 @@ class SkillFishing : Skill(
 ) {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun handleLevelling(event: PlayerFishEvent) {
+        if (this.config.getStrings("disabled-worlds").contains(event.player.world.name)) {
+            return
+        }
+
         val player = event.player
 
         if (player.gameMode == GameMode.CREATIVE || player.gameMode == GameMode.SPECTATOR) {

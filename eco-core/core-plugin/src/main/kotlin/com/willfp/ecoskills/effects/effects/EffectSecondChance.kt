@@ -17,6 +17,10 @@ class EffectSecondChance: Effect(
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: PlayerItemDamageEvent) {
+        if (this.config.getStrings("disabled-worlds").contains(event.player.world.name)) {
+            return
+        }
+
         val player = event.player
         val item = event.item
         val meta = item.itemMeta

@@ -19,6 +19,10 @@ class EffectOvercompensation : Effect(
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handleLevelling(event: EnchantItemEvent) {
+        if (this.config.getStrings("disabled-worlds").contains(event.enchanter.world.name)) {
+            return
+        }
+
         val player = event.enchanter
         val cost = event.whichButton() + 1
 

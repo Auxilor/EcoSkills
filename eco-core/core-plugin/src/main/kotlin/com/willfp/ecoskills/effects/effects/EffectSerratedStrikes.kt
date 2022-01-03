@@ -20,6 +20,10 @@ class EffectSerratedStrikes : Effect(
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: EntityDamageByEntityEvent) {
+        if (this.config.getStrings("disabled-worlds").contains(event.entity.world.name)) {
+            return
+        }
+
         val player = event.damager.tryAsPlayer() ?: return
         val victim = if (event.entity is LivingEntity) event.entity as LivingEntity else return
 

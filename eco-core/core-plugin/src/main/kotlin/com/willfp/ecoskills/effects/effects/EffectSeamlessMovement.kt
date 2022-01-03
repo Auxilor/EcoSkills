@@ -17,6 +17,10 @@ class EffectSeamlessMovement: Effect(
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: EntityDamageEvent) {
+        if (this.config.getStrings("disabled-worlds").contains(event.entity.world.name)) {
+            return
+        }
+
         val player = event.entity
 
         if (player !is Player) {

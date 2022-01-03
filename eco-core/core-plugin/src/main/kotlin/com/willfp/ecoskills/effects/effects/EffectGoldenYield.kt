@@ -19,6 +19,10 @@ class EffectGoldenYield: Effect(
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: BlockDropItemEvent) {
+        if (this.config.getStrings("disabled-worlds").contains(event.block.world.name)) {
+            return
+        }
+
         val block = event.block
         val player = event.player
 

@@ -16,6 +16,10 @@ class EffectCraftsmanship : Effect(
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: PlayerItemDamageEvent) {
+        if (this.config.getStrings("disabled-worlds").contains(event.player.world.name)) {
+            return
+        }
+
         val player = event.player
 
         if (!event.item.type.toString().lowercase().contains("axe")) {

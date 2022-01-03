@@ -18,6 +18,10 @@ class EffectStrongImpact : Effect(
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: EntityDamageByEntityEvent) {
+        if (this.config.getStrings("disabled-worlds").contains(event.entity.world.name)) {
+            return
+        }
+
         val player = event.damager.tryAsPlayer() ?: return
 
         val level = player.getEffectLevel(this)

@@ -22,6 +22,10 @@ class EffectDynamicMining : Effect(
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handle(event: BlockBreakEvent) {
+        if (this.config.getStrings("disabled-worlds").contains(event.block.world.name)) {
+            return
+        }
+
         val player = event.player
 
         val level = player.getEffectLevel(this)
