@@ -15,7 +15,7 @@ class SkillCombat : Skill(
 ) {
     @EventHandler(priority = EventPriority.MONITOR)
     fun handleLevelling(event: EntityDeathByEntityEvent) {
-        if (this.config.getStrings("disabled-worlds").contains(event.killer.world.name)) {
+        if (this.config.getStrings("disabled-in-worlds").contains(event.killer.world.name)) {
             return
         }
 

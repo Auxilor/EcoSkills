@@ -16,7 +16,7 @@ class SkillExploration : Skill(
 ) {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun handleLevelling(event: PlayerMoveEvent) {
-        if (this.config.getStrings("disabled-worlds").contains(event.player.world.name)) {
+        if (this.config.getStrings("disabled-in-worlds").contains(event.player.world.name)) {
             return
         }
 
