@@ -13,7 +13,8 @@ import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
-import java.util.UUID
+import org.bukkit.entity.Tameable
+import java.util.*
 import kotlin.math.abs
 
 private val expMultiplierCache = mutableMapOf<UUID, Double>()
@@ -180,6 +181,7 @@ fun Entity.tryAsPlayer(): Player? {
     return when (this) {
         is Projectile -> this.shooter as? Player
         is Player -> this
+        is Tameable -> this.owner as? Player
         else -> null
     }
 }
