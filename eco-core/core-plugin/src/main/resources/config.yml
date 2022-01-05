@@ -324,6 +324,12 @@ stats:
     disabled-in-worlds: []
     # The percent chance to deal damage twice
     chance-per-level: 0.5
+  health:
+    name: "&c❤ Health"
+    # Disabled worlds
+    disabled-in-worlds: []
+    # The extra hp per level
+    health-per-level: 1
 
 damage-indicators:
   # Requires HolographicDisplays/GHolo/CMI to be installed

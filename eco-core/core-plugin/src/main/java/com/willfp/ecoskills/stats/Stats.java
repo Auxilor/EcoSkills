@@ -6,6 +6,7 @@ import com.willfp.ecoskills.stats.stats.StatCritChance;
 import com.willfp.ecoskills.stats.stats.StatCritDamage;
 import com.willfp.ecoskills.stats.stats.StatDefense;
 import com.willfp.ecoskills.stats.stats.StatFerocity;
+import com.willfp.ecoskills.stats.stats.StatHealth;
 import com.willfp.ecoskills.stats.stats.StatSpeed;
 import com.willfp.ecoskills.stats.stats.StatStrength;
 import com.willfp.ecoskills.stats.stats.StatWisdom;
@@ -31,6 +32,7 @@ public class Stats {
     public static final Stat SPEED = new StatSpeed();
     public static final Stat WISDOM = new StatWisdom();
     public static final Stat FEROCITY = new StatFerocity();
+    public static final Stat HEALTH = new StatHealth();
 
     @ApiStatus.Internal
     public static void registerNewStat(@NotNull final Stat skill) {
