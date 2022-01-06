@@ -7,8 +7,11 @@ import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.tryAsPlayer
 import org.bukkit.GameMode
 import org.bukkit.attribute.Attribute
+import org.bukkit.entity.Monster
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
+import org.bukkit.event.entity.CreatureSpawnEvent
+import org.bukkit.metadata.FixedMetadataValue
 
 class SkillCombat : Skill(
     "combat"
@@ -29,7 +32,19 @@ class SkillCombat : Skill(
             return
         }
 
+        if (this.config.getBool("skills.prevent-levelling-from-spawners") && event.victim.hasMetadata("ecoIsSpawner")) {
+            return
+        }
+
         val xp = event.victim.getAttribute(Attribute.GENERIC_MAX_HEALTH)!!.value * this.config.getDouble("xp-per-heart")
         player.giveSkillExperience(this, xp)
     }
+
+    @EventHandler
+    fun onSpawn(event: CreatureSpawnEvent) {
+        if (event.spawnReason == CreatureSpawnEvent.SpawnReason.SPAWNER) {
+            event.entity.setMetadata("ecoIsSpawner", FixedMetadataValue(this.plugin, true))
+        }
+    }
+
 }
