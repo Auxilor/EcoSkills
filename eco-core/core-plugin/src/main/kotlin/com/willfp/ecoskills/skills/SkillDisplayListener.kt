@@ -28,7 +28,7 @@ class SkillDisplayListener(
 
         plugin.scheduler.run {
             if (this.plugin.configYml.getBool("skills.progress.action-bar.enabled")) {
-                var string = this.plugin.configYml.getString("skills.progress.action-bar.format")
+                var string = this.plugin.configYml.getFormattedString("skills.progress.action-bar.format")
                 string = string.replace("%skill%", skill.name)
                 string = string.replace("%current_xp%", NumberUtils.format(player.getSkillProgress(skill)))
                 val nextLevel = skill.getExpForLevel(player.getSkillLevel(skill) + 1).toDouble()
@@ -48,13 +48,13 @@ class SkillDisplayListener(
             }
 
             if (this.plugin.configYml.getBool("skills.progress.boss-bar.enabled")) {
-                var string = this.plugin.configYml.getString("skills.progress.boss-bar.format")
+                var string = this.plugin.configYml.getFormattedString("skills.progress.boss-bar.format")
                 val currentXp = player.getSkillProgress(skill)
                 string = string.replace("%skill%", skill.name)
                 string = string.replace("%current_xp%", NumberUtils.format(currentXp))
                 val nextLevel = skill.getExpForLevel(player.getSkillLevel(skill) + 1).toDouble()
                 val nextLevelMessage =
-                    if (nextLevel >= 2_000_000_000) plugin.langYml.getString("infinity") else NumberUtils.format(
+                    if (nextLevel >= 2_000_000_000) plugin.langYml.getFormattedString("infinity") else NumberUtils.format(
                         nextLevel
                     )
                 string = string.replace(
@@ -120,7 +120,7 @@ class SkillDisplayListener(
                     level
                 ) else level.toString()
 
-            for (string in this.plugin.configYml.getStrings("skills.level-up.message.message")) {
+            for (string in this.plugin.configYml.getFormattedStrings("skills.level-up.message.message")) {
                 messages.add(
                     string.replace("%skill%", skill.name)
                         .replace("%level%", levelName)
