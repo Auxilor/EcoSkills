@@ -7,7 +7,6 @@ import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.tryAsPlayer
 import org.bukkit.GameMode
 import org.bukkit.attribute.Attribute
-import org.bukkit.entity.Monster
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.entity.CreatureSpawnEvent
@@ -32,7 +31,7 @@ class SkillCombat : Skill(
             return
         }
 
-        if (this.config.getBool("skills.prevent-levelling-from-spawners") && event.victim.hasMetadata("ecoIsSpawner")) {
+        if (this.config.getBool("prevent-levelling-from-spawners") && event.victim.hasMetadata("from-spawner")) {
             return
         }
 
@@ -43,8 +42,7 @@ class SkillCombat : Skill(
     @EventHandler
     fun onSpawn(event: CreatureSpawnEvent) {
         if (event.spawnReason == CreatureSpawnEvent.SpawnReason.SPAWNER) {
-            event.entity.setMetadata("ecoIsSpawner", FixedMetadataValue(this.plugin, true))
+            event.entity.setMetadata("from-spawner", FixedMetadataValue(this.plugin, true))
         }
     }
-
 }
