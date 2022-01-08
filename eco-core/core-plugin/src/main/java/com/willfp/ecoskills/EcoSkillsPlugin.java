@@ -134,6 +134,6 @@ public class EcoSkillsPlugin extends EcoPlugin {
 
     @Override
     public String getMinimumEcoVersion() {
-        return "6.17.0";
+        return "6.18.0";
     }
 }
