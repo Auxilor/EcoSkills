@@ -75,7 +75,7 @@ abstract class Skill(
         }
 
         levelCommands.clear()
-        for (string in config.getStrings("rewards.level-commands", false)) {
+        for (string in config.getStrings("rewards.level-commands")) {
             val split = string.split(":")
             val level = split[0].toInt()
             val command = split[1]
@@ -163,7 +163,7 @@ abstract class Skill(
                 }
             }
 
-            for (string in this.config.getStrings("rewards.chat-messages.$highestLevel", false)) {
+            for (string in this.config.getStrings("rewards.chat-messages.$highestLevel")) {
                 var msg = string
 
                 for (levelUpReward in this.getLevelUpRewards()) {
@@ -199,7 +199,7 @@ abstract class Skill(
                 }
             }
 
-            for (string in this.config.getStrings("rewards.progression-lore.$highestLevel", false)) {
+            for (string in this.config.getStrings("rewards.progression-lore.$highestLevel")) {
                 var s = string
 
                 for (levelUpReward in this.getLevelUpRewards()) {
@@ -225,7 +225,7 @@ abstract class Skill(
 
     fun getGUILore(player: Player): MutableList<String> {
         val lore = mutableListOf<String>()
-        for (string in this.config.getStrings("gui.lore", false)) {
+        for (string in this.config.getStrings("gui.lore")) {
             lore.add(StringUtils.format(string, player))
         }
         return lore

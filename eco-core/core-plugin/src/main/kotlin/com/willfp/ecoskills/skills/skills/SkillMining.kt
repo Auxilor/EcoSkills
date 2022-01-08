@@ -22,7 +22,7 @@ class SkillMining : Skill(
 
     override fun postUpdate() {
         rewards.clear()
-        for (string in this.config.getStrings("xp-rewards", false)) {
+        for (string in this.config.getStrings("xp-rewards")) {
             val split = string.split(":")
             val material = Material.getMaterial(split[0].uppercase()) ?: continue
             rewards[material] = split[1].toDouble()

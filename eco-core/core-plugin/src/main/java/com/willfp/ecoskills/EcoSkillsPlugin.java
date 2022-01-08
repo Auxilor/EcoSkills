@@ -127,7 +127,7 @@ public class EcoSkillsPlugin extends EcoPlugin {
 
     @Override
     protected List<IntegrationLoader> loadIntegrationLoaders() {
-        return Arrays.asList(
+        return List.of(
                 new IntegrationLoader("EcoEnchants", () -> this.getEventManager().registerListener(new EcoEnchantsEnchantingLeveller(this)))
         );
     }

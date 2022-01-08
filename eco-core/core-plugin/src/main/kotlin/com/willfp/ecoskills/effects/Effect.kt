@@ -45,7 +45,7 @@ abstract class Effect(
     abstract fun formatDescription(string: String, level: Int): String
 
     fun getDescription(level: Int): String {
-        val desc = config.getString("description", false)
+        val desc = config.getString("description")
         return StringUtils.format(formatDescription(desc, level))
     }
 

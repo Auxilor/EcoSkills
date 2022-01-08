@@ -41,7 +41,7 @@ class CommandRecount(plugin: EcoPlugin): Subcommand(
 
         if (effect == null) {
             if (args[1].lowercase().contentEquals("all")) {
-                var total = 0;
+                var total = 0
                 for (ceffect in Effects.values()) {
                     total+=recount(player, ceffect)
                 }

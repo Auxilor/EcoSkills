@@ -52,9 +52,9 @@ class DamageIndicatorListener(
         )
 
         var text: String = if (event.isCrit) {
-            plugin.configYml.getString("damage-indicators.format.crit", false)
+            plugin.configYml.getString("damage-indicators.format.crit")
         } else {
-            plugin.configYml.getString("damage-indicators.format.normal", false)
+            plugin.configYml.getString("damage-indicators.format.normal")
         }
 
         text = text.replace("%damage%", NumberUtils.format(event.damage))
@@ -88,7 +88,7 @@ class DamageIndicatorListener(
             NumberUtils.randFloat(-z, z)
         )
 
-        var text = plugin.configYml.getString("damage-indicators.healing.format", false)
+        var text = plugin.configYml.getString("damage-indicators.healing.format")
 
         text = text.replace("%damage%", NumberUtils.format(event.amount))
 

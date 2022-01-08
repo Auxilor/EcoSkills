@@ -29,23 +29,23 @@ object SkillGUI {
 
     @JvmStatic
     private fun buildHomeMenu(plugin: EcoSkillsPlugin): Menu {
-        val maskPattern = plugin.configYml.getStrings("gui.mask.pattern", false).toTypedArray()
+        val maskPattern = plugin.configYml.getStrings("gui.mask.pattern").toTypedArray()
         val maskMaterials = plugin.configYml
-            .getStrings("gui.mask.materials", false)
+            .getStrings("gui.mask.materials")
             .mapNotNull { Material.getMaterial(it.uppercase(Locale.getDefault())) }
             .toTypedArray()
-        val closeItem = Items.lookup(plugin.configYml.getString("gui.close.material", false)).item
+        val closeItem = Items.lookup(plugin.configYml.getString("gui.close.material")).item
         val playerHeadItemBuilder = Function { player: Player ->
             val itemStack = SkullBuilder()
                 .setDisplayName(
                     StringUtils.format(
-                        plugin.configYml.getString("gui.player-info.name", false)
+                        plugin.configYml.getString("gui.player-info.name")
                             .replace("%player%", player.displayName), player
                     )
                 )
                 .addLoreLines {
                     val lore: MutableList<String> = ArrayList()
-                    for (string in plugin.configYml.getStrings("gui.player-info.lore", false)) {
+                    for (string in plugin.configYml.getStrings("gui.player-info.lore")) {
                         lore.add(StringUtils.format(string!!, player))
                     }
                     lore

@@ -36,13 +36,13 @@ class CommandRank(plugin: EcoPlugin) :
 
         val top = LeaderboardHandler.getPage(page, skill)
 
-        val messages = plugin.langYml.getStrings("top", false)
+        val messages = plugin.langYml.getStrings("top")
         val lines = mutableListOf<String>()
 
         val useDisplayName = plugin.configYml.getBool("commands.top.use-display-name")
 
         for ((rank, player) in top) {
-            var line = plugin.langYml.getString("top-line-format", false)
+            var line = plugin.langYml.getString("top-line-format")
                 .replace("%rank%", rank.toString())
                 .replace("%level%", player.getSkillLevel(skill).toString())
 

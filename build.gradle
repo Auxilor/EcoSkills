@@ -45,7 +45,7 @@ allprojects {
         compileOnly fileTree(dir: '../../lib', include: ['*.jar'])
 
 
-        compileOnly 'org.jetbrains:annotations:19.0.0'
+        compileOnly 'org.jetbrains:annotations:22.0.0'
         compileOnly 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
     }
 

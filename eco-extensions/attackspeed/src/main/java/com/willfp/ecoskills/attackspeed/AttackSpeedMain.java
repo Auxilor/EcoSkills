@@ -14,7 +14,7 @@ public class AttackSpeedMain extends Extension {
     /**
      * attackspeed.yml.
      */
-    private Config config = new AttackSpeedConfig(this);
+    private final Config config = new AttackSpeedConfig(this);
 
     /**
      * Create a new extension for a plugin.

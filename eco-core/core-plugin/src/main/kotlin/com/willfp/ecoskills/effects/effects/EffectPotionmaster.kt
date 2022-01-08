@@ -70,7 +70,7 @@ class EffectPotionmaster : Effect(
 
                 val lore = meta.lore ?: ArrayList()
 
-                for (string in config.getStrings("lore", false)) {
+                for (string in config.getStrings("lore")) {
                     lore.add(StringUtils.format(string.replace("%seconds%", secondsDelta), player))
                 }
 

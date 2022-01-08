@@ -20,7 +20,7 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 import org.bukkit.persistence.PersistentDataType
-import java.util.*
+import java.util.Objects
 import kotlin.math.ceil
 
 class SkillGUI(
@@ -48,7 +48,7 @@ class SkillGUI(
             val requiredXP = skill.getExpForLevel(player.getSkillLevel(skill) + 1)
             val requiredXPString = if (requiredXP == Int.MAX_VALUE) plugin.langYml.getFormattedString("infinity") else NumberUtils.format(requiredXP.toDouble())
             val lore = mutableListOf<String>()
-            for (string in plugin.configYml.getStrings("gui.skill-icon.lore", false)) {
+            for (string in plugin.configYml.getStrings("gui.skill-icon.lore")) {
                 lore.add(
                     StringUtils.format(
                         string.replace("%description%", skill.description)
@@ -95,16 +95,16 @@ class SkillGUI(
     val levels: Menu
 
     init {
-        val maskPattern = plugin.configYml.getStrings("level-gui.mask.pattern", false).toTypedArray()
+        val maskPattern = plugin.configYml.getStrings("level-gui.mask.pattern").toTypedArray()
         val maskMaterials: Array<Material> = plugin.configYml
-            .getStrings("level-gui.mask.materials", false)
+            .getStrings("level-gui.mask.materials")
             .stream()
             .map { string: String -> Material.getMaterial(string.uppercase()) }
             .filter(Objects::nonNull)
             .toArray { length -> arrayOfNulls(length) }
 
         val progressionOrder = "123456789abcdefghijklmnopqrstuvwxyz"
-        val progressionPattern = plugin.configYml.getStrings("level-gui.progression-slots.pattern", false)
+        val progressionPattern = plugin.configYml.getStrings("level-gui.progression-slots.pattern")
 
         val progressionSlots = mutableMapOf<Int, Pair<Int, Int>>()
 
@@ -131,9 +131,9 @@ class SkillGUI(
         val pages = ceil(skill.maxLevel / progressionSlots.size.toDouble()).toInt()
         val levelsPerPage = progressionSlots.size
 
-        val closeMaterial = Items.lookup(plugin.configYml.getString("level-gui.progression-slots.close.material", false)).item
-        val homeMaterial = Items.lookup(plugin.configYml.getString("level-gui.progression-slots.prev-page.material", false)).item
-        val nextMaterial = Items.lookup(plugin.configYml.getString("level-gui.progression-slots.next-page.material", false)).item
+        val closeMaterial = Items.lookup(plugin.configYml.getString("level-gui.progression-slots.close.material")).item
+        val homeMaterial = Items.lookup(plugin.configYml.getString("level-gui.progression-slots.prev-page.material")).item
+        val nextMaterial = Items.lookup(plugin.configYml.getString("level-gui.progression-slots.next-page.material")).item
 
         val pageKey = plugin.namespacedKeyFactory.create("page")
 

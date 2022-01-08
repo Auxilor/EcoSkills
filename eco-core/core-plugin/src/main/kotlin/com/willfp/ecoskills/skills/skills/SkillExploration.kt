@@ -27,7 +27,7 @@ class SkillExploration : Skill(
         }
 
         if (!this.config.getBool("allow-flying") && player.isFlying) {
-            return;
+            return
         }
 
         val from = event.from

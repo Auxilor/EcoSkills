@@ -59,7 +59,7 @@ object ActionBarUtils {
                     }
 
                     val message = plugin.configYml
-                        .getString("persistent-action-bar.format", false)
+                        .getString("persistent-action-bar.format")
                     val component = StringUtils.format(message, player)
 
                     whitelistTemp(player.uniqueId)

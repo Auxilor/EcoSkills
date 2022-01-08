@@ -36,7 +36,7 @@ class EffectEyeOfTheDepths: Effect(
             return
         }
 
-        val items = config.getStrings("rare-loot-items", false)
+        val items = config.getStrings("rare-loot-items")
 
         val itemName = items[NumberUtils.randInt(0, items.size - 1)]
 
