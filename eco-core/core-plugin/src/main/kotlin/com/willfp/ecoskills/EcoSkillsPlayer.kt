@@ -1,6 +1,8 @@
 package com.willfp.ecoskills
 
 import com.willfp.eco.core.data.PlayerProfile
+import com.willfp.eco.core.data.keys.PersistentDataKey
+import com.willfp.eco.core.data.keys.PersistentDataKeyType
 import com.willfp.ecoskills.api.PlayerSkillExpGainEvent
 import com.willfp.ecoskills.api.PlayerSkillLevelUpEvent
 import com.willfp.ecoskills.api.modifier.ModifierOperation
@@ -175,6 +177,18 @@ fun OfflinePlayer.setStatLevel(stat: Stat, level: Int) {
     if (this is Player) {
         stat.updateStatLevel(this)
     }
+}
+
+fun OfflinePlayer.hasGainSoundEnabled(): Boolean {
+    return PlayerProfile.load(this).read(PersistentDataKey(plugin.namespacedKeyFactory.create("gainSound"), PersistentDataKeyType.BOOLEAN, true))
+}
+
+fun OfflinePlayer.setGainSoundEnabled(enabled: Boolean) {
+    PlayerProfile.load(this).write(PersistentDataKey(plugin.namespacedKeyFactory.create("gainSound"), PersistentDataKeyType.BOOLEAN, true), enabled)
+}
+
+fun OfflinePlayer.toggleGainSoundEnabled() {
+    PlayerProfile.load(this).write(PersistentDataKey(plugin.namespacedKeyFactory.create("gainSound"), PersistentDataKeyType.BOOLEAN, true), !hasGainSoundEnabled())
 }
 
 fun Entity.tryAsPlayer(): Player? {

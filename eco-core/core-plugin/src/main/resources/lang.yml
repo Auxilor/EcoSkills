@@ -18,7 +18,10 @@ messages:
   gave-stat: "Gave %player% %amount% %stat%&r!"
   enabled-actionbar: "&fYou have &aenabled &fthe action bar!"
   disabled-actionbar: "&fYou have &cdisabled &fthe action bar!"
-  actionbar-disabled: "&cThe action bar disabled on this server."
+  actionbar-disabled: "&cThe action bar is disabled on this server."
+  enabled-xp-gain-sound: "&fYou have &aenabled &fskill XP gain sound!"
+  disabled-xp-gain-sound: "&fYou have &cdisabled &fskill XP gain sound!"
+  xp-gain-sound-disabled: "&cSkill XP gain sound is disabled on this server."
 
 line-wrap-color: "&8"
 

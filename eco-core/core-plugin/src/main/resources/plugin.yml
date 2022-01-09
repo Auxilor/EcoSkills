@@ -43,6 +43,7 @@ permissions:
       ecoskills.command.rank: true
       ecoskills.command.recount: true
       ecoskills.command.toggleactionbar: true
+      ecoskills.command.togglesound: true
 
   ecoskills.command.reload:
     description: Allows reloading the config
@@ -70,6 +71,9 @@ permissions:
     default: op
   ecoskills.command.toggleactionbar:
     description: Allows the use of /skills toggleactionbar.
+    default: op
+  ecoskills.command.togglesound:
+    description: Allows the use of /skills togglesound.
     default: op
 
   ecoskills.xpmultiplier.50percent:

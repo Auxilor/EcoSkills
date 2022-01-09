@@ -6,6 +6,7 @@ import com.willfp.ecoskills.api.PlayerSkillExpGainEvent
 import com.willfp.ecoskills.api.PlayerSkillLevelUpEvent
 import com.willfp.ecoskills.getSkillLevel
 import com.willfp.ecoskills.getSkillProgress
+import com.willfp.ecoskills.hasGainSoundEnabled
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.Bukkit
@@ -81,7 +82,7 @@ class SkillDisplayListener(
                     System.currentTimeMillis() + this.plugin.configYml.getInt("skills.progress.boss-bar.duration")
             }
 
-            if (this.plugin.configYml.getBool("skills.progress.sound.enabled")) {
+            if (this.plugin.configYml.getBool("skills.progress.sound.enabled") && player.hasGainSoundEnabled()) {
                 val sound = Sound.valueOf(this.plugin.configYml.getString("skills.progress.sound.id").uppercase())
                 val pitch = this.plugin.configYml.getDouble("skills.progress.sound.pitch")
 

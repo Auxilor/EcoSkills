@@ -18,6 +18,7 @@ class CommandSkills(plugin: EcoPlugin) :
         this.addSubcommand(CommandTop(plugin))
             .addSubcommand(CommandRank(plugin))
             .addSubcommand(CommandToggleActionbar(plugin))
+            .addSubcommand(CommandToggleSound(plugin))
     }
 
     override fun onExecute(sender: CommandSender, args: List<String>) {
