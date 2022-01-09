@@ -20,7 +20,7 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 import org.bukkit.persistence.PersistentDataType
-import java.util.Objects
+import java.util.*
 import kotlin.math.ceil
 
 class SkillGUI(
@@ -184,7 +184,7 @@ class SkillGUI(
                                                     .uppercase()
                                             )!!
                                             meta.setDisplayName(
-                                                plugin.configYml.getString("level-gui.progression-slots.unlocked.name")
+                                                plugin.configYml.getFormattedString("level-gui.progression-slots.unlocked.name")
                                                     .replace("%skill%", skill.name)
                                                     .replace("%level%", slotLevel.toString())
                                                     .replace("%level_numeral%", NumberUtils.toNumeral(slotLevel))
@@ -198,13 +198,13 @@ class SkillGUI(
                                                     .uppercase()
                                             )!!
                                             meta.setDisplayName(
-                                                plugin.configYml.getString("level-gui.progression-slots.in-progress.name")
+                                                plugin.configYml.getFormattedString("level-gui.progression-slots.in-progress.name")
                                                     .replace("%skill%", skill.name)
                                                     .replace("%level%", slotLevel.toString())
                                                     .replace("%level_numeral%", NumberUtils.toNumeral(slotLevel))
                                             )
 
-                                            lore.addAll(plugin.configYml.getStrings("level-gui.progression-slots.in-progress.lore"))
+                                            lore.addAll(plugin.configYml.getFormattedStrings("level-gui.progression-slots.in-progress.lore"))
                                         }
                                         else -> {
                                             item.type = Material.getMaterial(
@@ -212,13 +212,13 @@ class SkillGUI(
                                                     .uppercase()
                                             )!!
                                             meta.setDisplayName(
-                                                plugin.configYml.getString("level-gui.progression-slots.locked.name")
+                                                plugin.configYml.getFormattedString("level-gui.progression-slots.locked.name")
                                                     .replace("%skill%", skill.name)
                                                     .replace("%level%", slotLevel.toString())
                                                     .replace("%level_numeral%", NumberUtils.toNumeral(slotLevel))
                                             )
 
-                                            lore.addAll(plugin.configYml.getStrings("level-gui.progression-slots.locked.lore"))
+                                            lore.addAll(plugin.configYml.getFormattedStrings("level-gui.progression-slots.locked.lore"))
                                         }
                                     }
 
@@ -250,7 +250,7 @@ class SkillGUI(
                                         val wrapped = WordUtils.wrap(
                                             line.trim(),
                                             plugin.configYml.getInt("gui.line-wrap"),
-                                            "\n${plugin.langYml.getString("line-wrap-color")}", false
+                                            "\n${plugin.langYml.getFormattedString("line-wrap-color")}", false
                                         ).split("\n").toMutableList()
 
                                         wrapped.replaceAll { "$indent$it" }
