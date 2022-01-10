@@ -5,9 +5,13 @@ import com.willfp.eco.core.items.Items
 import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.getEffectLevel
+import org.bukkit.Bukkit
+import org.bukkit.Location
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.player.PlayerFishEvent
+import org.bukkit.inventory.ItemStack
 
 class EffectEyeOfTheDepths: Effect(
     "eye_of_the_depths"
@@ -38,13 +42,39 @@ class EffectEyeOfTheDepths: Effect(
 
         val items = config.getStrings("rare-loot-items")
 
-        val itemName = items[NumberUtils.randInt(0, items.size - 1)]
+        val reward = items[NumberUtils.randInt(0, items.size - 1)]
 
-        val item = Items.lookup(itemName).item
+        LootReward.fromString(reward).reward(player, event.caught!!.location)
+    }
 
-        DropQueue(player)
-            .setLocation(event.caught!!.location)
-            .addItem(item)
-            .push()
+    class LootReward(
+        private val item: ItemStack? = null,
+        private val command: String? = null
+    )
+    {
+        companion object {
+            @JvmStatic
+            fun fromString(from: String): LootReward {
+                return if (from.startsWith("command::", true)) {
+                    LootReward(command = from.replace("command::", "").replace("command:: ", ""))
+                } else {
+                    LootReward(item = Items.lookup(from).item)
+                }
+            }
+        }
+
+        fun reward(player: Player, location: Location = player.location) {
+            if (item != null) {
+                DropQueue(player)
+                    .setLocation(location)
+                    .addItem(item)
+                    .push()
+            }
+            else {
+                command?.let { Bukkit.dispatchCommand(Bukkit.getConsoleSender(), it.replace("%player%", player.name)) }
+            }
+
+        }
     }
 }
+
