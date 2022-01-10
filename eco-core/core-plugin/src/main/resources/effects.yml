@@ -30,7 +30,7 @@ eye_of_the_depths:
 
   # Disabled worlds
   disabled-in-worlds: []
-  rare-loot-items:
+  rare-loot-items: # Either an item from items lookup system, or a command (- command: say %player% is cool)
     - enchanted_book confusion:1
     - enchanted_book confusion:2
     - netherite_ingot
