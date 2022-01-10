@@ -23,7 +23,7 @@ class CommandToggleSound(plugin: EcoPlugin) :
     ) {
 
     override fun onExecute(sender: CommandSender, args: List<String>) {
-        if (this.plugin.configYml.getBool("skills.progress.sound.enabled")) {
+        if (!this.plugin.configYml.getBool("skills.progress.sound.enabled")) {
             sender.sendMessage(this.plugin.langYml.getMessage("xp-gain-sound-disabled"))
             return
         }
