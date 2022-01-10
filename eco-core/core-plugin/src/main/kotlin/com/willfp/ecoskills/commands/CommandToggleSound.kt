@@ -36,6 +36,6 @@ class CommandToggleSound(plugin: EcoPlugin) :
             else -> "disabled"
         }
 
-        player.sendMessage(this.plugin.langYml.getMessage("xp-gain-sound-$key"))
+        player.sendMessage(this.plugin.langYml.getMessage("$key-xp-gain-sound"))
     }
 }
