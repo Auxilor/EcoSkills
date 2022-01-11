@@ -32,10 +32,10 @@ class CommandToggleSound(plugin: EcoPlugin) :
         player.toggleGainSoundEnabled()
 
         val key = when(player.hasGainSoundEnabled()) {
-            true -> "enabled"
-            else -> "disabled"
+            true -> "disabled"
+            else -> "enabled"
         }
 
-        player.sendMessage(this.plugin.langYml.getMessage("xp-gain-sound-$key"))
+        player.sendMessage(this.plugin.langYml.getMessage("$key-xp-gain-sound"))
     }
 }
