@@ -16,7 +16,7 @@ import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
 import org.bukkit.entity.Tameable
-import java.util.*
+import java.util.UUID
 import kotlin.math.abs
 
 private val expMultiplierCache = mutableMapOf<UUID, Double>()
@@ -179,16 +179,18 @@ fun OfflinePlayer.setStatLevel(stat: Stat, level: Int) {
     }
 }
 
+private val gainSoundKey = PersistentDataKey<Boolean>(plugin.namespacedKeyFactory.create("gainSound"), PersistentDataKeyType.BOOLEAN, true);
+
 fun OfflinePlayer.hasGainSoundEnabled(): Boolean {
-    return PlayerProfile.load(this).read(PersistentDataKey(plugin.namespacedKeyFactory.create("gainSound"), PersistentDataKeyType.BOOLEAN, true))
+    return PlayerProfile.load(this).read(gainSoundKey)
 }
 
 fun OfflinePlayer.setGainSoundEnabled(enabled: Boolean) {
-    PlayerProfile.load(this).write(PersistentDataKey(plugin.namespacedKeyFactory.create("gainSound"), PersistentDataKeyType.BOOLEAN, true), enabled)
+    PlayerProfile.load(this).write(gainSoundKey, enabled)
 }
 
 fun OfflinePlayer.toggleGainSoundEnabled() {
-    PlayerProfile.load(this).write(PersistentDataKey(plugin.namespacedKeyFactory.create("gainSound"), PersistentDataKeyType.BOOLEAN, true), !hasGainSoundEnabled())
+    PlayerProfile.load(this).write(gainSoundKey, !hasGainSoundEnabled())
 }
 
 fun Entity.tryAsPlayer(): Player? {
