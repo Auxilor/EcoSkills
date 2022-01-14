@@ -16,11 +16,15 @@ import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
 import org.bukkit.entity.Tameable
-import java.util.UUID
+import java.util.*
 import kotlin.math.abs
 
 private val expMultiplierCache = mutableMapOf<UUID, Double>()
 private val plugin: EcoSkillsPlugin = EcoSkillsPlugin.getInstance()
+
+fun clearExpMultiplierCache() {
+    expMultiplierCache.clear()
+}
 
 fun Player.getSkillExperienceMultiplier(): Double {
     if (expMultiplierCache.containsKey(this.uniqueId)) {
@@ -54,10 +58,6 @@ private fun Player.cacheSkillExperienceMultiplier(): Double {
             return ((permission.substring(permission.lastIndexOf(".") + 1).toDoubleOrNull() ?: 100.0) / 100) + 1
         }
     }
-
-    plugin.scheduler.runLater({
-        expMultiplierCache.remove(this.uniqueId)
-    }, 200)
 
     return 1.0
 }
@@ -179,7 +179,8 @@ fun OfflinePlayer.setStatLevel(stat: Stat, level: Int) {
     }
 }
 
-private val gainSoundKey = PersistentDataKey<Boolean>(plugin.namespacedKeyFactory.create("gainSound"), PersistentDataKeyType.BOOLEAN, true);
+private val gainSoundKey =
+    PersistentDataKey<Boolean>(plugin.namespacedKeyFactory.create("gainSound"), PersistentDataKeyType.BOOLEAN, true);
 
 fun OfflinePlayer.hasGainSoundEnabled(): Boolean {
     return PlayerProfile.load(this).read(gainSoundKey)

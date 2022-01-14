@@ -74,6 +74,7 @@ public class EcoSkillsPlugin extends EcoPlugin {
             ActionBarUtils.startRunnable();
         }
 
+        this.getScheduler().runTimer(EcoSkillsPlayerKt::clearExpMultiplierCache, 100, 100);
         SkillDisplayListener.tickBossBars(this);
         this.getScheduler().runAsyncTimer(new LeaderboardHandler.Runnable(), 50, 2400);
     }
