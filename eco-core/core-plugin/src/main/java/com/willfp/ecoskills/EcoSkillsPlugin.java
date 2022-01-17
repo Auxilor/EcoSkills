@@ -52,7 +52,7 @@ public class EcoSkillsPlugin extends EcoPlugin {
 
     @Override
     protected void handleEnable() {
-        Skills.update();
+        Skills.update(this);
     }
 
     @Override
