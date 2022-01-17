@@ -1,6 +1,7 @@
 package com.willfp.ecoskills.skills;
 
 import com.google.common.collect.ImmutableSet;
+import com.willfp.eco.core.EcoPlugin;
 import com.willfp.eco.core.config.updating.ConfigUpdater;
 import com.willfp.eco.core.integrations.placeholder.PlaceholderEntry;
 import com.willfp.eco.util.NumberUtils;
@@ -59,8 +60,9 @@ public class Skills {
     }
 
     @ConfigUpdater
-    public static void update() {
+    public static void update(@NotNull final EcoPlugin plugin) {
         new PlaceholderEntry(
+                plugin,
                 "skill_multiplier",
                 (player -> NumberUtils.format(EcoSkillsPlayerKt.getSkillExperienceMultiplier(player))),
                 true

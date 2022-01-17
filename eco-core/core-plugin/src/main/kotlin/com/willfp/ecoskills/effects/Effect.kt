@@ -11,7 +11,7 @@ import com.willfp.ecoskills.SkillObject
 import com.willfp.ecoskills.getEffectLevel
 import org.bukkit.NamespacedKey
 import org.bukkit.event.Listener
-import java.util.UUID
+import java.util.*
 
 abstract class Effect(
     id: String
@@ -51,18 +51,21 @@ abstract class Effect(
 
     fun update() {
         PlaceholderEntry(
+            plugin,
             id,
             { player -> player.getEffectLevel(this).toString() },
             true
         ).register()
 
         PlaceholderEntry(
+            plugin,
             "${id}_numeral",
             { player -> NumberUtils.toNumeral(player.getEffectLevel(this)) },
             true
         ).register()
 
         PlaceholderEntry(
+            plugin,
             "${id}_description",
             { player -> this.getDescription(player.getEffectLevel(this)) },
             true

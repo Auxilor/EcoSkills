@@ -7,14 +7,10 @@ import com.willfp.eco.core.data.keys.PersistentDataKeyType
 import com.willfp.eco.core.integrations.placeholder.PlaceholderEntry
 import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.StringUtils
-import com.willfp.ecoskills.EcoSkillsPlugin
-import com.willfp.ecoskills.SkillObject
+import com.willfp.ecoskills.*
 import com.willfp.ecoskills.config.SkillConfig
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.effects.Effects
-import com.willfp.ecoskills.getAverageSkillLevel
-import com.willfp.ecoskills.getSkillLevel
-import com.willfp.ecoskills.getTotalSkillLevel
 import com.willfp.ecoskills.stats.Stats
 import org.bukkit.Bukkit
 import org.bukkit.NamespacedKey
@@ -86,24 +82,28 @@ abstract class Skill(
         }
 
         PlaceholderEntry(
+            plugin,
             id,
             { player -> player.getSkillLevel(this).toString() },
             true
         ).register()
 
         PlaceholderEntry(
+            plugin,
             "${id}_numeral",
             { player -> NumberUtils.toNumeral(player.getSkillLevel(this)) },
             true
         ).register()
 
         PlaceholderEntry(
+            plugin,
             "average_skill_level",
             { player -> NumberUtils.format(player.getAverageSkillLevel()) },
             true
         ).register()
 
         PlaceholderEntry(
+            plugin,
             "total_skill_level",
             { player -> player.getTotalSkillLevel().toString() },
             true
