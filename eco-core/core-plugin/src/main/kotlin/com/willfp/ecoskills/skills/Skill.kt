@@ -101,6 +101,13 @@ abstract class Skill(
 
         PlaceholderEntry(
             plugin,
+            "${id}_name",
+            { this.name },
+            false
+        ).register()
+
+        PlaceholderEntry(
+            plugin,
             "average_skill_level",
             { player -> NumberUtils.format(player.getAverageSkillLevel()) },
             true
