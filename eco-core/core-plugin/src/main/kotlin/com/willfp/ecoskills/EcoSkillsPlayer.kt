@@ -7,16 +7,18 @@ import com.willfp.ecoskills.api.PlayerSkillExpGainEvent
 import com.willfp.ecoskills.api.PlayerSkillLevelUpEvent
 import com.willfp.ecoskills.api.modifier.ModifierOperation
 import com.willfp.ecoskills.effects.Effect
+import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.stats.Stat
+import com.willfp.ecoskills.stats.Stats
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
 import org.bukkit.entity.Tameable
-import java.util.*
+import java.util.UUID
 import kotlin.math.abs
 
 private val expMultiplierCache = mutableMapOf<UUID, Double>()
@@ -200,5 +202,18 @@ fun Entity.tryAsPlayer(): Player? {
         is Player -> this
         is Tameable -> this.owner as? Player
         else -> null
+    }
+}
+
+fun OfflinePlayer.resetSkills() {
+    for (stat in Stats.values()) {
+        this.setStatLevel(stat, 0)
+    }
+    for (effect in Effects.values()) {
+        this.setEffectLevel(effect, 0)
+    }
+    for (skill in Skills.values()) {
+        this.setSkillLevel(skill, 0)
+        this.setSkillProgress(skill, 0.0)
     }
 }
