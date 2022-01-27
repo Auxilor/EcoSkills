@@ -6,11 +6,15 @@ import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.eco.core.data.keys.PersistentDataKeyType
 import com.willfp.eco.core.integrations.placeholder.PlaceholderEntry
 import com.willfp.eco.util.NumberUtils
-import com.willfp.ecoskills.*
+import com.willfp.ecoskills.EcoSkillsPlugin
+import com.willfp.ecoskills.SkillObject
+import com.willfp.ecoskills.getBaseStatLevel
+import com.willfp.ecoskills.getBonusStatLevel
+import com.willfp.ecoskills.getStatLevel
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
-import java.util.*
+import java.util.UUID
 
 abstract class Stat(
     id: String
@@ -44,7 +48,7 @@ abstract class Stat(
     }
 
     fun update() {
-        name = config.getString("name")
+        name = config.getFormattedString("name")
 
         PlaceholderEntry(
             plugin,

@@ -153,7 +153,7 @@ fun Player.removeStatModifier(key: NamespacedKey) {
 
 fun Player.getStatModifierKeys(): MutableSet<NamespacedKey> {
     val modifiers = getModifiersTag(this)
-    return modifiers.keys.mapNotNull { NamespacedKey.fromString(it) }.toMutableSet()
+    return modifiers.keys.map { NamespacedKeyUtils.fromString(it) }.toMutableSet()
 }
 
 fun Player.getStatModifiers(): MutableSet<PlayerStatModifier> {

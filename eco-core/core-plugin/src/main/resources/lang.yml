@@ -22,6 +22,8 @@ messages:
   enabled-xp-gain-sound: "&fYou have &aenabled &fskill XP gain sound!"
   disabled-xp-gain-sound: "&fYou have &cdisabled &fskill XP gain sound!"
   xp-gain-sound-disabled: "&cSkill XP gain sound is disabled on this server."
+  resetting-all-players: "&fResetting all players... (this may take a while)"
+  reset-all-players: "&fReset all players!"
 
 line-wrap-color: "&8"
 
