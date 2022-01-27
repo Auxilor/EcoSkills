@@ -27,6 +27,10 @@ class EffectSerratedStrikes : Effect(
         val player = event.damager.tryAsPlayer() ?: return
         val victim = if (event.entity is LivingEntity) event.entity as LivingEntity else return
 
+        if (player.uniqueId == victim.uniqueId) {
+            return
+        }
+
         val level = player.getEffectLevel(this)
 
         if (NumberUtils.randFloat(0.0, 100.0) >= config.getDouble("chance-per-level") * level) {
