@@ -1,5 +1,6 @@
 package com.willfp.ecoskills
 
+import com.github.benmanes.caffeine.cache.Caffeine
 import com.willfp.eco.core.data.PlayerProfile
 import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.eco.core.data.keys.PersistentDataKeyType
@@ -18,22 +19,19 @@ import org.bukkit.entity.Entity
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
 import org.bukkit.entity.Tameable
-import java.util.UUID
+import java.util.concurrent.TimeUnit
 import kotlin.math.abs
 
-private val expMultiplierCache = mutableMapOf<UUID, Double>()
+private val expMultiplierCache = Caffeine.newBuilder()
+    .expireAfterWrite(10, TimeUnit.SECONDS)
+    .build<Player, Double> {
+        it.cacheSkillExperienceMultiplier()
+    }
+
 private val plugin: EcoSkillsPlugin = EcoSkillsPlugin.getInstance()
 
-fun clearExpMultiplierCache() {
-    expMultiplierCache.clear()
-}
-
 fun Player.getSkillExperienceMultiplier(): Double {
-    if (expMultiplierCache.containsKey(this.uniqueId)) {
-        return expMultiplierCache[this.uniqueId]!!
-    }
-    expMultiplierCache[this.uniqueId] = cacheSkillExperienceMultiplier()
-    return this.getSkillExperienceMultiplier()
+    return expMultiplierCache.get(this)
 }
 
 private fun Player.cacheSkillExperienceMultiplier(): Double {

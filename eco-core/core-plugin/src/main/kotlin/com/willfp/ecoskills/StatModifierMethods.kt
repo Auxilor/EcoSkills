@@ -1,5 +1,6 @@
 package com.willfp.ecoskills
 
+import com.github.benmanes.caffeine.cache.Caffeine
 import com.willfp.eco.util.NamespacedKeyUtils
 import com.willfp.ecoskills.api.modifier.ItemStatModifier
 import com.willfp.ecoskills.api.modifier.ModifierOperation
@@ -13,6 +14,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.persistence.PersistentDataContainer
 import org.bukkit.persistence.PersistentDataType
+import java.util.concurrent.TimeUnit
 
 private val plugin = EcoSkillsPlugin.getInstance()
 
@@ -114,13 +116,20 @@ private const val META_STAT_KEY = "stat"
 private const val META_AMOUNT_KEY = "amount"
 private const val META_OPERATION_KEY = "operation"
 
+@Suppress("UNCHECKED_CAST")
+private val modifierCache = Caffeine.newBuilder()
+    .expireAfterWrite(200, TimeUnit.MILLISECONDS)
+    .build<Player, MutableMap<String, Any>> {
+        it.getMetadata(META_MODIFIERS).getOrNull(0)?.value() as MutableMap<String, Any>? ?: mutableMapOf()
+    }
+
 private fun Player.applyModifiers(meta: MutableMap<String, Any>) {
     this.setMetadata(META_MODIFIERS, plugin.metadataValueFactory.create(meta))
 }
 
 @Suppress("UNCHECKED_CAST")
 private fun getModifiersTag(player: Player): MutableMap<String, Any> {
-    return player.getMetadata(META_MODIFIERS).getOrNull(0)?.value() as MutableMap<String, Any>? ?: mutableMapOf()
+    return modifierCache.get(player)
 }
 
 fun Player.addStatModifier(modifier: StatModifier) {
