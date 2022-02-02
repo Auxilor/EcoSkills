@@ -284,13 +284,13 @@ stats:
   defense:
     name: "&#e884b0🛡 Defense"
     # Disabled worlds
-    disabled-in-worlds: []
+    disabled-in-worlds: [ ]
     # 100% halves the incoming damage
     percent-less-damage-per-level: 0.25
   strength:
     name: "&#db0000🗡 Strength"
     # Disabled worlds
-    disabled-in-worlds: []
+    disabled-in-worlds: [ ]
     # 100% is double damage
     percent-more-damage-per-level: 0.25
   crit_chance:
@@ -300,7 +300,7 @@ stats:
   crit_damage:
     name: "&9☠ Crit Damage"
     # Disabled worlds
-    disabled-in-worlds: []
+    disabled-in-worlds: [ ]
     # The percent more damage to deal on crits for each level.
     percent-more-damage-per-level: 0.5
     # The amount more damage to deal on crits by default.
@@ -308,26 +308,26 @@ stats:
   speed:
     name: "&#40ffe6✦ Speed"
     # Disabled worlds
-    disabled-in-worlds: []
+    disabled-in-worlds: [ ]
     # The percent more speed to give for the speed attribute (internal in the game)
     # for each level
     percent-faster-per-level: 1
   wisdom:
     name: "&#42f566✎ Wisdom"
     # Disabled worlds
-    disabled-in-worlds: []
+    disabled-in-worlds: [ ]
     # The percent more xp to gain from orbs for each level of the stat.
     percent-more-xp-gain: 1
   ferocity:
     name: "&#6b0000⫽ Ferocity"
     # Disabled worlds
-    disabled-in-worlds: []
+    disabled-in-worlds: [ ]
     # The percent chance to deal damage twice
     chance-per-level: 0.5
   health:
     name: "&c❤ Health"
     # Disabled worlds
-    disabled-in-worlds: []
+    disabled-in-worlds: [ ]
     # The extra hp per level
     health-per-level: 1
 
@@ -357,6 +357,8 @@ persistent-action-bar:
   reset-time: 3000
   # Time between action bar updates (in ticks).
   update-time: 5
+  # The worlds that the action bar should be disabled in.
+  disabled-in-worlds: [ ]
 
 commands:
   top:

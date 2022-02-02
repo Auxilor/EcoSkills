@@ -8,7 +8,7 @@ import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
-import java.util.*
+import java.util.UUID
 
 object ActionBarUtils {
     private val blacklist = mutableMapOf<UUID, Long>()
@@ -42,6 +42,13 @@ object ActionBarUtils {
             {
                 for (player in Bukkit.getOnlinePlayers()) {
                     if (isBlacklisted(player.uniqueId)) {
+                        continue
+                    }
+
+                    if (plugin.configYml.getStrings("persistent-action-bar.disabled-in-worlds")
+                            .map { it.lowercase() }
+                            .contains(player.world.name.lowercase())
+                    ) {
                         continue
                     }
 
