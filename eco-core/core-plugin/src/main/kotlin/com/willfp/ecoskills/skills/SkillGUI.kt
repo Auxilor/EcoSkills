@@ -5,7 +5,7 @@ import com.willfp.eco.core.gui.menu
 import com.willfp.eco.core.gui.menu.Menu
 import com.willfp.eco.core.gui.slot
 import com.willfp.eco.core.gui.slot.FillerMask
-import com.willfp.eco.core.gui.slot.MaskMaterials
+import com.willfp.eco.core.gui.slot.MaskItems
 import com.willfp.eco.core.items.Items
 import com.willfp.eco.core.items.builder.ItemStackBuilder
 import com.willfp.eco.util.NumberUtils
@@ -21,7 +21,6 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 import org.bukkit.persistence.PersistentDataType
-import java.util.Objects
 import kotlin.math.ceil
 
 class SkillGUI(
@@ -102,12 +101,7 @@ class SkillGUI(
 
     init {
         val maskPattern = plugin.configYml.getStrings("level-gui.mask.pattern").toTypedArray()
-        val maskMaterials: Array<Material> = plugin.configYml
-            .getStrings("level-gui.mask.materials")
-            .stream()
-            .map { string: String -> Material.getMaterial(string.uppercase()) }
-            .filter(Objects::nonNull)
-            .toArray { length -> arrayOfNulls(length) }
+        val maskItems = MaskItems.fromItemNames(plugin.configYml.getStrings("level-gui.mask.materials"))
 
         val progressionOrder = "123456789abcdefghijklmnopqrstuvwxyz"
         val progressionPattern = plugin.configYml.getStrings("level-gui.progression-slots.pattern")
@@ -150,9 +144,7 @@ class SkillGUI(
             setTitle(skill.name)
             setMask(
                 FillerMask(
-                    MaskMaterials(
-                        *maskMaterials
-                    ),
+                    maskItems,
                     *maskPattern
                 )
             )
@@ -162,7 +154,7 @@ class SkillGUI(
                         value.first,
                         value.second,
                         slot(ItemStack(Material.BLACK_STAINED_GLASS_PANE)) {
-                            setModifier { player, menu, item ->
+                            setUpdater { player, menu, item ->
                                 var page = menu.readData(player, pageKey, PersistentDataType.INTEGER)
                                 if (page == null) {
                                     menu.writeData(player, pageKey, PersistentDataType.INTEGER, 1)
@@ -178,9 +170,10 @@ class SkillGUI(
                                 item.amount = 1
 
                                 if (slotLevel > skill.maxLevel) {
-                                    item.type = maskMaterials[0]
+                                    item.type = maskItems.items[0].item.type
                                     meta.setDisplayName("")
                                     item.itemMeta = meta
+                                    item
                                 } else {
                                     if (plugin.configYml.getBool("level-gui.progression-slots.level-as-amount")) {
                                         item.amount = slotLevel
@@ -272,6 +265,7 @@ class SkillGUI(
 
                                     meta.lore = wrappedLore
                                     item.itemMeta = meta
+                                    item
                                 }
                             }
                         }
