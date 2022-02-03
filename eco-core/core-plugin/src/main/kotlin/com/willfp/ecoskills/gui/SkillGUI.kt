@@ -5,17 +5,15 @@ import com.willfp.eco.core.gui.menu
 import com.willfp.eco.core.gui.menu.Menu
 import com.willfp.eco.core.gui.slot
 import com.willfp.eco.core.gui.slot.FillerMask
-import com.willfp.eco.core.gui.slot.MaskMaterials
+import com.willfp.eco.core.gui.slot.MaskItems
 import com.willfp.eco.core.items.Items
 import com.willfp.eco.core.items.builder.ItemStackBuilder
 import com.willfp.eco.core.items.builder.SkullBuilder
 import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.skills.Skills
-import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.meta.SkullMeta
-import java.util.Locale
 
 object SkillGUI {
     @JvmStatic
@@ -30,10 +28,6 @@ object SkillGUI {
     @JvmStatic
     private fun buildHomeMenu(plugin: EcoSkillsPlugin): Menu {
         val maskPattern = plugin.configYml.getStrings("gui.mask.pattern").toTypedArray()
-        val maskMaterials = plugin.configYml
-            .getStrings("gui.mask.materials")
-            .mapNotNull { Material.getMaterial(it.uppercase(Locale.getDefault())) }
-            .toTypedArray()
         val closeItem = Items.lookup(plugin.configYml.getString("gui.close.material")).item
         val playerHeadItemBuilder = { player: Player, _: Menu ->
             val itemStack = SkullBuilder()
@@ -60,9 +54,7 @@ object SkillGUI {
             setTitle(plugin.langYml.getString("menu.title"))
             setMask(
                 FillerMask(
-                    MaskMaterials(
-                        *maskMaterials
-                    ),
+                    MaskItems.fromItemNames(plugin.configYml.getStrings("gui.mask.materials")),
                     *maskPattern
                 )
             )
