@@ -1,10 +1,11 @@
 package com.willfp.ecoskills.skills
 
 import com.willfp.eco.core.EcoPlugin
+import com.willfp.eco.core.gui.menu
 import com.willfp.eco.core.gui.menu.Menu
+import com.willfp.eco.core.gui.slot
 import com.willfp.eco.core.gui.slot.FillerMask
 import com.willfp.eco.core.gui.slot.MaskMaterials
-import com.willfp.eco.core.gui.slot.Slot
 import com.willfp.eco.core.items.Items
 import com.willfp.eco.core.items.builder.ItemStackBuilder
 import com.willfp.eco.util.NumberUtils
@@ -20,14 +21,14 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 import org.bukkit.persistence.PersistentDataType
-import java.util.*
+import java.util.Objects
 import kotlin.math.ceil
 
 class SkillGUI(
     plugin: EcoPlugin,
     skill: Skill
 ) {
-    val slot: Slot = Slot.builder { player: Player ->
+    val slot = slot({ player, _ ->
         ItemStackBuilder(
             Items.lookup(skill.config.getString("gui.item")).item
         ).addItemFlag(
@@ -46,7 +47,10 @@ class SkillGUI(
         ).addLoreLines {
             val currentXP = player.getSkillProgress(skill)
             val requiredXP = skill.getExpForLevel(player.getSkillLevel(skill) + 1)
-            val requiredXPString = if (requiredXP == Int.MAX_VALUE) plugin.langYml.getFormattedString("infinity") else NumberUtils.format(requiredXP.toDouble())
+            val requiredXPString =
+                if (requiredXP == Int.MAX_VALUE) plugin.langYml.getFormattedString("infinity") else NumberUtils.format(
+                    requiredXP.toDouble()
+                )
             val lore = mutableListOf<String>()
             for (string in plugin.configYml.getStrings("gui.skill-icon.lore")) {
                 lore.add(
@@ -88,9 +92,11 @@ class SkillGUI(
 
             wrappedLore
         }.build()
-    }.onLeftClick { event, _, _ ->
-        levels.open(event.whoClicked as Player)
-    }.build()
+    }) {
+        onLeftClick { event, _, _ ->
+            levels.open(event.whoClicked as Player)
+        }
+    }
 
     val levels: Menu
 
@@ -131,15 +137,18 @@ class SkillGUI(
         val pages = ceil(skill.maxLevel / progressionSlots.size.toDouble()).toInt()
         val levelsPerPage = progressionSlots.size
 
-        val closeMaterial = Items.lookup(plugin.configYml.getString("level-gui.progression-slots.close.material")).item
-        val homeMaterial = Items.lookup(plugin.configYml.getString("level-gui.progression-slots.prev-page.material")).item
-        val nextMaterial = Items.lookup(plugin.configYml.getString("level-gui.progression-slots.next-page.material")).item
+        val closeMaterial =
+            Items.lookup(plugin.configYml.getString("level-gui.progression-slots.close.material")).item
+        val homeMaterial =
+            Items.lookup(plugin.configYml.getString("level-gui.progression-slots.prev-page.material")).item
+        val nextMaterial =
+            Items.lookup(plugin.configYml.getString("level-gui.progression-slots.next-page.material")).item
 
         val pageKey = plugin.namespacedKeyFactory.create("page")
 
-        levels = Menu.builder(plugin.configYml.getInt("level-gui.rows"))
-            .setTitle(skill.name)
-            .setMask(
+        levels = menu(plugin.configYml.getInt("level-gui.rows")) {
+            setTitle(skill.name)
+            setMask(
                 FillerMask(
                     MaskMaterials(
                         *maskMaterials
@@ -147,13 +156,13 @@ class SkillGUI(
                     *maskPattern
                 )
             )
-            .modfiy { builder ->
+            modfiy { builder ->
                 for ((level, value) in progressionSlots) {
                     builder.setSlot(
                         value.first,
                         value.second,
-                        Slot.builder(ItemStack(Material.BLACK_STAINED_GLASS_PANE))
-                            .setModifier { player, menu, item ->
+                        slot(ItemStack(Material.BLACK_STAINED_GLASS_PANE)) {
+                            setModifier { player, menu, item ->
                                 var page = menu.readData(player, pageKey, PersistentDataType.INTEGER)
                                 if (page == null) {
                                     menu.writeData(player, pageKey, PersistentDataType.INTEGER, 1)
@@ -240,7 +249,10 @@ class SkillGUI(
                                     if (skillSpecificIndex != -1) {
                                         lore.removeAt(skillSpecificIndex)
                                         skill.getGUIRewardsMessages(player, slotLevel) // scary
-                                        lore.addAll(skillSpecificIndex, skill.getGUIRewardsMessages(player, slotLevel))
+                                        lore.addAll(
+                                            skillSpecificIndex,
+                                            skill.getGUIRewardsMessages(player, slotLevel)
+                                        )
                                     }
 
                                     val wrappedLore = mutableListOf<String>()
@@ -262,56 +274,61 @@ class SkillGUI(
                                     item.itemMeta = meta
                                 }
                             }
-                            .build()
+                        }
                     )
                 }
             }
-            .setSlot(
+            setSlot(
                 plugin.configYml.getInt("level-gui.progression-slots.prev-page.location.row"),
                 plugin.configYml.getInt("level-gui.progression-slots.prev-page.location.column"),
-                Slot.builder(
+                slot(
                     ItemStackBuilder(homeMaterial)
                         .setDisplayName(plugin.configYml.getString("level-gui.progression-slots.prev-page.name"))
                         .build()
-                ).onLeftClick { event, _, menu ->
-                    val player = event.whoClicked as Player
-                    var page = menu.readData(player, pageKey, PersistentDataType.INTEGER) ?: 1
-                    page--
-                    menu.writeData(player, pageKey, PersistentDataType.INTEGER, page)
-                    if (page == 0) {
-                        SkillGUI.homeMenu.open(event.whoClicked as Player)
+                ) {
+                    onLeftClick { event, _, menu ->
+                        val player = event.whoClicked as Player
+                        var page = menu.readData(player, pageKey, PersistentDataType.INTEGER) ?: 1
+                        page--
+                        menu.writeData(player, pageKey, PersistentDataType.INTEGER, page)
+                        if (page == 0) {
+                            SkillGUI.homeMenu.open(event.whoClicked as Player)
+                        }
                     }
-                }.build()
+                }
             )
-            .setSlot(
+            setSlot(
                 plugin.configYml.getInt("level-gui.progression-slots.next-page.location.row"),
                 plugin.configYml.getInt("level-gui.progression-slots.next-page.location.column"),
-                Slot.builder(
+                slot(
                     ItemStackBuilder(nextMaterial)
                         .setDisplayName(plugin.configYml.getString("level-gui.progression-slots.next-page.name"))
                         .build()
-                ).onLeftClick { event, _, menu ->
-                    val player = event.whoClicked as Player
-                    var page = menu.readData(player, pageKey, PersistentDataType.INTEGER) ?: 1
-                    if (page < pages) {
-                        page++
-                    }
-                    menu.writeData(player, pageKey, PersistentDataType.INTEGER, page)
+                ) {
+                    onLeftClick { event, _, menu ->
+                        val player = event.whoClicked as Player
+                        var page = menu.readData(player, pageKey, PersistentDataType.INTEGER) ?: 1
+                        if (page < pages) {
+                            page++
+                        }
+                        menu.writeData(player, pageKey, PersistentDataType.INTEGER, page)
 
-                }.build()
+                    }
+                }
             )
-            .setSlot(
+            setSlot(
                 plugin.configYml.getInt("level-gui.progression-slots.close.location.row"),
                 plugin.configYml.getInt("level-gui.progression-slots.close.location.column"),
-                Slot.builder(
+                slot(
                     ItemStackBuilder(closeMaterial)
                         .setDisplayName(plugin.configYml.getString("level-gui.progression-slots.close.name"))
                         .build()
-                ).onLeftClick { event, _ ->
-                    event.whoClicked.closeInventory()
-                }.build()
+                ) {
+                    onLeftClick { event, _ ->
+                        event.whoClicked.closeInventory()
+                    }
+                }
             )
-            .build()
+        }
     }
-
 }

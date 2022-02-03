@@ -23,7 +23,7 @@ abstract class Stat(
 
     val key: NamespacedKey = plugin.namespacedKeyFactory.create(id)
     val uuid: UUID = UUID.nameUUIDFromBytes(id.toByteArray())
-    val dataKey = PersistentDataKey<Int>(
+    val dataKey = PersistentDataKey(
         plugin.namespacedKeyFactory.create(id),
         PersistentDataKeyType.INT,
         0

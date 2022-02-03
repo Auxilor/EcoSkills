@@ -1,6 +1,6 @@
 package com.willfp.ecoskills.actionbar
 
-import com.willfp.eco.core.data.PlayerProfile
+import com.willfp.eco.core.data.profile
 import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.commands.CommandToggleActionbar
@@ -52,7 +52,7 @@ object ActionBarUtils {
                         continue
                     }
 
-                    if (!PlayerProfile.load(player).read(CommandToggleActionbar.DESCRIPTIONS_KEY)) {
+                    if (!player.profile.read(CommandToggleActionbar.DESCRIPTIONS_KEY)) {
                         continue
                     }
 

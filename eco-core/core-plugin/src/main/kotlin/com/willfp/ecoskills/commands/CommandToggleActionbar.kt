@@ -2,9 +2,9 @@ package com.willfp.ecoskills.commands
 
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.impl.Subcommand
-import com.willfp.eco.core.data.PlayerProfile
 import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.eco.core.data.keys.PersistentDataKeyType
+import com.willfp.eco.core.data.profile
 import com.willfp.eco.util.NamespacedKeyUtils
 import net.md_5.bungee.api.ChatMessageType
 import net.md_5.bungee.api.chat.TextComponent
@@ -25,7 +25,7 @@ class CommandToggleActionbar(plugin: EcoPlugin) : Subcommand(
         }
 
         val player = sender as Player
-        val profile = PlayerProfile.load(player)
+        val profile = player.profile
 
         var currentStatus = profile.read(DESCRIPTIONS_KEY)
         currentStatus = !currentStatus

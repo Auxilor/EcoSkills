@@ -27,12 +27,12 @@ abstract class Skill(
     protected val plugin: EcoPlugin = EcoSkillsPlugin.getInstance()
 
     val key: NamespacedKey = plugin.namespacedKeyFactory.create(id)
-    val dataKey = PersistentDataKey<Int>(
+    val dataKey = PersistentDataKey(
         plugin.namespacedKeyFactory.create(id),
         PersistentDataKeyType.INT,
         0
     )
-    val dataXPKey = PersistentDataKey<Double>(
+    val dataXPKey = PersistentDataKey(
         plugin.namespacedKeyFactory.create("${id}_xp"),
         PersistentDataKeyType.DOUBLE,
         0.0

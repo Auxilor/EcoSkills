@@ -1,9 +1,9 @@
 package com.willfp.ecoskills
 
 import com.github.benmanes.caffeine.cache.Caffeine
-import com.willfp.eco.core.data.PlayerProfile
 import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.eco.core.data.keys.PersistentDataKeyType
+import com.willfp.eco.core.data.profile
 import com.willfp.ecoskills.api.PlayerSkillExpGainEvent
 import com.willfp.ecoskills.api.PlayerSkillLevelUpEvent
 import com.willfp.ecoskills.api.modifier.ModifierOperation
@@ -105,11 +105,11 @@ fun Player.giveSkillExperience(skill: Skill, experience: Double, noMultiply: Boo
 }
 
 fun OfflinePlayer.getSkillLevel(skill: Skill): Int {
-    return PlayerProfile.load(this).read(skill.dataKey)
+    return this.profile.read(skill.dataKey)
 }
 
 fun OfflinePlayer.setSkillLevel(skill: Skill, level: Int) {
-    PlayerProfile.load(this).write(skill.dataKey, level)
+    this.profile.write(skill.dataKey, level)
 }
 
 fun OfflinePlayer.getSkillProgressToNextLevel(skill: Skill): Double {
@@ -121,19 +121,19 @@ fun OfflinePlayer.getSkillProgressRequired(skill: Skill): Int {
 }
 
 fun OfflinePlayer.getSkillProgress(skill: Skill): Double {
-    return PlayerProfile.load(this).read(skill.dataXPKey)
+    return this.profile.read(skill.dataXPKey)
 }
 
 fun OfflinePlayer.setSkillProgress(skill: Skill, level: Double) {
-    PlayerProfile.load(this).write(skill.dataXPKey, level)
+    this.profile.write(skill.dataXPKey, level)
 }
 
 fun OfflinePlayer.getEffectLevel(effect: Effect): Int {
-    return PlayerProfile.load(this).read(effect.dataKey)
+    return this.profile.read(effect.dataKey)
 }
 
 fun OfflinePlayer.setEffectLevel(effect: Effect, level: Int) {
-    PlayerProfile.load(this).write(effect.dataKey, level)
+    this.profile.write(effect.dataKey, level)
 }
 
 fun OfflinePlayer.getStatLevel(stat: Stat): Int {
@@ -169,29 +169,29 @@ fun Player.getBonusStatLevel(stat: Stat): Int {
 }
 
 fun OfflinePlayer.getBaseStatLevel(stat: Stat): Int {
-    return PlayerProfile.load(this).read(stat.dataKey)
+    return this.profile.read(stat.dataKey)
 }
 
 fun OfflinePlayer.setStatLevel(stat: Stat, level: Int) {
-    PlayerProfile.load(this).write(stat.dataKey, level)
+    this.profile.write(stat.dataKey, level)
     if (this is Player) {
         stat.updateStatLevel(this)
     }
 }
 
 private val gainSoundKey =
-    PersistentDataKey<Boolean>(plugin.namespacedKeyFactory.create("gainSound"), PersistentDataKeyType.BOOLEAN, true);
+    PersistentDataKey(plugin.namespacedKeyFactory.create("gainSound"), PersistentDataKeyType.BOOLEAN, true);
 
 fun OfflinePlayer.hasGainSoundEnabled(): Boolean {
-    return PlayerProfile.load(this).read(gainSoundKey)
+    return this.profile.read(gainSoundKey)
 }
 
 fun OfflinePlayer.setGainSoundEnabled(enabled: Boolean) {
-    PlayerProfile.load(this).write(gainSoundKey, enabled)
+    this.profile.write(gainSoundKey, enabled)
 }
 
 fun OfflinePlayer.toggleGainSoundEnabled() {
-    PlayerProfile.load(this).write(gainSoundKey, !hasGainSoundEnabled())
+    this.profile.write(gainSoundKey, !hasGainSoundEnabled())
 }
 
 fun Entity.tryAsPlayer(): Player? {
