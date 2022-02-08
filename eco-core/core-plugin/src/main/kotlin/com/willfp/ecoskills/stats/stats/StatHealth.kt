@@ -17,7 +17,7 @@ class StatHealth : Stat(
             this.uuid,
             this.name,
             this.config.getDouble("health-per-level") * player.getStatLevel(this),
-            AttributeModifier.Operation.MULTIPLY_SCALAR_1
+            AttributeModifier.Operation.ADD_NUMBER
         )
         val instance = player.getAttribute(Attribute.GENERIC_MAX_HEALTH) ?: return
 
