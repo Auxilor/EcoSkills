@@ -53,6 +53,6 @@ class EffectBountifulHarvest : DropMultiplierEffect(
             return
         }
 
-        this.handleDropBonus(event, player, block)
+        this.handleDropBonus(player, event.items.map { it.itemStack.clone() })
     }
 }

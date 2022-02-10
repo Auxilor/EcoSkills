@@ -3,57 +3,34 @@ package com.willfp.ecoskills.effects
 import com.willfp.eco.core.drops.DropQueue
 import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.getEffectLevel
-import org.bukkit.Bukkit
-import org.bukkit.block.Block
 import org.bukkit.entity.Player
-import org.bukkit.event.block.BlockDropItemEvent
+import org.bukkit.inventory.ItemStack
 
 abstract class DropMultiplierEffect(
     id: String
 ) : Effect(id) {
-    private val noRepeat = mutableListOf<BlockDropItemEvent>()
-
     override fun formatDescription(string: String, level: Int): String {
         return string.replace("%chance%", NumberUtils.format(this.getChance(level)))
             .replace("%multiplier%", this.getMultiplier(level).toString())
     }
 
-    fun handleDropBonus(event: BlockDropItemEvent, player: Player, block: Block) {
-        if (noRepeat.contains(event)) {
-            return
-        }
-
+    fun handleDropBonus(player: Player, items: Collection<ItemStack>) {
         val level = player.getEffectLevel(this)
 
         val bonus = generateBonus(getChance(level), getMultiplier(level))
 
-        if (bonus <= 1) {
-            return
-        }
-
-        val dropEvent = BlockDropItemEvent(block, block.state, player, event.items.map {
-            it.itemStack = it.itemStack.apply {
-                amount *= bonus
-            }
-            it
-        })
-
-        noRepeat.add(dropEvent)
-
-        Bukkit.getPluginManager().callEvent(dropEvent)
-
-        if (dropEvent.items.isEmpty() || dropEvent.isCancelled) {
+        if (bonus <= 0) {
             return
         }
 
         DropQueue(player)
-            .addItems(dropEvent.items.map { it.itemStack })
+            .addItems(items.map { it.apply { amount *= bonus } })
             .push()
     }
 
     private fun generateBonus(chance: Double, maxMultiplier: Int): Int {
-        var bonus = maxMultiplier - 1
-        if (NumberUtils.randFloat(0.0, 100.0) < chance) {
+        var bonus = maxMultiplier - 2
+        if (NumberUtils.randFloat(0.0, 100.0) <= chance) {
             bonus++
         }
 
