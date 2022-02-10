@@ -1,11 +1,8 @@
 package com.willfp.ecoskills.effects.effects
 
-import com.willfp.eco.core.drops.DropQueue
 import com.willfp.eco.util.BlockUtils
-import com.willfp.eco.util.NumberUtils
-import com.willfp.ecoskills.effects.Effect
-import com.willfp.ecoskills.getEffectLevel
-import org.bukkit.Bukkit
+import com.willfp.eco.util.containsIgnoreCase
+import com.willfp.ecoskills.effects.DropMultiplierEffect
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.event.EventHandler
@@ -13,16 +10,10 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockDropItemEvent
 
-class EffectMasterLumberjack : Effect(
+class EffectMasterLumberjack : DropMultiplierEffect(
     "master_lumberjack"
 ) {
     private val blockMap = mutableMapOf<Location, Material>()
-    private val noRepeat = mutableListOf<BlockDropItemEvent>()
-
-    override fun formatDescription(string: String, level: Int): String {
-        return string.replace("%chance%", NumberUtils.format(this.getChance(level)))
-            .replace("%multiplier%", this.getMultiplier(level).toString())
-    }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun onBreak(event: BlockBreakEvent) {
@@ -39,10 +30,6 @@ class EffectMasterLumberjack : Effect(
             return
         }
 
-        if (noRepeat.contains(event)) {
-            return
-        }
-
         val mat = blockMap[event.block.location] ?: return
 
         val player = event.player
@@ -53,64 +40,10 @@ class EffectMasterLumberjack : Effect(
             return
         }
 
-        if (!config.getStrings("on-blocks").contains(mat.name.lowercase())) {
+        if (!config.getStrings("on-blocks").containsIgnoreCase(mat.name)) {
             return
         }
 
-        val level = player.getEffectLevel(this)
-
-        val chance = getChance(level)
-
-        var bonus = getMultiplier(level) - 2
-
-        if (bonus <= 0) {
-            return
-        }
-
-        if (NumberUtils.randFloat(0.0, 100.0) < chance) {
-            bonus++
-        }
-
-        val dropEvent = BlockDropItemEvent(block, block.state, player, event.items.map {
-            it.itemStack = it.itemStack.apply {
-                this.amount *= bonus
-            }
-            it
-        })
-
-        noRepeat.add(dropEvent)
-
-        Bukkit.getPluginManager().callEvent(dropEvent)
-
-        if (dropEvent.items.isEmpty() || dropEvent.isCancelled) {
-            return
-        }
-
-        DropQueue(player)
-            .addItems(dropEvent.items.map { it.itemStack })
-            .push()
-    }
-
-    private fun getMultiplier(level: Int): Int {
-        val chance = config.getDouble("chance-per-level") * level
-
-        var add = 2
-
-        if (chance % 100 == 0.0) {
-            add = 1
-        }
-
-        return (chance / 100).toInt() + add
-    }
-
-    private fun getChance(level: Int): Double {
-        var chance = config.getDouble("chance-per-level") * level
-
-        chance -= ((getMultiplier(level) - 2) * 100)
-        if (chance == 0.0) {
-            chance = 100.0
-        }
-
-        return chance
+        this.handleDropBonus(event, player, block)
     }
 }
