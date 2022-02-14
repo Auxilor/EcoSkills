@@ -184,7 +184,9 @@ class SkillGUI(
                                             val lookup = Items.lookup(plugin.configYml.getString("level-gui.progression-slots.unlocked.material")).item
                                             item.type = lookup.type
                                             item.amount = lookup.amount
-                                            meta.setCustomModelData(lookup.itemMeta?.customModelData)
+                                            if (lookup.itemMeta?.hasCustomModelData() == true) {
+                                                meta.setCustomModelData(lookup.itemMeta?.customModelData)
+                                            }
                                             meta.setDisplayName(
                                                 plugin.configYml.getFormattedString("level-gui.progression-slots.unlocked.name")
                                                     .replace("%skill%", skill.name)
@@ -198,7 +200,9 @@ class SkillGUI(
                                             val lookup = Items.lookup(plugin.configYml.getString("level-gui.progression-slots.in-progress.material")).item
                                             item.type = lookup.type
                                             item.amount = lookup.amount
-                                            meta.setCustomModelData(lookup.itemMeta?.customModelData)
+                                            if (lookup.itemMeta?.hasCustomModelData() == true) {
+                                                meta.setCustomModelData(lookup.itemMeta?.customModelData)
+                                            }
                                             meta.setDisplayName(
                                                 plugin.configYml.getFormattedString("level-gui.progression-slots.in-progress.name")
                                                     .replace("%skill%", skill.name)
@@ -212,7 +216,9 @@ class SkillGUI(
                                             val lookup = Items.lookup(plugin.configYml.getString("level-gui.progression-slots.locked.material")).item
                                             item.type = lookup.type
                                             item.amount = lookup.amount
-                                            meta.setCustomModelData(lookup.itemMeta?.customModelData)
+                                            if (lookup.itemMeta?.hasCustomModelData() == true) {
+                                                meta.setCustomModelData(lookup.itemMeta?.customModelData)
+                                            }
                                             meta.setDisplayName(
                                                 plugin.configYml.getFormattedString("level-gui.progression-slots.locked.name")
                                                     .replace("%skill%", skill.name)
