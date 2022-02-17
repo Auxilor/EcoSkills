@@ -7,14 +7,10 @@ import com.willfp.eco.core.data.keys.PersistentDataKeyType
 import com.willfp.eco.core.integrations.placeholder.PlaceholderEntry
 import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.StringUtils
-import com.willfp.ecoskills.EcoSkillsPlugin
-import com.willfp.ecoskills.SkillObject
+import com.willfp.ecoskills.*
 import com.willfp.ecoskills.config.SkillConfig
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.effects.Effects
-import com.willfp.ecoskills.getAverageSkillLevel
-import com.willfp.ecoskills.getSkillLevel
-import com.willfp.ecoskills.getTotalSkillLevel
 import com.willfp.ecoskills.stats.Stats
 import org.bukkit.Bukkit
 import org.bukkit.NamespacedKey
@@ -31,12 +27,12 @@ abstract class Skill(
         plugin.namespacedKeyFactory.create(id),
         PersistentDataKeyType.INT,
         0
-    )
+    ).player()
     val dataXPKey = PersistentDataKey(
         plugin.namespacedKeyFactory.create("${id}_xp"),
         PersistentDataKeyType.DOUBLE,
         0.0
-    )
+    ).player()
     val config: Config = SkillConfig(this.id, this.javaClass, plugin)
     lateinit var name: String
     lateinit var description: String

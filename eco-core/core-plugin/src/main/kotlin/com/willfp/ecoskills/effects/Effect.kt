@@ -11,7 +11,7 @@ import com.willfp.ecoskills.SkillObject
 import com.willfp.ecoskills.getEffectLevel
 import org.bukkit.NamespacedKey
 import org.bukkit.event.Listener
-import java.util.UUID
+import java.util.*
 
 abstract class Effect(
     id: String
@@ -23,7 +23,7 @@ abstract class Effect(
         plugin.namespacedKeyFactory.create(id),
         PersistentDataKeyType.INT,
         0
-    )
+    ).player()
     val uuid: UUID = UUID.nameUUIDFromBytes(id.toByteArray())
     lateinit var config: Config
 

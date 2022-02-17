@@ -6,15 +6,11 @@ import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.eco.core.data.keys.PersistentDataKeyType
 import com.willfp.eco.core.integrations.placeholder.PlaceholderEntry
 import com.willfp.eco.util.NumberUtils
-import com.willfp.ecoskills.EcoSkillsPlugin
-import com.willfp.ecoskills.SkillObject
-import com.willfp.ecoskills.getBaseStatLevel
-import com.willfp.ecoskills.getBonusStatLevel
-import com.willfp.ecoskills.getStatLevel
+import com.willfp.ecoskills.*
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
-import java.util.UUID
+import java.util.*
 
 abstract class Stat(
     id: String
@@ -27,7 +23,7 @@ abstract class Stat(
         plugin.namespacedKeyFactory.create(id),
         PersistentDataKeyType.INT,
         0
-    )
+    ).player()
     lateinit var config: Config
     lateinit var name: String
 
