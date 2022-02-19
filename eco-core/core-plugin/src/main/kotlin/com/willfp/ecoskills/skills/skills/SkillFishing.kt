@@ -29,6 +29,10 @@ class SkillFishing : Skill(
 
         val expToDrop = event.expToDrop
 
+        if (expToDrop == 0) {
+            return
+        }
+
         val xp = expToDrop * this.config.getDouble("xp-per-experience-dropped")
         player.giveSkillExperience(this, xp)
     }
