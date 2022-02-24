@@ -1,5 +1,5 @@
 bountiful_harvest:
-  description: "&a%chance%%&8 to get &a%multiplier%x&8 drops from farming"
+  description: "&a%chance%%&8 chance to get &a%multiplier%x&8 drops from farming"
 
   # Chance is as a percentage; if the chance for a player is over 100 then it will always be double drops
   # with a chance to get triple drops. Same goes if above 200, but then it will always be triple with a chance
@@ -199,7 +199,7 @@ endangering:
   # Disabled worlds
   disabled-in-worlds: [ ]
 spelunking:
-  description: "&a%chance%%&8 to get &a%multiplier%x&8 drops from ores"
+  description: "&a%chance%%&8 chance to get &a%multiplier%x&8 drops from ores"
 
   # The ores that can drop double
   on-blocks:
@@ -255,7 +255,7 @@ overcompensation:
   # Disabled worlds
   disabled-in-worlds: [ ]
 master_lumberjack:
-  description: "&a%chance%%&8 to get &a%multiplier%x&8 drops from trees"
+  description: "&a%chance%%&8 chance to get &a%multiplier%x&8 drops from trees"
 
   # The blocks that can drop double
   on-blocks:
