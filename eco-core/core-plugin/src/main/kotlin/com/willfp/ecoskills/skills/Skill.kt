@@ -7,10 +7,15 @@ import com.willfp.eco.core.data.keys.PersistentDataKeyType
 import com.willfp.eco.core.integrations.placeholder.PlaceholderEntry
 import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.StringUtils
-import com.willfp.ecoskills.*
+import com.willfp.ecoskills.EcoSkillsPlugin
+import com.willfp.ecoskills.SkillObject
 import com.willfp.ecoskills.config.SkillConfig
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.effects.Effects
+import com.willfp.ecoskills.getAverageSkillLevel
+import com.willfp.ecoskills.getSkillLevel
+import com.willfp.ecoskills.getSkillProgress
+import com.willfp.ecoskills.getTotalSkillLevel
 import com.willfp.ecoskills.stats.Stats
 import org.bukkit.Bukkit
 import org.bukkit.NamespacedKey
@@ -85,6 +90,35 @@ abstract class Skill(
             plugin,
             id,
             { player -> player.getSkillLevel(this).toString() },
+            true
+        ).register()
+
+        PlaceholderEntry(
+            plugin,
+            "${id}_percentage_progress",
+            {
+                val currentXP = it.getSkillProgress(this)
+                val requiredXP = this.getExpForLevel(it.getSkillLevel(this) + 1)
+                NumberUtils.format((currentXP / requiredXP) * 100)
+            },
+            true
+        ).register()
+
+        PlaceholderEntry(
+            plugin,
+            "${id}_current_xp",
+            {
+                NumberUtils.format(it.getSkillProgress(this))
+            },
+            true
+        ).register()
+
+        PlaceholderEntry(
+            plugin,
+            "${id}_required_xp",
+            {
+                this.getExpForLevel(it.getSkillLevel(this) + 1).toString()
+            },
             true
         ).register()
 
@@ -178,7 +212,10 @@ abstract class Skill(
 
                     if (skillObject is Effect) {
                         val objLevel = this.getCumulativeLevelUpReward(skillObject, level)
-                        msg = msg.replace("%ecoskills_${skillObject.id}_description%", skillObject.getDescription(objLevel))
+                        msg = msg.replace(
+                            "%ecoskills_${skillObject.id}_description%",
+                            skillObject.getDescription(objLevel)
+                        )
                     }
                 }
                 messages.add(msg)
