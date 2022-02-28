@@ -42,7 +42,11 @@ class EffectEyeOfTheDepths: Effect(
 
         val items = config.getStrings("rare-loot-items")
 
-        val reward = items[NumberUtils.randInt(0, items.size - 1)]
+        if (items.isEmpty()) {
+            return
+        }
+
+        val reward = if (items.size == 1) items.first() else items[NumberUtils.randInt(0, items.size - 1)]
 
         LootReward.fromString(reward).reward(player, event.caught!!.location)
     }
