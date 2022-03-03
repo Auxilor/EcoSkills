@@ -107,12 +107,12 @@ class EffectPotionmaster : Effect(
             effects[effectType] = if (data.type.isUpgradeable) 2 else 1
         }
 
-        for ((k, v) in effects) {
+        for ((k, level) in effects) {
             player.addPotionEffect(
                 PotionEffect(
                     k,
                     PotionUtils.getDuration(data) + delta,
-                    v
+                    level - 1
                 )
             )
         }
