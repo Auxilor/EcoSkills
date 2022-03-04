@@ -140,7 +140,7 @@ class EffectPotionmaster : Effect(
             effects[PotionEffectType.SLOW] = 4
             effects[PotionEffectType.DAMAGE_RESISTANCE] = 2
         } else {
-            effects[data.type.effectType ?: return] = if (data.type.isUpgradeable) 2 else 1
+            effects[data.type.effectType ?: return] = if (data.isUpgraded) 2 else 1
         }
 
         for (entity in entities) {
