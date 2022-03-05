@@ -104,7 +104,7 @@ class EffectPotionmaster : Effect(
             effects[PotionEffectType.DAMAGE_RESISTANCE] = 2
         } else {
             val effectType = data.type.effectType ?: return
-            effects[effectType] = if (data.type.isUpgradeable) 2 else 1
+            effects[effectType] = if (data.isUpgraded) 2 else 1
         }
 
         for ((k, level) in effects) {
@@ -149,7 +149,7 @@ class EffectPotionmaster : Effect(
                     PotionEffect(
                         key,
                         ((PotionUtils.getDuration(data) + delta) * event.getIntensity(entity)).toInt(),
-                        value
+                        value - 1
                     )
                 )
             }
