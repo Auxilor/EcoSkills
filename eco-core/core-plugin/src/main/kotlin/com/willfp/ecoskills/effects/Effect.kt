@@ -3,7 +3,7 @@ package com.willfp.ecoskills.effects
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.eco.core.data.keys.PersistentDataKeyType
-import com.willfp.eco.core.integrations.placeholder.PlaceholderEntry
+import com.willfp.eco.core.placeholder.PlayerPlaceholder
 import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.EcoSkillsPlugin
@@ -50,25 +50,19 @@ abstract class Effect(
     }
 
     fun update() {
-        PlaceholderEntry(
+        PlayerPlaceholder(
             plugin,
-            id,
-            { player -> player.getEffectLevel(this).toString() },
-            true
-        ).register()
+            id
+        ) { player -> player.getEffectLevel(this).toString() }.register()
 
-        PlaceholderEntry(
+        PlayerPlaceholder(
             plugin,
-            "${id}_numeral",
-            { player -> NumberUtils.toNumeral(player.getEffectLevel(this)) },
-            true
-        ).register()
+            "${id}_numeral"
+        ) { player -> NumberUtils.toNumeral(player.getEffectLevel(this)) }.register()
 
-        PlaceholderEntry(
+        PlayerPlaceholder(
             plugin,
-            "${id}_description",
-            { player -> this.getDescription(player.getEffectLevel(this)) },
-            true
-        ).register()
+            "${id}_description"
+        ) { player -> this.getDescription(player.getEffectLevel(this)) }.register()
     }
 }

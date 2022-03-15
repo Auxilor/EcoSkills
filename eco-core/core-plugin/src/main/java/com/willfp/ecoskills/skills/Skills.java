@@ -3,7 +3,7 @@ package com.willfp.ecoskills.skills;
 import com.google.common.collect.ImmutableSet;
 import com.willfp.eco.core.EcoPlugin;
 import com.willfp.eco.core.config.updating.ConfigUpdater;
-import com.willfp.eco.core.integrations.placeholder.PlaceholderEntry;
+import com.willfp.eco.core.placeholder.PlayerPlaceholder;
 import com.willfp.eco.util.NumberUtils;
 import com.willfp.ecoskills.EcoSkillsPlayerKt;
 import com.willfp.ecoskills.EcoSkillsPlugin;
@@ -62,11 +62,10 @@ public class Skills {
 
     @ConfigUpdater
     public static void update(@NotNull final EcoPlugin plugin) {
-        new PlaceholderEntry(
+        new PlayerPlaceholder(
                 plugin,
                 "skill_multiplier",
-                (player -> NumberUtils.format(EcoSkillsPlayerKt.getSkillExperienceMultiplier(player))),
-                true
+                (player -> NumberUtils.format(EcoSkillsPlayerKt.getSkillExperienceMultiplier(player)))
         ).register();
 
         for (Skill skill : Skills.values()) {

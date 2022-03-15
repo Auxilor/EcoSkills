@@ -4,18 +4,14 @@ import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.eco.core.data.keys.PersistentDataKeyType
-import com.willfp.eco.core.integrations.placeholder.PlaceholderEntry
+import com.willfp.eco.core.placeholder.PlayerPlaceholder
+import com.willfp.eco.core.placeholder.PlayerlessPlaceholder
 import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.StringUtils
-import com.willfp.ecoskills.EcoSkillsPlugin
-import com.willfp.ecoskills.SkillObject
+import com.willfp.ecoskills.*
 import com.willfp.ecoskills.config.SkillConfig
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.effects.Effects
-import com.willfp.ecoskills.getAverageSkillLevel
-import com.willfp.ecoskills.getSkillLevel
-import com.willfp.ecoskills.getSkillProgress
-import com.willfp.ecoskills.getTotalSkillLevel
 import com.willfp.ecoskills.stats.Stats
 import org.bukkit.Bukkit
 import org.bukkit.NamespacedKey
@@ -86,69 +82,53 @@ abstract class Skill(
             levelCommands[level] = commands
         }
 
-        PlaceholderEntry(
+        PlayerPlaceholder(
             plugin,
-            id,
-            { player -> player.getSkillLevel(this).toString() },
-            true
-        ).register()
+            id
+        ) { player -> player.getSkillLevel(this).toString() }.register()
 
-        PlaceholderEntry(
+        PlayerPlaceholder(
             plugin,
-            "${id}_percentage_progress",
-            {
-                val currentXP = it.getSkillProgress(this)
-                val requiredXP = this.getExpForLevel(it.getSkillLevel(this) + 1)
-                NumberUtils.format((currentXP / requiredXP) * 100)
-            },
-            true
-        ).register()
+            "${id}_percentage_progress"
+        ) {
+            val currentXP = it.getSkillProgress(this)
+            val requiredXP = this.getExpForLevel(it.getSkillLevel(this) + 1)
+            NumberUtils.format((currentXP / requiredXP) * 100)
+        }.register()
 
-        PlaceholderEntry(
+        PlayerPlaceholder(
             plugin,
-            "${id}_current_xp",
-            {
-                NumberUtils.format(it.getSkillProgress(this))
-            },
-            true
-        ).register()
+            "${id}_current_xp"
+        ) {
+            NumberUtils.format(it.getSkillProgress(this))
+        }.register()
 
-        PlaceholderEntry(
+        PlayerPlaceholder(
             plugin,
-            "${id}_required_xp",
-            {
-                this.getExpForLevel(it.getSkillLevel(this) + 1).toString()
-            },
-            true
-        ).register()
+            "${id}_required_xp"
+        ) {
+            this.getExpForLevel(it.getSkillLevel(this) + 1).toString()
+        }.register()
 
-        PlaceholderEntry(
+        PlayerPlaceholder(
             plugin,
-            "${id}_numeral",
-            { player -> NumberUtils.toNumeral(player.getSkillLevel(this)) },
-            true
-        ).register()
+            "${id}_numeral"
+        ) { player -> NumberUtils.toNumeral(player.getSkillLevel(this)) }.register()
 
-        PlaceholderEntry(
+        PlayerlessPlaceholder(
             plugin,
-            "${id}_name",
-            { this.name },
-            false
-        ).register()
+            "${id}_name"
+        ) { this.name }.register()
 
-        PlaceholderEntry(
+        PlayerPlaceholder(
             plugin,
-            "average_skill_level",
-            { player -> NumberUtils.format(player.getAverageSkillLevel()) },
-            true
-        ).register()
+            "average_skill_level"
+        ) { player -> NumberUtils.format(player.getAverageSkillLevel()) }.register()
 
-        PlaceholderEntry(
+        PlayerPlaceholder(
             plugin,
-            "total_skill_level",
-            { player -> player.getTotalSkillLevel().toString() },
-            true
-        ).register()
+            "total_skill_level"
+        ) { player -> player.getTotalSkillLevel().toString() }.register()
 
         postUpdate()
 

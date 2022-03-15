@@ -4,7 +4,8 @@ import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.eco.core.data.keys.PersistentDataKeyType
-import com.willfp.eco.core.integrations.placeholder.PlaceholderEntry
+import com.willfp.eco.core.placeholder.PlayerPlaceholder
+import com.willfp.eco.core.placeholder.PlayerlessPlaceholder
 import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.*
 import org.bukkit.NamespacedKey
@@ -46,54 +47,42 @@ abstract class Stat(
     fun update() {
         name = config.getFormattedString("name")
 
-        PlaceholderEntry(
+        PlayerPlaceholder(
             plugin,
-            id,
-            { player -> player.getStatLevel(this).toString() },
-            true
-        ).register()
+            id
+        ) { player -> player.getStatLevel(this).toString() }.register()
 
-        PlaceholderEntry(
+        PlayerPlaceholder(
             plugin,
-            "${id}_numeral",
-            { player -> NumberUtils.toNumeral(player.getStatLevel(this)) },
-            true
-        ).register()
+            "${id}_numeral"
+        ) { player -> NumberUtils.toNumeral(player.getStatLevel(this)) }.register()
 
-        PlaceholderEntry(
+        PlayerPlaceholder(
             plugin,
-            "${id}_base",
-            { player -> player.getBaseStatLevel(this).toString() },
-            true
-        ).register()
+            "${id}_base"
+        ) { player -> player.getBaseStatLevel(this).toString() }.register()
 
-        PlaceholderEntry(
+        PlayerPlaceholder(
             plugin,
-            "${id}_base_numeral",
-            { player -> NumberUtils.toNumeral(player.getBaseStatLevel(this)) },
-            true
-        ).register()
+            "${id}_base_numeral"
+        ) { player -> NumberUtils.toNumeral(player.getBaseStatLevel(this)) }.register()
 
-        PlaceholderEntry(
+        PlayerPlaceholder(
             plugin,
-            "${id}_bonus",
-            { player ->
-                val bonus = player.getBonusStatLevel(this)
-                return@PlaceholderEntry when {
-                    bonus > 0 -> "+$bonus"
-                    bonus < 0 -> "$bonus"
-                    else -> ""
-                }
-            },
-            true
-        ).register()
+            "${id}_bonus"
+        ) { player ->
+            val bonus = player.getBonusStatLevel(this)
+            return@PlayerPlaceholder when {
+                bonus > 0 -> "+$bonus"
+                bonus < 0 -> "$bonus"
+                else -> ""
+            }
+        }.register()
 
-        PlaceholderEntry(
+        PlayerlessPlaceholder(
             plugin,
-            "${id}_name",
-            { this.name },
-            false
-        ).register()
+            "${id}_name"
+        ) { this.name }.register()
     }
 
     open fun updateStatLevel(player: Player) {
