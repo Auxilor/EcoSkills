@@ -10,7 +10,7 @@ class SkillConfig(
     plugin: EcoPlugin
 ) : ExtendableConfig(
     name,
-    false,
+    plugin.extensionLoader.loadedExtensions.isEmpty(),
     plugin,
     source,
     "skills/",
