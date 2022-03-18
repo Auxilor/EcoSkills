@@ -35,6 +35,7 @@ abstract class Skill(
         0.0
     ).player()
     val config: Config = SkillConfig(this.id, this.javaClass, plugin)
+    val xpRequirements = config.getInts("level-xp-requirements")
     lateinit var name: String
     lateinit var description: String
     lateinit var gui: SkillGUI
@@ -57,7 +58,7 @@ abstract class Skill(
     fun update() {
         name = config.getFormattedString("name")
         description = config.getFormattedString("description")
-        maxLevel = config.getInt("max-level")
+        maxLevel = xpRequirements.size - 1
         rewards.clear()
         for (string in config.getStrings("rewards.rewards")) {
             val split = string.split("::")
@@ -268,8 +269,8 @@ abstract class Skill(
     }
 
     fun getExpForLevel(level: Int): Int {
-        val req = this.config.getInts("level-xp-requirements")
-        return if (req.size < level) {
+        val req = xpRequirements
+        return if (maxLevel < level) {
             Int.MAX_VALUE
         } else {
             req[level - 1]

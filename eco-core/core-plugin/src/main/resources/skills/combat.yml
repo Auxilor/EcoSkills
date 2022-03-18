@@ -1,6 +1,5 @@
 name: "Combat"
 description: "Kill mobs to earn Combat XP"
-max-level: 50
 disabled-in-worlds: []
 
 # Add more levels if you want

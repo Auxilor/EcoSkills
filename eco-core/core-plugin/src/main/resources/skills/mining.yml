@@ -1,6 +1,5 @@
 name: "Mining"
 description: "Break blocks to earn Mining XP"
-max-level: 50
 disabled-in-worlds: []
 
 # Add more levels if you want

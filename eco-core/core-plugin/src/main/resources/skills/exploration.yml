@@ -1,6 +1,5 @@
 name: "Exploration"
 description: "Move to earn Exploration XP"
-max-level: 50
 disabled-in-worlds: []
 
 # Add more levels if you want

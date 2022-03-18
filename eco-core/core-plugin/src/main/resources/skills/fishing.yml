@@ -1,6 +1,5 @@
 name: "Fishing"
 description: "Fish to earn Fishing XP"
-max-level: 50
 disabled-in-worlds: []
 
 # Add more levels if you want

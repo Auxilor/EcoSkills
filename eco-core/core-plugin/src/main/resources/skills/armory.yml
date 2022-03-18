@@ -1,6 +1,5 @@
 name: "Armory"
 description: "Take damage to earn Armory XP"
-max-level: 50
 disabled-in-worlds: []
 
 # Add more levels if you want
