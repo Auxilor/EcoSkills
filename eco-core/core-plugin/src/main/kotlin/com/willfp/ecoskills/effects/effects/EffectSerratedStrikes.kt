@@ -1,5 +1,6 @@
 package com.willfp.ecoskills.effects.effects
 
+import com.willfp.eco.core.integrations.antigrief.AntigriefManager
 import com.willfp.eco.core.scheduling.RunnableTask
 import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.effects.Effect
@@ -28,6 +29,10 @@ class EffectSerratedStrikes : Effect(
         val victim = if (event.entity is LivingEntity) event.entity as LivingEntity else return
 
         if (player.uniqueId == victim.uniqueId) {
+            return
+        }
+
+        if (!AntigriefManager.canInjure(player, victim)) {
             return
         }
 
