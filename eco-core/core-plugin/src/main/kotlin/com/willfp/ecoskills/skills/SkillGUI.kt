@@ -194,7 +194,7 @@ class SkillGUI(
                                                     .replace("%level_numeral%", NumberUtils.toNumeral(slotLevel))
                                             )
 
-                                            lore.addAll(plugin.configYml.getStrings("level-gui.progression-slots.unlocked.lore"))
+                                            lore.addAll(plugin.configYml.getFormattedStrings("level-gui.progression-slots.unlocked.lore"))
                                         }
                                         slotLevel == player.getSkillLevel(skill) + 1 -> {
                                             val lookup = Items.lookup(plugin.configYml.getString("level-gui.progression-slots.in-progress.material")).item
