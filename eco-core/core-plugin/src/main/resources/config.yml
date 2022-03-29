@@ -281,6 +281,7 @@ stats:
 damage-indicators:
   # Requires HolographicDisplays/GHolo/CMI to be installed
   enabled: true
+  final-damage: false # If final damage (with reductions applied) should be used.
   format:
     normal: "&7%damage%"
     crit: "&f✧ <gradient:#f953c6>%damage%</gradient:#b91d73> &f✧"

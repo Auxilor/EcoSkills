@@ -57,7 +57,12 @@ class DamageIndicatorListener(
             plugin.configYml.getString("damage-indicators.format.normal")
         }
 
-        text = text.replace("%damage%", NumberUtils.format(event.damage))
+        text = if (plugin.configYml.getBool("damage-indicators.final-damage")) {
+            text.replace("%damage%", NumberUtils.format(event.finalDamage))
+        } else {
+            text.replace("%damage%", NumberUtils.format(event.damage))
+        }
+
 
         text = StringUtils.format(text)
 
