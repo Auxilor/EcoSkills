@@ -1,7 +1,0 @@
-group 'com.willfp'
-version '1.0.0'
-description = 'Attack Speed Extension'
-
-shadowJar {
-    archiveFileName = project.getDescription() + " v" + project.version + ".jar"
-}

@@ -277,6 +277,13 @@ stats:
     disabled-in-worlds: [ ]
     # The extra hp per level
     health-per-level: 1
+  attack_speed:
+    name: "&#fcba03⚔ Attack Speed"
+    # Disabled worlds
+    disabled-in-worlds: [ ]
+    # The percent more speed to give for the speed attribute (internal in the game)
+    # for each level
+    percent-faster-per-level: 1
 
 damage-indicators:
   # Requires HolographicDisplays/GHolo/CMI to be installed
