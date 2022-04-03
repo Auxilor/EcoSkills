@@ -2,6 +2,7 @@ package com.willfp.ecoskills.stats;
 
 import com.google.common.collect.ImmutableSet;
 import com.willfp.eco.core.config.updating.ConfigUpdater;
+import com.willfp.ecoskills.stats.stats.StatAttackSpeed;
 import com.willfp.ecoskills.stats.stats.StatCritChance;
 import com.willfp.ecoskills.stats.stats.StatCritDamage;
 import com.willfp.ecoskills.stats.stats.StatDefense;
@@ -33,6 +34,7 @@ public class Stats {
     public static final Stat WISDOM = new StatWisdom();
     public static final Stat FEROCITY = new StatFerocity();
     public static final Stat HEALTH = new StatHealth();
+    public static final Stat ATTACK_SPEED = new StatAttackSpeed();
 
     @ApiStatus.Internal
     public static void registerNewStat(@NotNull final Stat skill) {
