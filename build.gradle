@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.0"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
     }
 }
 
@@ -41,12 +41,12 @@ allprojects {
     }
 
     dependencies {
-        compileOnly 'com.willfp:eco:6.30.0'
+        compileOnly 'com.willfp:eco:6.32.0'
         compileOnly fileTree(dir: '../../lib', include: ['*.jar'])
 
 
-        compileOnly 'org.jetbrains:annotations:22.0.0'
-        compileOnly 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
+        compileOnly 'org.jetbrains:annotations:23.0.0'
+        compileOnly 'org.jetbrains.kotlin:kotlin-stdlib:1.6.10'
     }
 
     tasks.withType(JavaCompile) {
