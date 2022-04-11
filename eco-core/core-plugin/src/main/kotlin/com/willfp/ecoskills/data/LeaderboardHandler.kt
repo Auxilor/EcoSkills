@@ -6,7 +6,7 @@ import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.skills.Skills
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
-import java.util.Collections
+import java.util.*
 import kotlin.math.ceil
 import kotlin.math.max
 import kotlin.math.min
@@ -40,7 +40,7 @@ class LeaderboardHandler {
 
     class Runnable : java.lang.Runnable {
         override fun run() {
-            val players = Bukkit.getOfflinePlayers()
+            val players = Bukkit.getOfflinePlayers().filterNot { it.uniqueId == UUID(0, 0) }
 
             for (skill in Skills.values()) {
                 skillLeaderboards[skill] = players.sortedByDescending { it.getSkillLevel(skill) }
