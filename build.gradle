@@ -41,9 +41,9 @@ allprojects {
     }
 
     dependencies {
-        compileOnly 'com.willfp:eco:6.32.0'
+        compileOnly 'com.willfp:eco:6.31.1'
         compileOnly fileTree(dir: '../../lib', include: ['*.jar'])
-
+        compileOnly 'com.github.LegameMc:EnchantGui-API:1.0'
 
         compileOnly 'org.jetbrains:annotations:23.0.0'
         compileOnly 'org.jetbrains.kotlin:kotlin-stdlib:1.6.10'
