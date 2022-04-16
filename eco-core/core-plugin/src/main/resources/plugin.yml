@@ -9,6 +9,7 @@ depend:
   - eco
 softdepend:
   - EcoEnchants
+  - EnchantGui
 
 commands:
   ecoskills:
