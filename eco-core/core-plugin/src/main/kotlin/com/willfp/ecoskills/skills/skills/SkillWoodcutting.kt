@@ -1,15 +1,13 @@
 package com.willfp.ecoskills.skills.skills
 
-import com.willfp.eco.core.integrations.afk.AFKManager
 import com.willfp.eco.util.BlockUtils
 import com.willfp.ecoskills.giveSkillExperience
 import com.willfp.ecoskills.skills.Skill
-import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.block.BlockBreakEvent
-import java.util.EnumMap
+import java.util.*
 
 class SkillWoodcutting : Skill(
     "woodcutting"
@@ -31,24 +29,12 @@ class SkillWoodcutting : Skill(
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     fun handleLevelling(event: BlockBreakEvent) {
-        if (this.config.getStrings("disabled-in-worlds").contains(event.block.world.name)) {
-            return
-        }
-
         val type = event.block.type
-        val player = event.player
-
-        if (player.gameMode == GameMode.CREATIVE || player.gameMode == GameMode.SPECTATOR) {
-            return
-        }
+        val player = event.player.filterSkillEnabled() ?: return
 
         val toGive = rewards[type] ?: return
 
         if (BlockUtils.isPlayerPlaced(event.block)) {
-            return
-        }
-
-        if (plugin.configYml.getBool("skills.prevent-levelling-while-afk") && AFKManager.isAfk(player)) {
             return
         }
 

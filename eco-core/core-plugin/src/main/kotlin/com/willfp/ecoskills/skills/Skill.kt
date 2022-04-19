@@ -4,16 +4,19 @@ import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.eco.core.data.keys.PersistentDataKeyType
+import com.willfp.eco.core.integrations.afk.AFKManager
 import com.willfp.eco.core.placeholder.PlayerPlaceholder
 import com.willfp.eco.core.placeholder.PlayerlessPlaceholder
 import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.StringUtils
+import com.willfp.eco.util.containsIgnoreCase
 import com.willfp.ecoskills.*
 import com.willfp.ecoskills.config.SkillConfig
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.stats.Stats
 import org.bukkit.Bukkit
+import org.bukkit.GameMode
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
@@ -53,6 +56,25 @@ abstract class Skill(
 
     private fun finishLoading() {
         Skills.registerNewSkill(this)
+    }
+
+    protected fun Player?.filterSkillEnabled(): Player? {
+        val player = this ?: return null
+        with(this@Skill) {
+            if (this.config.getStrings("disabled-in-worlds").containsIgnoreCase(player.world.name)) {
+                return null
+            }
+
+            if (player.gameMode == GameMode.CREATIVE || player.gameMode == GameMode.SPECTATOR) {
+                return null
+            }
+
+            if (plugin.configYml.getBool("skills.prevent-levelling-while-afk") && AFKManager.isAfk(player)) {
+                return null
+            }
+
+            return player
+        }
     }
 
     fun update() {

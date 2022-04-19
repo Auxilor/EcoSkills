@@ -2,9 +2,9 @@ package com.willfp.ecoskills.skills.skills
 
 import com.willfp.eco.core.integrations.afk.AFKManager
 import com.willfp.eco.util.NumberUtils
+import com.willfp.eco.util.containsIgnoreCase
 import com.willfp.ecoskills.giveSkillExperience
 import com.willfp.ecoskills.skills.Skill
-import org.bukkit.GameMode
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -16,15 +16,7 @@ class SkillExploration : Skill(
 ) {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun handleLevelling(event: PlayerMoveEvent) {
-        if (this.config.getStrings("disabled-in-worlds").contains(event.player.world.name)) {
-            return
-        }
-
-        val player = event.player
-
-        if (player.gameMode == GameMode.CREATIVE || player.gameMode == GameMode.SPECTATOR) {
-            return
-        }
+        val player = event.player.filterSkillEnabled() ?: return
 
         if (!this.config.getBool("allow-flying") && player.isFlying) {
             return
@@ -47,10 +39,6 @@ class SkillExploration : Skill(
             xp *= speed
         }
 
-        if (plugin.configYml.getBool("skills.prevent-levelling-while-afk") && AFKManager.isAfk(player)) {
-            return
-        }
-
         if (NumberUtils.randFloat(0.0, 100.0) < this.config.getDouble("xp-on-move-chance")) {
             player.giveSkillExperience(this, xp)
         }
@@ -64,7 +52,7 @@ class SkillExploration : Skill(
         if (player !is Player) {
             return
         }
-        if (this.config.getStrings("disabled-in-worlds").contains(player.getWorld().getName())) {
+        if (this.config.getStrings("disabled-in-worlds").containsIgnoreCase(player.getWorld().getName())) {
             return
         }
 

@@ -1,10 +1,8 @@
 package com.willfp.ecoskills.skills.skills
 
-import com.willfp.eco.core.integrations.afk.AFKManager
 import com.willfp.eco.util.BlockUtils
 import com.willfp.ecoskills.giveSkillExperience
 import com.willfp.ecoskills.skills.Skill
-import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.block.data.Ageable
 import org.bukkit.event.EventHandler
@@ -32,20 +30,9 @@ class SkillFarming : Skill(
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
     fun handleLevelling(event: BlockBreakEvent) {
-        if (this.config.getStrings("disabled-in-worlds").contains(event.block.world.name)) {
-            return
-        }
+        val player = event.player.filterSkillEnabled() ?: return
 
         val type = event.block.type
-        val player = event.player
-
-        if (player.gameMode == GameMode.CREATIVE || player.gameMode == GameMode.SPECTATOR) {
-            return
-        }
-
-        if (plugin.configYml.getBool("skills.prevent-levelling-while-afk") && AFKManager.isAfk(player)) {
-            return
-        }
 
         if (event.block.blockData is Ageable && event.block.type != Material.SUGAR_CANE && event.block.type != Material.BAMBOO) {
             val data = event.block.blockData as Ageable
