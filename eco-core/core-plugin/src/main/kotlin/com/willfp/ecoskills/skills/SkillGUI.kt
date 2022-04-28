@@ -20,7 +20,6 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
-import org.bukkit.persistence.PersistentDataType
 import kotlin.math.ceil
 
 class SkillGUI(
@@ -138,7 +137,7 @@ class SkillGUI(
         val nextMaterial =
             Items.lookup(plugin.configYml.getString("level-gui.progression-slots.next-page.material")).item
 
-        val pageKey = plugin.namespacedKeyFactory.create("page")
+        val pageKey = "page"
 
         levels = menu(plugin.configYml.getInt("level-gui.rows")) {
             setTitle(skill.name)
@@ -155,9 +154,9 @@ class SkillGUI(
                         value.second,
                         slot(ItemStack(Material.BLACK_STAINED_GLASS_PANE)) {
                             setUpdater { player, menu, item ->
-                                var page = menu.readData(player, pageKey, PersistentDataType.INTEGER)
+                                var page = menu.getState<Int>(player, pageKey)
                                 if (page == null) {
-                                    menu.writeData(player, pageKey, PersistentDataType.INTEGER, 1)
+                                    menu.addState(player, pageKey, 1)
                                     page = 1
                                 }
 
@@ -288,9 +287,9 @@ class SkillGUI(
                 ) {
                     onLeftClick { event, _, menu ->
                         val player = event.whoClicked as Player
-                        var page = menu.readData(player, pageKey, PersistentDataType.INTEGER) ?: 1
+                        var page = menu.getState(player, pageKey) ?: 1
                         page--
-                        menu.writeData(player, pageKey, PersistentDataType.INTEGER, page)
+                        menu.addState(player, pageKey, page)
                         if (page == 0) {
                             SkillGUI.homeMenu.open(event.whoClicked as Player)
                         }
@@ -307,11 +306,11 @@ class SkillGUI(
                 ) {
                     onLeftClick { event, _, menu ->
                         val player = event.whoClicked as Player
-                        var page = menu.readData(player, pageKey, PersistentDataType.INTEGER) ?: 1
+                        var page = menu.getState(player, pageKey) ?: 1
                         if (page < pages) {
                             page++
                         }
-                        menu.writeData(player, pageKey, PersistentDataType.INTEGER, page)
+                        menu.addState(player, pageKey, page)
 
                     }
                 }
