@@ -10,6 +10,11 @@ depend:
 softdepend:
   - EcoEnchants
   - EnchantGui
+  - Reforges
+  - Talismans
+  - EcoItems
+  - EcoBosses
+  - EcoArmor
 
 commands:
   ecoskills:
