@@ -2,6 +2,7 @@ package com.willfp.ecoskills.commands
 
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.impl.Subcommand
+import com.willfp.eco.util.StringUtils
 import com.willfp.eco.util.formatEco
 import com.willfp.ecoskills.getBaseStatLevel
 import com.willfp.ecoskills.giveSkillExperience
@@ -61,8 +62,8 @@ class CommandGive(plugin: EcoPlugin) :
 
         if (obj is Skill) {
             player.giveSkillExperience(obj, amount.toDouble(), noMultiply = true)
-            player.sendMessage(
-                this.plugin.langYml.getMessage("messages.gave-skill-xp")
+            sender.sendMessage(
+                this.plugin.langYml.getMessage("gave-skill-xp", StringUtils.FormatOption.WITHOUT_PLACEHOLDERS)
                     .replace("%player%", player.name)
                     .replace("%amount%", amount.toString())
                     .replace("%skill%", obj.name)
@@ -74,7 +75,7 @@ class CommandGive(plugin: EcoPlugin) :
         if (obj is Stat) {
             player.setStatLevel(obj, player.getBaseStatLevel(obj) + amount)
             sender.sendMessage(
-                this.plugin.langYml.getString("messages.gave-stat")
+                this.plugin.langYml.getMessage("gave-stat", StringUtils.FormatOption.WITHOUT_PLACEHOLDERS)
                     .replace("%player%", player.name)
                     .replace("%amount%", amount.toString())
                     .replace("%stat%", obj.name)
