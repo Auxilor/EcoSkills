@@ -10,10 +10,15 @@ import com.willfp.eco.core.placeholder.PlayerlessPlaceholder
 import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.StringUtils
 import com.willfp.eco.util.containsIgnoreCase
-import com.willfp.ecoskills.*
+import com.willfp.ecoskills.EcoSkillsPlugin
+import com.willfp.ecoskills.SkillObject
 import com.willfp.ecoskills.config.SkillConfig
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.effects.Effects
+import com.willfp.ecoskills.getAverageSkillLevel
+import com.willfp.ecoskills.getSkillLevel
+import com.willfp.ecoskills.getSkillProgress
+import com.willfp.ecoskills.getTotalSkillLevel
 import com.willfp.ecoskills.stats.Stats
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
@@ -97,9 +102,17 @@ abstract class Skill(
         levelCommands.clear()
         for (string in config.getStrings("rewards.level-commands")) {
             val split = string.split(":")
-            val level = split[0].toInt()
-            val command = split[1]
 
+            if (split.size == 1) {
+                for (level in 1..maxLevel) {
+                    val commands = levelCommands[level] ?: mutableListOf()
+                    commands.add(string)
+                    levelCommands[level] = commands
+                }
+            }
+            val level = split[0].toInt()
+
+            val command = string.removePrefix("$level:")
             val commands = levelCommands[level] ?: mutableListOf()
             commands.add(command)
             levelCommands[level] = commands
