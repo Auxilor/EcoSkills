@@ -11,7 +11,7 @@ class SkillArmory : Skill(
     "armory"
 ) {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    fun handleLevelling(event: EntityDamageByEntityEvent) {
+    fun handleLeveling(event: EntityDamageByEntityEvent) {
         val player = (event.entity as? Player)?.filterSkillEnabled() ?: return
 
         if (player.isBlocking) {

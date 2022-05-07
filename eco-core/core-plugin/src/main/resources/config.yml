@@ -177,7 +177,7 @@ level-gui:
       - "&eClick to view Level Progression!"
 
 skills:
-  prevent-levelling-while-afk: true # If the player is afk (Essentials) then don't give xp
+  prevent-leveling-while-afk: true # If the player is afk (Essentials) then don't give xp
 
   # Ways to tell the player about skill progress
   progress:
@@ -207,7 +207,7 @@ skills:
       # The volume
       volume: 0.1
 
-  # Ways to tell the player about levelling up
+  # Ways to tell the player about leveling up
   level-up:
     message:
       level-as-numeral: true

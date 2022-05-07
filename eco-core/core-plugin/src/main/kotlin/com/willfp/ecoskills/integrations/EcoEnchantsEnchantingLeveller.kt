@@ -15,7 +15,7 @@ class EcoEnchantsEnchantingLeveller(
     private val plugin: EcoSkillsPlugin
 ) : Listener {
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-    fun handleLevelling(event: EnchantItemEvent) {
+    fun handleLeveling(event: EnchantItemEvent) {
         val player = event.enchanter
 
         if (player.gameMode == GameMode.CREATIVE || player.gameMode == GameMode.SPECTATOR) {

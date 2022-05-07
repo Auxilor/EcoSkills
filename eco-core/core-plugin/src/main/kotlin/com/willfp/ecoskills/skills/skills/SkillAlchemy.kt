@@ -29,7 +29,7 @@ class SkillAlchemy : Skill(
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    fun handleLevelling(event: BrewEvent) {
+    fun handleLeveling(event: BrewEvent) {
         val player = event.contents.viewers.filterIsInstance<Player>().firstOrNull().filterSkillEnabled() ?: return
 
         var mult = 0

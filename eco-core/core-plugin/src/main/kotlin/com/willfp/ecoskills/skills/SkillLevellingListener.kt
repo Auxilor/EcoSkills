@@ -11,7 +11,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 
-class SkillLevellingListener : Listener {
+class SkillLevelingListener : Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     fun onLevelUp(event: PlayerSkillLevelUpEvent) {
         val player = event.player

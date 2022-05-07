@@ -74,7 +74,7 @@ abstract class Skill(
                 return null
             }
 
-            if (plugin.configYml.getBool("skills.prevent-levelling-while-afk") && AFKManager.isAfk(player)) {
+            if (plugin.configYml.getBool("skills.prevent-leveling-while-afk") && AFKManager.isAfk(player)) {
                 return null
             }
 
