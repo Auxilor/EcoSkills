@@ -28,7 +28,7 @@ class SkillMining : Skill(
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    fun handleLeveling(event: BlockBreakEvent) {
+    fun handleLevelling(event: BlockBreakEvent) {
         val type = event.block.type
         val player = event.player.filterSkillEnabled() ?: return
         val toGive = rewards[type] ?: return

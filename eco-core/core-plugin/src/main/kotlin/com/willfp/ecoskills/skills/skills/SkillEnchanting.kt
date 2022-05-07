@@ -10,7 +10,7 @@ class SkillEnchanting : Skill(
     "enchanting"
 ) {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    fun handleLeveling(event: EnchantItemEvent) {
+    fun handleLevelling(event: EnchantItemEvent) {
         val player = event.enchanter.filterSkillEnabled() ?: return
 
         val cost = event.expLevelCost

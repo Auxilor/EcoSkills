@@ -10,7 +10,7 @@ class SkillFishing : Skill(
     "fishing"
 ) {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    fun handleLeveling(event: PlayerFishEvent) {
+    fun handleLevelling(event: PlayerFishEvent) {
         val player = event.player.filterSkillEnabled() ?: return
 
         val expToDrop = event.expToDrop

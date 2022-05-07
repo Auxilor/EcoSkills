@@ -15,7 +15,7 @@ class SkillExploration : Skill(
     "exploration"
 ) {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    fun handleLeveling(event: PlayerMoveEvent) {
+    fun handleLevelling(event: PlayerMoveEvent) {
         val player = event.player.filterSkillEnabled() ?: return
 
         if (!this.config.getBool("allow-flying") && player.isFlying) {
@@ -45,7 +45,7 @@ class SkillExploration : Skill(
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-    fun handleLeveling(event: EntityDamageEvent) {
+    fun handleLevelling(event: EntityDamageEvent) {
     
         val player = event.entity
 
@@ -60,7 +60,7 @@ class SkillExploration : Skill(
             return
         }
 
-        if (plugin.configYml.getBool("skills.prevent-leveling-while-afk") && AFKManager.isAfk(player)) {
+        if (plugin.configYml.getBool("skills.prevent-levelling-while-afk") && AFKManager.isAfk(player)) {
             return
         }
 

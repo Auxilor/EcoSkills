@@ -29,7 +29,7 @@ class SkillFarming : Skill(
     }
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
-    fun handleLeveling(event: BlockBreakEvent) {
+    fun handleLevelling(event: BlockBreakEvent) {
         val player = event.player.filterSkillEnabled() ?: return
 
         val type = event.block.type

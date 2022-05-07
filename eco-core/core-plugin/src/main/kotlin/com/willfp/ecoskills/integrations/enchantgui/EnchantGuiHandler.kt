@@ -13,7 +13,7 @@ import org.bukkit.event.enchantment.EnchantItemEvent
 
 class EnchantGuiHandler: Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    fun handleLeveling(event: PlayerEnchantItemEvent) {
+    fun handleLevelling(event: PlayerEnchantItemEvent) {
         val skill = Skills.ENCHANTING
         if (skill.config.getStrings("disabled-in-worlds").contains(event.player.world.name)) {
             return
@@ -26,7 +26,7 @@ class EnchantGuiHandler: Listener {
         }
 
         if (EcoSkillsPlugin.getInstance()
-                .configYml.getBool("skills.prevent-leveling-while-afk") && AFKManager.isAfk(player)) {
+                .configYml.getBool("skills.prevent-levelling-while-afk") && AFKManager.isAfk(player)) {
             return
         }
 

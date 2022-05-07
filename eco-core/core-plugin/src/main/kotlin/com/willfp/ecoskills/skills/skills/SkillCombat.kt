@@ -14,10 +14,10 @@ class SkillCombat : Skill(
     "combat"
 ) {
     @EventHandler(priority = EventPriority.MONITOR)
-    fun handleLeveling(event: EntityDeathByEntityEvent) {
+    fun handleLevelling(event: EntityDeathByEntityEvent) {
         val player = event.killer.tryAsPlayer().filterSkillEnabled() ?: return
 
-        if (this.config.getBool("prevent-leveling-from-spawners") && event.victim.hasMetadata("from-spawner")) {
+        if (this.config.getBool("prevent-levelling-from-spawners") && event.victim.hasMetadata("from-spawner")) {
             return
         }
 

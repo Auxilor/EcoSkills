@@ -166,4 +166,4 @@ rewards:
 # The experience to give for each hp of a killed enemy
 xp-per-heart: 0.33
 # Prevent gaining xp killing mobs from spawners
-prevent-leveling-from-spawners: true
+prevent-levelling-from-spawners: true

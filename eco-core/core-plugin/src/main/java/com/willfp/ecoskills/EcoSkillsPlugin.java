@@ -20,7 +20,7 @@ import com.willfp.ecoskills.integrations.EcoEnchantsEnchantingLeveller;
 import com.willfp.ecoskills.integrations.enchantgui.EnchantGuiHandler;
 import com.willfp.ecoskills.skills.Skill;
 import com.willfp.ecoskills.skills.SkillDisplayListener;
-import com.willfp.ecoskills.skills.SkillLevelingListener;
+import com.willfp.ecoskills.skills.SkillLevellingListener;
 import com.willfp.ecoskills.skills.Skills;
 import com.willfp.ecoskills.stats.DamageIndicatorListener;
 import com.willfp.ecoskills.stats.Stat;
@@ -99,7 +99,7 @@ public class EcoSkillsPlugin extends EcoPlugin {
     @Override
     protected List<Listener> loadListeners() {
         return Arrays.asList(
-                new SkillLevelingListener(),
+                new SkillLevellingListener(),
                 new SkillDisplayListener(this),
                 new StatModifierListener(),
                 new DataListener(),
