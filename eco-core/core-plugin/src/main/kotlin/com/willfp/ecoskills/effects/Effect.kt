@@ -16,6 +16,13 @@ import java.util.*
 abstract class Effect(
     id: String
 ) : SkillObject(id), Listener {
+    constructor(
+        id: String,
+        forceConfig: Config
+    ) : this(id) {
+        this.config = forceConfig
+    }
+
     protected val plugin: EcoSkillsPlugin = EcoSkillsPlugin.getInstance()
 
     val key: NamespacedKey = plugin.namespacedKeyFactory.create(id)
@@ -32,7 +39,9 @@ abstract class Effect(
     }
 
     private fun finishLoading() {
-        config = loadConfig()
+        if (!::config.isInitialized) {
+            config = loadConfig()
+        }
 
         Effects.registerNewEffect(this)
         update()

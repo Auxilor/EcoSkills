@@ -1,7 +1,9 @@
 package com.willfp.ecoskills.effects;
 
 import com.google.common.collect.ImmutableSet;
+import com.willfp.eco.core.config.interfaces.Config;
 import com.willfp.eco.core.config.updating.ConfigUpdater;
+import com.willfp.ecoskills.EcoSkillsPlugin;
 import com.willfp.ecoskills.effects.effects.EffectAcceleratedEscape;
 import com.willfp.ecoskills.effects.effects.EffectBountifulHarvest;
 import com.willfp.ecoskills.effects.effects.EffectBravery;
@@ -28,6 +30,7 @@ import com.willfp.ecoskills.effects.effects.EffectShamanism;
 import com.willfp.ecoskills.effects.effects.EffectSpelunking;
 import com.willfp.ecoskills.effects.effects.EffectStrongImpact;
 import com.willfp.ecoskills.effects.effects.EffectVersatileTools;
+import com.willfp.libreforge.chains.EffectChains;
 import org.bukkit.NamespacedKey;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -37,7 +40,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class Effects {
+public final class Effects {
     /**
      * All registered Skills.
      */
@@ -75,6 +78,11 @@ public class Effects {
         REGISTRY.put(effect.getId(), effect);
     }
 
+    @ApiStatus.Internal
+    public static void removeEffect(@NotNull final Effect effect) {
+        REGISTRY.remove(effect.getId());
+    }
+
     @Nullable
     public static Effect getByID(@NotNull final String id) {
         return REGISTRY.get(id.toLowerCase());
@@ -90,7 +98,13 @@ public class Effects {
     }
 
     @ConfigUpdater
-    public static void update() {
+    public static void update(@NotNull final EcoSkillsPlugin plugin) {
+        for (Config config : plugin.getCustomEffectsYml().getSubsections("chains")) {
+            EffectChains.compile(config, "Custom Effect Chains");
+        }
+
+        CustomEffects.update(plugin);
+
         for (Effect effect : Effects.values()) {
             effect.update();
         }

@@ -40,8 +40,13 @@ allprojects {
         onlyIf { !sourceSets.main.allSource.files.isEmpty() }
     }
 
+    shadowJar {
+        relocate('com.willfp.libreforge', 'com.willfp.ecoskills.libreforge')
+    }
+
     dependencies {
         compileOnly 'com.willfp:eco:6.35.1'
+        implementation 'com.willfp:libreforge:3.43.0'
         compileOnly fileTree(dir: '../../lib', include: ['*.jar'])
         compileOnly 'com.github.LegameMc:EnchantGui-API:1.0'
 
@@ -61,7 +66,7 @@ allprojects {
     }
 
     processResources {
-        filesNotMatching(["**/*.png", "**/models/**", "**/textures/**"]) {
+        filesMatching(["**plugin.yml"]) {
             expand projectVersion: project.version
         }
     }

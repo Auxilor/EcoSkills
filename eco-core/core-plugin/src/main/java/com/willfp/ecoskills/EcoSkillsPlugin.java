@@ -1,8 +1,8 @@
 package com.willfp.ecoskills;
 
 import com.willfp.eco.core.AbstractPacketAdapter;
-import com.willfp.eco.core.EcoPlugin;
 import com.willfp.eco.core.command.impl.PluginCommand;
+import com.willfp.eco.core.config.interfaces.Config;
 import com.willfp.eco.core.integrations.IntegrationLoader;
 import com.willfp.ecoskills.actionbar.ActionBarClearOnGamemode;
 import com.willfp.ecoskills.actionbar.ActionBarCompatChatMessage;
@@ -14,6 +14,8 @@ import com.willfp.ecoskills.commands.CommandSkills;
 import com.willfp.ecoskills.config.EffectsYml;
 import com.willfp.ecoskills.data.DataListener;
 import com.willfp.ecoskills.data.LeaderboardHandler;
+import com.willfp.ecoskills.effects.CustomEffectUtils;
+import com.willfp.ecoskills.effects.CustomEffectsYml;
 import com.willfp.ecoskills.effects.Effect;
 import com.willfp.ecoskills.effects.Effects;
 import com.willfp.ecoskills.integrations.EcoEnchantsEnchantingLeveller;
@@ -26,12 +28,14 @@ import com.willfp.ecoskills.stats.DamageIndicatorListener;
 import com.willfp.ecoskills.stats.Stat;
 import com.willfp.ecoskills.stats.Stats;
 import com.willfp.ecoskills.stats.modifier.StatModifierListener;
+import com.willfp.libreforge.LibReforgePlugin;
 import org.bukkit.event.Listener;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class EcoSkillsPlugin extends EcoPlugin {
+public class EcoSkillsPlugin extends LibReforgePlugin {
     /**
      * Instance of EcoSkills.
      */
@@ -43,20 +47,29 @@ public class EcoSkillsPlugin extends EcoPlugin {
     private final EffectsYml effectsYml;
 
     /**
+     * customeffects.yml.
+     */
+    private final Config customEffectsYml;
+
+    /**
      * Internal constructor called by bukkit on plugin load.
      */
     public EcoSkillsPlugin() {
+        super(1351, 13052, "&#ff00ae", "");
         instance = this;
         effectsYml = new EffectsYml(this);
+        customEffectsYml = new CustomEffectsYml(this);
+
+        this.registerJavaHolderProvider(CustomEffectUtils::getCustomEffects);
     }
 
     @Override
-    protected void handleEnable() {
+    public void handleEnableAdditional() {
         Skills.update(this);
     }
 
     @Override
-    protected void handleReload() {
+    public void handleReloadAdditional() {
         for (Effect effect : Effects.values()) {
             this.getEventManager().unregisterListener(effect);
             this.getEventManager().registerListener(effect);
@@ -85,6 +98,15 @@ public class EcoSkillsPlugin extends EcoPlugin {
      */
     public EffectsYml getEffectsYml() {
         return effectsYml;
+    }
+
+    /**
+     * Get customeffects.yml.
+     *
+     * @return customeffects.yml.
+     */
+    public Config getCustomEffectsYml() {
+        return customEffectsYml;
     }
 
     /**
@@ -125,16 +147,12 @@ public class EcoSkillsPlugin extends EcoPlugin {
         );
     }
 
+    @NotNull
     @Override
-    protected List<IntegrationLoader> loadIntegrationLoaders() {
+    public List<IntegrationLoader> loadAdditionalIntegrations() {
         return List.of(
                 new IntegrationLoader("EcoEnchants", () -> this.getEventManager().registerListener(new EcoEnchantsEnchantingLeveller(this))),
                 new IntegrationLoader("EnchantGui", () -> this.getEventManager().registerListener(new EnchantGuiHandler()))
         );
-    }
-
-    @Override
-    public String getMinimumEcoVersion() {
-        return "6.35.1";
     }
 }
