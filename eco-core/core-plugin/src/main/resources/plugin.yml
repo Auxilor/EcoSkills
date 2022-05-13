@@ -7,10 +7,16 @@ website: willfp.com
 load: STARTUP
 depend:
   - eco
+  - ProtocolLib
 softdepend:
   - EcoEnchants
   - EnchantGui
-
+  - AureliumSkills
+  - Vault
+  - mcMMO
+  - Jobs
+  - EcoArmor
+  - TMMobcoins
 commands:
   ecoskills:
     description: Base Command
