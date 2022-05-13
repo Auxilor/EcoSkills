@@ -36,8 +36,8 @@ class CustomEffect(
         config.injectPlaceholders(
             PlayerStaticPlaceholder(
                 "level"
-            ) {
-                it.getEffectLevel(this).toString()
+            ) { p ->
+                p.getEffectLevel(this).toString()
             }
         )
 
