@@ -24,6 +24,7 @@ import com.willfp.ecoskills.skills.Skill;
 import com.willfp.ecoskills.skills.SkillDisplayListener;
 import com.willfp.ecoskills.skills.SkillLevellingListener;
 import com.willfp.ecoskills.skills.Skills;
+import com.willfp.ecoskills.stats.CustomStatsYml;
 import com.willfp.ecoskills.stats.DamageIndicatorListener;
 import com.willfp.ecoskills.stats.Stat;
 import com.willfp.ecoskills.stats.Stats;
@@ -52,12 +53,18 @@ public class EcoSkillsPlugin extends LibReforgePlugin {
     private final Config customEffectsYml;
 
     /**
+     * customstats.yml.
+     */
+    private final Config customStatsYml;
+
+    /**
      * Internal constructor called by bukkit on plugin load.
      */
     public EcoSkillsPlugin() {
         instance = this;
         effectsYml = new EffectsYml(this);
         customEffectsYml = new CustomEffectsYml(this);
+        customStatsYml = new CustomStatsYml(this);
 
         this.registerJavaHolderProvider(CustomEffectUtils::getCustomEffects);
     }
@@ -106,6 +113,15 @@ public class EcoSkillsPlugin extends LibReforgePlugin {
      */
     public Config getCustomEffectsYml() {
         return customEffectsYml;
+    }
+
+    /**
+     * Get customstats.yml.
+     *
+     * @return customstats.yml.
+     */
+    public Config getCustomStatsYml() {
+        return customStatsYml;
     }
 
     /**

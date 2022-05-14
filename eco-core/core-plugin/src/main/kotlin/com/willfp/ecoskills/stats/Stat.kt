@@ -7,15 +7,26 @@ import com.willfp.eco.core.data.keys.PersistentDataKeyType
 import com.willfp.eco.core.placeholder.PlayerPlaceholder
 import com.willfp.eco.core.placeholder.PlayerlessPlaceholder
 import com.willfp.eco.util.NumberUtils
-import com.willfp.ecoskills.*
+import com.willfp.ecoskills.EcoSkillsPlugin
+import com.willfp.ecoskills.SkillObject
+import com.willfp.ecoskills.getBaseStatLevel
+import com.willfp.ecoskills.getBonusStatLevel
+import com.willfp.ecoskills.getStatLevel
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
-import java.util.*
+import java.util.UUID
 
 abstract class Stat(
     id: String
 ) : SkillObject(id), Listener {
+    constructor(
+        id: String,
+        forceConfig: Config
+    ) : this(id) {
+        this.config = forceConfig
+    }
+
     protected val plugin: EcoPlugin = EcoSkillsPlugin.getInstance()
 
     val key: NamespacedKey = plugin.namespacedKeyFactory.create(id)
@@ -33,7 +44,9 @@ abstract class Stat(
     }
 
     private fun finishLoading() {
-        config = loadConfig()
+        if (!::config.isInitialized) {
+            config = loadConfig()
+        }
 
         Stats.registerNewStat(this)
 

@@ -2,6 +2,7 @@ package com.willfp.ecoskills.stats;
 
 import com.google.common.collect.ImmutableSet;
 import com.willfp.eco.core.config.updating.ConfigUpdater;
+import com.willfp.ecoskills.EcoSkillsPlugin;
 import com.willfp.ecoskills.stats.stats.StatAttackSpeed;
 import com.willfp.ecoskills.stats.stats.StatCritChance;
 import com.willfp.ecoskills.stats.stats.StatCritDamage;
@@ -37,8 +38,13 @@ public class Stats {
     public static final Stat ATTACK_SPEED = new StatAttackSpeed();
 
     @ApiStatus.Internal
-    public static void registerNewStat(@NotNull final Stat skill) {
-        REGISTRY.put(skill.getId(), skill);
+    public static void registerNewStat(@NotNull final Stat stat) {
+        REGISTRY.put(stat.getId(), stat);
+    }
+
+    @ApiStatus.Internal
+    public static void removeStat(@NotNull final Stat stat) {
+        REGISTRY.remove(stat.getId());
     }
 
     @Nullable
@@ -56,7 +62,9 @@ public class Stats {
     }
 
     @ConfigUpdater
-    public static void update() {
+    public static void update(@NotNull final EcoSkillsPlugin plugin) {
+        CustomStats.update(plugin);
+
         for (Stat stat : Stats.values()) {
             stat.update();
         }

@@ -21,13 +21,13 @@ chains:
 effects:
   - id: gold_touch # The ID of the effect, to be used in skills
     max-level: 100 # The max obtainable level of the effect - this is required in order to generate the correct number of levels
-    placeholder: "%level%" # The placeholder to be shown in the description, you can use expressions - eg %level% * 2
+    placeholder: "%level% / 50" # The placeholder to be shown in the description, you can use expressions - eg %level% * 2
     description: "&a%placeholder%%&8 chance to get $50 every time you mine a block" # The description to be shown in lore and messages
 
     effects:
       - id: give_money
         args:
-          chance: "%level%"
+          chance: "%level% / 50"
           amount: 50
         triggers:
           - mine_block
