@@ -55,7 +55,6 @@ public class EcoSkillsPlugin extends LibReforgePlugin {
      * Internal constructor called by bukkit on plugin load.
      */
     public EcoSkillsPlugin() {
-        super(1351, 13052, "&#ff00ae", "");
         instance = this;
         effectsYml = new EffectsYml(this);
         customEffectsYml = new CustomEffectsYml(this);
