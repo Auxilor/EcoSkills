@@ -5,7 +5,7 @@ stats:
 
     effects:
       - id: hunger_multplier
-          args:
-            multiplier: "1 - (%level% / 300)"
+        args:
+          multiplier: "1 - (%level% / 300)"
 
     conditions: [ ]
