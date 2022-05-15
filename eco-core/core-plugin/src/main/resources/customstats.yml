@@ -4,7 +4,7 @@ stats:
     max-level: 200 # The max obtainable level of the stat - this is required in order to generate the correct number of levels
 
     effects:
-      - id: hunger_multplier
+      - id: hunger_multiplier
         args:
           multiplier: "1 - (%level% / 300)"
 
