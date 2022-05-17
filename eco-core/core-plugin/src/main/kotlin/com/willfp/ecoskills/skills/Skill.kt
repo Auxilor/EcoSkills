@@ -219,7 +219,7 @@ abstract class Skill(
 
             var highestConfiguredLevel = 1
             for (messagesLevel in parentSection.getKeys(false).map { it.toInt() }) {
-                if (highestConfiguredLevel > level) {
+                if (messagesLevel > level) {
                     continue
                 }
 
@@ -260,7 +260,7 @@ abstract class Skill(
 
             var highestConfiguredLevel = 1
             for (messagesLevel in parentSection.getKeys(false).map { it.toInt() }) {
-                if (highestConfiguredLevel > level) {
+                if (messagesLevel > level) {
                     continue
                 }
 
