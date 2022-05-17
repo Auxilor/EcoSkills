@@ -10,10 +10,15 @@ import com.willfp.eco.core.placeholder.PlayerlessPlaceholder
 import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.StringUtils
 import com.willfp.eco.util.containsIgnoreCase
-import com.willfp.ecoskills.*
+import com.willfp.ecoskills.EcoSkillsPlugin
+import com.willfp.ecoskills.SkillObject
 import com.willfp.ecoskills.config.SkillConfig
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.effects.Effects
+import com.willfp.ecoskills.getAverageSkillLevel
+import com.willfp.ecoskills.getSkillLevel
+import com.willfp.ecoskills.getSkillProgress
+import com.willfp.ecoskills.getTotalSkillLevel
 import com.willfp.ecoskills.stats.Stats
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
@@ -80,7 +85,12 @@ abstract class Skill(
     fun update() {
         name = config.getFormattedString("name")
         description = config.getFormattedString("description")
+
+        xpRequirements.clear()
+        xpRequirements.addAll(config.getInts("level-xp-requirements"))
+
         maxLevel = xpRequirements.size - 1
+
         rewards.clear()
         for (string in config.getStrings("rewards.rewards")) {
             val split = string.split("::")
