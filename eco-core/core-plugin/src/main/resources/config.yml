@@ -326,7 +326,7 @@ stats:
   crit_chance:
     name: "&#f7ff85☣ Crit Chance"
 
-    description: "&8Gives you a &a%chance%%&8 to deal crits" # The description to be shown in lore and messages
+    description: "&8Gives you a &a%chance%%&8 chance to deal crits" # The description to be shown in lore and messages
 
     stats-gui:
       enabled: true
@@ -453,7 +453,7 @@ stats:
   attack_speed:
     name: "&#fcba03⚔ Attack Speed"
 
-    description: "&8Gives &a+%health%&8 health" # The description to be shown in lore and messages
+    description: "&8Increases your attack speed by &a%percent_faster%%" # The description to be shown in lore and messages
 
     stats-gui:
       enabled: false
