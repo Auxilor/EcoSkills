@@ -110,7 +110,7 @@ object StatsGUI {
                         .setDisplayName(plugin.configYml.getString("stats-gui.back.name"))
                         .build()
                 ) {
-                    onLeftClick { event, _ -> event.whoClicked.closeInventory() }
+                    onLeftClick { event, _ -> SkillGUI.homeMenu.open(event.whoClicked as Player) }
                 }
             )
         }
