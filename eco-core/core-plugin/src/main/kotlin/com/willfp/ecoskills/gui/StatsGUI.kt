@@ -31,7 +31,7 @@ object StatsGUI {
     @JvmStatic
     private fun buildStatsMenu(plugin: EcoSkillsPlugin): Menu {
         val maskPattern = plugin.configYml.getStrings("stats-gui.mask.pattern").toTypedArray()
-        val closeItem = Items.lookup(plugin.configYml.getString("stats-gui.close.material")).item
+        val backItem = Items.lookup(plugin.configYml.getString("stats-gui.back.material")).item
         val playerHeadItemBuilder = { player: Player, _: Menu ->
             val itemStack = SkullBuilder()
                 .setDisplayName(
@@ -103,11 +103,11 @@ object StatsGUI {
                 }
             }
 
-            setSlot(plugin.configYml.getInt("stats-gui.close.location.row"),
-                plugin.configYml.getInt("stats-gui.close.location.column"),
+            setSlot(plugin.configYml.getInt("stats-gui.back.location.row"),
+                plugin.configYml.getInt("stats-gui.back.location.column"),
                 slot(
-                    ItemStackBuilder(closeItem)
-                        .setDisplayName(plugin.configYml.getString("stats-gui.close.name"))
+                    ItemStackBuilder(backItem)
+                        .setDisplayName(plugin.configYml.getString("stats-gui.back.name"))
                         .build()
                 ) {
                     onLeftClick { event, _ -> event.whoClicked.closeInventory() }

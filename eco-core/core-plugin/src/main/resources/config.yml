@@ -115,12 +115,12 @@ stats-gui:
       - "&7Total Skill Level: &f%ecoskills_total_skill_level%"
       - "&7Average Skill Level: &f%ecoskills_average_skill_level%"
 
-  close:
-    material: barrier
-    name: "&cClose"
+  back:
+    material: arrow
+    name: "&fBack"
     location:
       row: 6
-      column: 5
+      column: 1
 
 level-gui:
   rows: 6
