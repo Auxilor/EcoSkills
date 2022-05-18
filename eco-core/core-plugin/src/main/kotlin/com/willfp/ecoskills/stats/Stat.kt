@@ -7,6 +7,7 @@ import com.willfp.eco.core.data.keys.PersistentDataKeyType
 import com.willfp.eco.core.placeholder.PlayerPlaceholder
 import com.willfp.eco.core.placeholder.PlayerlessPlaceholder
 import com.willfp.eco.util.NumberUtils
+import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.SkillObject
 import com.willfp.ecoskills.getBaseStatLevel
@@ -15,7 +16,7 @@ import com.willfp.ecoskills.getStatLevel
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
-import java.util.UUID
+import java.util.*
 
 abstract class Stat(
     id: String
@@ -57,6 +58,15 @@ abstract class Stat(
         return plugin.configYml.getSubsection("stats.$id")
     }
 
+    open fun formatDescription(string: String, level: Int): String {
+        return string
+    }
+
+    fun getDescription(level: Int): String {
+        val desc = config.getString("description")
+        return StringUtils.format(formatDescription(desc, level))
+    }
+
     fun update() {
         name = config.getFormattedString("name")
 
@@ -64,6 +74,11 @@ abstract class Stat(
             plugin,
             id
         ) { player -> player.getStatLevel(this).toString() }.register()
+
+        PlayerPlaceholder(
+            plugin,
+            "${id}_description"
+        ) { player -> this.getDescription(player.getStatLevel(this)) }.register()
 
         PlayerPlaceholder(
             plugin,

@@ -24,6 +24,7 @@ import com.willfp.ecoskills.skills.Skill;
 import com.willfp.ecoskills.skills.SkillDisplayListener;
 import com.willfp.ecoskills.skills.SkillLevellingListener;
 import com.willfp.ecoskills.skills.Skills;
+import com.willfp.ecoskills.stats.CustomStatUtils;
 import com.willfp.ecoskills.stats.CustomStatsYml;
 import com.willfp.ecoskills.stats.DamageIndicatorListener;
 import com.willfp.ecoskills.stats.Stat;
@@ -67,6 +68,7 @@ public class EcoSkillsPlugin extends LibReforgePlugin {
         customStatsYml = new CustomStatsYml(this);
 
         this.registerJavaHolderProvider(CustomEffectUtils::getCustomEffects);
+        this.registerJavaHolderProvider(CustomStatUtils::getCustomStats);
     }
 
     @Override

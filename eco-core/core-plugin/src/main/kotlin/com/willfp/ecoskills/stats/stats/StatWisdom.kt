@@ -1,6 +1,7 @@
 package com.willfp.ecoskills.stats.stats
 
 import com.willfp.eco.core.events.NaturalExpGainEvent
+import com.willfp.eco.util.toNiceString
 import com.willfp.ecoskills.getStatLevel
 import com.willfp.ecoskills.stats.Stat
 import org.bukkit.event.EventHandler
@@ -10,6 +11,13 @@ import kotlin.math.ceil
 class StatWisdom : Stat(
     "wisdom"
 ) {
+    override fun formatDescription(string: String, level: Int): String {
+        return string.replace(
+            "%percent_more_xp%",
+            (this.config.getDouble("percent-more-xp-gain") * level).toNiceString()
+        )
+    }
+
     @EventHandler(priority = EventPriority.LOW)
     fun handle(event: NaturalExpGainEvent) {
         val player = event.expChangeEvent.player

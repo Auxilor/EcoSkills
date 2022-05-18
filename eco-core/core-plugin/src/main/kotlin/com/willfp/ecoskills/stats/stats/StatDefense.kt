@@ -1,5 +1,6 @@
 package com.willfp.ecoskills.stats.stats
 
+import com.willfp.eco.util.toNiceString
 import com.willfp.ecoskills.getStatLevel
 import com.willfp.ecoskills.stats.Stat
 import org.bukkit.entity.Player
@@ -10,6 +11,13 @@ import org.bukkit.event.entity.EntityDamageEvent
 class StatDefense : Stat(
     "defense"
 ) {
+    override fun formatDescription(string: String, level: Int): String {
+        return string.replace(
+            "%percent_less_damage%",
+            (this.config.getDouble("percent-less-damage-per-level") * level).toNiceString()
+        )
+    }
+
     @EventHandler(priority = EventPriority.LOW)
     fun handle(event: EntityDamageEvent) {
         if (event.entity !is Player) {

@@ -35,4 +35,7 @@ top:
 menu:
   title: "Your Skills"
 
+stats-gui:
+  title: "Your Stats"
+
 infinity: "∞"

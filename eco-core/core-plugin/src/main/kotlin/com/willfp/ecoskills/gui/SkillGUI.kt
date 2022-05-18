@@ -61,7 +61,14 @@ object SkillGUI {
             setSlot(
                 plugin.configYml.getInt("gui.player-info.row"),
                 plugin.configYml.getInt("gui.player-info.column"),
-                slot(playerHeadItemBuilder) {}
+                slot(playerHeadItemBuilder) {
+                    if (plugin.configYml.getBool("gui.player-info.click-to-open-stats")) {
+                        onLeftClick { event, _ ->
+                            val player = event.whoClicked as Player
+                            StatsGUI.menu.open(player)
+                        }
+                    }
+                }
             )
             modfiy { menuBuilder ->
                 for (skill in Skills.values()) {

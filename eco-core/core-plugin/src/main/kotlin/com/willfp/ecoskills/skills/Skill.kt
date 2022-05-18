@@ -47,7 +47,7 @@ abstract class Skill(
     val xpRequirements = config.getInts("level-xp-requirements")
     lateinit var name: String
     lateinit var description: String
-    lateinit var gui: SkillGUI
+    lateinit var gui: SkillLevelGUI
     var maxLevel: Int = 50
     private val rewards = mutableListOf<SkillObjectReward>()
     private val levelCommands = mutableMapOf<Int, MutableList<String>>()
@@ -180,7 +180,7 @@ abstract class Skill(
         guiLoreCache.invalidateAll()
         messagesCache.invalidateAll()
 
-        gui = SkillGUI(plugin, this)
+        gui = SkillLevelGUI(plugin, this)
     }
 
     fun getLevelUpRewards(): MutableList<SkillObjectReward> {

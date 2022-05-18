@@ -35,6 +35,8 @@ gui:
     row: 1
     column: 5
 
+    click-to-open-stats: true
+
     name: "&f%player%&f's &fStats:"
     lore:
       - "&f"
@@ -48,6 +50,8 @@ gui:
       - "&f"
       - "&7Total Skill Level: &f%ecoskills_total_skill_level%"
       - "&7Average Skill Level: &f%ecoskills_average_skill_level%"
+      - ""
+      - "&eClick to view more!"
 
   close:
     material: barrier
@@ -68,6 +72,55 @@ gui:
       - "&8» &e%current_xp%&8/&7%required_xp% &fXP"
       - "&f"
       - "&eClick to view Level Progression!"
+
+stats-gui:
+  rows: 6
+
+  mask:
+    # The way the mask works is by having a list of materials
+    # And then a pattern to use those materials.
+
+    # The pattern is the rows in the GUI
+    # Each line must be 9 long, and the amount of rows should be the amount of rows in the GUI
+    # A zero represents nothing
+    # A 1 represents the first material
+    # A 2 represents the second material
+    # And so on, you can add up to 9.
+
+    materials:
+      - black_stained_glass_pane
+    pattern:
+      - "111101111"
+      - "111111111"
+      - "101010101"
+      - "110101011"
+      - "111111111"
+      - "111101111"
+
+  player-info:
+    row: 1
+    column: 5
+
+    name: "&f%player%&f's &fStats:"
+    lore:
+      - "&f"
+      - " %ecoskills_defense_name%&f %ecoskills_defense_base% &e%ecoskills_defense_bonus%"
+      - " %ecoskills_strength_name%&f %ecoskills_strength_base% &e%ecoskills_strength_bonus%"
+      - " %ecoskills_crit_chance_name%&f %ecoskills_crit_chance_base%% &e%ecoskills_crit_chance_bonus%"
+      - " %ecoskills_crit_damage_name%&f %ecoskills_crit_damage_base% &e%ecoskills_crit_damage_bonus%"
+      - " %ecoskills_speed_name%&f %ecoskills_speed_base% &e%ecoskills_speed_bonus%"
+      - " %ecoskills_wisdom_name%&f %ecoskills_wisdom_base% &e%ecoskills_wisdom_bonus%"
+      - " %ecoskills_ferocity_name%&f %ecoskills_ferocity_base% &e%ecoskills_ferocity_bonus%"
+      - "&f"
+      - "&7Total Skill Level: &f%ecoskills_total_skill_level%"
+      - "&7Average Skill Level: &f%ecoskills_average_skill_level%"
+
+  close:
+    material: barrier
+    name: "&cClose"
+    location:
+      row: 6
+      column: 5
 
 level-gui:
   rows: 6
@@ -230,22 +283,82 @@ skills:
 stats:
   defense:
     name: "&#e884b0🛡 Defense"
+
+    description: "&8Take &a%percent_less_damage%%&8 less damage" # The description to be shown in lore and messages
+
+    stats-gui:
+      enabled: true
+      position:
+        row: 3
+        column: 2
+      item:
+        item: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjlhODczZjI0OGMzOTExMjIxODg3OWNjOWMwMzM0N2VkMTZlN2Y2MDIzOTBhYzdhNjgwNmY4ZTg0OTI3OTRkNSJ9fX0=
+        name: "%stat%"
+        lore:
+          - "&fLevel: &a%level%"
+          - "&8&o%description%"
+
     # Disabled worlds
     disabled-in-worlds: [ ]
     # 100% halves the incoming damage
     percent-less-damage-per-level: 0.25
   strength:
     name: "&#db0000🗡 Strength"
+
+    description: "&8Deal &a%percent_more_damage%%&8 more damage" # The description to be shown in lore and messages
+
+    stats-gui:
+      enabled: true
+      position:
+        row: 3
+        column: 6
+      item:
+        item: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWRmOTZjY2Q5Mjk5MGRkOGI4NTUzZDJjY2VhYjRjMmM5YjIwOGFhMjI1ZGIxNTc1ODJmY2Q1NjY5MTVkNGJjZiJ9fX0=
+        name: "%stat%"
+        lore:
+          - "&fLevel: &a%level%"
+          - "&8&o%description%"
+
     # Disabled worlds
     disabled-in-worlds: [ ]
     # 100% is double damage
     percent-more-damage-per-level: 0.25
   crit_chance:
     name: "&#f7ff85☣ Crit Chance"
+
+    description: "&8Gives you a &a%chance%%&8 to deal crits" # The description to be shown in lore and messages
+
+    stats-gui:
+      enabled: true
+      position:
+        row: 3
+        column: 8
+      item:
+        item: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmFiMTgwZTgyMGY3MTYyOWYwMWYyNWI2MmJkZWI5YzMyNGQ1MGEzOGFmNzRlNmE5MzIxNDM5NDcxMDQ2ZGM0MSJ9fX0=
+        name: "%stat%"
+        lore:
+          - "&fLevel: &a%level%"
+          - "&8&o%description%"
+
     # Nothing happens above 100%, 200% is the same as it.
     chance-per-level: 1
   crit_damage:
     name: "&9☠ Crit Damage"
+
+    description: "&8Crits deal &a%percent_more_damage%%&8 more damage" # The description to be shown in lore and messages
+
+    stats-gui:
+      enabled: true
+      position:
+        row: 4
+        column: 3
+      item:
+        item: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2UzN2RmMjdkMWU5MjVkMmY3OGRlNjkzNDEzYWRhYjc1ZDc5MTg4NDViYWM4ZjYxNzRmZGIyMmVjNTc3NjExZCJ9fX0=
+        name: "%stat%"
+        lore:
+          - "&fLevel: &a%level%"
+          - "&8&o%description%"
+
     # Disabled worlds
     disabled-in-worlds: [ ]
     # The percent more damage to deal on crits for each level.
@@ -254,6 +367,21 @@ stats:
     base-percent-more: 50
   speed:
     name: "&#40ffe6✦ Speed"
+
+    description: "&8Makes you move &a%percent_faster%%&8 faster" # The description to be shown in lore and messages
+
+    stats-gui:
+      enabled: true
+      position:
+        row: 4
+        column: 5
+      item:
+        item: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODYyNGJhY2I1ZjE5ODZlNjQ3N2FiY2U0YWU3ZGNhMTgyMGE1MjYwYjYyMzNiNTViYTFkOWJhOTM2Yzg0YiJ9fX0=
+        name: "%stat%"
+        lore:
+          - "&fLevel: &a%level%"
+          - "&8&o%description%"
+
     # Disabled worlds
     disabled-in-worlds: [ ]
     # The percent more speed to give for the speed attribute (internal in the game)
@@ -261,24 +389,84 @@ stats:
     percent-faster-per-level: 1
   wisdom:
     name: "&#42f566✎ Wisdom"
+
+    description: "&8Increases xp gain by &a%percent_more_xp%%" # The description to be shown in lore and messages
+
+    stats-gui:
+      enabled: true
+      position:
+        row: 4
+        column: 5
+      item:
+        item: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzA1NGMyOWM3ODA5MDQ3MWMxZWEwNThiZDY0MTg5NzM5MWM5ZTQ2OTRhYTlkMTQwYWZiYmE4ZDBjYzQzNjM3In19fQ==
+        name: "%stat%"
+        lore:
+          - "&fLevel: &a%level%"
+          - "&8&o%description%"
+
     # Disabled worlds
     disabled-in-worlds: [ ]
     # The percent more xp to gain from orbs for each level of the stat.
     percent-more-xp-gain: 1
   ferocity:
     name: "&#6b0000⫽ Ferocity"
+
+    description: "&8Gives a &a%chance%%&8 chance to deal damage twice" # The description to be shown in lore and messages
+
+    stats-gui:
+      enabled: true
+      position:
+        row: 4
+        column: 7
+      item:
+        item: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjk2YTYzNTMwZjhmNGVkMzBhMWQzNjg2ZTk4OGY2NzYzMDBlNGYxODE0MDllMDc4YWUzMGY5ZTA2NDZmYjI3ZCJ9fX0=
+        name: "%stat%"
+        lore:
+          - "&fLevel: &a%level%"
+          - "&8&o%description%"
+
     # Disabled worlds
     disabled-in-worlds: [ ]
     # The percent chance to deal damage twice
     chance-per-level: 0.5
   health:
     name: "&c❤ Health"
+
+    description: "&8Gives &a+%health%&8 health" # The description to be shown in lore and messages
+
+    stats-gui:
+      enabled: false
+      position:
+        row: 5
+        column: 4
+      item:
+        item: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWNhYTc0NDZiZTg3NGJmMWExNGVkMWZjZWZjYzBhMDkyMzM2YzFiZjViZjQ2NWU5ZDI1NGRlZTM0YWZlYTc5In19fQ==
+        name: "%stat%"
+        lore:
+          - "&fLevel: &a%level%"
+          - "&8&o%description%"
+
     # Disabled worlds
     disabled-in-worlds: [ ]
     # The extra hp per level
     health-per-level: 1
   attack_speed:
     name: "&#fcba03⚔ Attack Speed"
+
+    description: "&8Gives &a+%health%&8 health" # The description to be shown in lore and messages
+
+    stats-gui:
+      enabled: false
+      position:
+        row: 5
+        column: 6
+      item:
+        item: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmJiOGQ3MjU5YzhlNzI1ZTdjZjc1ODFjNzY5YWRkNDIyMmU3NjY3NWZlOTZlZDAxYWQ3YjRkYjdkNTU0ZjRhMyJ9fX0=
+        name: "%stat%"
+        lore:
+          - "&fLevel: &a%level%"
+          - "&8&o%description%"
+
     # Disabled worlds
     disabled-in-worlds: [ ]
     # The percent more speed to give for the speed attribute (internal in the game)
