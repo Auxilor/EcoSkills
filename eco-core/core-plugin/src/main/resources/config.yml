@@ -311,7 +311,7 @@ stats:
       enabled: true
       position:
         row: 3
-        column: 6
+        column: 4
       item:
         item: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWRmOTZjY2Q5Mjk5MGRkOGI4NTUzZDJjY2VhYjRjMmM5YjIwOGFhMjI1ZGIxNTc1ODJmY2Q1NjY5MTVkNGJjZiJ9fX0=
         name: "%stat%"
@@ -332,7 +332,7 @@ stats:
       enabled: true
       position:
         row: 3
-        column: 8
+        column: 6
       item:
         item: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmFiMTgwZTgyMGY3MTYyOWYwMWYyNWI2MmJkZWI5YzMyNGQ1MGEzOGFmNzRlNmE5MzIxNDM5NDcxMDQ2ZGM0MSJ9fX0=
         name: "%stat%"
@@ -350,8 +350,8 @@ stats:
     stats-gui:
       enabled: true
       position:
-        row: 4
-        column: 3
+        row: 3
+        column: 8
       item:
         item: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2UzN2RmMjdkMWU5MjVkMmY3OGRlNjkzNDEzYWRhYjc1ZDc5MTg4NDViYWM4ZjYxNzRmZGIyMmVjNTc3NjExZCJ9fX0=
         name: "%stat%"
@@ -374,7 +374,7 @@ stats:
       enabled: true
       position:
         row: 4
-        column: 5
+        column: 3
       item:
         item: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODYyNGJhY2I1ZjE5ODZlNjQ3N2FiY2U0YWU3ZGNhMTgyMGE1MjYwYjYyMzNiNTViYTFkOWJhOTM2Yzg0YiJ9fX0=
         name: "%stat%"
