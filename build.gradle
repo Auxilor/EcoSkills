@@ -42,11 +42,13 @@ allprojects {
 
     shadowJar {
         relocate('com.willfp.libreforge', 'com.willfp.ecoskills.libreforge')
+        relocate('org.joml', 'com.willfp.ecoskills.libreforge.joml')
     }
 
     dependencies {
         compileOnly 'com.willfp:eco:6.35.1'
-        implementation 'com.willfp:libreforge:3.47.0'
+        implementation 'com.willfp:libreforge:3.48.0'
+        implementation 'org.joml:joml:1.10.4'
         compileOnly fileTree(dir: '../../lib', include: ['*.jar'])
         compileOnly 'com.github.LegameMc:EnchantGui-API:1.0'
 
