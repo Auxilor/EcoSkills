@@ -51,7 +51,8 @@ fun ItemStack.addStatModifier(modifier: ItemStatModifier) {
     modifierTag.set(
         slotsKey,
         PersistentDataType.STRING,
-        modifier.slots.map { slot -> slot.name }.toTypedArray().joinToString { "," })
+        modifier.slots.joinToString(separator = ",") { it.name }
+    )
     modifiers.set(modifier.key, PersistentDataType.TAG_CONTAINER, modifierTag)
 
     meta.persistentDataContainer.applyModifiers(modifiers)
@@ -96,9 +97,10 @@ fun ItemStack.getStatModifier(key: NamespacedKey): ItemStatModifier? {
 
         val stat = Stats.getByID(modifierTag.get(statKey, PersistentDataType.STRING)!!)!!
         val amount = modifierTag.get(amountKey, PersistentDataType.DOUBLE)!!
-        val slots = modifierTag.get(slotsKey, PersistentDataType.STRING)!!.split(",")
-            .map { s -> EquipmentSlot.valueOf(s) }
-            .toCollection(ArrayList())
+        val slots = modifierTag.get(slotsKey, PersistentDataType.STRING)!!
+            .split(",")
+            .filterNot { it.isBlank() }
+            .mapNotNull { s -> runCatching { EquipmentSlot.valueOf(s) }.getOrNull() }
         val operation = ModifierOperation.valueOf(modifierTag.get(operationKey, PersistentDataType.STRING)!!)
 
         ItemStatModifier(key, stat, amount, operation, *slots.toTypedArray())
