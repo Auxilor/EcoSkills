@@ -53,6 +53,7 @@ fun ItemStack.addStatModifier(modifier: ItemStatModifier) {
         PersistentDataType.STRING,
         modifier.slots.joinToString(separator = ",") { it.name }
     )
+    modifierTag.set(operationKey, PersistentDataType.STRING, modifier.operation.name)
     modifiers.set(modifier.key, PersistentDataType.TAG_CONTAINER, modifierTag)
 
     meta.persistentDataContainer.applyModifiers(modifiers)
