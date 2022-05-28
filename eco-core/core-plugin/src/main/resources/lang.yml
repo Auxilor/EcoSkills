@@ -24,6 +24,10 @@ messages:
   xp-gain-sound-disabled: "&cSkill XP gain sound is disabled on this server."
   resetting-all-players: "&fResetting all players... (this may take a while)"
   reset-all-players: "&fReset all players!"
+  cannot-afford: "&cYou can't afford to do this! &fCost: &a$$%cost%"
+  cannot-afford-type: "&cYou can't afford to do this! &fCost: &a%cost% %type%"
+  on-cooldown: "&cThis effect is on cooldown! &fTime left: &a%seconds% seconds"
+  cannot-transmit: "&cYou can't transmit here!"
 
 line-wrap-color: "&8"
 
