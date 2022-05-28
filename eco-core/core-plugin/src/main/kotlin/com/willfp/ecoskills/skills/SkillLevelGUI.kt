@@ -22,7 +22,7 @@ import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 import kotlin.math.ceil
 
-class SkillGUI(
+class SkillLevelGUI(
     plugin: EcoPlugin,
     skill: Skill
 ) {

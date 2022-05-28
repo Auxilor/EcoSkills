@@ -28,7 +28,8 @@ class CustomEffect(
     private val effects: Set<ConfiguredEffect>
     private val conditions: Set<ConfiguredCondition>
 
-    private val levels = mutableMapOf<Int, CustomEffectLevel>()
+    private val levels = Caffeine.newBuilder()
+        .build<Int, CustomEffectLevel>()
     private val levelDescriptions = Caffeine.newBuilder()
         .build<Int, String>()
 
@@ -48,13 +49,11 @@ class CustomEffect(
         conditions = config.getSubsections("conditions").mapNotNull {
             Conditions.compile(it, "Custom Effect $id")
         }.toSet()
-
-        repeat(config.getInt("max-level")) {
-            levels[it] = CustomEffectLevel(this, it, effects, conditions)
-        }
     }
 
-    fun getLevel(level: Int) = levels[level]!!
+    fun getLevel(level: Int): CustomEffectLevel = levels.get(level) {
+        CustomEffectLevel(this, it, effects, conditions)
+    }
 
     override fun formatDescription(string: String, level: Int): String {
         return levelDescriptions.get(level) {

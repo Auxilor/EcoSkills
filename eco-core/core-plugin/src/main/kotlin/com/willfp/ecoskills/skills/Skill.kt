@@ -1,5 +1,6 @@
 package com.willfp.ecoskills.skills
 
+import com.github.benmanes.caffeine.cache.Caffeine
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.data.keys.PersistentDataKey
@@ -10,10 +11,15 @@ import com.willfp.eco.core.placeholder.PlayerlessPlaceholder
 import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.StringUtils
 import com.willfp.eco.util.containsIgnoreCase
-import com.willfp.ecoskills.*
+import com.willfp.ecoskills.EcoSkillsPlugin
+import com.willfp.ecoskills.SkillObject
 import com.willfp.ecoskills.config.SkillConfig
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.effects.Effects
+import com.willfp.ecoskills.getAverageSkillLevel
+import com.willfp.ecoskills.getSkillLevel
+import com.willfp.ecoskills.getSkillProgress
+import com.willfp.ecoskills.getTotalSkillLevel
 import com.willfp.ecoskills.stats.Stats
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
@@ -41,14 +47,16 @@ abstract class Skill(
     val xpRequirements = config.getInts("level-xp-requirements")
     lateinit var name: String
     lateinit var description: String
-    lateinit var gui: SkillGUI
+    lateinit var gui: SkillLevelGUI
     var maxLevel: Int = 50
     private val rewards = mutableListOf<SkillObjectReward>()
     private val levelCommands = mutableMapOf<Int, MutableList<String>>()
 
     // Cached values
-    private val guiLoreCache = mutableMapOf<Int, List<String>>()
-    private val messagesCache = mutableMapOf<Int, List<String>>()
+    private val guiLoreCache = Caffeine.newBuilder()
+        .build<Int, List<String>>()
+    private val messagesCache = Caffeine.newBuilder()
+        .build<Int, List<String>>()
 
     init {
         finishLoading()
@@ -80,7 +88,12 @@ abstract class Skill(
     fun update() {
         name = config.getFormattedString("name")
         description = config.getFormattedString("description")
+
+        xpRequirements.clear()
+        xpRequirements.addAll(config.getInts("level-xp-requirements"))
+
         maxLevel = xpRequirements.size - 1
+
         rewards.clear()
         for (string in config.getStrings("rewards.rewards")) {
             val split = string.split("::")
@@ -164,10 +177,10 @@ abstract class Skill(
 
         postUpdate()
 
-        guiLoreCache.clear()
-        messagesCache.clear()
+        guiLoreCache.invalidateAll()
+        messagesCache.invalidateAll()
 
-        gui = SkillGUI(plugin, this)
+        gui = SkillLevelGUI(plugin, this)
     }
 
     fun getLevelUpRewards(): MutableList<SkillObjectReward> {
@@ -200,23 +213,24 @@ abstract class Skill(
         return levels
     }
 
-    fun getRewardsMessages(player: Player?, level: Int, useCache: Boolean = true): MutableList<String> {
-        val messages = mutableListOf<String>()
-        if (messagesCache.containsKey(level) && useCache) {
-            messages.addAll(messagesCache[level]!!)
-        } else {
-            var highestLevel = 1
-            for (startLevel in this.config.getSubsection("rewards.chat-messages").getKeys(false)) {
-                if (startLevel.toInt() > level) {
-                    break
+    fun getRewardsMessages(player: Player?, level: Int): List<String> {
+        val raw = messagesCache.get(level) {
+            val parentSection = this.config.getSubsection("rewards.chat-messages")
+
+            var highestConfiguredLevel = 1
+            for (messagesLevel in parentSection.getKeys(false).map { it.toInt() }) {
+                if (messagesLevel > level) {
+                    continue
                 }
 
-                if (startLevel.toInt() > highestLevel) {
-                    highestLevel = startLevel.toInt()
+                if (messagesLevel > highestConfiguredLevel) {
+                    highestConfiguredLevel = messagesLevel
                 }
             }
 
-            for (string in this.config.getStrings("rewards.chat-messages.$highestLevel")) {
+            val messages = mutableListOf<String>()
+
+            for (string in this.config.getStrings("rewards.chat-messages.$highestConfiguredLevel")) {
                 var msg = string
 
                 for (levelUpReward in this.getLevelUpRewards()) {
@@ -230,32 +244,34 @@ abstract class Skill(
                         )
                     }
                 }
+
                 messages.add(msg)
             }
 
-            messagesCache[level] = messages
+            messages
         }
 
-        return StringUtils.formatList(messages, player)
+        return StringUtils.formatList(raw, player)
     }
 
-    fun getGUIRewardsMessages(player: Player?, level: Int, useCache: Boolean = true): MutableList<String> {
-        val lore = mutableListOf<String>()
-        if (guiLoreCache.containsKey(level) && useCache) {
-            lore.addAll(guiLoreCache[level]!!)
-        } else {
-            var highestLevel = 1
-            for (startLevel in this.config.getSubsection("rewards.progression-lore").getKeys(false)) {
-                if (startLevel.toInt() > level) {
-                    break
+    fun getGUIRewardsMessages(player: Player?, level: Int): MutableList<String> {
+        val raw = guiLoreCache.get(level) {
+            val parentSection = this.config.getSubsection("rewards.progression-lore")
+
+            var highestConfiguredLevel = 1
+            for (messagesLevel in parentSection.getKeys(false).map { it.toInt() }) {
+                if (messagesLevel > level) {
+                    continue
                 }
 
-                if (startLevel.toInt() > highestLevel) {
-                    highestLevel = startLevel.toInt()
+                if (messagesLevel > highestConfiguredLevel) {
+                    highestConfiguredLevel = messagesLevel
                 }
             }
 
-            for (string in this.config.getStrings("rewards.progression-lore.$highestLevel")) {
+            val messages = mutableListOf<String>()
+
+            for (string in this.config.getStrings("rewards.progression-lore.$highestConfiguredLevel")) {
                 var s = string
 
                 for (levelUpReward in this.getLevelUpRewards()) {
@@ -270,13 +286,13 @@ abstract class Skill(
                     }
                 }
 
-                lore.add(s)
+                messages.add(s)
             }
 
-            guiLoreCache[level] = lore
+            messages
         }
 
-        return StringUtils.formatList(lore, player)
+        return StringUtils.formatList(raw, player)
     }
 
     fun getGUILore(player: Player): MutableList<String> {

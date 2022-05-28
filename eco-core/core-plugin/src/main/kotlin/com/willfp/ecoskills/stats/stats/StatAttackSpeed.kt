@@ -1,5 +1,6 @@
 package com.willfp.ecoskills.stats.stats
 
+import com.willfp.eco.util.toNiceString
 import com.willfp.ecoskills.getStatLevel
 import com.willfp.ecoskills.stats.Stat
 import org.bukkit.attribute.Attribute
@@ -12,6 +13,13 @@ import org.bukkit.event.player.PlayerChangedWorldEvent
 class StatAttackSpeed : Stat(
     "attack_speed"
 ) {
+    override fun formatDescription(string: String, level: Int): String {
+        return string.replace(
+            "%percent_faster%",
+            (this.config.getDouble("percent-faster-per-level") * level).toNiceString()
+        )
+    }
+
     override fun updateStatLevel(player: Player) {
         val modifier = AttributeModifier(
             this.uuid,

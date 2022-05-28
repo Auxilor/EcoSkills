@@ -1,10 +1,23 @@
 stats:
   - id: saturation # The ID of the stat, to be used in skills
     name: "&#f5aa42🍖 Saturation" # The name of the stat, shown to players
-    max-level: 200 # The max obtainable level of the stat - this is required in order to generate the correct number of levels
+    placeholder: "%level% / 3" # The placeholder to be shown in the description, you can use expressions - eg %level% * 2
+    description: "&8Lose &a%placeholder%%&8 less hunger" # The description to be shown in lore and messages
+
+    stats-gui:
+      enabled: false
+      position:
+        row: 5
+        column: 5
+      item:
+        item: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDMzZGRiOTJjYjZiM2E3OTI4MGI4YmRjZWQ4OTc2YWVhYjEzYTRiZmZlYWVmMmQ0NmQ4MjhiZDkxZGVlMGYzZSJ9fX0=
+        name: "%stat%"
+        lore:
+          - "&fLevel: &a%level%"
+          - "&8&o%description%"
 
     effects:
-      - id: hunger_multplier
+      - id: hunger_multiplier
         args:
           multiplier: "1 - (%level% / 300)"
 
