@@ -1,6 +1,7 @@
 name: "Combat"
 description: "Kill mobs to earn Combat XP"
 disabled-in-worlds: []
+enabled: true
 
 # Add more levels if you want
 level-xp-requirements:

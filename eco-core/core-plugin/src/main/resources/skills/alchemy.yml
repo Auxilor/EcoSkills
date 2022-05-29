@@ -1,6 +1,7 @@
 name: "Alchemy"
 description: "Brew potions to earn Alchemy XP"
 disabled-in-worlds: []
+enabled: true
 
 # Add more levels if you want
 level-xp-requirements:

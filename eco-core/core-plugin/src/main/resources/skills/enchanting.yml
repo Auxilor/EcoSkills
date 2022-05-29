@@ -1,6 +1,7 @@
 name: "Enchanting"
 description: "Enchant items to earn Enchanting XP"
 disabled-in-worlds: []
+enabled: true
 
 # Add more levels if you want
 level-xp-requirements:

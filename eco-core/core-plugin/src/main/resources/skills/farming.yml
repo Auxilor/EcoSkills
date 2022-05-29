@@ -1,6 +1,7 @@
 name: "Farming"
 description: "Harvest crops to earn Farming XP"
 disabled-in-worlds: []
+enabled: true
 
 # Add more levels if you want
 level-xp-requirements:

@@ -49,7 +49,7 @@ object TabCompleteHelper {
     fun update() {
         SKILL_NAMES.clear()
         SKILL_NAMES.addAll(
-            Skills.values().stream().map(Skill::id).collect(Collectors.toList())
+            Skills.values().stream().filter(Skill::enabled).map(Skill::id).collect(Collectors.toList())
         )
         STAT_NAMES.clear()
         STAT_NAMES.addAll(

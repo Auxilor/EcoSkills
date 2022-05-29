@@ -1,6 +1,7 @@
 name: "Fishing"
 description: "Fish to earn Fishing XP"
 disabled-in-worlds: []
+enabled: true
 
 # Add more levels if you want
 level-xp-requirements:

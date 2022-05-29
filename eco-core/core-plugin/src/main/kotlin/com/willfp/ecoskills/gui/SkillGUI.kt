@@ -72,11 +72,13 @@ object SkillGUI {
             )
             modfiy { menuBuilder ->
                 for (skill in Skills.values()) {
-                    menuBuilder.setSlot(
-                        skill.config.getInt("gui.position.row"),
-                        skill.config.getInt("gui.position.column"),
-                        skill.gui.slot
-                    )
+                    if (skill.enabled) {
+                        menuBuilder.setSlot(
+                            skill.config.getInt("gui.position.row"),
+                            skill.config.getInt("gui.position.column"),
+                            skill.gui.slot
+                        )
+                    }
                 }
             }
             setSlot(plugin.configYml.getInt("gui.close.location.row"),

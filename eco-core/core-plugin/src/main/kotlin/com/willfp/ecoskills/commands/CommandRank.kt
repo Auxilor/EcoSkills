@@ -27,7 +27,7 @@ class CommandRank(plugin: EcoPlugin) :
 
         val skill = Skills.getByID(args[0].lowercase())
 
-        if (skill == null) {
+        if (skill == null || !skill.enabled) {
             sender.sendMessage(plugin.langYml.getMessage("invalid-skill"))
             return
         }

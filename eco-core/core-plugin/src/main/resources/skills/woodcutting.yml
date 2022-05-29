@@ -1,6 +1,7 @@
 name: "Woodcutting"
 description: "Cut down trees to earn Woodcutting XP"
 disabled-in-worlds: []
+enabled: true
 
 # Add more levels if you want
 level-xp-requirements:

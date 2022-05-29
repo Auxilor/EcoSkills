@@ -1,6 +1,7 @@
 name: "Exploration"
 description: "Move to earn Exploration XP"
 disabled-in-worlds: []
+enabled: true
 
 # Add more levels if you want
 level-xp-requirements:
