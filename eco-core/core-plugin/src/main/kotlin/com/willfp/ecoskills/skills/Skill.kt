@@ -51,7 +51,7 @@ abstract class Skill(
     var maxLevel: Int = 50
     private val rewards = mutableListOf<SkillObjectReward>()
     private val levelCommands = mutableMapOf<Int, MutableList<String>>()
-    var enabled = config.getBool("enabled")
+    var enabled = config.getBoolOrNull("enabled") ?: true
 
     // Cached values
     private val guiLoreCache = Caffeine.newBuilder()
@@ -91,7 +91,7 @@ abstract class Skill(
     }
 
     fun update() {
-        enabled = config.getBool("enabled")
+        enabled = config.getBoolOrNull("enabled") ?: true
         name = config.getFormattedString("name")
         description = config.getFormattedString("description")
 
