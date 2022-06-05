@@ -103,6 +103,8 @@ fun Player.giveExactSkillExperience(skill: Skill, experience: Double) {
         val levelUpEvent = PlayerSkillLevelUpEvent(this, skill, level + 1)
         Bukkit.getPluginManager().callEvent(levelUpEvent)
         this.giveExactSkillExperience(skill, overshoot)
+    } else {
+        this.setSkillProgress(skill, progress)
     }
 }
 
