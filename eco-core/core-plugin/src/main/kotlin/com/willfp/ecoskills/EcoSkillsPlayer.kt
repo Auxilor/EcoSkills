@@ -79,7 +79,7 @@ fun OfflinePlayer.getAverageSkillLevel(): Double {
 }
 
 fun Player.giveSkillExperience(skill: Skill, experience: Double, noMultiply: Boolean = false) {
-    var exp = abs(if (noMultiply) experience else experience * this.getSkillExperienceMultiplier())
+    val exp = abs(if (noMultiply) experience else experience * this.getSkillExperienceMultiplier())
 
     val gainEvent = PlayerSkillExpGainEvent(this, skill, exp, !noMultiply)
     Bukkit.getPluginManager().callEvent(gainEvent)
@@ -88,19 +88,21 @@ fun Player.giveSkillExperience(skill: Skill, experience: Double, noMultiply: Boo
         return
     }
 
-    exp = gainEvent.amount
+    this.giveExactSkillExperience(skill, gainEvent.amount)
+}
 
+fun Player.giveExactSkillExperience(skill: Skill, experience: Double) {
     val level = this.getSkillLevel(skill)
 
-    this.setSkillProgress(skill, this.getSkillProgress(skill) + exp)
+    val progress = this.getSkillProgress(skill) + experience
 
-    if (this.getSkillProgress(skill) >= skill.getExpForLevel(level + 1) && level + 1 <= skill.maxLevel) {
-        val overshoot = this.getSkillProgress(skill) - skill.getExpForLevel(level + 1)
+    if (progress >= skill.getExpForLevel(level + 1) && level + 1 <= skill.maxLevel) {
+        val overshoot = progress - skill.getExpForLevel(level + 1)
         this.setSkillProgress(skill, 0.0)
         this.setSkillLevel(skill, level + 1)
         val levelUpEvent = PlayerSkillLevelUpEvent(this, skill, level + 1)
         Bukkit.getPluginManager().callEvent(levelUpEvent)
-        this.giveSkillExperience(skill, overshoot, true)
+        this.giveExactSkillExperience(skill, overshoot)
     }
 }
 
