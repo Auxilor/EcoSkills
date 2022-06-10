@@ -5,6 +5,7 @@ import com.willfp.eco.core.integrations.hologram.HologramManager
 import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.isCrit
+import org.bukkit.GameMode
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
 import org.bukkit.event.EventHandler
@@ -79,7 +80,12 @@ class DamageIndicatorListener(
         if (!plugin.configYml.getBool("damage-indicators.healing.enabled")) {
             return
         }
-
+        val p = event.entity
+        if (p is Player){
+            if (p.gameMode == GameMode.SPECTATOR){
+                return
+            }
+        }
         val location = event.entity.location
 
         location.add(0.0, event.entity.height, 0.0)
