@@ -9,14 +9,18 @@ depend:
   - eco
   - ProtocolLib
 softdepend:
-  - EcoEnchants
   - EnchantGui
   - AureliumSkills
   - Vault
   - mcMMO
   - Jobs
-  - EcoArmor
   - TMMobcoins
+  - EcoEnchants
+  - EcoBosses
+  - Talismans
+  - EcoArmor
+  - EcoItems
+  - Boosters
 commands:
   ecoskills:
     description: Base Command
