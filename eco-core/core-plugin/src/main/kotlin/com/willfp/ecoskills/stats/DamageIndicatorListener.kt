@@ -80,12 +80,11 @@ class DamageIndicatorListener(
         if (!plugin.configYml.getBool("damage-indicators.healing.enabled")) {
             return
         }
-        val p = event.entity
-        if (p is Player){
-            if (p.gameMode == GameMode.SPECTATOR){
-                return
-            }
+
+        if (event.entity is Player && (event.entity as Player).gameMode == GameMode.SPECTATOR) {
+            return
         }
+
         val location = event.entity.location
 
         location.add(0.0, event.entity.height, 0.0)
