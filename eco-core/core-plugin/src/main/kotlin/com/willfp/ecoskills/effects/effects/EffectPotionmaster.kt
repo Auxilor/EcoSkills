@@ -5,6 +5,7 @@ import com.willfp.eco.util.PotionUtils
 import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.getEffectLevel
+import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -61,18 +62,18 @@ class EffectPotionmaster : Effect(
                 val duration = PotionUtils.getDuration(potionData)
                 val delta = (duration * multiplier).toInt() - duration
                 val secondsDelta = NumberUtils.format(delta / 20.0)
-
+                val lore = meta.lore ?: ArrayList()
+                if (!meta.persistentDataContainer.has(plugin.namespacedKeyFactory.create("duration-delta"), PersistentDataType.INTEGER)){
+                    for (string in config.getStrings("lore")) {
+                        lore.add(StringUtils.format(string.replace("%seconds%", secondsDelta), player))
+                    }
+                }
                 meta.persistentDataContainer.set(
                     plugin.namespacedKeyFactory.create("duration-delta"),
                     PersistentDataType.INTEGER,
                     delta
                 )
 
-                val lore = meta.lore ?: ArrayList()
-
-                for (string in config.getStrings("lore")) {
-                    lore.add(StringUtils.format(string.replace("%seconds%", secondsDelta), player))
-                }
 
                 meta.lore = lore
 
