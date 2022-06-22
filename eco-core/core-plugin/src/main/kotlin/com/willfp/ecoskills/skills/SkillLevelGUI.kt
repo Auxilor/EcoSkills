@@ -33,7 +33,7 @@ class SkillLevelGUI(
             ItemFlag.HIDE_ATTRIBUTES
         ).setDisplayName(
             plugin.configYml.getFormattedString("gui.skill-icon.name")
-                .replace("%skill%", skill.name)
+                .replace("%skill%", skill.levelName)
                 .replace(
                     "%level%",
                     player.getSkillLevel(skill).toString()

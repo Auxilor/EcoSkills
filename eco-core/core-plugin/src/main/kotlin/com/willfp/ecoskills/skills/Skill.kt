@@ -46,6 +46,7 @@ abstract class Skill(
     val config: Config = SkillConfig(this.id, this.javaClass, plugin)
     val xpRequirements = config.getInts("level-xp-requirements")
     lateinit var name: String
+    lateinit var levelName: String
     lateinit var description: String
     lateinit var gui: SkillLevelGUI
     var maxLevel: Int = 50
@@ -93,6 +94,7 @@ abstract class Skill(
     fun update() {
         enabled = config.getBoolOrNull("enabled") ?: true
         name = config.getFormattedString("name")
+        levelName = config.getFormattedStringOrNull("gui.name") ?: name
         description = config.getFormattedString("description")
 
         xpRequirements.clear()
