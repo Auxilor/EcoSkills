@@ -33,7 +33,7 @@ class SkillLevelGUI(
             ItemFlag.HIDE_ATTRIBUTES
         ).setDisplayName(
             plugin.configYml.getFormattedString("gui.skill-icon.name")
-                .replace("%skill%", skill.levelName)
+                .replace("%skill%", skill.name)
                 .replace(
                     "%level%",
                     player.getSkillLevel(skill).toString()
@@ -140,7 +140,7 @@ class SkillLevelGUI(
         val pageKey = "page"
 
         levels = menu(plugin.configYml.getInt("level-gui.rows")) {
-            setTitle(skill.name)
+            setTitle(skill.levelName)
             setMask(
                 FillerMask(
                     maskItems,
