@@ -6,6 +6,7 @@ import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.isCrit
 import org.bukkit.GameMode
+import org.bukkit.entity.Allay
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
 import org.bukkit.event.EventHandler
@@ -36,6 +37,10 @@ class DamageIndicatorListener(
         }
 
         if (event.entity is Player && (event.entity as Player).isBlocking) {
+            return
+        }
+
+        if (event.entity is Allay) {
             return
         }
 
