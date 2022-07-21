@@ -21,6 +21,7 @@ softdepend:
   - EcoArmor
   - EcoItems
   - Boosters
+  - EcoPets
 commands:
   ecoskills:
     description: Base Command

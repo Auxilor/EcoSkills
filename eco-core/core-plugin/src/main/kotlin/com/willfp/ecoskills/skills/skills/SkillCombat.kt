@@ -5,9 +5,11 @@ import com.willfp.ecoskills.giveSkillExperience
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.tryAsPlayer
 import org.bukkit.attribute.Attribute
+import org.bukkit.entity.Slime
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.entity.CreatureSpawnEvent
+import org.bukkit.event.entity.SlimeSplitEvent
 import org.bukkit.metadata.FixedMetadataValue
 
 class SkillCombat : Skill(
@@ -27,7 +29,7 @@ class SkillCombat : Skill(
 
     @EventHandler
     fun onSpawn(event: CreatureSpawnEvent) {
-        if (event.spawnReason == CreatureSpawnEvent.SpawnReason.SPAWNER) {
+        if (event.spawnReason == CreatureSpawnEvent.SpawnReason.SPAWNER || event.spawnReason == CreatureSpawnEvent.SpawnReason.SLIME_SPLIT) {
             event.entity.setMetadata("from-spawner", FixedMetadataValue(this.plugin, true))
         }
     }

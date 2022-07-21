@@ -41,12 +41,6 @@ class DamageIndicatorListener(
             return
         }
 
-        if (Prerequisite.HAS_1_19.isMet) {
-            if (event.entity is Allay) {
-                return
-            }
-        }
-
         val location = event.entity.location
 
         location.add(0.0, event.entity.height, 0.0)
@@ -91,6 +85,12 @@ class DamageIndicatorListener(
 
         if (event.entity is Player && (event.entity as Player).gameMode == GameMode.SPECTATOR) {
             return
+        }
+
+        if (Prerequisite.HAS_1_19.isMet) {
+            if (event.entity is Allay) {
+                return
+            }
         }
 
         val location = event.entity.location
