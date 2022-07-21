@@ -1,5 +1,6 @@
 package com.willfp.ecoskills.effects.effects
 
+import com.willfp.eco.util.containsIgnoreCase
 import com.willfp.ecoskills.effects.DropMultiplierEffect
 import org.bukkit.Location
 import org.bukkit.Material
@@ -37,11 +38,7 @@ class EffectBountifulHarvest : DropMultiplierEffect(
             return
         }
 
-        if (mat == Material.SUGAR_CANE || mat == Material.SWEET_BERRY_BUSH || mat == Material.CACTUS || mat == Material.BAMBOO) {
-            return
-        }
-
-        if (!config.getStrings("on-blocks").contains(mat.name.lowercase())) {
+        if (!config.getStrings("on-crops").containsIgnoreCase(mat.name)) {
             return
         }
 
