@@ -1,5 +1,13 @@
 bountiful_harvest:
   description: "&a%chance%%&8 chance to get &a%multiplier%x&8 drops from farming"
+  # Use the blocks from here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+  # that have "BlockData: Ageable" as their description.
+  # The blocks also have to be lowercase.
+  on-blocks:
+  - carrots
+  - potatoes
+  - beetroots
+  - kelp
 
   # Chance is as a percentage; if the chance for a player is over 100 then it will always be double drops
   # with a chance to get triple drops. Same goes if above 200, but then it will always be triple with a chance
