@@ -18,7 +18,7 @@ class EffectBountifulHarvest : DropMultiplierEffect(
     fun onBreak(event: BlockBreakEvent) {
         blockMap[event.block.location] = event.block.type
 
-        this.plugin.scheduler.run {
+        this.plugin.scheduler.runLater(5) {
             blockMap.remove(event.block.location)
         }
     }
@@ -31,13 +31,9 @@ class EffectBountifulHarvest : DropMultiplierEffect(
 
         val mat = blockMap[event.block.location] ?: return
 
-        val player = event.player
+        val state = (event.blockState.blockData as Ageable)
 
-        val block = event.block
-
-        val data = block.blockData
-
-        if (data !is Ageable) {
+        if (state.age != state.maximumAge) {
             return
         }
 
@@ -45,14 +41,10 @@ class EffectBountifulHarvest : DropMultiplierEffect(
             return
         }
 
-        if (data.age != data.maximumAge) {
-            return
-        }
-
         if (!config.getStrings("on-blocks").contains(mat.name.lowercase())) {
             return
         }
 
-        this.handleDropBonus(player, event.items.map { it.itemStack.clone() })
+        this.handleDropBonus(event.player, event.items.map { it.itemStack.clone() })
     }
 }
