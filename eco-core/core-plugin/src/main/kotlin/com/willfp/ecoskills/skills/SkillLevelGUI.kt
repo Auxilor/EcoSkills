@@ -1,6 +1,7 @@
 package com.willfp.ecoskills.skills
 
 import com.willfp.eco.core.EcoPlugin
+import com.willfp.eco.core.fast.fast
 import com.willfp.eco.core.gui.menu
 import com.willfp.eco.core.gui.menu.Menu
 import com.willfp.eco.core.gui.slot
@@ -153,7 +154,7 @@ class SkillLevelGUI(
                         value.first,
                         value.second,
                         slot(ItemStack(Material.BLACK_STAINED_GLASS_PANE)) {
-                            setUpdater { player, menu, item ->
+                            setUpdater { player, menu, _ ->
                                 var page = menu.getState<Int>(player, pageKey)
                                 if (page == null) {
                                     menu.addState(player, pageKey, 1)
@@ -162,72 +163,55 @@ class SkillLevelGUI(
 
                                 val slotLevel = ((page - 1) * levelsPerPage) + level
 
-                                val meta = item.itemMeta!!
-                                meta.lore = emptyList()
                                 val lore = mutableListOf<String>()
 
-                                item.amount = 1
-
                                 if (slotLevel > skill.maxLevel) {
-                                    item.type = maskItems.items[0].item.type
-                                    meta.setDisplayName("")
-                                    item.itemMeta = meta
-                                    item
+                                    return@setUpdater maskItems.items[0].item
                                 } else {
-                                    if (plugin.configYml.getBool("level-gui.progression-slots.level-as-amount")) {
-                                        item.amount = slotLevel
-                                    }
+                                    val amount = if (plugin.configYml.getBool("level-gui.progression-slots.level-as-amount")) {
+                                        slotLevel
+                                    } else 1
 
-                                    when {
+                                    val item = when {
                                         slotLevel <= player.getSkillLevel(skill) -> {
                                             val lookup = Items.lookup(plugin.configYml.getString("level-gui.progression-slots.unlocked.material")).item
-                                            item.type = lookup.type
-                                            item.amount = lookup.amount
-                                            if (lookup.itemMeta?.hasCustomModelData() == true) {
-                                                meta.setCustomModelData(lookup.itemMeta?.customModelData)
-                                            }
-                                            meta.setDisplayName(
-                                                plugin.configYml.getFormattedString("level-gui.progression-slots.unlocked.name")
-                                                    .replace("%skill%", skill.name)
-                                                    .replace("%level%", slotLevel.toString())
-                                                    .replace("%level_numeral%", NumberUtils.toNumeral(slotLevel))
-                                            )
+
+                                            lookup.fast().displayName = plugin.configYml.getFormattedString("level-gui.progression-slots.unlocked.name")
+                                                .replace("%skill%", skill.name)
+                                                .replace("%level%", slotLevel.toString())
+                                                .replace("%level_numeral%", NumberUtils.toNumeral(slotLevel))
 
                                             lore.addAll(plugin.configYml.getFormattedStrings("level-gui.progression-slots.unlocked.lore"))
+
+                                            lookup
                                         }
                                         slotLevel == player.getSkillLevel(skill) + 1 -> {
                                             val lookup = Items.lookup(plugin.configYml.getString("level-gui.progression-slots.in-progress.material")).item
-                                            item.type = lookup.type
-                                            item.amount = lookup.amount
-                                            if (lookup.itemMeta?.hasCustomModelData() == true) {
-                                                meta.setCustomModelData(lookup.itemMeta?.customModelData)
-                                            }
-                                            meta.setDisplayName(
-                                                plugin.configYml.getFormattedString("level-gui.progression-slots.in-progress.name")
-                                                    .replace("%skill%", skill.name)
-                                                    .replace("%level%", slotLevel.toString())
-                                                    .replace("%level_numeral%", NumberUtils.toNumeral(slotLevel))
-                                            )
+
+                                            lookup.fast().displayName = plugin.configYml.getFormattedString("level-gui.progression-slots.in-progress.name")
+                                                .replace("%skill%", skill.name)
+                                                .replace("%level%", slotLevel.toString())
+                                                .replace("%level_numeral%", NumberUtils.toNumeral(slotLevel))
 
                                             lore.addAll(plugin.configYml.getFormattedStrings("level-gui.progression-slots.in-progress.lore"))
+
+                                            lookup
                                         }
                                         else -> {
                                             val lookup = Items.lookup(plugin.configYml.getString("level-gui.progression-slots.locked.material")).item
-                                            item.type = lookup.type
-                                            item.amount = lookup.amount
-                                            if (lookup.itemMeta?.hasCustomModelData() == true) {
-                                                meta.setCustomModelData(lookup.itemMeta?.customModelData)
-                                            }
-                                            meta.setDisplayName(
-                                                plugin.configYml.getFormattedString("level-gui.progression-slots.locked.name")
-                                                    .replace("%skill%", skill.name)
-                                                    .replace("%level%", slotLevel.toString())
-                                                    .replace("%level_numeral%", NumberUtils.toNumeral(slotLevel))
-                                            )
+
+                                            lookup.fast().displayName = plugin.configYml.getFormattedString("level-gui.progression-slots.locked.name")
+                                                .replace("%skill%", skill.name)
+                                                .replace("%level%", slotLevel.toString())
+                                                .replace("%level_numeral%", NumberUtils.toNumeral(slotLevel))
 
                                             lore.addAll(plugin.configYml.getFormattedStrings("level-gui.progression-slots.locked.lore"))
+
+                                            lookup
                                         }
                                     }
+
+                                    item.amount = amount
 
                                     val currentXP = player.getSkillProgress(skill)
                                     val requiredXP = player.getSkillProgressRequired(skill)
@@ -268,8 +252,7 @@ class SkillLevelGUI(
                                         wrappedLore.addAll(wrapped)
                                     }
 
-                                    meta.lore = wrappedLore
-                                    item.itemMeta = meta
+                                    item.fast().lore = wrappedLore
                                     item
                                 }
                             }
