@@ -39,7 +39,7 @@ class DataListener : Listener {
                     }
                 }
             }
-            event.player.setStatLevel(obj, total)
+            event.player.setStatLevel(stat, total)
         }
 
         for (attribute in Attribute.values()) {
