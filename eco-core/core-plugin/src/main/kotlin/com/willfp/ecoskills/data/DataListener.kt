@@ -4,7 +4,9 @@ import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.getSkillLevel
 import com.willfp.ecoskills.setEffectLevel
+import com.willfp.ecoskills.setStatLevel
 import com.willfp.ecoskills.skills.Skills
+import com.willfp.ecoskills.stats.Stat
 import com.willfp.ecoskills.stats.Stats
 import org.bukkit.attribute.Attribute
 import org.bukkit.event.EventHandler
