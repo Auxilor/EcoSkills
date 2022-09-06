@@ -4,8 +4,8 @@ import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.effects.Effects
-import com.willfp.ecoskills.effects.Stat
-import com.willfp.ecoskills.effects.Stats
+import com.willfp.ecoskills.stats.Stat
+import com.willfp.ecoskills.stats.Stats
 import com.willfp.ecoskills.getSkillLevel
 import com.willfp.ecoskills.setEffectLevel
 import com.willfp.ecoskills.skills.Skills
