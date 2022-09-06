@@ -8,6 +8,7 @@ import com.willfp.ecoskills.stats.Stat
 import com.willfp.ecoskills.stats.Stats
 import com.willfp.ecoskills.getSkillLevel
 import com.willfp.ecoskills.setEffectLevel
+import com.willfp.ecoskills.setStatLevel
 import com.willfp.ecoskills.skills.Skills
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
