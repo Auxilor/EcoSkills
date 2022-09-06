@@ -46,12 +46,8 @@ class SkillExploration : Skill(
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     fun handleLevelling(event: EntityDamageEvent) {
-    
-        val player = event.entity
-
-        if (player !is Player) {
-            return
-        }
+        val player = (event.entity as? Player)?.filterSkillEnabled() ?: return
+        
         if (this.config.getStrings("disabled-in-worlds").containsIgnoreCase(player.getWorld().getName())) {
             return
         }
