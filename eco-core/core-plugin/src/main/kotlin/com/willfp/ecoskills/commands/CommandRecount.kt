@@ -67,7 +67,7 @@ class CommandRecount(plugin: EcoPlugin): Subcommand(
                 sender.sendMessage(
                     plugin.langYml.getMessage("recounted-player")
                         .replace("%player%", player.displayName)
-                        .replace("%effect%", effect.id)
+                        .replace("%effect%", effect?.id)
                         .replace("%level%", recount(player, effect).toString())
                 )
             }
@@ -75,7 +75,7 @@ class CommandRecount(plugin: EcoPlugin): Subcommand(
                 sender.sendMessage(
                     plugin.langYml.getMessage("recounted-player")
                         .replace("%player%", player.displayName)
-                        .replace("%effect%", stat.id)
+                        .replace("%effect%", stat?.id)
                         .replace("%level%", recount(player, stat).toString())
                 )
             }
