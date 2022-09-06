@@ -63,19 +63,19 @@ class CommandRecount(plugin: EcoPlugin): Subcommand(
                 return
             }
         } else {
-            if (stat == null) {
+            if (stat == null && effect != null) {
                 sender.sendMessage(
                     plugin.langYml.getMessage("recounted-player")
                         .replace("%player%", player.displayName)
-                        .replace("%effect%", effect?.id)
+                        .replace("%effect%", effect.id)
                         .replace("%level%", recount(player, effect).toString())
                 )
             }
-            if (effect == null) {
+            if (effect == null && stat != null) {
                 sender.sendMessage(
                     plugin.langYml.getMessage("recounted-player")
                         .replace("%player%", player.displayName)
-                        .replace("%effect%", stat?.id)
+                        .replace("%effect%", stat.id)
                         .replace("%level%", recount(player, stat).toString())
                 )
             }
