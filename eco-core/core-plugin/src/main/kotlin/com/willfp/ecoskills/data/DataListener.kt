@@ -26,6 +26,19 @@ class DataListener : Listener {
                 )
             }
         }
+        
+        for (stat in Stats.values()) {
+            var total = 0
+            for (skill in Skills.values()) {
+                for (levelUpReward in skill.getLevelUpRewards()) {
+                    val obj = levelUpReward.obj
+                    if (obj is Stat && obj == stat ) {
+                        total+=skill.getCumulativeLevelUpReward(obj, event.player.getSkillLevel(skill))
+                    }
+                }
+            }
+            event.player.setStatLevel(obj, total)
+        }
 
         for (attribute in Attribute.values()) {
             val player = event.player
