@@ -1,6 +1,7 @@
 package com.willfp.ecoskills;
 
 import com.willfp.eco.core.AbstractPacketAdapter;
+import com.willfp.eco.core.Prerequisite;
 import com.willfp.eco.core.command.impl.PluginCommand;
 import com.willfp.eco.core.config.interfaces.Config;
 import com.willfp.eco.core.integrations.IntegrationLoader;
@@ -150,6 +151,12 @@ public class EcoSkillsPlugin extends LibReforgePlugin {
 
     @Override
     protected List<AbstractPacketAdapter> loadPacketAdapters() {
+        if (Prerequisite.HAS_1_19.isMet()) {
+            return List.of(
+                    new ActionBarCompatSetActionBar(this)
+            );
+        }
+
         return Arrays.asList(
                 new ActionBarCompatChatMessage(this),
                 new ActionBarCompatSetActionBar(this)
