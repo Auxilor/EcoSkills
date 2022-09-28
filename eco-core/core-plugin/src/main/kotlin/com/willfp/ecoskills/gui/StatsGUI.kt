@@ -1,10 +1,12 @@
 package com.willfp.ecoskills.gui
 
+import com.google.common.math.Stats
 import com.willfp.eco.core.config.updating.ConfigUpdater
 import com.willfp.eco.core.fast.fast
 import com.willfp.eco.core.gui.menu
 import com.willfp.eco.core.gui.menu.Menu
 import com.willfp.eco.core.gui.slot
+import com.willfp.eco.core.gui.slot.ConfigSlot
 import com.willfp.eco.core.gui.slot.FillerMask
 import com.willfp.eco.core.gui.slot.MaskItems
 import com.willfp.eco.core.items.Items
@@ -113,6 +115,14 @@ object StatsGUI {
                     onLeftClick { event, _ -> SkillGUI.homeMenu.open(event.whoClicked as Player) }
                 }
             )
+
+            for (config in plugin.configYml.getSubsections("stats-gui.custom-slots")) {
+                setSlot(
+                    config.getInt("row"),
+                    config.getInt("column"),
+                    ConfigSlot(config)
+                )
+            }
         }
     }
 }

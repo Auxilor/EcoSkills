@@ -4,6 +4,7 @@ import com.willfp.eco.core.config.updating.ConfigUpdater
 import com.willfp.eco.core.gui.menu
 import com.willfp.eco.core.gui.menu.Menu
 import com.willfp.eco.core.gui.slot
+import com.willfp.eco.core.gui.slot.ConfigSlot
 import com.willfp.eco.core.gui.slot.FillerMask
 import com.willfp.eco.core.gui.slot.MaskItems
 import com.willfp.eco.core.items.Items
@@ -91,6 +92,14 @@ object SkillGUI {
                     onLeftClick { event, _ -> event.whoClicked.closeInventory() }
                 }
             )
+
+            for (config in plugin.configYml.getSubsections("gui.custom-slots")) {
+                setSlot(
+                    config.getInt("row"),
+                    config.getInt("column"),
+                    ConfigSlot(config)
+                )
+            }
         }
     }
 }
