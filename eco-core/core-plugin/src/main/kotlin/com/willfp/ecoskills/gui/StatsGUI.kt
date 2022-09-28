@@ -1,6 +1,5 @@
 package com.willfp.ecoskills.gui
 
-import com.google.common.math.Stats
 import com.willfp.eco.core.config.updating.ConfigUpdater
 import com.willfp.eco.core.fast.fast
 import com.willfp.eco.core.gui.menu
