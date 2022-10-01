@@ -43,6 +43,6 @@ class CommandToggleActionbar(plugin: EcoPlugin) : Subcommand(
             NamespacedKeyUtils.create("ecoskills", "actionbar_enabled"),
             PersistentDataKeyType.BOOLEAN,
             true
-        ).player()
+        )
     }
 }

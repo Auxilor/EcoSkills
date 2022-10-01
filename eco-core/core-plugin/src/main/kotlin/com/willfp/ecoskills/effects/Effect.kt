@@ -30,7 +30,7 @@ abstract class Effect(
         plugin.namespacedKeyFactory.create(id),
         PersistentDataKeyType.INT,
         0
-    ).player()
+    )
     val uuid: UUID = UUID.nameUUIDFromBytes(id.toByteArray())
     lateinit var config: Config
 

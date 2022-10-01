@@ -187,7 +187,7 @@ private val gainSoundKey = PersistentDataKey(
     plugin.namespacedKeyFactory.create("gainSound"),
     PersistentDataKeyType.BOOLEAN,
     true
-).player()
+)
 
 fun OfflinePlayer.hasGainSoundEnabled(): Boolean {
     return this.profile.read(gainSoundKey)

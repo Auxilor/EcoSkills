@@ -37,12 +37,12 @@ abstract class Skill(
         plugin.namespacedKeyFactory.create(id),
         PersistentDataKeyType.INT,
         0
-    ).player()
+    )
     val dataXPKey = PersistentDataKey(
         plugin.namespacedKeyFactory.create("${id}_xp"),
         PersistentDataKeyType.DOUBLE,
         0.0
-    ).player()
+    )
     val config: Config = SkillConfig(this.id, this.javaClass, plugin)
     val xpRequirements = config.getInts("level-xp-requirements")
     lateinit var name: String

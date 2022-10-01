@@ -36,7 +36,7 @@ abstract class Stat(
         plugin.namespacedKeyFactory.create(id),
         PersistentDataKeyType.INT,
         0
-    ).player()
+    )
     lateinit var config: Config
     lateinit var name: String
 
