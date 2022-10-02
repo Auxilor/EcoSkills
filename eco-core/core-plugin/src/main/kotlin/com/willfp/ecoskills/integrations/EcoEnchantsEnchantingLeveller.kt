@@ -1,7 +1,7 @@
 package com.willfp.ecoskills.integrations
 
-import com.willfp.ecoenchants.enchantments.EcoEnchants
-import com.willfp.ecoenchants.enchantments.meta.EnchantmentType
+import com.willfp.eco.core.fast.fast
+import com.willfp.ecoenchants.enchants.wrap
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.giveSkillExperience
 import com.willfp.ecoskills.skills.Skills
@@ -23,7 +23,7 @@ class EcoEnchantsEnchantingLeveller(
         }
 
         this.plugin.scheduler.runLater({
-            if (EcoEnchants.hasAnyOfType(event.item, EnchantmentType.SPECIAL)) {
+            if (event.item.fast().enchants.keys.any { it.wrap().type.id == "special" }) {
                 val toGive = Skills.ENCHANTING.config.getDouble("ecoenchants.xp-for-special")
 
                 player.giveSkillExperience(Skills.ENCHANTING, toGive)
