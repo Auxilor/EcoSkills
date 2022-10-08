@@ -26,6 +26,10 @@ class EffectGoldenYield: Effect(
         val block = event.block
         val player = event.player
 
+        if (!this.checkConditions(player)) {
+            return
+        }
+
         val data = block.blockData
 
         if (data !is Ageable) {

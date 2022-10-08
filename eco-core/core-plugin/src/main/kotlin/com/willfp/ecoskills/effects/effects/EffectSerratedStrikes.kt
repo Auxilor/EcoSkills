@@ -32,6 +32,10 @@ class EffectSerratedStrikes : Effect(
             return
         }
 
+        if (!this.checkConditions(player)) {
+            return
+        }
+
         if (!AntigriefManager.canInjure(player, victim)) {
             return
         }

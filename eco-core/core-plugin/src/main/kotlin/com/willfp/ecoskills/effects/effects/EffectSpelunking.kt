@@ -33,6 +33,10 @@ class EffectSpelunking : DropMultiplierEffect(
 
         val player = event.player
 
+        if (!this.checkConditions(player)) {
+            return
+        }
+
         val block = event.block
 
         if (BlockUtils.isPlayerPlaced(block)) {

@@ -29,6 +29,10 @@ class EffectEfficientBrewing : Effect(
             return
         }
 
+        if (!this.checkConditions(player)) {
+            return
+        }
+
         if (player.getEffectLevel(this) == 0) {
             return
         }

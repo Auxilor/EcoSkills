@@ -29,6 +29,10 @@ class EffectAcceleratedEscape: Effect(
             return
         }
 
+        if (!this.checkConditions(player)) {
+            return
+        }
+
         val level = player.getEffectLevel(this)
 
         val modifier = AttributeModifier(

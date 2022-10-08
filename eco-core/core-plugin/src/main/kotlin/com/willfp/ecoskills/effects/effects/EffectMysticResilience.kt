@@ -28,6 +28,10 @@ class EffectMysticResilience : Effect(
             return
         }
 
+        if (!this.checkConditions(player)) {
+            return
+        }
+
         val level = player.getEffectLevel(this)
 
         if (NumberUtils.randFloat(0.0, 100.0) >= this.config.getDouble("chance-per-level") * level) {

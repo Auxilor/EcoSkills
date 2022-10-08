@@ -25,6 +25,10 @@ class EffectSecondChance: Effect(
         val item = event.item
         val meta = item.itemMeta
 
+        if (!this.checkConditions(player)) {
+            return
+        }
+
         if (meta !is Damageable) {
             return
         }

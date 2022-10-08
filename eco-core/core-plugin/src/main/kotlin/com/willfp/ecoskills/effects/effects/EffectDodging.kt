@@ -27,6 +27,10 @@ class EffectDodging: Effect(
             return
         }
 
+        if (!this.checkConditions(player)) {
+            return
+        }
+
         if (event.cause == EntityDamageEvent.DamageCause.FALL) {
             return
         }

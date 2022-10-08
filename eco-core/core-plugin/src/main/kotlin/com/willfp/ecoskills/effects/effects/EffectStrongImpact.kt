@@ -24,6 +24,10 @@ class EffectStrongImpact : Effect(
 
         val player = event.damager.tryAsPlayer() ?: return
 
+        if (!this.checkConditions(player)) {
+            return
+        }
+
         val level = player.getEffectLevel(this)
 
         if (NumberUtils.randFloat(0.0, 100.0) >= config.getDouble("chance-per-level") * level) {

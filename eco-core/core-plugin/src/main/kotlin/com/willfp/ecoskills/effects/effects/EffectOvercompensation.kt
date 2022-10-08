@@ -26,6 +26,10 @@ class EffectOvercompensation : Effect(
         val player = event.enchanter
         val cost = event.whichButton() + 1
 
+        if (!this.checkConditions(player)) {
+            return
+        }
+
         val chance = config.getDouble("chance-per-level") * player.getEffectLevel(this)
 
         if (NumberUtils.randFloat(0.0, 100.0) < chance) {

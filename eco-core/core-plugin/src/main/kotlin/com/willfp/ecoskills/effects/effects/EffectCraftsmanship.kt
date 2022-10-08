@@ -22,6 +22,10 @@ class EffectCraftsmanship : Effect(
 
         val player = event.player
 
+        if (!this.checkConditions(player)) {
+            return
+        }
+
         if (!event.item.type.toString().lowercase().contains("axe")) {
             return
         }

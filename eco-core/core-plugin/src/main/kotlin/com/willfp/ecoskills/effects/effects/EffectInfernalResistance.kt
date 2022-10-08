@@ -27,6 +27,10 @@ class EffectInfernalResistance: Effect(
             return
         }
 
+        if (!this.checkConditions(player)) {
+            return
+        }
+
         if (event.cause != EntityDamageEvent.DamageCause.FIRE
             && event.cause != EntityDamageEvent.DamageCause.FIRE_TICK
             && event.cause != EntityDamageEvent.DamageCause.LAVA

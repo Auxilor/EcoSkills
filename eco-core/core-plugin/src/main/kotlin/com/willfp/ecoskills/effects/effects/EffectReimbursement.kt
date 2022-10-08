@@ -21,6 +21,9 @@ class EffectReimbursement : Effect(
         }
 
         val player = event.enchanter
+        if (!this.checkConditions(player)) {
+            return
+        }
         val cost = event.whichButton()+1
 
         val chance = config.getDouble("chance-per-level") * player.getEffectLevel(this)

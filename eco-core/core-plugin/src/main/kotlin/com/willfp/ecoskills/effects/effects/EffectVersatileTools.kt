@@ -31,6 +31,10 @@ class EffectVersatileTools: Effect(
             return
         }
 
+        if (!this.checkConditions(player)) {
+            return
+        }
+
         val level = player.getEffectLevel(this)
 
         var multiplier = config.getDouble("percent-more-per-level") * level

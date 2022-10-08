@@ -30,6 +30,10 @@ class EffectBountifulHarvest : DropMultiplierEffect(
             return
         }
 
+        if (!this.checkConditions(event.player)) {
+            return
+        }
+
         val mat = blockMap[event.block.location] ?: return
 
         val state = event.blockState.blockData as? Ageable ?: return

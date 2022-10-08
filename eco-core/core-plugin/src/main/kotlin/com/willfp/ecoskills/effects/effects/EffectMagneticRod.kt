@@ -26,6 +26,10 @@ class EffectMagneticRod : Effect(
 
         val player = event.player
 
+        if (!this.checkConditions(player)) {
+            return
+        }
+
         val level = player.getEffectLevel(this)
 
         if (level == 0) {
