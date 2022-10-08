@@ -8,7 +8,7 @@ import org.bukkit.block.data.Ageable
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.block.BlockBreakEvent
-import java.util.*
+import java.util.EnumMap
 
 class SkillFarming : Skill(
     "farming"
@@ -34,17 +34,27 @@ class SkillFarming : Skill(
 
         val type = event.block.type
 
-        if (event.block.blockData is Ageable && event.block.type != Material.SUGAR_CANE && event.block.type != Material.BAMBOO) {
+        val toIgnoreAge = listOf(
+            Material.SUGAR_CANE,
+            Material.BAMBOO,
+            Material.GLOW_BERRIES,
+            Material.SWEET_BERRY_BUSH
+        )
+
+        if (event.block.blockData is Ageable && !toIgnoreAge.contains(event.block.type)) {
             val data = event.block.blockData as Ageable
             if (data.age < data.maximumAge) {
                 return
             }
         }
 
-        if (BlockUtils.isPlayerPlaced(event.block) &&
-            (event.block.type == Material.PUMPKIN || event.block.type == Material.MELON
-                    || event.block.type == Material.SUGAR_CANE || event.block.type == Material.COCOA)
-        ) {
+        val toCheckPlayers = listOf(
+            Material.PUMPKIN,
+            Material.MELON,
+            Material.SUGAR_CANE
+        )
+
+        if (BlockUtils.isPlayerPlaced(event.block) && toCheckPlayers.contains(event.block.type)) {
             return
         }
 
