@@ -32,6 +32,10 @@ class EffectBravery: Effect(
             return
         }
 
+        if (!this.checkConditions(player)) {
+            return
+        }
+
         if (event.damager !is Boss && event.damager !is ElderGuardian
             && !event.damager.persistentDataContainer.has(NamespacedKeyUtils.create("ecobosses", "boss"), PersistentDataType.STRING)) {
             return

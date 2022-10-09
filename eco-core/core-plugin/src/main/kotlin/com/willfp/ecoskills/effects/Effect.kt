@@ -9,7 +9,9 @@ import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.SkillObject
 import com.willfp.ecoskills.getEffectLevel
+import com.willfp.libreforge.conditions.Conditions
 import org.bukkit.NamespacedKey
+import org.bukkit.entity.Player
 import org.bukkit.event.Listener
 import java.util.*
 
@@ -73,5 +75,10 @@ abstract class Effect(
             plugin,
             "${id}_description"
         ) { player -> this.getDescription(player.getEffectLevel(this)) }.register()
+    }
+
+    protected fun checkConditions(player: Player): Boolean {
+        return this.config.getSubsections("conditions").map { Conditions.compile(it,
+            "Condition for effect: ${this.key.key}") }.all { it?.isMet(player)?: true }
     }
 }

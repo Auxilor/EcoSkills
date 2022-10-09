@@ -28,6 +28,10 @@ class EffectDynamicMining : Effect(
 
         val player = event.player
 
+        if (!this.checkConditions(player)) {
+            return
+        }
+
         val level = player.getEffectLevel(this)
 
         if (NumberUtils.randFloat(0.0, 100.0) >= config.getDouble("chance-per-level") * level) {

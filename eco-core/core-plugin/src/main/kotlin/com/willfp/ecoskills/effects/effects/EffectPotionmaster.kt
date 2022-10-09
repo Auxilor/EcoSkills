@@ -34,6 +34,10 @@ class EffectPotionmaster : Effect(
 
         val player = event.contents.viewers.filterIsInstance<Player>().firstOrNull() ?: return
 
+        if (!this.checkConditions(player)) {
+            return
+        }
+
         if (player.getEffectLevel(this) == 0) {
             return
         }

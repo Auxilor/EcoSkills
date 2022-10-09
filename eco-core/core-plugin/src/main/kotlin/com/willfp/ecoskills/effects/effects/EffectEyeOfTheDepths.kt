@@ -32,6 +32,10 @@ class EffectEyeOfTheDepths: Effect(
             return
         }
 
+        if (!this.checkConditions(player)) {
+            return
+        }
+
         val level = player.getEffectLevel(this)
 
         val chance = config.getDouble("chance-per-level") * level

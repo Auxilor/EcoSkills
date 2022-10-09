@@ -27,6 +27,10 @@ class EffectSatiation: Effect(
             return
         }
 
+        if (!this.checkConditions(player)) {
+            return
+        }
+
         if (event.foodLevel > player.foodLevel) {
             return
         }
