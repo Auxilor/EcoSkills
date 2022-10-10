@@ -2,6 +2,7 @@ package com.willfp.ecoskills.skills
 
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.util.NumberUtils
+import com.willfp.ecoskills.actionbar.ActionBarUtils
 import com.willfp.ecoskills.api.PlayerSkillExpGainEvent
 import com.willfp.ecoskills.api.PlayerSkillLevelUpEvent
 import com.willfp.ecoskills.getSkillLevel
@@ -42,6 +43,7 @@ class SkillDisplayListener(
                     nextLevelMessage
                 )
                 string = string.replace("%gained_xp%", NumberUtils.format(amount))
+                ActionBarUtils.blacklist(player.uniqueId)
                 player.spigot().sendMessage(
                     ChatMessageType.ACTION_BAR,
                     *TextComponent.fromLegacyText(string)
