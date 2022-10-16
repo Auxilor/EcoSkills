@@ -74,6 +74,10 @@ class SkillDisplayListener(
                     BarStyle.valueOf(this.plugin.configYml.getString("skills.progress.boss-bar.style").uppercase())
                 )
 
+                if (ratio !in (0.0..1.0)) {
+                    return@run
+                }
+
                 bossBar.setTitle(string)
                 bossBar.progress = ratio
                 bossBar.addPlayer(player)
