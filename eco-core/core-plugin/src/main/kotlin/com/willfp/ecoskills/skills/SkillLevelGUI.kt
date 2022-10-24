@@ -142,7 +142,7 @@ class SkillLevelGUI(
         val pageKey = "page"
 
         levels = menu(plugin.configYml.getInt("level-gui.rows")) {
-            setTitle(skill.levelName)
+            title = skill.levelName
             setMask(
                 FillerMask(
                     maskItems,
@@ -158,7 +158,7 @@ class SkillLevelGUI(
                             setUpdater { player, menu, _ ->
                                 var page = menu.getState<Int>(player, pageKey)
                                 if (page == null) {
-                                    menu.addState(player, pageKey, 1)
+                                    menu.setState(player, pageKey, 1)
                                     page = 1
                                 }
 
@@ -273,7 +273,7 @@ class SkillLevelGUI(
                         val player = event.whoClicked as Player
                         var page = menu.getState(player, pageKey) ?: 1
                         page--
-                        menu.addState(player, pageKey, page)
+                        menu.setState(player, pageKey, page)
                         if (page == 0) {
                             SkillGUI.homeMenu.open(event.whoClicked as Player)
                         }
@@ -294,8 +294,7 @@ class SkillLevelGUI(
                         if (page < pages) {
                             page++
                         }
-                        menu.addState(player, pageKey, page)
-
+                        menu.setState(player, pageKey, page)
                     }
                 }
             )

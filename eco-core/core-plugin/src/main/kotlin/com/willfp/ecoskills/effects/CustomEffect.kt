@@ -42,13 +42,15 @@ class CustomEffect(
             }
         )
 
-        effects = config.getSubsections("effects").mapNotNull {
-            Effects.compile(it, "Custom Effect $id")
-        }.toSet()
+        effects = Effects.compile(
+            config.getSubsections("effects"),
+            "Custom Effect $id"
+        )
 
-        conditions = config.getSubsections("conditions").mapNotNull {
-            Conditions.compile(it, "Custom Effect $id")
-        }.toSet()
+        conditions = Conditions.compile(
+            config.getSubsections("conditions"),
+            "Custom Effect $id"
+        )
     }
 
     fun getLevel(level: Int): CustomEffectLevel = levels.get(level) {

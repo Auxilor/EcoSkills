@@ -44,7 +44,7 @@ abstract class Skill(
         0.0
     )
     val config: Config = SkillConfig(this.id, this.javaClass, plugin)
-    val xpRequirements = config.getInts("level-xp-requirements")
+    val xpRequirements = config.getInts("level-xp-requirements").toMutableList()
     lateinit var name: String
     lateinit var levelName: String
     lateinit var description: String
