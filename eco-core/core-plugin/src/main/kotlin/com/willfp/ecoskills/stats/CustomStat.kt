@@ -23,8 +23,9 @@ import org.bukkit.entity.Player
 import java.util.*
 
 class CustomStat(
+    id: String,
     config: Config
-) : Stat(config.getString("id"), config) {
+) : Stat(id, config) {
     private val effects: Set<ConfiguredEffect>
     private val conditions: Set<ConfiguredCondition>
 
@@ -97,15 +98,6 @@ internal val Player.customStats: Collection<Holder>
 
         return stats
     }
-
-class CustomStatsYml(
-    plugin: EcoPlugin
-) : BaseConfig(
-    "customstats",
-    plugin,
-    true,
-    ConfigType.YAML
-)
 
 class CustomStatLevel(
     parent: CustomStat,

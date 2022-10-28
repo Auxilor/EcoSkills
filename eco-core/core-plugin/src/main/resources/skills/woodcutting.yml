@@ -55,6 +55,7 @@ level-xp-requirements:
   - 3400000
   - 3700000
   - 4000000
+  - 5000000
 
 gui:
   name: "Woodcutting"

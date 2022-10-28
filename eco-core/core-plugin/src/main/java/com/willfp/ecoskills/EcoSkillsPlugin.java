@@ -3,7 +3,6 @@ package com.willfp.ecoskills;
 import com.willfp.eco.core.AbstractPacketAdapter;
 import com.willfp.eco.core.Prerequisite;
 import com.willfp.eco.core.command.impl.PluginCommand;
-import com.willfp.eco.core.config.interfaces.Config;
 import com.willfp.eco.core.integrations.IntegrationLoader;
 import com.willfp.ecoskills.actionbar.ActionBarClearOnGamemode;
 import com.willfp.ecoskills.actionbar.ActionBarCompatChatMessage;
@@ -16,17 +15,16 @@ import com.willfp.ecoskills.config.EffectsYml;
 import com.willfp.ecoskills.data.DataListener;
 import com.willfp.ecoskills.data.LeaderboardHandler;
 import com.willfp.ecoskills.effects.CustomEffectUtils;
-import com.willfp.ecoskills.effects.CustomEffectsYml;
 import com.willfp.ecoskills.effects.Effect;
 import com.willfp.ecoskills.effects.Effects;
 import com.willfp.ecoskills.integrations.EcoEnchantsEnchantingLeveller;
 import com.willfp.ecoskills.integrations.enchantgui.EnchantGuiHandler;
+import com.willfp.ecoskills.skills.CustomSkillTriggerXPGainListener;
 import com.willfp.ecoskills.skills.Skill;
 import com.willfp.ecoskills.skills.SkillDisplayListener;
 import com.willfp.ecoskills.skills.SkillLevellingListener;
 import com.willfp.ecoskills.skills.Skills;
 import com.willfp.ecoskills.stats.CustomStatUtils;
-import com.willfp.ecoskills.stats.CustomStatsYml;
 import com.willfp.ecoskills.stats.DamageIndicatorListener;
 import com.willfp.ecoskills.stats.Stat;
 import com.willfp.ecoskills.stats.Stats;
@@ -50,24 +48,12 @@ public class EcoSkillsPlugin extends LibReforgePlugin {
     private final EffectsYml effectsYml;
 
     /**
-     * customeffects.yml.
-     */
-    private final Config customEffectsYml;
-
-    /**
-     * customstats.yml.
-     */
-    private final Config customStatsYml;
-
-    /**
      * Internal constructor called by bukkit on plugin load.
      */
     public EcoSkillsPlugin() {
         super(false);
         instance = this;
         effectsYml = new EffectsYml(this);
-        customEffectsYml = new CustomEffectsYml(this);
-        customStatsYml = new CustomStatsYml(this);
 
         this.registerJavaHolderProvider(CustomEffectUtils::getCustomEffects);
         this.registerJavaHolderProvider(CustomStatUtils::getCustomStats);
@@ -111,24 +97,6 @@ public class EcoSkillsPlugin extends LibReforgePlugin {
     }
 
     /**
-     * Get customeffects.yml.
-     *
-     * @return customeffects.yml.
-     */
-    public Config getCustomEffectsYml() {
-        return customEffectsYml;
-    }
-
-    /**
-     * Get customstats.yml.
-     *
-     * @return customstats.yml.
-     */
-    public Config getCustomStatsYml() {
-        return customStatsYml;
-    }
-
-    /**
      * Get the instance of EcoSkills.
      *
      * @return Instance.
@@ -146,7 +114,8 @@ public class EcoSkillsPlugin extends LibReforgePlugin {
                 new DataListener(),
                 new DamageIndicatorListener(this),
                 new HealthScaleListener(this),
-                new ActionBarClearOnGamemode()
+                new ActionBarClearOnGamemode(),
+                new CustomSkillTriggerXPGainListener()
         );
     }
 

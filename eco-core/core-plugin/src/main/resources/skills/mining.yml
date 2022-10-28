@@ -55,6 +55,7 @@ level-xp-requirements:
   - 3400000
   - 3700000
   - 4000000
+  - 5000000
 
 gui:
   name: "Mining"
@@ -173,3 +174,5 @@ xp-rewards:
   - "diamond_ore:10"
   - "deepslate_diamond_ore:15"
   - "ancient_debris:22"
+  - "amethyst_block:5.5"
+  - "budding_amethyst:8.5"

@@ -1,12 +1,16 @@
 package com.willfp.ecoskills.effects;
 
 import com.google.common.collect.ImmutableSet;
+import com.willfp.eco.core.config.ConfigType;
+import com.willfp.eco.core.config.Configs;
 import com.willfp.eco.core.config.interfaces.Config;
 import com.willfp.ecoskills.EcoSkillsPlugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public final class CustomEffects {
@@ -36,8 +40,15 @@ public final class CustomEffects {
 
         VALUES.clear();
 
-        for (Config cfg : plugin.getCustomEffectsYml().getSubsections("effects")) {
-            VALUES.add(new CustomEffect(cfg));
+        for (Map.Entry<String, Config> entry : plugin.fetchConfigs("customeffects", true).entrySet()) {
+            VALUES.add(new CustomEffect(entry.getKey(), entry.getValue()));
+        }
+
+        // Legacy
+        Config customEffectsYml = Configs.fromFile(new File(plugin.getDataFolder(), "customeffects.yml"), ConfigType.YAML);
+
+        for (Config cfg : customEffectsYml.getSubsections("effects")) {
+            VALUES.add(new CustomEffect(cfg.getString("id"), cfg));
         }
     }
 }

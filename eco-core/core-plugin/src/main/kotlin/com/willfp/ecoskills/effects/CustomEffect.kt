@@ -23,8 +23,9 @@ import org.bukkit.entity.Player
 import java.util.*
 
 class CustomEffect(
+    id: String,
     config: Config
-) : Effect(config.getString("id"), config) {
+) : Effect(id, config) {
     private val effects: Set<ConfiguredEffect>
     private val conditions: Set<ConfiguredCondition>
 
@@ -97,15 +98,6 @@ internal val Player.customEffects: Collection<Holder>
 
         return effects
     }
-
-class CustomEffectsYml(
-    plugin: EcoPlugin
-) : BaseConfig(
-    "customeffects",
-    plugin,
-    true,
-    ConfigType.YAML
-)
 
 class CustomEffectLevel(
     parent: CustomEffect,

@@ -33,25 +33,36 @@ abstract class Skill(
     protected val plugin: EcoPlugin = EcoSkillsPlugin.getInstance()
 
     val key: NamespacedKey = plugin.namespacedKeyFactory.create(id)
+
     val dataKey = PersistentDataKey(
         plugin.namespacedKeyFactory.create(id),
         PersistentDataKeyType.INT,
         0
     )
+
     val dataXPKey = PersistentDataKey(
         plugin.namespacedKeyFactory.create("${id}_xp"),
         PersistentDataKeyType.DOUBLE,
         0.0
     )
-    val config: Config = SkillConfig(this.id, this.javaClass, plugin)
+
+    open val config: Config = SkillConfig(this.id, this.javaClass, plugin)
+
     val xpRequirements = config.getInts("level-xp-requirements").toMutableList()
+
     lateinit var name: String
     lateinit var levelName: String
+
     lateinit var description: String
+
     lateinit var gui: SkillLevelGUI
+
     var maxLevel: Int = 50
+
     private val rewards = mutableListOf<SkillObjectReward>()
+
     private val levelCommands = mutableMapOf<Int, MutableList<String>>()
+
     var enabled = config.getBoolOrNull("enabled") ?: true
 
     // Cached values
@@ -70,6 +81,7 @@ abstract class Skill(
 
     protected fun Player?.filterSkillEnabled(): Player? {
         val player = this ?: return null
+
         with(this@Skill) {
             if (!this.enabled) {
                 return null
@@ -103,6 +115,7 @@ abstract class Skill(
         maxLevel = xpRequirements.size - 1
 
         rewards.clear()
+
         for (string in config.getStrings("rewards.rewards")) {
             val split = string.split("::")
             val asEffect = Effects.getByID(split[0].lowercase())
@@ -116,6 +129,7 @@ abstract class Skill(
         }
 
         levelCommands.clear()
+
         for (string in config.getStrings("rewards.level-commands")) {
             val split = string.split(":")
 

@@ -16,6 +16,7 @@ import com.willfp.ecoskills.skills.skills.SkillFarming;
 import com.willfp.ecoskills.skills.skills.SkillFishing;
 import com.willfp.ecoskills.skills.skills.SkillMining;
 import com.willfp.ecoskills.skills.skills.SkillWoodcutting;
+import com.willfp.ecoskills.stats.Stat;
 import org.bukkit.NamespacedKey;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -46,6 +47,11 @@ public class Skills {
         REGISTRY.put(skill.getId(), skill);
     }
 
+    @ApiStatus.Internal
+    public static void removeSkill(@NotNull final Skill skill) {
+        REGISTRY.remove(skill.getId());
+    }
+
     @Nullable
     public static Skill getByID(@NotNull final String id) {
         return REGISTRY.get(id.toLowerCase());
@@ -61,12 +67,14 @@ public class Skills {
     }
 
     @ConfigUpdater
-    public static void update(@NotNull final EcoPlugin plugin) {
+    public static void update(@NotNull final EcoSkillsPlugin plugin) {
         new PlayerPlaceholder(
                 plugin,
                 "skill_multiplier",
                 (player -> NumberUtils.format(EcoSkillsPlayerKt.getSkillExperienceMultiplier(player)))
         ).register();
+
+        CustomSkills.update(plugin);
 
         for (Skill skill : Skills.values()) {
             skill.update();
