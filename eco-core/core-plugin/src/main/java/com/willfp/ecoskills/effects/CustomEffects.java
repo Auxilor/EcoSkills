@@ -5,6 +5,7 @@ import com.willfp.eco.core.config.ConfigType;
 import com.willfp.eco.core.config.Configs;
 import com.willfp.eco.core.config.interfaces.Config;
 import com.willfp.ecoskills.EcoSkillsPlugin;
+import com.willfp.libreforge.chains.EffectChains;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -49,6 +50,9 @@ public final class CustomEffects {
 
         for (Config cfg : customEffectsYml.getSubsections("effects")) {
             VALUES.add(new CustomEffect(cfg.getString("id"), cfg));
+        }
+        for (Config cfg : customEffectsYml.getSubsections("chains")) {
+            EffectChains.compile(cfg, "Effect Chains (customeffects.yml)");
         }
     }
 }

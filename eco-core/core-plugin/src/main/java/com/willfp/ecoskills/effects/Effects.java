@@ -99,10 +99,6 @@ public final class Effects {
 
     @ConfigUpdater
     public static void update(@NotNull final EcoSkillsPlugin plugin) {
-        for (Config config : plugin.getCustomEffectsYml().getSubsections("chains")) {
-            EffectChains.compile(config, "Custom Effect Chains");
-        }
-
         CustomEffects.update(plugin);
 
         for (Effect effect : Effects.values()) {
