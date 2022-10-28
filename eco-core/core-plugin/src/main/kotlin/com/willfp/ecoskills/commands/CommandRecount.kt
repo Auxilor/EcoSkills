@@ -48,7 +48,7 @@ class CommandRecount(plugin: EcoPlugin): Subcommand(
                 sender.sendMessage(
                     plugin.langYml.getMessage("recounted-player")
                         .replace("%player%", player.displayName)
-                        .replace("%effect%", "&6ALL")
+                        .replace("%effect%", "ALL")
                         .replace("%level%", total.toString())
                 )
             } else {
