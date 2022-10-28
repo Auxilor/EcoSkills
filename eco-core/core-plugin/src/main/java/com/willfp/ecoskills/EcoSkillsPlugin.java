@@ -61,6 +61,10 @@ public class EcoSkillsPlugin extends LibReforgePlugin {
 
     @Override
     public void handleEnableAdditional() {
+        this.copyConfigs("customstats");
+        this.copyConfigs("customeffects");
+        this.copyConfigs("customskills");
+
         Skills.update(this);
     }
 
