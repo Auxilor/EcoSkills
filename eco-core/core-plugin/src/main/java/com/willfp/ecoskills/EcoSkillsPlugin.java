@@ -51,7 +51,6 @@ public class EcoSkillsPlugin extends LibReforgePlugin {
      * Internal constructor called by bukkit on plugin load.
      */
     public EcoSkillsPlugin() {
-        super(false);
         instance = this;
         effectsYml = new EffectsYml(this);
 
