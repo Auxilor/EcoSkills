@@ -209,9 +209,9 @@ abstract class Skill(
         return ArrayList(rewards)
     }
 
-    fun getLevelUpReward(skillObject: SkillObject, to: Int): Int {
+    fun getLevelUpReward(skillObjectReward: SkillObjectReward, to: Int): Int {
         for (reward in rewards) {
-            if (reward.obj != skillObject) {
+            if (reward != skillObjectReward) {
                 continue
             }
 
@@ -226,10 +226,10 @@ abstract class Skill(
         return 0
     }
 
-    fun getCumulativeLevelUpReward(skillObject: SkillObject, to: Int): Int {
+    fun getCumulativeLevelUpReward(skillObjectReward: SkillObjectReward, to: Int): Int {
         var levels = 0
         for (i in 1..to) {
-            levels += getLevelUpReward(skillObject, i)
+            levels += getLevelUpReward(skillObjectReward, i)
         }
 
         return levels
@@ -259,7 +259,7 @@ abstract class Skill(
                     val skillObject = levelUpReward.obj
 
                     if (skillObject is Effect) {
-                        val objLevel = this.getCumulativeLevelUpReward(skillObject, level)
+                        val objLevel = this.getCumulativeLevelUpReward(levelUpReward, level)
                         msg = msg.replace(
                             "%ecoskills_${skillObject.id}_description%",
                             skillObject.getDescription(objLevel)
@@ -298,7 +298,7 @@ abstract class Skill(
 
                 for (levelUpReward in this.getLevelUpRewards()) {
                     val skillObject = levelUpReward.obj
-                    val objLevel = this.getCumulativeLevelUpReward(skillObject, level)
+                    val objLevel = this.getCumulativeLevelUpReward(levelUpReward, level)
 
                     s = s.replace("%ecoskills_${skillObject.id}%", objLevel.toString())
                     s = s.replace("%ecoskills_${skillObject.id}_numeral%", NumberUtils.toNumeral(objLevel))

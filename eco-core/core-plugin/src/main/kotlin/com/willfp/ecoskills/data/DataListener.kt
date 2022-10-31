@@ -22,7 +22,7 @@ class DataListener : Listener {
                 }
                 event.player.setEffectLevel(
                     obj,
-                    skill.getCumulativeLevelUpReward(obj, event.player.getSkillLevel(skill))
+                    skill.getCumulativeLevelUpReward(levelUpReward, event.player.getSkillLevel(skill))
                 )
             }
         }

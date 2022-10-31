@@ -101,7 +101,7 @@ class CommandRecount(plugin: EcoPlugin): Subcommand(
                 if (reward.obj is Effect && reward.obj == effect) {
                     for (i in range) {
                         val obj = reward.obj
-                        val toGive = skill.getLevelUpReward(obj, i)
+                        val toGive = skill.getLevelUpReward(reward, i)
                         ofSkill+=toGive
                     }
                 }
