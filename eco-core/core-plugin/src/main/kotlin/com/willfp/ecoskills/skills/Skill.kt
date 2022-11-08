@@ -27,8 +27,9 @@ import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
 
-abstract class Skill(
-    val id: String
+abstract class Skill @JvmOverloads constructor(
+    val id: String,
+    forceConfig: Config? = null
 ) : Listener {
     protected val plugin: EcoPlugin = EcoSkillsPlugin.getInstance()
 
@@ -46,9 +47,9 @@ abstract class Skill(
         0.0
     )
 
-    open val config: Config = SkillConfig(this.id, this.javaClass, plugin)
+    val config: Config
 
-    val xpRequirements = config.getInts("level-xp-requirements").toMutableList()
+    val xpRequirements: MutableList<Int>
 
     lateinit var name: String
     lateinit var levelName: String
@@ -63,7 +64,7 @@ abstract class Skill(
 
     private val levelCommands = mutableMapOf<Int, MutableList<String>>()
 
-    var enabled = config.getBoolOrNull("enabled") ?: true
+    var enabled: Boolean
 
     // Cached values
     private val guiLoreCache = Caffeine.newBuilder()
@@ -72,6 +73,10 @@ abstract class Skill(
         .build<Int, List<String>>()
 
     init {
+        config = forceConfig ?: SkillConfig(this.id, this.javaClass, plugin)
+        enabled = config.getBoolOrNull("enabled") ?: true
+        xpRequirements = config.getInts("level-xp-requirements").toMutableList()
+
         finishLoading()
     }
 

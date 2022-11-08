@@ -7,8 +7,11 @@ import org.bukkit.entity.Player
 
 class CustomSkill(
     id: String,
-    override val config: Config
-) : Skill(id) {
+    config: Config
+) : Skill(
+    id,
+    forceConfig = config
+) {
     private val jobXpGains = config.getSubsections("xp-gain-methods").mapNotNull {
         Counters.compile(it, "Skill $id")
     }
