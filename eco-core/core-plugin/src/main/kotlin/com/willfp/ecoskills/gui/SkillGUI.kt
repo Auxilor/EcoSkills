@@ -18,12 +18,12 @@ import org.bukkit.inventory.meta.SkullMeta
 
 object SkillGUI {
     @JvmStatic
-    lateinit var homeMenu: Menu
+    private lateinit var menu: Menu
 
     @JvmStatic
     @ConfigUpdater
     fun update(plugin: EcoSkillsPlugin) {
-        homeMenu = buildHomeMenu(plugin)
+        menu = buildHomeMenu(plugin)
     }
 
     @JvmStatic
@@ -66,22 +66,22 @@ object SkillGUI {
                     if (plugin.configYml.getBool("gui.player-info.click-to-open-stats")) {
                         onLeftClick { event, _ ->
                             val player = event.whoClicked as Player
-                            StatsGUI.menu.open(player)
+                            StatsGUI.open(player)
                         }
                     }
                 }
             )
-            modfiy { menuBuilder ->
-                for (skill in Skills.values()) {
-                    if (skill.enabled) {
-                        menuBuilder.setSlot(
-                            skill.config.getInt("gui.position.row"),
-                            skill.config.getInt("gui.position.column"),
-                            skill.gui.slot
-                        )
-                    }
+
+            for (skill in Skills.values()) {
+                if (skill.enabled) {
+                    setSlot(
+                        skill.config.getInt("gui.position.row"),
+                        skill.config.getInt("gui.position.column"),
+                        skill.gui.slot
+                    )
                 }
             }
+
             setSlot(plugin.configYml.getInt("gui.close.location.row"),
                 plugin.configYml.getInt("gui.close.location.column"),
                 slot(
@@ -101,5 +101,9 @@ object SkillGUI {
                 )
             }
         }
+    }
+
+    fun open(player: Player) {
+        menu.open(player)
     }
 }
