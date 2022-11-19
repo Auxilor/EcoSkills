@@ -3,6 +3,7 @@ package com.willfp.ecoskills.commands
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.impl.PluginCommand
 import com.willfp.ecoskills.gui.SkillGUI
+import com.willfp.ecoskills.skills.Skills
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
@@ -27,6 +28,18 @@ class CommandSkills(plugin: EcoPlugin) :
             return
         }
 
-        SkillGUI.homeMenu.open(sender)
+        if (args.isEmpty()) {
+            SkillGUI.open(sender)
+        }
+
+        val id = args[0].lowercase()
+        val skill = Skills.getByID(id)
+
+        if (skill == null) {
+            sender.sendMessage(this.plugin.langYml.getMessage("invalid-skill"))
+            return
+        }
+
+        skill.gui.menu.open(sender)
     }
 }

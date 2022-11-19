@@ -21,7 +21,7 @@ import org.bukkit.inventory.meta.SkullMeta
 
 object StatsGUI {
     @JvmStatic
-    lateinit var menu: Menu
+    private lateinit var menu: Menu
 
     @JvmStatic
     @ConfigUpdater
@@ -111,7 +111,7 @@ object StatsGUI {
                         .setDisplayName(plugin.configYml.getString("stats-gui.back.name"))
                         .build()
                 ) {
-                    onLeftClick { event, _ -> SkillGUI.homeMenu.open(event.whoClicked as Player) }
+                    onLeftClick { event, _ -> SkillGUI.open(event.whoClicked as Player) }
                 }
             )
 
@@ -123,5 +123,9 @@ object StatsGUI {
                 )
             }
         }
+    }
+
+    fun open(player: Player) {
+        menu.open(player)
     }
 }

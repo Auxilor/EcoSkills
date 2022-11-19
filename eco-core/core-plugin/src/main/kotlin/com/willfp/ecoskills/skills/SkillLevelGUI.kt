@@ -94,11 +94,11 @@ class SkillLevelGUI(
         }.build()
     }) {
         onLeftClick { event, _, _ ->
-            levels.open(event.whoClicked as Player)
+            menu.open(event.whoClicked as Player)
         }
     }
 
-    val levels: Menu
+    val menu: Menu
 
     init {
         val maskPattern = plugin.configYml.getStrings("level-gui.mask.pattern").toTypedArray()
@@ -141,7 +141,7 @@ class SkillLevelGUI(
 
         val pageKey = "page"
 
-        levels = menu(plugin.configYml.getInt("level-gui.rows")) {
+        menu = menu(plugin.configYml.getInt("level-gui.rows")) {
             title = skill.levelName
             setMask(
                 FillerMask(
@@ -275,7 +275,7 @@ class SkillLevelGUI(
                         page--
                         menu.setState(player, pageKey, page)
                         if (page == 0) {
-                            SkillGUI.homeMenu.open(event.whoClicked as Player)
+                            SkillGUI.open(event.whoClicked as Player)
                         }
                     }
                 }
