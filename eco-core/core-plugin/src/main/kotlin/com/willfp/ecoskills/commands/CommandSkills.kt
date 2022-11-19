@@ -6,6 +6,7 @@ import com.willfp.ecoskills.gui.SkillGUI
 import com.willfp.ecoskills.skills.Skills
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
+import org.bukkit.util.StringUtil
 
 class CommandSkills(plugin: EcoPlugin) :
     PluginCommand(
@@ -41,5 +42,20 @@ class CommandSkills(plugin: EcoPlugin) :
         }
 
         skill.gui.menu.open(sender)
+    }
+
+    override fun tabComplete(sender: CommandSender, args: List<String>): List<String> {
+        val completions = mutableListOf<String>()
+
+        if (args.size == 1) {
+            StringUtil.copyPartialMatches(
+                args[0],
+                Skills.values().map { it.id },
+                completions
+            )
+            return completions
+        }
+
+        return emptyList()
     }
 }
