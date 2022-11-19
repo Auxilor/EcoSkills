@@ -31,6 +31,7 @@ class CommandSkills(plugin: EcoPlugin) :
 
         if (args.isEmpty()) {
             SkillGUI.open(sender)
+            return
         }
 
         val id = args[0].lowercase()
