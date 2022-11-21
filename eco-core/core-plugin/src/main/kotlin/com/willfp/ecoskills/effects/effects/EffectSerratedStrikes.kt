@@ -32,6 +32,11 @@ class EffectSerratedStrikes : Effect(
             return
         }
 
+        if (victim.hasMetadata("serratedStrikes") &&
+            this.config.getBool("prevent-multiple-bleeding")) {
+            return
+        }
+
         if (!this.checkConditions(player)) {
             return
         }
@@ -52,10 +57,13 @@ class EffectSerratedStrikes : Effect(
 
         var currentBleedCount = 0
 
+        victim.setMetadata("serratedStrikes", plugin.metadataValueFactory.create(1))
+
         plugin.runnableFactory.create { bukkitRunnable: RunnableTask ->
             currentBleedCount++
             victim.damage(bleedDamage)
             if (currentBleedCount >= bleedCount) {
+                victim.removeMetadata("serratedStrikes", plugin)
                 bukkitRunnable.cancel()
                 return@create
             }

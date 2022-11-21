@@ -69,6 +69,8 @@ serrated_strikes:
   bleed-tick-spacing: 15
   # The amount of bleed ticks to give
   bleed-ticks: 4
+  # Prevent multiple stacks of serrated strikes
+  prevent-multiple-bleeding: false
   # Disabled worlds
   disabled-in-worlds: [ ]
   # Conditions
