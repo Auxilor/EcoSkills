@@ -26,7 +26,7 @@ class EffectCraftsmanship : Effect(
             return
         }
 
-        if (!event.item.type.toString().lowercase().contains("axe")) {
+        if (!event.item.type.toString().lowercase().contains("_axe")) {
             return
         }
 
