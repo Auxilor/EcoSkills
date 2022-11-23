@@ -20,7 +20,7 @@ class SkillLevellingListener : Listener {
 
         for (reward in skill.getLevelUpRewards()) {
             val obj = reward.obj
-            val toGive = skill.getLevelUpReward(obj, to)
+            val toGive = skill.getLevelUpReward(reward, to)
 
             when (obj) {
                 is Effect -> {

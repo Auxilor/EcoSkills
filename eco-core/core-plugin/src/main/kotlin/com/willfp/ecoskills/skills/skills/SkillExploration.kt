@@ -44,7 +44,7 @@ class SkillExploration : Skill(
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun handleLevelling(event: EntityDamageEvent) {
         val player = (event.entity as? Player)?.filterSkillEnabled() ?: return
         
