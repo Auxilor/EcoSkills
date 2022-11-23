@@ -1,5 +1,7 @@
 package com.willfp.ecoskills.skills
 
+import java.util.Objects
+
 class SkillObjectOptions(
     options: String
 ) {
@@ -17,5 +19,23 @@ class SkillObjectOptions(
             startLevel = 1
             endLevel = Int.MAX_VALUE
         }
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (other !is SkillObjectOptions) {
+            return false
+        }
+
+        return this.amountPerLevel == other.amountPerLevel
+                && this.startLevel == other.startLevel
+                && this.endLevel == other.endLevel
+    }
+
+    override fun hashCode(): Int {
+        return Objects.hash(
+            this.amountPerLevel,
+            this.startLevel,
+            this.endLevel
+        )
     }
 }
