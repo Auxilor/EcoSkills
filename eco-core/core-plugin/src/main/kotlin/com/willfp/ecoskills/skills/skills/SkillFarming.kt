@@ -54,10 +54,6 @@ class SkillFarming : Skill(
             Material.SUGAR_CANE
         )
 
-        if (BlockUtils.isPlayerPlaced(event.block) && toCheckPlayers.contains(event.block.type)) {
-            return
-        }
-
         if (type == Material.SUGAR_CANE) {
             val block = event.block
             val blockAbove = block.getRelative(0, 1, 0)
@@ -70,6 +66,10 @@ class SkillFarming : Skill(
             if (blockAbove2.type == Material.SUGAR_CANE && !BlockUtils.isPlayerPlaced(blockAbove2)) {
                 player.giveSkillExperience(this, toGive)
             }
+        }
+        
+        if (BlockUtils.isPlayerPlaced(event.block) && toCheckPlayers.contains(event.block.type)) {
+            return
         }
 
         val toGive = rewards[type] ?: return
