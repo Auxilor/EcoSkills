@@ -9,27 +9,19 @@ import com.willfp.ecoskills.stats.Stats
 import org.bukkit.attribute.Attribute
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerJoinEvent
 
 class DataListener : Listener {
     @EventHandler
     fun onJoin(event: PlayerJoinEvent) {
-        for (skill in Skills.values()) {
-            for (levelUpReward in skill.getLevelUpRewards()) {
-                val obj = levelUpReward.obj
-                if (obj !is Effect) {
-                    continue
-                }
-                event.player.setEffectLevel(
-                    obj,
-                    skill.getCumulativeLevelUpReward(levelUpReward, event.player.getSkillLevel(skill))
-                )
-            }
+        val player = event.player
+        
+        for (ceffect in Effects.values()) {
+            recount(player, ceffect)
         }
 
         for (attribute in Attribute.values()) {
-            val player = event.player
-
             val inst = player.getAttribute(attribute) ?: continue
             for (modifier in inst.modifiers.toMutableList()) {
                 if (modifier.amount == 0.0) {
@@ -50,7 +42,27 @@ class DataListener : Listener {
         }
 
         for (stat in Stats.values()) {
-            stat.updateStatLevel(event.player)
+            stat.updateStatLevel(player)
         }
+    }
+    
+    private fun recount(player: Player, effect: Effect): Int {
+        var total = 0
+        for (skill in Skills.values()) {
+            var ofSkill = 0
+            val range = 1..player.getSkillLevel(skill)
+
+            for (reward in skill.getLevelUpRewards()) {
+                if (reward.obj is Effect && reward.obj == effect) {
+                    for (i in range) {
+                        val toGive = skill.getLevelUpReward(reward, i)
+                        ofSkill+=toGive
+                    }
+                }
+            }
+            total+=ofSkill
+        }
+        player.setEffectLevel(effect, total)
+        return total
     }
 }
