@@ -18,6 +18,8 @@ import org.bukkit.boss.BarStyle
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
+import kotlin.math.ceil
+import kotlin.math.floor
 
 class SkillDisplayListener(
     private val plugin: EcoPlugin
@@ -43,6 +45,11 @@ class SkillDisplayListener(
                     nextLevelMessage
                 )
                 string = string.replace("%gained_xp%", NumberUtils.format(amount))
+                val percentage = player.getSkillProgress(skill) / nextLevel * 100
+                val percentageMessage = "§a▬".repeat(floor(percentage/10).toInt()) + "§7▬".repeat(ceil((100-percentage)/10).toInt())
+                string = string.replace("%progress_bar%", percentageMessage)
+                val level = player.getSkillLevel(skill)
+                string = string.replace("%level%", level.toString())
                 ActionBarUtils.blacklist(player.uniqueId)
                 player.spigot().sendMessage(
                     ChatMessageType.ACTION_BAR,
