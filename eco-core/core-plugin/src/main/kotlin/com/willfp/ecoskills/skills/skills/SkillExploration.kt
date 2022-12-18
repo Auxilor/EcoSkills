@@ -10,6 +10,9 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.player.PlayerMoveEvent
+import kotlin.math.abs
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 class SkillExploration : Skill(
     "exploration"
@@ -30,6 +33,11 @@ class SkillExploration : Skill(
         }
 
         if (from.distance(to) > 100) {
+            return
+        }
+
+        // If distance travelled on the Y axis is larger than distance travelled on X and Z, consider it a falling player, and dismiss
+        if (abs(from.blockY - to.blockY) > sqrt((from.x - to.x).pow(2) + (from.z - to.z).pow(2))) {
             return
         }
 
