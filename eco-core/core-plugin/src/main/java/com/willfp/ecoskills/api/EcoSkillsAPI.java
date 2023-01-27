@@ -106,6 +106,16 @@ public interface EcoSkillsAPI {
                        @NotNull Effect effect);
 
     /**
+     * Get if skill is enabled.
+     *
+     * @param player The player.
+     * @param skill  The skill.
+     * @return If the skill is enabled.
+     */
+    boolean getSkillEnabled(@NotNull OfflinePlayer player,
+                        @NotNull Skill skill);
+
+    /**
      * Get the stat level for a player.
      *
      * @param player The player.

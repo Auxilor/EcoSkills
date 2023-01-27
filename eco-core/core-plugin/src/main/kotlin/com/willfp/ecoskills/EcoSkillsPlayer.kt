@@ -140,6 +140,19 @@ fun OfflinePlayer.setEffectLevel(effect: Effect, level: Int) {
     this.profile.write(effect.dataKey, level)
 }
 
+fun OfflinePlayer.toggleSkillEnabled(skill: Skill): Boolean {
+    return this.setSkillEnabled(skill, !this.isSkillEnabled(skill))
+}
+
+fun OfflinePlayer.setSkillEnabled(skill: Skill, enabled: Boolean): Boolean {
+    this.profile.write(skill.dataEnabledKey, enabled)
+    return enabled
+}
+
+fun OfflinePlayer.isSkillEnabled(skill: Skill): Boolean {
+    return this.profile.read(skill.dataEnabledKey)
+}
+
 fun OfflinePlayer.getStatLevel(stat: Stat): Int {
     var base = this.getBaseStatLevel(stat)
     if (this is Player) {

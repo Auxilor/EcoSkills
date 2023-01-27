@@ -18,6 +18,7 @@ import com.willfp.ecoskills.getStatModifierKeys
 import com.willfp.ecoskills.getStatModifiers
 import com.willfp.ecoskills.getTotalSkillLevel
 import com.willfp.ecoskills.giveSkillExperience
+import com.willfp.ecoskills.isSkillEnabled
 import com.willfp.ecoskills.removeStatModifier
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.stats.Stat
@@ -53,6 +54,10 @@ object EcoSkillsAPIImpl : EcoSkillsAPI {
 
     override fun getEffectLevel(player: OfflinePlayer, effect: Effect): Int {
         return player.getEffectLevel(effect)
+    }
+
+    override fun getSkillEnabled(player: OfflinePlayer, skill: Skill): Boolean {
+        return player.isSkillEnabled(skill)
     }
 
     override fun getStatLevel(player: OfflinePlayer, stat: Stat): Int {
