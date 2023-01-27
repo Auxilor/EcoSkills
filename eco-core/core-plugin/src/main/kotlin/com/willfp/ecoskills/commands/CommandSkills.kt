@@ -3,9 +3,11 @@ package com.willfp.ecoskills.commands
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.impl.PluginCommand
 import com.willfp.eco.core.commands.notifyFalse
+import com.willfp.eco.core.commands.notifyOfflinePlayerRequired
 import com.willfp.eco.core.commands.notifyPermissionRequired
 import com.willfp.eco.core.commands.notifyPlayerRequired
 import com.willfp.eco.core.data.profile
+import com.willfp.eco.util.savedDisplayName
 import com.willfp.ecoskills.gui.SkillGUI
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.toggleSkillEnabled
@@ -63,12 +65,12 @@ class CommandSkills(plugin: EcoPlugin) :
             else -> {
                 sender.notifyPermissionRequired(togglePerm, "no-permission")
                 sender.notifyPermissionRequired(togglePermOthers, "no-permission")
-                val player = args[2].notifyPlayerRequired("invalid-player")
+                val player = args[2].notifyOfflinePlayerRequired("invalid-player")
                 sender.sendMessage(
                     plugin.langYml.getMessage(when(player.toggleSkillEnabled(skill)) {
                         true -> "enable-skill-player"
                         false -> "disable-skill-player"
-                    }).replace("%skill%", skill.name).replace("%player%", player.name)
+                    }).replace("%skill%", skill.name).replace("%player%", player.savedDisplayName)
                 )
             }
         }
