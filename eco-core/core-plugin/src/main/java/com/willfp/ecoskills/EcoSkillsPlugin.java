@@ -19,6 +19,7 @@ import com.willfp.ecoskills.effects.Effect;
 import com.willfp.ecoskills.effects.Effects;
 import com.willfp.ecoskills.integrations.EcoEnchantsEnchantingLeveller;
 import com.willfp.ecoskills.integrations.enchantgui.EnchantGuiHandler;
+import com.willfp.ecoskills.placeholders.EcoSkillsTopExpansion;
 import com.willfp.ecoskills.skills.CustomSkillTriggerXPGainListener;
 import com.willfp.ecoskills.skills.Skill;
 import com.willfp.ecoskills.skills.SkillDisplayListener;
@@ -149,7 +150,8 @@ public class EcoSkillsPlugin extends LibReforgePlugin {
     public List<IntegrationLoader> loadAdditionalIntegrations() {
         return List.of(
                 new IntegrationLoader("EcoEnchants", () -> this.getEventManager().registerListener(new EcoEnchantsEnchantingLeveller(this))),
-                new IntegrationLoader("EnchantGui", () -> this.getEventManager().registerListener(new EnchantGuiHandler()))
+                new IntegrationLoader("EnchantGui", () -> this.getEventManager().registerListener(new EnchantGuiHandler())),
+                new IntegrationLoader("PlaceholderAPI", () -> new EcoSkillsTopExpansion(this).register())
         );
     }
 }

@@ -34,6 +34,7 @@ allprojects {
         maven { url 'https://repo.codemc.io/repository/maven-public/' }
         maven { url 'https://repo.dmulloy2.net/repository/public/' }
         maven { url 'https://repo.essentialsx.net/releases/' }
+        maven { url 'https://repo.extendedclip.com/content/repositories/placeholderapi/' }
     }
 
     jar {
@@ -49,6 +50,7 @@ allprojects {
         compileOnly 'com.willfp:eco:6.44.0'
         implementation 'com.willfp:libreforge:3.128.0'
         implementation 'org.joml:joml:1.10.4'
+        compileOnly 'me.clip:placeholderapi:2.11.2'
         compileOnly fileTree(dir: '../../lib', include: ['*.jar'])
         compileOnly 'com.github.LegameMc:EnchantGui-API:1.0'
 

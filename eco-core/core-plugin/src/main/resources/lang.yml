@@ -42,8 +42,11 @@ line-wrap-color: "&8"
 
 top-line-format: "%rank%. %playername% - %level%"
 top:
-  - "---- Skills Leaderboard ----"
-  - "%lines%"
+  format:
+    - "---- Skills Leaderboard ----"
+    - "%lines%"
+  name-empty: "&cEmpty"
+  amount-empty: "&0"
 
 menu:
   title: "Your Skills"
