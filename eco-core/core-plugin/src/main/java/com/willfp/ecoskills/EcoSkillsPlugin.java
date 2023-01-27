@@ -150,8 +150,8 @@ public class EcoSkillsPlugin extends LibReforgePlugin {
     public List<IntegrationLoader> loadAdditionalIntegrations() {
         return List.of(
                 new IntegrationLoader("EcoEnchants", () -> this.getEventManager().registerListener(new EcoEnchantsEnchantingLeveller(this))),
-                new IntegrationLoader("EnchantGui", () -> this.getEventManager().registerListener(new EnchantGuiHandler())),
-                new IntegrationLoader("PlaceholderAPI", () -> new EcoSkillsTopExpansion(this).register())
+                new IntegrationLoader("EnchantGui", () -> this.getEventManager().registerListener(new EnchantGuiHandler()))
+                //new IntegrationLoader("PlaceholderAPI", () -> new EcoSkillsTopExpansion(this).register())
         );
     }
 }
