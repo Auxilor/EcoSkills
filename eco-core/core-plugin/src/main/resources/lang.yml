@@ -45,8 +45,6 @@ top:
   format:
     - "---- Skills Leaderboard ----"
     - "%lines%"
-  name-empty: "&cEmpty"
-  amount-empty: "&0"
 
 menu:
   title: "Your Skills"

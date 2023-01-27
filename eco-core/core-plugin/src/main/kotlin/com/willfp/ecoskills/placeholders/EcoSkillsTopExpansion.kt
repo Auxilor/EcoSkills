@@ -14,7 +14,7 @@ class EcoSkillsTopExpansion(val plugin: EcoSkillsPlugin): PlaceholderExpansion()
      * @return placeholder identifier that is associated with this expansion
      */
     override fun getIdentifier(): String {
-        return "ecoskillstop"
+        return "ecoskills"
     }
 
     /**
@@ -23,7 +23,7 @@ class EcoSkillsTopExpansion(val plugin: EcoSkillsPlugin): PlaceholderExpansion()
      * @return name of the author for this expansion
      */
     override fun getAuthor(): String {
-        return "_OfTeN_"
+        return "Auxilor"
     }
 
     /**
@@ -37,16 +37,22 @@ class EcoSkillsTopExpansion(val plugin: EcoSkillsPlugin): PlaceholderExpansion()
 
     override fun onRequest(player: OfflinePlayer?, params: String): String? {
         val args = params.split("_")
-        val skill = Skills.getByID(args.firstOrNull()?.lowercase() ?: return "Invalid skill")
-        val place = args.getOrNull(1)?.toIntOrNull() ?: return "Invalid place (must be an integer)"
+
+        if (args.size < 3) {
+            return ""
+        }
+
+        if (args[0] != "top") {
+            return ""
+        }
+
+        val skill = Skills.getByID(args[1]) ?: return ""
+
+        val place = args[2].toIntOrNull() ?: return ""
 
         return when (args.lastOrNull() ?: return "Invalid type: ${args.lastOrNull()}. Must be name/amount") {
-            "name" -> skill?.getTop(place)?.player?.savedDisplayName ?: plugin.langYml.getFormattedString(
-                "top.name-empty"
-            )
-            "amount" -> skill?.getTop(place)?.amount?.toString() ?: plugin.langYml.getFormattedString(
-                "top.amount-empty"
-            )
+            "name" -> skill.getTop(place)?.player?.savedDisplayName ?: ""
+            "amount" -> skill.getTop(place)?.amount?.toString() ?: ""
             else -> null
         }
     }
