@@ -155,4 +155,10 @@ public class EcoSkillsPlugin extends LibReforgePlugin {
                 new IntegrationLoader("EnchantGui", () -> this.getEventManager().registerListener(new EnchantGuiHandler()))
         );
     }
+
+    @NotNull
+    @Override
+    public String getMinimumEcoVersion() {
+        return "6.50.0";
+    }
 }
