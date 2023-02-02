@@ -1,16 +1,12 @@
 package com.willfp.ecoskills.effects
 
 import com.github.benmanes.caffeine.cache.Caffeine
-import com.willfp.eco.core.EcoPlugin
-import com.willfp.eco.core.config.BaseConfig
-import com.willfp.eco.core.config.ConfigType
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.placeholder.InjectablePlaceholder
 import com.willfp.eco.core.placeholder.PlaceholderInjectable
 import com.willfp.eco.core.placeholder.PlayerStaticPlaceholder
 import com.willfp.eco.core.placeholder.StaticPlaceholder
 import com.willfp.eco.util.NumberUtils
-import com.willfp.eco.util.formatEco
 import com.willfp.ecoskills.getEffectLevel
 import com.willfp.libreforge.Holder
 import com.willfp.libreforge.conditions.Conditions
@@ -46,33 +42,58 @@ class CustomEffect(
             "Custom Effect $id"
         )
 
+        conditions = Conditions.compile(
+            config.getSubsections("conditions"),
+            "Custom Effect $id"
+        )
+    }
+
+    fun getLevel(level: Int): CustomEffectLevel = levels.get(level) {
         CustomEffectLevel(this, it, effects, conditions)
     }
 
     override fun formatDescription(string: String, level: Int): String {
         return levelDescriptions.get(level) {
-            val placeholderValue = NumberUtils.evaluateExpression(
-                config.getString("placeholder"),
-                null,
-                object : PlaceholderInjectable {
-                    override fun getPlaceholderInjections(): List<InjectablePlaceholder> {
-                        return listOf(
-                            StaticPlaceholder(
-                                "level",
-                            ) { level.toString() }
-                        )
-                    }
+        val uncompiledPlaceholders = config.getSubsection("placeholders").getKeys(false).associateWith {
+            config.getString("placeholders.$it")
+        }.toMutableMap()
 
-                    override fun clearInjectedPlaceholders() {
-                        // Do nothing
-                    }
-                }
-            ).toString()
+        // Add %placeholder% placeholder in
+        uncompiledPlaceholders["placeholder"] = config.getString("placeholder")
 
-            config.getString("description")
-                .replace("%placeholder%", placeholderValue)
-                .formatEco()
+        // Evaluate each placeholder
+        val placeholders = uncompiledPlaceholders.map { (id, expr) ->
+            DescriptionPlaceholder(
+                    id,
+                    NumberUtils.evaluateExpression(
+                            expr,
+                            null,
+                            object : PlaceholderInjectable {
+                                override fun getPlaceholderInjections(): List<InjectablePlaceholder> {
+                                    return listOf(
+                                            StaticPlaceholder(
+                                                    "level",
+                                            ) { level.toString() }
+                                    )
+                                }
+
+                                override fun clearInjectedPlaceholders() {
+                                    // Do nothing
+                                }
+                            }
+                    )
+            )
         }
+
+        // Apply placeholders to description
+        val rawDescription = config.getString("description")
+        var description = rawDescription
+        for (placeholder in placeholders) {
+            description = description.replace("%${placeholder.id}%", NumberUtils.format(placeholder.value))
+        }
+
+        description
+    }
     }
 }
 
