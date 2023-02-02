@@ -1,3 +1,5 @@
+@file:JvmName("CustomEffectUtils")
+
 package com.willfp.ecoskills.effects
 
 import com.github.benmanes.caffeine.cache.Caffeine
