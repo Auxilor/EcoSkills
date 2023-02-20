@@ -7,7 +7,9 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class PlayerSkillExpGainEvent extends PlayerEvent implements Cancellable {
+import javax.annotation.concurrent.NotThreadSafe;
+
+public class PlayerSkillExpGainEvent extends PlayerEvent implements Cancellable, SkillEvent {
     /**
      * Bukkit parity.
      */
@@ -55,6 +57,8 @@ public class PlayerSkillExpGainEvent extends PlayerEvent implements Cancellable 
      *
      * @return The skill.
      */
+    @Override
+    @NotNull
     public Skill getSkill() {
         return this.skill;
     }
