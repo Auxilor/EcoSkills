@@ -6,7 +6,9 @@ import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.getEffectLevel
 import com.willfp.ecoskills.tryAsPlayer
+import org.bukkit.entity.HumanEntity
 import org.bukkit.entity.LivingEntity
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.entity.EntityDamageByEntityEvent
@@ -29,6 +31,10 @@ class EffectSerratedStrikes : Effect(
         val victim = if (event.entity is LivingEntity) event.entity as LivingEntity else return
 
         if (player.uniqueId == victim.uniqueId) {
+            return
+        }
+
+        if (victim is HumanEntity && victim.isBlocking) {
             return
         }
 

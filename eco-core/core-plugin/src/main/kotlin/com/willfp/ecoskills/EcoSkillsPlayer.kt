@@ -55,7 +55,7 @@ private fun Player.cacheSkillExperienceMultiplier(): Double {
     for (permissionAttachmentInfo in this.effectivePermissions) {
         val permission = permissionAttachmentInfo.permission
         if (permission.startsWith(prefix)) {
-            (permission.substring(permission.lastIndexOf(".") + 1).toDoubleOrNull())?.let{
+            (permission.substring(permission.lastIndexOf(".") + 1).toDoubleOrNull())?.let {
                 return (it / 100) + 1
             }
         }
@@ -220,7 +220,11 @@ fun OfflinePlayer.resetSkills() {
         this.setEffectLevel(effect, 0)
     }
     for (skill in Skills.values()) {
-        this.setSkillLevel(skill, 0)
-        this.setSkillProgress(skill, 0.0)
+        this.resetSkill(skill)
     }
+}
+
+fun OfflinePlayer.resetSkill(skill: Skill) {
+    this.setSkillLevel(skill, 0)
+    this.setSkillProgress(skill, 0.0)
 }

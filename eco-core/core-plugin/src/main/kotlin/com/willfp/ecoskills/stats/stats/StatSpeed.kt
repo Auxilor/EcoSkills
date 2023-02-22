@@ -24,7 +24,7 @@ class StatSpeed : Stat(
         val modifier = AttributeModifier(
             this.uuid,
             this.name,
-            (this.config.getDouble("percent-faster-per-level") * player.getStatLevel(this)) / 100.0,
+            (this.config.getDouble("percent-faster-per-level") * 0) / 100.0,
             AttributeModifier.Operation.MULTIPLY_SCALAR_1
         )
         val instance = player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED) ?: return
@@ -39,6 +39,10 @@ class StatSpeed : Stat(
             instance.removeModifier(modifier)
             instance.addModifier(modifier)
         }
+
+        val maxSpeed = 1 + (this.config.getDouble("percent-faster-per-level") * player.getStatLevel(this)) / 100.0
+        player.walkSpeed = (maxSpeed / 5.0).toFloat()
+        player.sendMessage("§aTvá rychlost chůze byla nastavena na §e${maxSpeed * 100}% §7(/walkspeed)")
     }
 
     @EventHandler(priority = EventPriority.LOW)

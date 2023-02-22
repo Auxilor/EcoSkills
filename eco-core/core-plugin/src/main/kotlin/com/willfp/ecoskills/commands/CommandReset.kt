@@ -4,9 +4,19 @@ package com.willfp.ecoskills.commands
 
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.impl.Subcommand
+import com.willfp.eco.util.StringUtils
+import com.willfp.eco.util.savedDisplayName
+import com.willfp.ecoskills.EcoSkillsPlugin
+import com.willfp.ecoskills.resetSkill
 import com.willfp.ecoskills.resetSkills
+import com.willfp.ecoskills.setStatLevel
+import com.willfp.ecoskills.skills.Skill
+import com.willfp.ecoskills.skills.Skills
+import com.willfp.ecoskills.stats.Stat
+import com.willfp.ecoskills.stats.Stats
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
+import org.bukkit.command.TabCompleter
 import org.bukkit.util.StringUtil
 
 class CommandReset(plugin: EcoPlugin) :
@@ -34,6 +44,37 @@ class CommandReset(plugin: EcoPlugin) :
                 return
             }
 
+            if (args.size == 2) {
+                when (val obj = Skills.getByID(args[1].lowercase()) ?: Stats.getByID(args[1].lowercase())) {
+                    is Skill -> {
+                        sender.sendMessage(
+                            plugin.langYml.getMessage(
+                                "reset-player-skill",
+                                StringUtils.FormatOption.WITHOUT_PLACEHOLDERS
+                            )
+                                .replace("%player%", args[0])
+                                .replace("%skill%", obj.name)
+                        )
+                        player.resetSkill(obj)
+                    }
+
+                    is Stat -> {
+                        sender.sendMessage(
+                            plugin.langYml.getMessage(
+                                "reset-player-stat",
+                                StringUtils.FormatOption.WITHOUT_PLACEHOLDERS
+                            )
+                                .replace("%player%", args[0])
+                                .replace("%skill%", obj.name)
+                        )
+                        player.setStatLevel(obj, 0)
+                    }
+
+                    else -> sender.sendMessage(plugin.langYml.getMessage("invalid-skill-stat"))
+                }
+                return
+            }
+
             sender.sendMessage(plugin.langYml.getMessage("reset-player"))
             player.resetSkills()
         }
@@ -46,6 +87,15 @@ class CommandReset(plugin: EcoPlugin) :
             StringUtil.copyPartialMatches(
                 args[0],
                 Bukkit.getOnlinePlayers().map { player -> player.name }.toMutableList(),
+                completions
+            )
+            return completions
+        }
+
+        if (args.size == 2) {
+            StringUtil.copyPartialMatches(
+                args[1],
+                TabCompleteHelper.SKILL_NAMES + TabCompleteHelper.STAT_NAMES,
                 completions
             )
             return completions

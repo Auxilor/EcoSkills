@@ -132,9 +132,16 @@ xp-on-move-chance: 0.05
 base-xp-to-give: 15
 # If the amount of xp given should be higher when travelling faster
 multiply-xp-by-speed: true
-# The amount of experience to give for each point of fall damage taken
-fall-damage-xp-per-hp: 16
+# Settings for earning xp by fall damage
+fall-damage:
+  # The amount of experience to give for each point of fall damage taken
+  xp-per-hp: 16
+  limit-by-period:
+    enabled: true
+    value: 60 # Seconds
 # If experience should be given when the player dies of fall damage
 give-xp-on-fatal-fall: false
 # If experience should be given when the player is flying (/fly)
 allow-flying: true
+# XP Multiplier for flying gain
+flying-multiplier: 0.5

@@ -32,6 +32,21 @@ commands:
       - skill
     description: Open the skills menu
     permission: ecoskills.command.skills
+  walkspeed:
+    aliases:
+      - ws
+      - walks
+      - wspeed
+    description: Set walking speed up to stat's max
+    permission: ecoskills.command.walkspeed
+  flyspeed:
+    aliases:
+      - fs
+      - flys
+      - fspeed
+    description: Set walking speed up to stat's max
+    permission: ecoskills.command.flyspeed
+
 
 permissions:
   ecoskills.*:

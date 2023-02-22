@@ -10,6 +10,9 @@ dependencies {
     compileOnly 'net.essentialsx:EssentialsX:2.19.0'
     compileOnly 'com.github.ben-manes.caffeine:caffeine:3.0.6'
     compileOnly 'commons-lang:commons-lang:2.6'
+
+    // Custom
+    compileOnly 'net.luckperms:api:5.4'
 }
 
 build.dependsOn publishToMavenLocal

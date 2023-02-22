@@ -1,5 +1,6 @@
 package com.willfp.ecoskills.skills.skills
 
+import com.github.benmanes.caffeine.cache.Caffeine
 import com.willfp.eco.core.integrations.afk.AFKManager
 import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.containsIgnoreCase
@@ -10,13 +11,19 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.player.PlayerMoveEvent
-import kotlin.math.abs
-import kotlin.math.pow
-import kotlin.math.sqrt
+import java.util.UUID
+import java.util.concurrent.TimeUnit
+import kotlin.math.*
 
 class SkillExploration : Skill(
     "exploration"
 ) {
+    private val fallDamageCache = Caffeine.newBuilder()
+        .expireAfterWrite(this.config.getInt("fall-damage.limit-by-period.value").toLong(), TimeUnit.SECONDS)
+        .build<UUID, Boolean>()
+
+    private val fallDamageTimeoutEnabled = this.config.getBool("fall-damage.limit-by-period.enabled")
+
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun handleLevelling(event: PlayerMoveEvent) {
         val player = event.player.filterSkillEnabled() ?: return
@@ -47,7 +54,12 @@ class SkillExploration : Skill(
             xp *= speed
         }
 
-        if (NumberUtils.randFloat(0.0, 100.0) < this.config.getDouble("xp-on-move-chance")) {
+        if (player.isFlying) {
+            xp *= this.config.getDouble("flying-multiplier")
+        }
+
+        xp = round(xp)
+        if (NumberUtils.randFloat(0.0, 100.0) < this.config.getDouble("xp-on-move-chance") && xp > 0.0) {
             player.giveSkillExperience(this, xp)
         }
     }
@@ -55,7 +67,7 @@ class SkillExploration : Skill(
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun handleLevelling(event: EntityDamageEvent) {
         val player = (event.entity as? Player)?.filterSkillEnabled() ?: return
-        
+
         if (this.config.getStrings("disabled-in-worlds").containsIgnoreCase(player.getWorld().name)) {
             return
         }
@@ -68,11 +80,17 @@ class SkillExploration : Skill(
             return
         }
 
+        if (fallDamageTimeoutEnabled && fallDamageCache.getIfPresent(player.uniqueId) == true) {
+            return
+        }
+
         if (event.finalDamage > player.health && !this.config.getBool("give-xp-on-fatal-fall")) {
             return
         }
 
-        val xp = this.config.getDouble("fall-damage-xp-per-hp") * event.finalDamage
-        player.giveSkillExperience(this, xp)
+        fallDamageCache.put(player.uniqueId, true)
+
+        val xp = this.config.getDouble("fall-damage.xp-per-hp") * event.finalDamage
+            player.giveSkillExperience(this, xp)
     }
 }

@@ -10,7 +10,9 @@ import com.willfp.ecoskills.actionbar.ActionBarCompatSetActionBar;
 import com.willfp.ecoskills.actionbar.ActionBarUtils;
 import com.willfp.ecoskills.actionbar.HealthScaleListener;
 import com.willfp.ecoskills.commands.CommandEcoskills;
+import com.willfp.ecoskills.commands.CommandFlySpeed;
 import com.willfp.ecoskills.commands.CommandSkills;
+import com.willfp.ecoskills.commands.CommandWalkSpeed;
 import com.willfp.ecoskills.config.EffectsYml;
 import com.willfp.ecoskills.data.DataListener;
 import com.willfp.ecoskills.data.LeaderboardHandler;
@@ -143,7 +145,9 @@ public class EcoSkillsPlugin extends LibReforgePlugin {
     protected List<PluginCommand> loadPluginCommands() {
         return Arrays.asList(
                 new CommandEcoskills(this),
-                new CommandSkills(this)
+                new CommandSkills(this),
+                new CommandWalkSpeed(this),
+                new CommandFlySpeed(this)
         );
     }
 
