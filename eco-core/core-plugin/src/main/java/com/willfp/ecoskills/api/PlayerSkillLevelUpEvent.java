@@ -6,7 +6,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class PlayerSkillLevelUpEvent extends PlayerEvent {
+public class PlayerSkillLevelUpEvent extends PlayerEvent implements SkillEvent {
     /**
      * Bukkit parity.
      */
@@ -42,6 +42,8 @@ public class PlayerSkillLevelUpEvent extends PlayerEvent {
      *
      * @return The skill.
      */
+    @Override
+    @NotNull
     public Skill getSkill() {
         return this.skill;
     }
