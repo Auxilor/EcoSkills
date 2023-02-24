@@ -127,16 +127,18 @@ fun OfflinePlayer.getSkillProgressRequired(skill: Skill): Int {
 fun OfflinePlayer.getSkillProgress(skill: Skill): Double {
     val xp = this.profile.read(skill.dataXPKey)
 
-    if (xp.isNaN()) {
-        this.profile.write(skill.dataXPKey, 0.0)
-        return 0.0
+    if (!xp.isFinite()) {
+        this.profile.write(skill.dataXPKey, 1.0)
+        return 1.0
     }
 
     return xp
 }
 
 fun OfflinePlayer.setSkillProgress(skill: Skill, xp: Double) {
-    require(!xp.isNaN()) { "NaN Experience!" }
+    if (!xp.isFinite()) {
+        return
+    }
 
     this.profile.write(skill.dataXPKey, xp)
 }
