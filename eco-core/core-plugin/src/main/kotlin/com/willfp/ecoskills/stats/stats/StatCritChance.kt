@@ -4,6 +4,7 @@ import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.toNiceString
 import com.willfp.ecoskills.getStatLevel
 import com.willfp.ecoskills.isCrit
+import com.willfp.ecoskills.isStatEnabled
 import com.willfp.ecoskills.stats.Stat
 import com.willfp.ecoskills.stats.Stats
 import com.willfp.ecoskills.tryAsPlayer
@@ -25,6 +26,10 @@ class StatCritChance : Stat(
     @EventHandler(priority = EventPriority.LOW)
     fun handle(event: EntityDamageByEntityEvent) {
         val player = event.damager.tryAsPlayer() ?: return
+
+        if (!player.isStatEnabled(this)) {
+            return
+        }
 
         if (this.config.getStrings("disabled-in-worlds").contains(player.world.name)
             || Stats.CRIT_DAMAGE.config.getStrings("disabled-in-worlds").contains(player.world.name)) {

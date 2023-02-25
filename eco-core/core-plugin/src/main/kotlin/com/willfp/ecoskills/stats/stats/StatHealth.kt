@@ -2,6 +2,7 @@ package com.willfp.ecoskills.stats.stats
 
 import com.willfp.eco.util.toNiceString
 import com.willfp.ecoskills.getStatLevel
+import com.willfp.ecoskills.isStatEnabled
 import com.willfp.ecoskills.stats.Stat
 import org.bukkit.attribute.Attribute
 import org.bukkit.attribute.AttributeModifier
@@ -37,7 +38,9 @@ class StatHealth : Stat(
 
         plugin.scheduler.run {
             instance.removeModifier(modifier)
-            instance.addModifier(modifier)
+            if (player.isStatEnabled(this)) {
+                instance.addModifier(modifier)
+            }
         }
     }
 

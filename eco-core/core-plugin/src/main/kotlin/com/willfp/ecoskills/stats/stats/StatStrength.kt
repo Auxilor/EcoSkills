@@ -2,6 +2,7 @@ package com.willfp.ecoskills.stats.stats
 
 import com.willfp.eco.util.toNiceString
 import com.willfp.ecoskills.getStatLevel
+import com.willfp.ecoskills.isStatEnabled
 import com.willfp.ecoskills.stats.Stat
 import com.willfp.ecoskills.tryAsPlayer
 import org.bukkit.event.EventHandler
@@ -21,6 +22,11 @@ class StatStrength : Stat(
     @EventHandler(priority = EventPriority.LOW)
     fun handle(event: EntityDamageByEntityEvent) {
         val player = event.damager.tryAsPlayer() ?: return
+
+
+        if (!player.isStatEnabled(this)) {
+            return
+        }
 
         if (this.config.getStrings("disabled-in-worlds").contains(player.world.name)) {
             return
