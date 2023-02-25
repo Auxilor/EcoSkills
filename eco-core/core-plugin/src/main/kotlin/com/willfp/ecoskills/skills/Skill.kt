@@ -6,7 +6,6 @@ import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.eco.core.data.keys.PersistentDataKeyType
-import com.willfp.eco.core.data.profile
 import com.willfp.eco.core.integrations.afk.AFKManager
 import com.willfp.eco.core.placeholder.PlayerPlaceholder
 import com.willfp.eco.core.placeholder.PlayerlessPlaceholder
@@ -54,12 +53,6 @@ abstract class Skill @JvmOverloads constructor(
         0.0
     )
 
-    val dataEnabledKey = PersistentDataKey(
-        plugin.namespacedKeyFactory.create("${id}_enabled"),
-        PersistentDataKeyType.BOOLEAN,
-        true
-    )
-
     val config: Config
 
     val xpRequirements: MutableList<Int>
@@ -105,10 +98,6 @@ abstract class Skill @JvmOverloads constructor(
                 return null
             }
 
-            if(!player.profile.read(dataEnabledKey)) {
-                return null;
-            }
-
             if (this.config.getStrings("disabled-in-worlds").containsIgnoreCase(player.world.name)) {
                 return null
             }
@@ -132,7 +121,6 @@ abstract class Skill @JvmOverloads constructor(
         description = config.getFormattedString("description")
 
         xpRequirements.clear()
-        xpRequirements.addAll(config.getInts("level-xp-requirements"))
         xpRequirements.addAll(config.getInts("level-xp-requirements"))
 
         maxLevel = xpRequirements.size - 1

@@ -37,6 +37,12 @@ abstract class Stat(
         PersistentDataKeyType.INT,
         0
     )
+    val enabledKey = PersistentDataKey(
+        plugin.namespacedKeyFactory.create("${id}_enabled"),
+        PersistentDataKeyType.BOOLEAN,
+        true
+    )
+
     lateinit var config: Config
     lateinit var name: String
 

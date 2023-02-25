@@ -24,7 +24,10 @@ messages:
   reset-player: "&fReset player!"
   recounted-player: "&fRecounted effect &6%effect% &ffor player &a%player%&f to level &6%level%&f!"
   requires-skill: "&cYou must specify a skill!"
+  requires-stat: "&cYou must specify a stat!"
+  requires-skill-or-stat: "&cYou must supply a skill or stat!"
   invalid-skill: "&cInvalid skill!"
+  invalid-stat: "&cInvalid stat!"
   requires-amount: "&cYou must specify the amount!"
   invalid-amount: "&cInvalid amount!"
   gave-skill-xp: "Gave %player% %amount% %skill% experience!"
@@ -41,6 +44,10 @@ messages:
   enable-skill: "&aSuccessfully enabled %skill%!"
   disable-skill-player: "&aSuccessfully enabled %skill% for %player%!"
   enable-skill-player: "&aSuccessfully enabled %skill% for %player%!"
+  disable-stat: "&cSuccessfully disabled %stat%!"
+  enable-stat: "&aSuccessfully enabled %stat%!"
+  disable-stat-player: "&aSuccessfully enabled %stat% for %player%!"
+  enable-stat-player: "&aSuccessfully enabled %stat% for %player%!"
 
 line-wrap-color: "&8"
 
