@@ -131,11 +131,23 @@ fun OfflinePlayer.getSkillProgress(skill: Skill): Double {
 //    if(skill.id == "mining" && this.name == "CZBaterka"){
 //        println("EcoSkills XP: ${skill.id} | $name | ${this.profile.read(skill.dataXPKey)} XP")
 //    }
-    return this.profile.read(skill.dataXPKey)
+
+    val xp = this.profile.read(skill.dataXPKey)
+
+    if (!xp.isFinite()) {
+        this.profile.write(skill.dataXPKey, 1.0)
+        return 1.0
+    }
+
+    return xp
 }
 
-fun OfflinePlayer.setSkillProgress(skill: Skill, level: Double) {
-    this.profile.write(skill.dataXPKey, level)
+fun OfflinePlayer.setSkillProgress(skill: Skill, xp: Double) {
+    if (!xp.isFinite()) {
+        return
+    }
+
+    this.profile.write(skill.dataXPKey, xp)
 }
 
 fun OfflinePlayer.getEffectLevel(effect: Effect): Int {
