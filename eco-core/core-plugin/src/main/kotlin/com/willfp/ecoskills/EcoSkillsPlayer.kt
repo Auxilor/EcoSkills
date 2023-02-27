@@ -55,9 +55,7 @@ private fun Player.cacheSkillExperienceMultiplier(): Double {
     for (permissionAttachmentInfo in this.effectivePermissions) {
         val permission = permissionAttachmentInfo.permission
         if (permission.startsWith(prefix)) {
-            (permission.substring(permission.lastIndexOf(".") + 1).toDoubleOrNull())?.let {
-                return (it / 100) + 1
-            }
+            return ((permission.substring(permission.lastIndexOf(".") + 1).toDoubleOrNull() ?: 100.0) / 100) + 1
         }
     }
 
@@ -111,6 +109,9 @@ fun Player.giveExactSkillExperience(skill: Skill, experience: Double) {
 }
 
 fun OfflinePlayer.getSkillLevel(skill: Skill): Int {
+//    if(skill.id == "mining" && this.name == "CZBaterka"){
+//        println("EcoSkills Level: ${skill.id} | $name | ${this.profile.read(skill.dataKey)} lvl")
+//    }
     return this.profile.read(skill.dataKey)
 }
 
@@ -127,6 +128,9 @@ fun OfflinePlayer.getSkillProgressRequired(skill: Skill): Int {
 }
 
 fun OfflinePlayer.getSkillProgress(skill: Skill): Double {
+//    if(skill.id == "mining" && this.name == "CZBaterka"){
+//        println("EcoSkills XP: ${skill.id} | $name | ${this.profile.read(skill.dataXPKey)} XP")
+//    }
     return this.profile.read(skill.dataXPKey)
 }
 

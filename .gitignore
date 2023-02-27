@@ -21,5 +21,3 @@ gradle-app.setting
 
 # Mac OSX
 .DS_Store
-
-local.properties

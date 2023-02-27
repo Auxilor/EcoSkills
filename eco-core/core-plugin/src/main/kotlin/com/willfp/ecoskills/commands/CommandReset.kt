@@ -5,8 +5,6 @@ package com.willfp.ecoskills.commands
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.eco.util.StringUtils
-import com.willfp.eco.util.savedDisplayName
-import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.resetSkill
 import com.willfp.ecoskills.resetSkills
 import com.willfp.ecoskills.setStatLevel
@@ -16,7 +14,6 @@ import com.willfp.ecoskills.stats.Stat
 import com.willfp.ecoskills.stats.Stats
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
-import org.bukkit.command.TabCompleter
 import org.bukkit.util.StringUtil
 
 class CommandReset(plugin: EcoPlugin) :

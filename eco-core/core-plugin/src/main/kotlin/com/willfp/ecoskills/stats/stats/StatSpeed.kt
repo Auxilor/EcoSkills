@@ -42,7 +42,7 @@ class StatSpeed : Stat(
 
         val maxSpeed = 1 + (this.config.getDouble("percent-faster-per-level") * player.getStatLevel(this)) / 100.0
         player.walkSpeed = (maxSpeed / 5.0).toFloat()
-        player.sendMessage("§aTvá rychlost chůze byla nastavena na §e${maxSpeed * 100}% §7(/walkspeed)")
+        player.sendMessage("§aTvá rychlost chůze byla nastavena na §e${String.format("%.1f", maxSpeed * 100)}% §7(/walkspeed)")
     }
 
     @EventHandler(priority = EventPriority.LOW)
