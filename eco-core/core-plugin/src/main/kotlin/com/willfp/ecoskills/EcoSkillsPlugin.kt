@@ -21,6 +21,17 @@ import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.effects.customEffects
 import com.willfp.ecoskills.integrations.EcoEnchantsEnchantingLeveller
 import com.willfp.ecoskills.integrations.enchantgui.EnchantGuiHandler
+import com.willfp.ecoskills.libreforge.ConditionHasSkillLevel
+import com.willfp.ecoskills.libreforge.EffectAddStat
+import com.willfp.ecoskills.libreforge.EffectAddStatTemporarily
+import com.willfp.ecoskills.libreforge.EffectGiveSkillXp
+import com.willfp.ecoskills.libreforge.EffectMultiplyAllStats
+import com.willfp.ecoskills.libreforge.EffectMultiplyStat
+import com.willfp.ecoskills.libreforge.EffectMultiplyStatTemporarily
+import com.willfp.ecoskills.libreforge.EffectSkillXpMultiplier
+import com.willfp.ecoskills.libreforge.FilterSkill
+import com.willfp.ecoskills.libreforge.TriggerGainSkillXp
+import com.willfp.ecoskills.libreforge.TriggerLevelUpSkill
 import com.willfp.ecoskills.placeholders.EcoSkillsTopPlaceholder
 import com.willfp.ecoskills.skills.CustomSkills
 import com.willfp.ecoskills.skills.SkillDisplayListener
@@ -33,9 +44,12 @@ import com.willfp.ecoskills.stats.Stats
 import com.willfp.ecoskills.stats.customStats
 import com.willfp.ecoskills.stats.modifier.StatModifierListener
 import com.willfp.libreforge.SimpleProvidedHolder
+import com.willfp.libreforge.conditions.Conditions
+import com.willfp.libreforge.filters.Filters
 import com.willfp.libreforge.loader.LibreforgePlugin
 import com.willfp.libreforge.loader.configs.ConfigCategory
 import com.willfp.libreforge.registerHolderProvider
+import com.willfp.libreforge.triggers.Triggers
 import org.bukkit.event.Listener
 
 class EcoSkillsPlugin : LibreforgePlugin() {
@@ -48,6 +62,18 @@ class EcoSkillsPlugin : LibreforgePlugin() {
     }
 
     override fun handleEnable() {
+        com.willfp.libreforge.effects.Effects.register(EffectAddStat)
+        com.willfp.libreforge.effects.Effects.register(EffectMultiplyStat)
+        com.willfp.libreforge.effects.Effects.register(EffectSkillXpMultiplier)
+        com.willfp.libreforge.effects.Effects.register(EffectGiveSkillXp)
+        com.willfp.libreforge.effects.Effects.register(EffectMultiplyAllStats)
+        com.willfp.libreforge.effects.Effects.register(EffectAddStatTemporarily)
+        com.willfp.libreforge.effects.Effects.register(EffectMultiplyStatTemporarily)
+        Conditions.register(ConditionHasSkillLevel)
+        Triggers.register(TriggerGainSkillXp)
+        Triggers.register(TriggerLevelUpSkill)
+        Filters.register(FilterSkill)
+        
         EcoSkillsTopPlaceholder.register(this)
         Skills.update(this)
 
