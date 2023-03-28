@@ -49,7 +49,7 @@ allprojects {
 
     tasks {
         shadowJar {
-            relocate("com.willfp.libreforge.loader", "com.willfp.libreforgetemplate.libreforge.loader")
+            relocate("com.willfp.libreforge.loader", "com.willfp.ecoskills.libreforge.loader")
         }
 
         compileKotlin {
