@@ -36,6 +36,7 @@ object StatsGUI {
         val playerHeadItemBuilder = { player: Player, _: Menu ->
             val itemStack = SkullBuilder()
                 .setDisplayName(
+                    @Suppress("DEPRECATION")
                     StringUtils.format(
                         plugin.configYml.getString("stats-gui.player-info.name")
                             .replace("%player%", player.displayName), player

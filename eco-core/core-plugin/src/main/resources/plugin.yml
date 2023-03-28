@@ -1,7 +1,7 @@
-name: EcoSkills
-version: ${projectVersion}
+name: ${pluginName}
+version: ${version}
 main: com.willfp.ecoskills.EcoSkillsPlugin
-api-version: 1.16
+api-version: 1.17
 authors: [ Auxilor ]
 website: willfp.com
 depend:
@@ -9,18 +9,7 @@ depend:
   - ProtocolLib
 softdepend:
   - EnchantGui
-  - AureliumSkills
-  - Vault
-  - mcMMO
-  - Jobs
-  - TMMobcoins
-  - EcoEnchants
-  - EcoBosses
-  - Talismans
-  - EcoArmor
-  - EcoItems
-  - Boosters
-  - EcoPets
+  - libreforge
 commands:
   ecoskills:
     description: Base Command

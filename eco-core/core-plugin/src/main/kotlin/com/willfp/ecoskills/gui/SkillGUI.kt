@@ -33,6 +33,7 @@ object SkillGUI {
         val playerHeadItemBuilder = { player: Player, _: Menu ->
             val itemStack = SkullBuilder()
                 .setDisplayName(
+                    @Suppress("DEPRECATION")
                     StringUtils.format(
                         plugin.configYml.getString("gui.player-info.name")
                             .replace("%player%", player.displayName), player

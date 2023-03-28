@@ -9,9 +9,9 @@ import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.SkillObject
 import com.willfp.ecoskills.getEffectLevel
+import com.willfp.libreforge.ViolationContext
+import com.willfp.libreforge.conditions.ConditionList
 import com.willfp.libreforge.conditions.Conditions
-import com.willfp.libreforge.conditions.ConfiguredCondition
-import com.willfp.libreforge.conditions.isMet
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
@@ -20,7 +20,7 @@ import java.util.UUID
 abstract class Effect(
     id: String
 ) : SkillObject(id), Listener {
-    private val conditions = mutableSetOf<ConfiguredCondition>()
+    private lateinit var conditions: ConditionList
 
     constructor(
         id: String,
@@ -49,9 +49,9 @@ abstract class Effect(
             config = loadConfig()
         }
 
-        conditions += Conditions.compile(
+        conditions = Conditions.compile(
             this.config.getSubsections("conditions"),
-            "Effect ID $id"
+            ViolationContext(plugin, "Effect $id")
         )
 
         Effects.registerNewEffect(this)
@@ -87,6 +87,6 @@ abstract class Effect(
     }
 
     protected fun checkConditions(player: Player): Boolean {
-        return conditions.isMet(player)
+        return conditions.areMet(player)
     }
 }

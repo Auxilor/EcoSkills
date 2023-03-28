@@ -45,6 +45,8 @@ class CommandRecount(plugin: EcoPlugin): Subcommand(
                 for (ceffect in Effects.values()) {
                     total+=recount(player, ceffect)
                 }
+
+                @Suppress("DEPRECATION")
                 sender.sendMessage(
                     plugin.langYml.getMessage("recounted-player")
                         .replace("%player%", player.displayName)
@@ -56,6 +58,7 @@ class CommandRecount(plugin: EcoPlugin): Subcommand(
                 return
             }
         } else {
+            @Suppress("DEPRECATION")
             sender.sendMessage(
                 plugin.langYml.getMessage("recounted-player")
                     .replace("%player%", player.displayName)

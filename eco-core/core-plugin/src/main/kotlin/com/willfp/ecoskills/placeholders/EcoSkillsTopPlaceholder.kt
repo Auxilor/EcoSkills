@@ -5,9 +5,6 @@ import com.willfp.eco.core.placeholder.DynamicPlaceholder
 import com.willfp.eco.util.savedDisplayName
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.skills.Skills
-import me.clip.placeholderapi.expansion.PlaceholderExpansion
-import org.bukkit.OfflinePlayer
-import java.util.StringJoiner
 import java.util.regex.Pattern
 
 object EcoSkillsTopPlaceholder {

@@ -9,6 +9,7 @@ import com.willfp.eco.core.data.keys.PersistentDataKeyType
 import com.willfp.eco.core.integrations.afk.AFKManager
 import com.willfp.eco.core.placeholder.PlayerPlaceholder
 import com.willfp.eco.core.placeholder.PlayerlessPlaceholder
+import com.willfp.eco.core.registry.Registrable
 import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.StringUtils
 import com.willfp.eco.util.containsIgnoreCase
@@ -33,7 +34,7 @@ import java.time.Duration
 abstract class Skill @JvmOverloads constructor(
     val id: String,
     forceConfig: Config? = null
-) : Listener {
+) : Listener, Registrable {
     protected val plugin: EcoPlugin = EcoSkillsPlugin.getInstance()
     val leaderBoardCache: Cache<Int, LeaderboardCacheEntry?> = Caffeine.newBuilder()
         .expireAfterWrite(Duration.ofSeconds(plugin.configYml.getInt("cache-expire-after").toLong()))
@@ -357,6 +358,10 @@ abstract class Skill @JvmOverloads constructor(
 
     open fun postUpdate() {
         // Override when needed
+    }
+
+    override fun getID(): String {
+        return id
     }
 
     fun getExpForLevel(level: Int): Int {

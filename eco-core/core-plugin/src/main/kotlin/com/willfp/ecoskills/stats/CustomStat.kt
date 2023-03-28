@@ -4,8 +4,6 @@ package com.willfp.ecoskills.stats
 
 import com.github.benmanes.caffeine.cache.Caffeine
 import com.willfp.eco.core.EcoPlugin
-import com.willfp.eco.core.config.BaseConfig
-import com.willfp.eco.core.config.ConfigType
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.placeholder.InjectablePlaceholder
 import com.willfp.eco.core.placeholder.PlaceholderInjectable
@@ -15,9 +13,10 @@ import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.formatEco
 import com.willfp.ecoskills.getStatLevel
 import com.willfp.libreforge.Holder
+import com.willfp.libreforge.ViolationContext
+import com.willfp.libreforge.conditions.ConditionList
 import com.willfp.libreforge.conditions.Conditions
-import com.willfp.libreforge.conditions.ConfiguredCondition
-import com.willfp.libreforge.effects.ConfiguredEffect
+import com.willfp.libreforge.effects.EffectList
 import com.willfp.libreforge.effects.Effects
 import org.bukkit.entity.Player
 import java.util.*
@@ -26,8 +25,8 @@ class CustomStat(
     id: String,
     config: Config
 ) : Stat(id, config) {
-    private val effects: Set<ConfiguredEffect>
-    private val conditions: Set<ConfiguredCondition>
+    private val effects: EffectList
+    private val conditions: ConditionList
 
     private val levels = Caffeine.newBuilder()
         .build<Int, CustomStatLevel>()
@@ -45,17 +44,17 @@ class CustomStat(
 
         effects = Effects.compile(
             config.getSubsections("effects"),
-            "Custom Effect $id"
+            ViolationContext(plugin, "Custom Effect $id")
         )
 
         conditions = Conditions.compile(
             config.getSubsections("conditions"),
-            "Custom Effect $id"
+            ViolationContext(plugin, "Custom Effect $id")
         )
     }
 
     fun getLevel(level: Int): CustomStatLevel = levels.get(level) {
-        CustomStatLevel(this, it, effects, conditions)
+        CustomStatLevel(plugin, this, it, effects, conditions)
     }
 
     override fun formatDescription(string: String, level: Int): String {
@@ -70,6 +69,10 @@ class CustomStat(
                                 "level",
                             ) { level.toString() }
                         )
+                    }
+
+                    override fun addInjectablePlaceholder(p0: MutableIterable<InjectablePlaceholder>) {
+                        // Do nothing.
                     }
 
                     override fun clearInjectedPlaceholders() {
@@ -100,12 +103,13 @@ internal val Player.customStats: Collection<Holder>
     }
 
 class CustomStatLevel(
+    plugin: EcoPlugin,
     parent: CustomStat,
     level: Int,
-    override val effects: Set<ConfiguredEffect>,
-    override val conditions: Set<ConfiguredCondition>
+    override val effects: EffectList,
+    override val conditions: ConditionList
 ) : Holder {
-    override val id = "${parent.id}_$level"
+    override val id = plugin.createNamespacedKey("${parent.id}_$level")
 
     override fun equals(other: Any?): Boolean {
         if (other !is CustomStatLevel) {

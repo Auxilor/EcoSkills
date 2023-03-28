@@ -2,19 +2,26 @@ package com.willfp.ecoskills.skills;
 
 import com.google.common.collect.ImmutableSet;
 import com.willfp.eco.core.config.interfaces.Config;
+import com.willfp.eco.core.registry.Registry;
 import com.willfp.ecoskills.EcoSkillsPlugin;
+import com.willfp.libreforge.loader.LibreforgePlugin;
+import com.willfp.libreforge.loader.configs.ConfigCategory;
+import com.willfp.libreforge.loader.configs.LegacyLocation;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
-public final class CustomSkills {
+public final class CustomSkills extends ConfigCategory {
     /**
      * Custom skills.
      */
-    private static final Set<CustomSkill> VALUES = new HashSet<>();
+    private static final Registry<CustomSkill> REGISTRY = new Registry<>();
+
+    public CustomSkills() {
+        super("skill", "customskills");
+    }
 
     /**
      * Get all registered custom skills.
@@ -22,23 +29,22 @@ public final class CustomSkills {
      * @return The custom skills.
      */
     public static Collection<CustomSkill> values() {
-        return ImmutableSet.copyOf(VALUES);
+        return ImmutableSet.copyOf(REGISTRY.values());
     }
 
-    /**
-     * Update the registry.
-     *
-     * @param plugin Instance of EcoSkills.
-     */
-    public static void update(@NotNull final EcoSkillsPlugin plugin) {
-        for (Skill skill : VALUES) {
+    @Override
+    public void clear(@NotNull final LibreforgePlugin libreforgePlugin) {
+        for (Skill skill : REGISTRY.values()) {
             Skills.removeSkill(skill);
         }
 
-        VALUES.clear();
+        REGISTRY.clear();
+    }
 
-        for (Map.Entry<String, Config> entry : plugin.fetchConfigs("customskills", false).entrySet()) {
-            VALUES.add(new CustomSkill(entry.getKey(), entry.getValue()));
-        }
+    @Override
+    public void acceptConfig(@NotNull final LibreforgePlugin libreforgePlugin,
+                             @NotNull final String id,
+                             @NotNull final Config config) {
+        REGISTRY.register(new CustomSkill(id, config));
     }
 }

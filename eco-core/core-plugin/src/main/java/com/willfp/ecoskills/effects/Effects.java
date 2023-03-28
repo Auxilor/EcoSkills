@@ -1,7 +1,6 @@
 package com.willfp.ecoskills.effects;
 
 import com.google.common.collect.ImmutableSet;
-import com.willfp.eco.core.config.interfaces.Config;
 import com.willfp.eco.core.config.updating.ConfigUpdater;
 import com.willfp.ecoskills.EcoSkillsPlugin;
 import com.willfp.ecoskills.effects.effects.EffectAcceleratedEscape;
@@ -30,7 +29,6 @@ import com.willfp.ecoskills.effects.effects.EffectShamanism;
 import com.willfp.ecoskills.effects.effects.EffectSpelunking;
 import com.willfp.ecoskills.effects.effects.EffectStrongImpact;
 import com.willfp.ecoskills.effects.effects.EffectVersatileTools;
-import com.willfp.libreforge.chains.EffectChains;
 import org.bukkit.NamespacedKey;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -99,8 +97,6 @@ public final class Effects {
 
     @ConfigUpdater
     public static void update(@NotNull final EcoSkillsPlugin plugin) {
-        CustomEffects.update(plugin);
-
         for (Effect effect : Effects.values()) {
             effect.update();
         }

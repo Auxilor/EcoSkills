@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.willfp.ecoskills.actionbar
 
 import com.willfp.eco.core.data.profile

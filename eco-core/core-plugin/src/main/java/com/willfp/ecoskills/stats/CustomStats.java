@@ -1,24 +1,35 @@
 package com.willfp.ecoskills.stats;
 
 import com.google.common.collect.ImmutableSet;
-import com.willfp.eco.core.config.ConfigType;
-import com.willfp.eco.core.config.Configs;
 import com.willfp.eco.core.config.interfaces.Config;
-import com.willfp.ecoskills.EcoSkillsPlugin;
-import com.willfp.libreforge.chains.EffectChains;
+import com.willfp.eco.core.registry.Registry;
+import com.willfp.libreforge.loader.LibreforgePlugin;
+import com.willfp.libreforge.loader.configs.ConfigCategory;
+import com.willfp.libreforge.loader.configs.LegacyLocation;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
-public final class CustomStats {
+public final class CustomStats extends ConfigCategory {
     /**
-     * Custom stats.
+     * The registry.
      */
-    private static final Set<CustomStat> VALUES = new HashSet<>();
+    private static final Registry<CustomStat> registry = new Registry<>();
+
+    public CustomStats() {
+        super("stat", "customstats");
+    }
+
+    @NotNull
+    @Override
+    public LegacyLocation getLegacyLocation() {
+        return new LegacyLocation(
+                "customstats.yml",
+                "stats",
+                new ArrayList<>()
+        );
+    }
 
     /**
      * Get all registered custom stats.
@@ -26,33 +37,19 @@ public final class CustomStats {
      * @return The custom stats.
      */
     public static Collection<CustomStat> values() {
-        return ImmutableSet.copyOf(VALUES);
+        return ImmutableSet.copyOf(registry.values());
     }
 
-    /**
-     * Update the registry.
-     *
-     * @param plugin Instance of EcoSkills.
-     */
-    public static void update(@NotNull final EcoSkillsPlugin plugin) {
-        for (Stat stat : VALUES) {
-            Stats.removeStat(stat);
-        }
+    @Override
+    public void clear(@NotNull final LibreforgePlugin libreforgePlugin) {
+        registry.values().forEach(Stats::removeStat);
+        registry.clear();
+    }
 
-        VALUES.clear();
-
-        for (Map.Entry<String, Config> entry : plugin.fetchConfigs("customstats", true).entrySet()) {
-            VALUES.add(new CustomStat(entry.getKey(), entry.getValue()));
-        }
-
-        // Legacy
-        Config customEffectsYml = Configs.fromFile(new File(plugin.getDataFolder(), "customstats.yml"), ConfigType.YAML);
-
-        for (Config cfg : customEffectsYml.getSubsections("stats")) {
-            VALUES.add(new CustomStat(cfg.getString("id"), cfg));
-        }
-        for (Config cfg : customEffectsYml.getSubsections("stats")) {
-            EffectChains.compile(cfg, "Effect Chains (customstats.yml)");
-        }
+    @Override
+    public void acceptConfig(@NotNull final LibreforgePlugin libreforgePlugin,
+                             @NotNull final String id,
+                             @NotNull final Config config) {
+        registry.register(new CustomStat(id, config));
     }
 }

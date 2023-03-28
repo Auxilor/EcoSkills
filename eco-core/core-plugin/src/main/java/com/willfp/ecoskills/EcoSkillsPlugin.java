@@ -9,35 +9,42 @@ import com.willfp.ecoskills.actionbar.ActionBarCompatChatMessage;
 import com.willfp.ecoskills.actionbar.ActionBarCompatSetActionBar;
 import com.willfp.ecoskills.actionbar.ActionBarUtils;
 import com.willfp.ecoskills.actionbar.HealthScaleListener;
-import com.willfp.ecoskills.commands.CommandEcoskills;
+import com.willfp.ecoskills.commands.CommandEcoSkills;
 import com.willfp.ecoskills.commands.CommandSkills;
 import com.willfp.ecoskills.config.EffectsYml;
 import com.willfp.ecoskills.data.DataListener;
 import com.willfp.ecoskills.data.LeaderboardHandler;
 import com.willfp.ecoskills.effects.CustomEffectUtils;
+import com.willfp.ecoskills.effects.CustomEffects;
 import com.willfp.ecoskills.effects.Effect;
 import com.willfp.ecoskills.effects.Effects;
 import com.willfp.ecoskills.integrations.EcoEnchantsEnchantingLeveller;
 import com.willfp.ecoskills.integrations.enchantgui.EnchantGuiHandler;
 import com.willfp.ecoskills.placeholders.EcoSkillsTopPlaceholder;
-import com.willfp.ecoskills.skills.CustomSkillTriggerXPGainListener;
+import com.willfp.ecoskills.skills.CustomSkills;
 import com.willfp.ecoskills.skills.Skill;
 import com.willfp.ecoskills.skills.SkillDisplayListener;
 import com.willfp.ecoskills.skills.SkillLevellingListener;
 import com.willfp.ecoskills.skills.Skills;
 import com.willfp.ecoskills.stats.CustomStatUtils;
+import com.willfp.ecoskills.stats.CustomStats;
 import com.willfp.ecoskills.stats.DamageIndicatorListener;
 import com.willfp.ecoskills.stats.Stat;
 import com.willfp.ecoskills.stats.Stats;
 import com.willfp.ecoskills.stats.modifier.StatModifierListener;
-import com.willfp.libreforge.LibReforgePlugin;
+import com.willfp.libreforge.HolderProvider;
+import com.willfp.libreforge.HolderProviderKt;
+import com.willfp.libreforge.ProvidedHolder;
+import com.willfp.libreforge.SimpleProvidedHolder;
+import com.willfp.libreforge.loader.LibreforgePlugin;
+import com.willfp.libreforge.loader.configs.ConfigCategory;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class EcoSkillsPlugin extends LibReforgePlugin {
+public class EcoSkillsPlugin extends LibreforgePlugin {
     /**
      * Instance of EcoSkills.
      */
@@ -55,23 +62,34 @@ public class EcoSkillsPlugin extends LibReforgePlugin {
         instance = this;
         effectsYml = new EffectsYml(this);
 
-        this.registerJavaHolderProvider(CustomEffectUtils::getCustomEffects);
-        this.registerJavaHolderProvider(CustomStatUtils::getCustomStats);
+        HolderProviderKt.registerHolderProvider((HolderProvider) player -> CustomEffectUtils.getCustomEffects(player).stream().map(
+                it -> (ProvidedHolder) new SimpleProvidedHolder(it)
+        ).toList());
+
+        HolderProviderKt.registerHolderProvider((HolderProvider) player -> CustomStatUtils.getCustomStats(player).stream().map(
+                it -> (ProvidedHolder) new SimpleProvidedHolder(it)
+        ).toList());
+    }
+
+    @NotNull
+    @Override
+    public List<ConfigCategory> loadConfigCategories() {
+        return List.of(
+                new CustomStats(),
+                new CustomEffects(),
+                new CustomSkills()
+        );
     }
 
     @Override
-    public void handleEnableAdditional() {
+    public void handleEnable() {
         EcoSkillsTopPlaceholder.register(this);
-
-        this.copyConfigs("customstats");
-        this.copyConfigs("customeffects");
-        this.copyConfigs("customskills");
 
         Skills.update(this);
     }
 
     @Override
-    public void handleReloadAdditional() {
+    public void handleReload() {
         for (Effect effect : Effects.values()) {
             this.getEventManager().unregisterListener(effect);
             this.getEventManager().registerListener(effect);
@@ -120,11 +138,11 @@ public class EcoSkillsPlugin extends LibReforgePlugin {
                 new DataListener(),
                 new DamageIndicatorListener(this),
                 new HealthScaleListener(this),
-                new ActionBarClearOnGamemode(),
-                new CustomSkillTriggerXPGainListener()
+                new ActionBarClearOnGamemode()
         );
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected List<AbstractPacketAdapter> loadPacketAdapters() {
         if (Prerequisite.HAS_1_19.isMet()) {
@@ -142,23 +160,17 @@ public class EcoSkillsPlugin extends LibReforgePlugin {
     @Override
     protected List<PluginCommand> loadPluginCommands() {
         return Arrays.asList(
-                new CommandEcoskills(this),
+                new CommandEcoSkills(this),
                 new CommandSkills(this)
         );
     }
 
     @NotNull
     @Override
-    public List<IntegrationLoader> loadAdditionalIntegrations() {
+    public List<IntegrationLoader> loadIntegrationLoaders() {
         return List.of(
                 new IntegrationLoader("EcoEnchants", () -> this.getEventManager().registerListener(new EcoEnchantsEnchantingLeveller(this))),
                 new IntegrationLoader("EnchantGui", () -> this.getEventManager().registerListener(new EnchantGuiHandler()))
         );
-    }
-
-    @NotNull
-    @Override
-    public String getMinimumEcoVersion() {
-        return "6.50.0";
     }
 }

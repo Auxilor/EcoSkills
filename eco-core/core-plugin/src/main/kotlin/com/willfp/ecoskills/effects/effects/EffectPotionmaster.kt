@@ -66,6 +66,7 @@ class EffectPotionmaster : Effect(
                 val duration = PotionUtils.getDuration(potionData)
                 val delta = (duration * multiplier).toInt() - duration
                 val secondsDelta = NumberUtils.format(delta / 20.0)
+                @Suppress("DEPRECATION")
                 val lore = meta.lore ?: ArrayList()
                 if (!meta.persistentDataContainer.has(plugin.namespacedKeyFactory.create("duration-delta"), PersistentDataType.INTEGER)){
                     for (string in config.getStrings("lore")) {
@@ -79,6 +80,7 @@ class EffectPotionmaster : Effect(
                 )
 
 
+                @Suppress("DEPRECATION")
                 meta.lore = lore
 
                 item.itemMeta = meta

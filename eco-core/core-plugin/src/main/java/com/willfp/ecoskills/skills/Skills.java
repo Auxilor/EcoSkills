@@ -74,8 +74,6 @@ public class Skills {
                 (player -> NumberUtils.format(EcoSkillsPlayerKt.getSkillExperienceMultiplier(player)))
         ).register();
 
-        CustomSkills.update(plugin);
-
         for (Skill skill : Skills.values()) {
             skill.update();
         }

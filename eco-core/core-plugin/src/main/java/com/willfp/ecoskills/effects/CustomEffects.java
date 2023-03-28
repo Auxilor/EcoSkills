@@ -1,24 +1,34 @@
 package com.willfp.ecoskills.effects;
 
 import com.google.common.collect.ImmutableSet;
-import com.willfp.eco.core.config.ConfigType;
-import com.willfp.eco.core.config.Configs;
 import com.willfp.eco.core.config.interfaces.Config;
-import com.willfp.ecoskills.EcoSkillsPlugin;
-import com.willfp.libreforge.chains.EffectChains;
+import com.willfp.eco.core.registry.Registry;
+import com.willfp.libreforge.loader.LibreforgePlugin;
+import com.willfp.libreforge.loader.configs.ConfigCategory;
+import com.willfp.libreforge.loader.configs.LegacyLocation;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
-public final class CustomEffects {
+public final class CustomEffects extends ConfigCategory {
     /**
      * Custom effects.
      */
-    private static final Set<CustomEffect> VALUES = new HashSet<>();
+    private static final Registry<CustomEffect> REGISTRY = new Registry<>();
+
+    public CustomEffects() {
+        super("effect", "customeffects");
+    }
+
+    @Override
+    public LegacyLocation getLegacyLocation() {
+        return new LegacyLocation(
+                "customeffects.yml",
+                "effects",
+                new ArrayList<>()
+        );
+    }
 
     /**
      * Get all registered custom effects.
@@ -26,33 +36,22 @@ public final class CustomEffects {
      * @return The custom effects.
      */
     public static Collection<CustomEffect> values() {
-        return ImmutableSet.copyOf(VALUES);
+        return ImmutableSet.copyOf(REGISTRY.values());
     }
 
-    /**
-     * Update the registry.
-     *
-     * @param plugin Instance of EcoSkills.
-     */
-    public static void update(@NotNull final EcoSkillsPlugin plugin) {
-        for (Effect effect : VALUES) {
+    @Override
+    public void clear(@NotNull final LibreforgePlugin libreforgePlugin) {
+        for (Effect effect : REGISTRY.values()) {
             Effects.removeEffect(effect);
         }
 
-        VALUES.clear();
+        REGISTRY.clear();
+    }
 
-        for (Map.Entry<String, Config> entry : plugin.fetchConfigs("customeffects", true).entrySet()) {
-            VALUES.add(new CustomEffect(entry.getKey(), entry.getValue()));
-        }
-
-        // Legacy
-        Config customEffectsYml = Configs.fromFile(new File(plugin.getDataFolder(), "customeffects.yml"), ConfigType.YAML);
-
-        for (Config cfg : customEffectsYml.getSubsections("effects")) {
-            VALUES.add(new CustomEffect(cfg.getString("id"), cfg));
-        }
-        for (Config cfg : customEffectsYml.getSubsections("chains")) {
-            EffectChains.compile(cfg, "Effect Chains (customeffects.yml)");
-        }
+    @Override
+    public void acceptConfig(@NotNull final LibreforgePlugin libreforgePlugin,
+                             @NotNull final String id,
+                             @NotNull final Config config) {
+        REGISTRY.register(new CustomEffect(id, config));
     }
 }

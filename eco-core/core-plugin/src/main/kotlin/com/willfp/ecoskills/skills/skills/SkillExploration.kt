@@ -26,6 +26,8 @@ class SkillExploration : Skill(
         }
 
         val from = event.from
+
+        @Suppress("USELESS_ELVIS") // Used to be nullable.
         val to = event.to ?: return
 
         if (from.world != to.world) {
@@ -55,7 +57,7 @@ class SkillExploration : Skill(
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun handleLevelling(event: EntityDamageEvent) {
         val player = (event.entity as? Player)?.filterSkillEnabled() ?: return
-        
+
         if (this.config.getStrings("disabled-in-worlds").containsIgnoreCase(player.getWorld().name)) {
             return
         }

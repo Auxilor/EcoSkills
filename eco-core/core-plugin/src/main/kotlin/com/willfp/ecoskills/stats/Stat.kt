@@ -6,6 +6,7 @@ import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.eco.core.data.keys.PersistentDataKeyType
 import com.willfp.eco.core.placeholder.PlayerPlaceholder
 import com.willfp.eco.core.placeholder.PlayerlessPlaceholder
+import com.willfp.eco.core.registry.Registrable
 import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.EcoSkillsPlugin
@@ -20,7 +21,7 @@ import java.util.*
 
 abstract class Stat(
     id: String
-) : SkillObject(id), Listener {
+) : SkillObject(id), Listener, Registrable {
     constructor(
         id: String,
         forceConfig: Config

@@ -63,8 +63,6 @@ public class Stats {
 
     @ConfigUpdater
     public static void update(@NotNull final EcoSkillsPlugin plugin) {
-        CustomStats.update(plugin);
-
         for (Stat stat : Stats.values()) {
             stat.update();
         }

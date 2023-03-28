@@ -1,5 +1,0 @@
-rootProject.name = 'EcoSkills'
-
-// Core
-include ':eco-core'
-include ':eco-core:core-plugin'

@@ -1,0 +1,17 @@
+name: ${pluginName}
+version: ${version}
+main: com.willfp.ecoskills.EcoSkillsPlugin
+api-version: 1.19
+
+dependencies:
+  - name: eco
+    required: true
+    bootstrap: false
+
+  - name: libreforge
+    required: false
+    bootstrap: false
+
+load-after:
+  - name: eco
+    bootstrap: false
