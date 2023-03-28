@@ -96,7 +96,7 @@ public final class Effects {
     }
 
     @ConfigUpdater
-    public static void update(@NotNull final EcoSkillsPlugin plugin) {
+    public static void update() {
         for (Effect effect : Effects.values()) {
             effect.update();
         }

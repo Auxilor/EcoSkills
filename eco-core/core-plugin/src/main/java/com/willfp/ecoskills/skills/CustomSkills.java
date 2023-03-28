@@ -3,15 +3,11 @@ package com.willfp.ecoskills.skills;
 import com.google.common.collect.ImmutableSet;
 import com.willfp.eco.core.config.interfaces.Config;
 import com.willfp.eco.core.registry.Registry;
-import com.willfp.ecoskills.EcoSkillsPlugin;
 import com.willfp.libreforge.loader.LibreforgePlugin;
 import com.willfp.libreforge.loader.configs.ConfigCategory;
-import com.willfp.libreforge.loader.configs.LegacyLocation;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
-import java.util.Map;
 
 public final class CustomSkills extends ConfigCategory {
     /**
