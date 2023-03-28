@@ -1,5 +1,6 @@
 package com.willfp.ecoskills.libreforge
 
+import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.util.NumberUtils
 import com.willfp.ecoskills.api.EcoSkillsAPI
@@ -11,11 +12,12 @@ import com.willfp.libreforge.arguments
 import com.willfp.libreforge.effects.Effect
 import com.willfp.libreforge.getDoubleFromExpression
 import com.willfp.libreforge.getIntFromExpression
-import com.willfp.libreforge.plugin
 import com.willfp.libreforge.triggers.TriggerData
 import com.willfp.libreforge.triggers.TriggerParameter
 
-object EffectMultiplyStatTemporarily : Effect<NoCompileData>("multiply_stat_temporarily") {
+class EffectMultiplyStatTemporarily(
+    private val plugin: EcoPlugin
+) : Effect<NoCompileData>("multiply_stat_temporarily") {
     override val parameters = setOf(
         TriggerParameter.PLAYER
     )

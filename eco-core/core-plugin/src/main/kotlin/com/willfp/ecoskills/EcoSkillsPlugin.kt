@@ -67,13 +67,13 @@ class EcoSkillsPlugin : LibreforgePlugin() {
         com.willfp.libreforge.effects.Effects.register(EffectSkillXpMultiplier)
         com.willfp.libreforge.effects.Effects.register(EffectGiveSkillXp)
         com.willfp.libreforge.effects.Effects.register(EffectMultiplyAllStats)
-        com.willfp.libreforge.effects.Effects.register(EffectAddStatTemporarily)
-        com.willfp.libreforge.effects.Effects.register(EffectMultiplyStatTemporarily)
+        com.willfp.libreforge.effects.Effects.register(EffectAddStatTemporarily(this))
+        com.willfp.libreforge.effects.Effects.register(EffectMultiplyStatTemporarily(this))
         Conditions.register(ConditionHasSkillLevel)
         Triggers.register(TriggerGainSkillXp)
         Triggers.register(TriggerLevelUpSkill)
         Filters.register(FilterSkill)
-        
+
         EcoSkillsTopPlaceholder.register(this)
         Skills.update(this)
 
