@@ -9,6 +9,8 @@ import com.willfp.eco.util.StringUtils
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.SkillObject
 import com.willfp.ecoskills.getEffectLevel
+import com.willfp.libreforge.EmptyProvidedHolder
+import com.willfp.libreforge.SimpleProvidedHolder
 import com.willfp.libreforge.ViolationContext
 import com.willfp.libreforge.conditions.ConditionList
 import com.willfp.libreforge.conditions.Conditions
@@ -87,6 +89,6 @@ abstract class Effect(
     }
 
     protected fun checkConditions(player: Player): Boolean {
-        return conditions.areMet(player)
+        return conditions.areMet(player, EmptyProvidedHolder)
     }
 }
