@@ -3,7 +3,7 @@ pluginManagement {
         gradlePluginPortal()
         mavenLocal()
         maven("https://repo.jpenilla.xyz/snapshots/")
-        maven("https://jitpack.io")
+        maven("https://repo.auxilor.io/repository/maven-public/")
     }
 }
 
