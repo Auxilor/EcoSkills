@@ -3,6 +3,7 @@ package com.willfp.ecoskills.stats;
 import com.google.common.collect.ImmutableSet;
 import com.willfp.eco.core.config.interfaces.Config;
 import com.willfp.eco.core.registry.Registry;
+import com.willfp.ecoskills.skills.CustomSkill;
 import com.willfp.libreforge.loader.LibreforgePlugin;
 import com.willfp.libreforge.loader.configs.ConfigCategory;
 import com.willfp.libreforge.loader.configs.LegacyLocation;
@@ -51,5 +52,12 @@ public final class CustomStats extends ConfigCategory {
                              @NotNull final String id,
                              @NotNull final Config config) {
         registry.register(new CustomStat(id, config));
+    }
+
+    @Override
+    public void afterReload(@NotNull LibreforgePlugin plugin) {
+        for (CustomStat stat : registry.values()) {
+            stat.update();
+        }
     }
 }

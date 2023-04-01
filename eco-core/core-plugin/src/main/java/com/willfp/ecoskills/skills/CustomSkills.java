@@ -3,6 +3,7 @@ package com.willfp.ecoskills.skills;
 import com.google.common.collect.ImmutableSet;
 import com.willfp.eco.core.config.interfaces.Config;
 import com.willfp.eco.core.registry.Registry;
+import com.willfp.ecoskills.effects.CustomEffect;
 import com.willfp.libreforge.loader.LibreforgePlugin;
 import com.willfp.libreforge.loader.configs.ConfigCategory;
 import org.jetbrains.annotations.NotNull;
@@ -42,5 +43,12 @@ public final class CustomSkills extends ConfigCategory {
                              @NotNull final String id,
                              @NotNull final Config config) {
         REGISTRY.register(new CustomSkill(id, config));
+    }
+
+    @Override
+    public void afterReload(@NotNull LibreforgePlugin plugin) {
+        for (CustomSkill skill : REGISTRY.values()) {
+            skill.update();
+        }
     }
 }

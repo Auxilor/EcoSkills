@@ -20,8 +20,6 @@ object SkillGUI {
     @JvmStatic
     private lateinit var menu: Menu
 
-    @JvmStatic
-    @ConfigUpdater
     fun update(plugin: EcoSkillsPlugin) {
         menu = buildHomeMenu(plugin)
     }
