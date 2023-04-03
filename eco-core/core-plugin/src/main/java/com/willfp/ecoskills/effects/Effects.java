@@ -95,7 +95,6 @@ public final class Effects {
         return ImmutableSet.copyOf(REGISTRY.values());
     }
 
-    @ConfigUpdater
     public static void update() {
         for (Effect effect : Effects.values()) {
             effect.update();

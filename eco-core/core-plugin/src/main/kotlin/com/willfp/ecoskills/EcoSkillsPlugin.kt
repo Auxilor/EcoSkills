@@ -13,12 +13,15 @@ import com.willfp.ecoskills.actionbar.ActionBarUtils.startRunnable
 import com.willfp.ecoskills.actionbar.HealthScaleListener
 import com.willfp.ecoskills.commands.CommandEcoSkills
 import com.willfp.ecoskills.commands.CommandSkills
+import com.willfp.ecoskills.commands.TabCompleteHelper
 import com.willfp.ecoskills.config.EffectsYml
 import com.willfp.ecoskills.data.DataListener
 import com.willfp.ecoskills.data.LeaderboardHandler
 import com.willfp.ecoskills.effects.CustomEffects
 import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.effects.customEffects
+import com.willfp.ecoskills.gui.SkillGUI
+import com.willfp.ecoskills.gui.StatsGUI
 import com.willfp.ecoskills.integrations.EcoEnchantsEnchantingLeveller
 import com.willfp.ecoskills.integrations.enchantgui.EnchantGuiHandler
 import com.willfp.ecoskills.libreforge.ConditionHasSkillLevel
@@ -76,6 +79,11 @@ class EcoSkillsPlugin : LibreforgePlugin() {
 
         EcoSkillsTopPlaceholder.register(this)
         Skills.update(this)
+        Effects.update()
+        Stats.update(this)
+        StatsGUI.update(this)
+        SkillGUI.update(this)
+        TabCompleteHelper.update()
 
         registerHolderProvider { it.customEffects.map { h -> SimpleProvidedHolder(h) } }
         registerHolderProvider { it.customStats.map { h -> SimpleProvidedHolder(h) } }
@@ -101,6 +109,12 @@ class EcoSkillsPlugin : LibreforgePlugin() {
 
         tickBossBars(this)
         scheduler.runAsyncTimer(LeaderboardHandler.Runnable(), 50, 2400)
+        Skills.update(this)
+        Effects.update()
+        Stats.update(this)
+        StatsGUI.update(this)
+        SkillGUI.update(this)
+        TabCompleteHelper.update()
     }
 
     override fun loadListeners(): List<Listener> {

@@ -64,7 +64,6 @@ public class Skills {
         return ImmutableSet.copyOf(REGISTRY.values());
     }
 
-    @ConfigUpdater
     public static void update(@NotNull final EcoSkillsPlugin plugin) {
         new PlayerPlaceholder(
                 plugin,

@@ -54,4 +54,11 @@ public final class CustomEffects extends ConfigCategory {
                              @NotNull final Config config) {
         REGISTRY.register(new CustomEffect(id, config));
     }
+
+    @Override
+    public void afterReload(@NotNull LibreforgePlugin plugin) {
+        for (CustomEffect effect : REGISTRY.values()) {
+            effect.update();
+        }
+    }
 }

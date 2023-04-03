@@ -24,7 +24,6 @@ object StatsGUI {
     private lateinit var menu: Menu
 
     @JvmStatic
-    @ConfigUpdater
     fun update(plugin: EcoSkillsPlugin) {
         menu = buildStatsMenu(plugin)
     }

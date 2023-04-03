@@ -44,7 +44,6 @@ object TabCompleteHelper {
     /**
      * Update lists.
      */
-    @ConfigUpdater
     @JvmStatic
     fun update() {
         SKILL_NAMES.clear()
