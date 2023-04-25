@@ -6,6 +6,7 @@ import com.willfp.ecoskills.api.modifier.ItemStatModifier
 import com.willfp.ecoskills.api.modifier.ModifierOperation
 import com.willfp.ecoskills.api.modifier.PlayerStatModifier
 import com.willfp.ecoskills.api.modifier.StatModifier
+import com.willfp.ecoskills.stats.Stat
 import com.willfp.ecoskills.stats.Stats
 import org.bukkit.NamespacedKey
 import org.bukkit.entity.Player
@@ -135,7 +136,8 @@ private fun getModifiersTag(player: Player): MutableMap<String, Any> {
     return modifierCache.get(player)
 }
 
-fun Player.addStatModifier(modifier: StatModifier) {
+@JvmOverloads
+fun Player.addStatModifier(modifier: StatModifier, shouldUpdate: Boolean = true) {
     val modifiers = getModifiersTag(this)
 
     modifiers[modifier.key.toString()] = mapOf(
@@ -146,21 +148,31 @@ fun Player.addStatModifier(modifier: StatModifier) {
 
     this.applyModifiers(modifiers)
 
-    for (stat in Stats.values()) {
-        stat.updateStatLevel(this)
+    if (shouldUpdate) {
+        modifier.stat.updateStatLevel(this)
     }
 }
 
-fun Player.removeStatModifier(key: NamespacedKey) {
+@JvmOverloads
+fun Player.removeStatModifier(key: NamespacedKey, shouldUpdate: Boolean = true): Stat? {
     val modifiers = getModifiersTag(this)
+
+    @Suppress("UNCHECKED_CAST")
+    val stat = Stats.getByID(
+        (modifiers[key.toString()]
+                as? MutableMap<String, Any>)
+            ?.get(META_STAT_KEY) as? String ?: ""
+    )
 
     modifiers.remove(key.toString())
 
     this.applyModifiers(modifiers)
 
-    for (stat in Stats.values()) {
-        stat.updateStatLevel(this)
+    if (shouldUpdate) {
+        stat?.updateStatLevel(this)
     }
+
+    return stat
 }
 
 fun Player.getStatModifierKeys(): MutableSet<NamespacedKey> {

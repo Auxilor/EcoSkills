@@ -27,6 +27,7 @@ class StatHealth : Stat(
             this.config.getDouble("health-per-level") * player.getStatLevel(this),
             AttributeModifier.Operation.ADD_NUMBER
         )
+
         val instance = player.getAttribute(Attribute.GENERIC_MAX_HEALTH) ?: return
 
         instance.removeModifier(modifier)
@@ -35,9 +36,12 @@ class StatHealth : Stat(
             return
         }
 
+        instance.addModifier(modifier)
+
         plugin.scheduler.run {
-            instance.removeModifier(modifier)
-            instance.addModifier(modifier)
+            if (player.health > instance.value && player.health > instance.baseValue && instance.value > 0) {
+                player.health = instance.value
+            }
         }
     }
 

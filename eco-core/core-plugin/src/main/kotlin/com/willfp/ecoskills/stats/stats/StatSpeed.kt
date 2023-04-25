@@ -35,10 +35,7 @@ class StatSpeed : Stat(
             return
         }
 
-        plugin.scheduler.run {
-            instance.removeModifier(modifier)
-            instance.addModifier(modifier)
-        }
+        instance.addModifier(modifier)
     }
 
     @EventHandler(priority = EventPriority.LOW)
