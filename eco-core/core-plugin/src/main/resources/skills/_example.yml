@@ -1,3 +1,9 @@
+# The ID of the skill is the name of the .yml file,
+# for example mining.yml has the ID of mining
+# You can place skills anywhere in this folder,
+# including in subfolders if you want to organize your skill configs
+# _example.yml is not loaded.
+
 # The name and description, shown to players.
 name: Mining
 description: Break blocks to earn XP
