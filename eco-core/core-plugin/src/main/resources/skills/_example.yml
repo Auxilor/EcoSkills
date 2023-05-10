@@ -81,6 +81,7 @@ xp-requirements:
   - 4000000
   - 5000000
 
+
 # The rewards given on level up
 # You specify a reward (either a stat or an effect),
 # the number of levels to give it, and optionally
@@ -117,6 +118,45 @@ level-up-effects:
   - id: give_money
     args:
       amount: 1000 * %level%
+
+
+# Custom placeholders to be used in descriptions,
+# Don't add % to the IDs, this is done automatically
+# The value takes a %level% placeholder and is a mathematical expression
+placeholders:
+  money: "%level% * 0.4"
+  blocks: "ceil(10 - %level% / 10)"
+
+
+# The chat messages to send on level up,
+# and the lore that will be shown with %rewards% in the GUI
+
+# The number dictates the minimum level for this text to show for
+# Adding new levels will override this text on those levels or above
+reward-messages:
+  1:
+    - " &8» &r&f+2 %ecoskills_defense_name%"
+    - " &8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
+    - "    %ecoskills_versatile_tools_description%"
+    - " &8» &r&6Dynamic Mining %ecoskills_dynamic_mining_numeral%"
+    - "    %ecoskills_dynamic_mining_description%"
+  10:
+    - " &8» &r&f+2 %ecoskills_defense_name%"
+    - " &8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
+    - "    %ecoskills_versatile_tools_description%"
+    - " &8» &r&6Spelunking %ecoskills_spelunking_numeral%"
+    - "    %ecoskills_spelunking_description%"
+    - " &8» &r&6Dynamic Mining %ecoskills_dynamic_mining_numeral%"
+    - "    %ecoskills_dynamic_mining_description%"
+  15:
+    - " &8» &r&f+2 %ecoskills_defense_name%"
+    - " &8» &r&f+1 %ecoskills_ferocity_name%"
+    - " &8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
+    - "    %ecoskills_versatile_tools_description%"
+    - " &8» &r&6Spelunking %ecoskills_spelunking_numeral%"
+    - "    %ecoskills_spelunking_description%"
+    - " &8» &r&6Dynamic Mining %ecoskills_dynamic_mining_numeral%"
+    - "    %ecoskills_dynamic_mining_description%"
 
 
 # An XP Gain method takes a trigger, a multiplier, conditions, and filters.

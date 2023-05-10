@@ -7,16 +7,21 @@ import com.willfp.eco.core.data.profile
 import com.willfp.eco.core.placeholder.PlayerPlaceholder
 import com.willfp.eco.core.placeholder.context.placeholderContext
 import com.willfp.eco.util.NumberUtils
+import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.toNiceString
 import com.willfp.eco.util.toNumeral
 import com.willfp.ecoskills.EcoSkillsPlugin
+import com.willfp.ecoskills.api.getRequiredXP
 import com.willfp.ecoskills.api.getSkillLevel
+import com.willfp.ecoskills.api.getSkillProgress
+import com.willfp.ecoskills.api.getSkillXP
 import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.libreforge.TriggerLevelUpSkill
 import com.willfp.ecoskills.obj.Levellable
 import com.willfp.ecoskills.stats.Stats
 import com.willfp.ecoskills.util.InvalidConfigurationException
 import com.willfp.ecoskills.util.LevelInjectable
+import com.willfp.ecoskills.util.loadDescriptionPlaceholders
 import com.willfp.libreforge.EmptyProvidedHolder
 import com.willfp.libreforge.NamedValue
 import com.willfp.libreforge.ViolationContext
@@ -66,6 +71,8 @@ class Skill(
         ViolationContext(plugin, "Skill $id level-up-effects")
     )
 
+    private val rewardMessages = mutableMapOf<Int, List<String>>()
+
     init {
         if (xpFormula == null && requirements == null) {
             throw InvalidConfigurationException("Skill $id has no requirements or xp formula")
@@ -80,10 +87,7 @@ class Skill(
         }.register()
 
         PlayerPlaceholder(plugin, "${id}_percentage_progress") {
-            val currentXP = getSavedXP(it)
-            val requiredXP = getXPRequired(it.getSkillLevel(this))
-
-            (currentXP / requiredXP * 100).toNiceString()
+            (it.getSkillProgress(this) * 100).toNiceString()
         }.register()
     }
 
@@ -119,6 +123,71 @@ class Skill(
         }
 
         return Double.POSITIVE_INFINITY
+    }
+
+    /**
+     * Add skill placeholders into [strings], to be shown to a [player].
+     */
+    fun addPlaceholdersInto(
+        strings: List<String>,
+        player: Player,
+        level: Int = player.getSkillLevel(this)
+    ): List<String> {
+        // Replace placeholders in the strings with their actual values.
+        val withPlaceholders = strings.map { s ->
+            s.replace("%percentage_progress%", (player.getSkillProgress(this) * 100).toNiceString())
+                .replace("%current_xp%", player.getSkillXP(this).toNiceString())
+                .replace("%required_xp%", player.getRequiredXP(this).let { req ->
+                    if (req.isInfinite()) {
+                        plugin.langYml.getFormattedString("infinity")
+                    } else {
+                        req.toNiceString()
+                    }
+                })
+                .replace("%description%", this.getDescription(player))
+                .replace("%skill%", this.name)
+                .replace("%level%", level.toString())
+                .replace("%level_numeral%", level.toNumeral())
+        }
+
+        // Replace the placeholder "%rewards%" with level up messages.
+        val processed = withPlaceholders.map { s ->
+            val margin = s.count { it == ' ' }
+            if (s.contains("%rewards%")) {
+                getRewardMessages(level, margin)
+            } else {
+                listOf(s)
+            }
+        }
+
+        return processed.flatten().formatEco(player)
+    }
+
+    /**
+     * Get the reward messages for a certain [level], with a [margin].
+     */
+    private fun getRewardMessages(
+        level: Int,
+        margin: Int = 0
+    ): List<String> = rewardMessages.getOrPut(level) {
+        // Determine the highest level of messages from the config that is not greater than the provided level.
+        val highestConfiguredLevel = config.getSubsection("reward-messages")
+            .getKeys(false)
+            .mapNotNull { it.toIntOrNull() } // Convert strings to Int, ignoring any that cannot be converted
+            .filter { it <= level } // Only consider levels not greater than the provided level
+            .maxOrNull() ?: 1 // Get the maximum level, default to 1 if no suitable level was found
+
+        val rawMessages = config.getStrings("reward-messages.$highestConfiguredLevel")
+
+        val messages = loadDescriptionPlaceholders(config).fold(rawMessages) { desc, placeholder ->
+            desc.map { s -> s.replace("%${placeholder.id}%", placeholder.expr) }
+        }
+
+        return messages.formatEco(
+            placeholderContext(
+                injectable = LevelInjectable(level)
+            )
+        ).map { " ".repeat(margin) + it }
     }
 
     internal fun handleLevelUp(player: OfflinePlayer, level: Int) {

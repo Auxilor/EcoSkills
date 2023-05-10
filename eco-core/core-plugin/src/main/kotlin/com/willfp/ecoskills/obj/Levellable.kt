@@ -15,6 +15,7 @@ import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.util.DescriptionPlaceholder
 import com.willfp.ecoskills.util.LeaderboardEntry
 import com.willfp.ecoskills.util.LevelInjectable
+import com.willfp.ecoskills.util.loadDescriptionPlaceholders
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
@@ -47,21 +48,7 @@ abstract class Levellable(
 
     // Lazy init so config placeholders can inject
     private val unformattedDescription by lazy {
-        val placeholders = mutableListOf(
-            DescriptionPlaceholder(
-                "placeholder",
-                config.getString("placeholder"),
-            )
-        )
-
-        for (key in config.getSubsection("placeholders").getKeys(false)) {
-            placeholders += DescriptionPlaceholder(
-                key,
-                config.getString("placeholders.$key"),
-            )
-        }
-
-        placeholders.fold(config.getString("description")) { desc, it ->
+        loadDescriptionPlaceholders(config).fold(config.getString("description")) { desc, it ->
             desc.replace("%${it.id}%", it.expr)
         }
     }

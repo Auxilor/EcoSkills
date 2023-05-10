@@ -1,19 +1,26 @@
 package com.willfp.ecoskills.util
 
-import com.willfp.eco.core.placeholder.context.placeholderContext
-import com.willfp.eco.util.NumberUtils
-import com.willfp.eco.util.toNiceString
+import com.willfp.eco.core.config.interfaces.Config
 
 data class DescriptionPlaceholder(
     val id: String,
     val expr: String
-) {
-    fun getValue(level: Int): String {
-        return NumberUtils.evaluateExpression(
-            expr,
-            placeholderContext(
-                injectable = LevelInjectable(level)
-            )
-        ).toNiceString()
+)
+
+fun loadDescriptionPlaceholders(config: Config): List<DescriptionPlaceholder> {
+    val placeholders = mutableListOf(
+        DescriptionPlaceholder(
+            "placeholder",
+            config.getString("placeholder"),
+        )
+    )
+
+    for (key in config.getSubsection("placeholders").getKeys(false)) {
+        placeholders += DescriptionPlaceholder(
+            key,
+            config.getString("placeholders.$key"),
+        )
     }
+
+    return placeholders
 }
