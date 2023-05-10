@@ -1,6 +1,6 @@
 package com.willfp.ecoskills.libreforge
 
-import com.willfp.ecoskills.api.PlayerSkillLevelUpEvent
+import com.willfp.ecoskills.api.event.PlayerSkillLevelUpEvent
 import com.willfp.libreforge.triggers.Trigger
 import com.willfp.libreforge.triggers.TriggerData
 import com.willfp.libreforge.triggers.TriggerParameter
@@ -11,7 +11,7 @@ object TriggerLevelUpSkill : Trigger("level_up_skill") {
         TriggerParameter.PLAYER,
         TriggerParameter.LOCATION
     )
-    
+
     @EventHandler(ignoreCancelled = true)
     fun handle(event: PlayerSkillLevelUpEvent) {
         val player = event.player

@@ -12,14 +12,6 @@ dependencies:
     required: false
     bootstrap: false
 
-  - name: ProtocolLib
-    required: true
-    bootstrap: false
-
-  - name: EcoEnchants
-    required: false
-    bootstrap: false
-
 load-after:
   - name: eco
     bootstrap: false

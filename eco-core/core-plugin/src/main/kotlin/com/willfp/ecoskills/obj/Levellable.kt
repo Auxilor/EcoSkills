@@ -1,0 +1,117 @@
+package com.willfp.ecoskills.obj
+
+import com.github.benmanes.caffeine.cache.Caffeine
+import com.willfp.eco.core.config.interfaces.Config
+import com.willfp.eco.core.data.keys.PersistentDataKey
+import com.willfp.eco.core.data.keys.PersistentDataKeyType
+import com.willfp.eco.core.data.profile
+import com.willfp.eco.core.placeholder.PlayerPlaceholder
+import com.willfp.eco.core.placeholder.PlayerStaticPlaceholder
+import com.willfp.eco.core.placeholder.PlayerlessPlaceholder
+import com.willfp.eco.core.placeholder.context.placeholderContext
+import com.willfp.eco.core.registry.KRegistrable
+import com.willfp.eco.util.toNumeral
+import com.willfp.ecoskills.EcoSkillsPlugin
+import com.willfp.ecoskills.util.DescriptionPlaceholder
+import com.willfp.ecoskills.util.LeaderboardEntry
+import com.willfp.ecoskills.util.LevelInjectable
+import org.bukkit.Bukkit
+import org.bukkit.OfflinePlayer
+import org.bukkit.entity.Player
+import java.util.UUID
+import java.util.concurrent.TimeUnit
+
+abstract class Levellable(
+    final override val id: String,
+    val config: Config,
+    protected val plugin: EcoSkillsPlugin
+) : KRegistrable {
+    open val startLevel: Int = 0
+
+    private val key by lazy {
+        PersistentDataKey(
+            plugin.createNamespacedKey(id),
+            PersistentDataKeyType.INT,
+            startLevel
+        )
+    }
+
+    // Not the best way to do this, but it works!
+    private val leaderboardCache = Caffeine.newBuilder()
+        .expireAfterWrite(1, TimeUnit.MINUTES)
+        .build<Boolean, List<UUID>> {
+            Bukkit.getOfflinePlayers().sortedByDescending {
+                getActualLevel(it)
+            }.map { it.uniqueId }
+        }
+
+    // Lazy init so config placeholders can inject
+    private val unformattedDescription by lazy {
+        val placeholders = mutableListOf(
+            DescriptionPlaceholder(
+                "placeholder",
+                config.getString("placeholder"),
+            )
+        )
+
+        for (key in config.getSubsection("placeholders").getKeys(false)) {
+            placeholders += DescriptionPlaceholder(
+                key,
+                config.getString("placeholders.$key"),
+            )
+        }
+
+        placeholders.fold(config.getString("description")) { desc, it ->
+            desc.replace("%${it.id}%", it.expr)
+        }
+    }
+
+    val name = config.getFormattedString("name")
+
+    init {
+        config.injectPlaceholders(
+            PlayerStaticPlaceholder("level") {
+                getActualLevel(it).toString()
+            }
+        )
+
+        PlayerPlaceholder(plugin, id) {
+            getActualLevel(it).toString()
+        }.register()
+
+        PlayerPlaceholder(plugin, "${id}_numeral") {
+            getActualLevel(it).toNumeral()
+        }.register()
+
+        PlayerlessPlaceholder(plugin, "${id}_name") {
+            name
+        }.register()
+    }
+
+    internal open fun getActualLevel(player: OfflinePlayer) = getSavedLevel(player)
+
+    internal fun getSavedLevel(player: OfflinePlayer) = player.profile.read(key)
+    internal fun setSavedLevel(player: OfflinePlayer, level: Int) = player.profile.write(key, level)
+
+    fun getTop(position: Int): LeaderboardEntry? {
+        require(position > 0) { "Position must be greater than 0" }
+
+        val uuid = leaderboardCache.get(true).getOrNull(position - 1) ?: return null
+
+        val player = Bukkit.getOfflinePlayer(uuid)
+        return LeaderboardEntry(
+            player,
+            getActualLevel(player)
+        )
+    }
+
+    fun getDescription(player: Player): String {
+        return config.getFormattedString(
+            unformattedDescription,
+            placeholderContext(
+                player = player,
+                injectable = LevelInjectable(getActualLevel(player))
+            )
+        )
+    }
+}
