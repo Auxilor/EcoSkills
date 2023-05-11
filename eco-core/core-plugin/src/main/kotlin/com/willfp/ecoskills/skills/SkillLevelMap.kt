@@ -67,7 +67,7 @@ class SkillLevelMap(
             val event = PlayerSkillXPGainEvent(
                 player,
                 skill,
-                xp
+                xp * player.skillXPMultiplier
             )
 
             Bukkit.getPluginManager().callEvent(event)
