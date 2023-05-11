@@ -11,7 +11,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerGameModeChangeEvent
 import java.util.UUID
 
-private const val ACTION_BAR_DURATION = 3000L
+private const val ACTION_BAR_DURATION = 2700L
 private const val TICK_DURATION = 50L
 
 private val blacklist = mutableMapOf<UUID, Long>()

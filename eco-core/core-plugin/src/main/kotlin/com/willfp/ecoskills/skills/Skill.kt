@@ -49,7 +49,7 @@ class Skill(
     )
 
     private val xpGainMethods = config.getSubsections("xp-gain-methods").mapNotNull {
-        Counters.compile(it, ViolationContext(plugin, "Skill $id"))
+        Counters.compile(it, ViolationContext(plugin, "Skill $id xp-gain-methods"))
     }
 
     private val xpFormula = config.getStringOrNull("xp-formula")
