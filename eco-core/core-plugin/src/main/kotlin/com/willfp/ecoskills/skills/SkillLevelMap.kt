@@ -77,4 +77,11 @@ class SkillLevelMap(
             giveXP(skill, xp)
         }
     }
+
+    fun reset(skill: Skill) {
+        this[skill] = SkillLevel(
+            skill.startLevel,
+            0.0
+        )
+    }
 }

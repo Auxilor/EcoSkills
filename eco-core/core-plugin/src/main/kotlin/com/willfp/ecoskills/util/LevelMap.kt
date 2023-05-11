@@ -15,4 +15,8 @@ class LevelMap<T : Levellable>(
 
         levellable.setSavedLevel(player, level)
     }
+
+    fun reset(levellable: T) {
+        levellable.setSavedLevel(player, levellable.startLevel)
+    }
 }

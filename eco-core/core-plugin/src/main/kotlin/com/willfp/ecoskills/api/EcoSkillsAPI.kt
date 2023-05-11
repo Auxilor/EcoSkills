@@ -4,11 +4,14 @@ package com.willfp.ecoskills.api
 
 import com.willfp.ecoskills.api.modifiers.StatModifier
 import com.willfp.ecoskills.effects.Effect
+import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.effects.effects
 import com.willfp.ecoskills.skills.Skill
+import com.willfp.ecoskills.skills.SkillLevel
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.skills.skills
 import com.willfp.ecoskills.stats.Stat
+import com.willfp.ecoskills.stats.Stats
 import com.willfp.ecoskills.stats.statModifiers
 import com.willfp.ecoskills.stats.stats
 import org.bukkit.OfflinePlayer
@@ -20,6 +23,18 @@ import java.util.UUID
 Skills
 
  */
+
+fun OfflinePlayer.resetSkills() {
+    for (skill in Skills.values()) {
+        this.skills.reset(skill)
+    }
+    for (stat in Stats.values()) {
+        this.stats.reset(stat)
+    }
+    for (effect in Effects.values()) {
+        this.effects.reset(effect)
+    }
+}
 
 fun OfflinePlayer.getSkillXP(skill: Skill): Double =
     this.skills[skill].xp

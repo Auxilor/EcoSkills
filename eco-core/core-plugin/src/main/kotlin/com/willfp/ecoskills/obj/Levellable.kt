@@ -30,11 +30,13 @@ abstract class Levellable(
     val config: Config,
     protected val plugin: EcoSkillsPlugin
 ) : KRegistrable {
+    open val startLevel = 1
+
     private val key by lazy {
         PersistentDataKey(
             plugin.createNamespacedKey(id),
             PersistentDataKeyType.INT,
-            1
+            startLevel
         )
     }
 
