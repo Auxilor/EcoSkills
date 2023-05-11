@@ -56,7 +56,7 @@ object ActionBarGamemodeListener : Listener {
     @EventHandler
     fun handle(event: PlayerGameModeChangeEvent) {
         if (event.newGameMode in setOf(GameMode.CREATIVE, GameMode.SPECTATOR)) {
-            event.player.sendCompatibleActionBarMessage("")
+            event.player.sendPersistentActionBar("")
         }
     }
 }
