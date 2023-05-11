@@ -18,8 +18,8 @@ gui:
     - "   %ecoskills_mystic_resilience_description%"
 
   position:
-    row: 3
-    column: 3
+    row: 4
+    column: 4
 
 xp-requirements:
   - 1

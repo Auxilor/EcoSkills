@@ -40,8 +40,6 @@ class Skill(
     config: Config,
     plugin: EcoSkillsPlugin
 ) : Levellable(id, config, plugin) {
-    override val startLevel = 1
-
     private val xpKey = PersistentDataKey(
         plugin.createNamespacedKey("${id}_xp"),
         PersistentDataKeyType.DOUBLE,
@@ -128,7 +126,7 @@ class Skill(
         }
 
         if (requirements != null) {
-            return requirements.getOrNull(level - 1) ?: Double.POSITIVE_INFINITY
+            return requirements.getOrNull(level) ?: Double.POSITIVE_INFINITY
         }
 
         return Double.POSITIVE_INFINITY

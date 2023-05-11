@@ -10,6 +10,7 @@ import com.willfp.eco.core.placeholder.PlayerStaticPlaceholder
 import com.willfp.eco.core.placeholder.PlayerlessPlaceholder
 import com.willfp.eco.core.placeholder.context.placeholderContext
 import com.willfp.eco.core.registry.KRegistrable
+import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.toNumeral
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.util.DescriptionPlaceholder
@@ -27,13 +28,11 @@ abstract class Levellable(
     val config: Config,
     protected val plugin: EcoSkillsPlugin
 ) : KRegistrable {
-    open val startLevel: Int = 0
-
     private val key by lazy {
         PersistentDataKey(
             plugin.createNamespacedKey(id),
             PersistentDataKeyType.INT,
-            startLevel
+            1
         )
     }
 
@@ -93,8 +92,7 @@ abstract class Levellable(
     }
 
     fun getDescription(player: Player): String {
-        return config.getFormattedString(
-            unformattedDescription,
+        return unformattedDescription.formatEco(
             placeholderContext(
                 player = player,
                 injectable = LevelInjectable(getActualLevel(player))
