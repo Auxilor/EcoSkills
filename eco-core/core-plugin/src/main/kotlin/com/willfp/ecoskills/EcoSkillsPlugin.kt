@@ -20,6 +20,7 @@ import com.willfp.ecoskills.libreforge.FilterSkill
 import com.willfp.ecoskills.libreforge.TriggerGainSkillXp
 import com.willfp.ecoskills.libreforge.TriggerLevelUpSkill
 import com.willfp.ecoskills.skills.EcoSkillsTopPlaceholder
+import com.willfp.ecoskills.skills.SkillCritListener
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.skills.display.DamageIndicatorListener
 import com.willfp.ecoskills.skills.display.GainXPDisplay
@@ -90,7 +91,8 @@ class EcoSkillsPlugin : LibreforgePlugin() {
             LevelUpDisplay(this),
             GainXPDisplay(this),
             DamageIndicatorListener(this),
-            ActionBarGamemodeListener
+            ActionBarGamemodeListener,
+            SkillCritListener
         )
     }
 
