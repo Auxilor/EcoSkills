@@ -22,7 +22,7 @@ gui:
     pattern:
       - "111101111"
       - "111111111"
-      - "1100000111"
+      - "110000011"
       - "110010011"
       - "111111111"
       - "111101111"
@@ -45,8 +45,6 @@ gui:
       - "&f"
       - "&7Total Skill Level: &f%ecoskills_total_skill_level%"
       - "&7Average Skill Level: &f%ecoskills_average_skill_level%"
-      - ""
-      - "&eClick to view more!"
 
     view-more:
       - ""
@@ -95,10 +93,10 @@ stats-gui:
     pattern:
       - "111101111"
       - "111111111"
-      - "1100000111"
-      - "110010011"
+      - "110101011"
+      - "101010101"
       - "111111111"
-      - "111101111"
+      - "011101111"
 
   player-info:
     row: 1
@@ -109,6 +107,13 @@ stats-gui:
     lore:
       - "&fLevel: &a%level%"
       - "&8&o%description%"
+
+  back:
+    item: arrow
+    name: "&eGo Back"
+    location:
+      row: 6
+      column: 1
 
   close:
     item: barrier

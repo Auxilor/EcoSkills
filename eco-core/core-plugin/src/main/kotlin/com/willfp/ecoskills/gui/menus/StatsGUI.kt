@@ -6,9 +6,11 @@ import com.willfp.eco.core.gui.menu.Menu
 import com.willfp.eco.core.gui.slot.ConfigSlot
 import com.willfp.eco.core.gui.slot.FillerMask
 import com.willfp.eco.core.gui.slot.MaskItems
+import com.willfp.ecoskills.gui.components.BackButton
 import com.willfp.ecoskills.gui.components.CloseButton
 import com.willfp.ecoskills.gui.components.PlayerInfoIcon
 import com.willfp.ecoskills.gui.components.addComponent
+import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.stats.Stats
 import org.bukkit.entity.Player
 
@@ -45,6 +47,14 @@ object StatsGUI {
                 CloseButton(
                     plugin.configYml.getSubsection("stats-gui.close")
                 )
+            )
+
+            addComponent(
+                BackButton(
+                    plugin.configYml.getSubsection("stats-gui.back")
+                ) {
+                    SkillsGUI.open(it)
+                }
             )
 
             for (config in plugin.configYml.getSubsections("stats-gui.custom-slots")) {
