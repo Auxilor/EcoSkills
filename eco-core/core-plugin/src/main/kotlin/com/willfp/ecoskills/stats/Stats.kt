@@ -7,6 +7,7 @@ import com.willfp.eco.util.toNiceString
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.api.averageSkillLevel
 import com.willfp.ecoskills.api.totalSkillLevel
+import com.willfp.ecoskills.gui.menus.StatsGUI
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.libreforge.loader.LibreforgePlugin
@@ -33,6 +34,10 @@ object Stats : ConfigCategory("stat", "stats") {
 
     override fun acceptConfig(plugin: LibreforgePlugin, id: String, config: Config) {
         registry.register(Stat(id, config, plugin as EcoSkillsPlugin))
+    }
+
+    override fun afterReload(plugin: LibreforgePlugin) {
+        StatsGUI.update(plugin)
     }
 
     fun getByID(id: String): Stat? = registry[id]

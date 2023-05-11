@@ -9,17 +9,14 @@ placeholder: "%level% / 3" # The placeholder to be shown in the description, you
 description: "&8Lose &a%placeholder%%&8 less hunger" # The description to be shown in lore and messages
 
 # Options for the stat in the GUI
-stats-gui:
-  enabled: false # If the stat should show up in the GUI
+gui:
+  enabled: true # If the stat should show up in the GUI
 
   position:
     row: 5
     column: 5
 
   icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDMzZGRiOTJjYjZiM2E3OTI4MGI4YmRjZWQ4OTc2YWVhYjEzYTRiZmZlYWVmMmQ0NmQ4MjhiZDkxZGVlMGYzZSJ9fX0=
-  lore:
-    - "&fLevel: &a%level%"
-    - "&8&o%description%"
 
 # The effects of the stat (i.e. the functionality)
 # See here: https://plugins.auxilor.io/effects/configuring-an-effect

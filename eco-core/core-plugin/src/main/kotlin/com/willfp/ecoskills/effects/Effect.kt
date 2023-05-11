@@ -12,8 +12,7 @@ class Effect(
     id: String,
     config: Config,
     plugin: EcoSkillsPlugin
-) : LevellableWithHolder(id, config, plugin) {
-}
+) : LevellableWithHolder(id, config, plugin)
 
 
 internal val OfflinePlayer.effects: LevelMap<Effect>

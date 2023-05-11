@@ -3,3 +3,257 @@
 # by Auxilor
 #
 
+gui:
+  rows: 6
+
+  mask:
+    # The way the mask works is by having a list of materials
+    # And then a pattern to use those materials.
+
+    # The pattern is the rows in the GUI
+    # Each line must be 9 long, and the amount of rows should be the amount of rows in the GUI
+    # A zero represents nothing
+    # A 1 represents the first material
+    # A 2 represents the second material
+    # And so on, you can add up to 9.
+
+    materials:
+      - black_stained_glass_pane
+    pattern:
+      - "111101111"
+      - "111111111"
+      - "1100000111"
+      - "110010011"
+      - "111111111"
+      - "111101111"
+
+  player-info:
+    row: 1
+    column: 5
+
+    name: "&f%player%&f's &fStats:"
+
+    lore:
+      - "&f"
+      - " %ecoskills_defense_name%&f %ecoskills_defense_base% &e%ecoskills_defense_bonus%"
+      - " %ecoskills_strength_name%&f %ecoskills_strength_base% &e%ecoskills_strength_bonus%"
+      - " %ecoskills_crit_chance_name%&f %ecoskills_crit_chance_base%% &e%ecoskills_crit_chance_bonus%"
+      - " %ecoskills_crit_damage_name%&f %ecoskills_crit_damage_base% &e%ecoskills_crit_damage_bonus%"
+      - " %ecoskills_speed_name%&f %ecoskills_speed_base% &e%ecoskills_speed_bonus%"
+      - " %ecoskills_wisdom_name%&f %ecoskills_wisdom_base% &e%ecoskills_wisdom_bonus%"
+      - " %ecoskills_ferocity_name%&f %ecoskills_ferocity_base% &e%ecoskills_ferocity_bonus%"
+      - "&f"
+      - "&7Total Skill Level: &f%ecoskills_total_skill_level%"
+      - "&7Average Skill Level: &f%ecoskills_average_skill_level%"
+      - ""
+      - "&eClick to view more!"
+
+    view-more:
+      - ""
+      - "&eClick to view more!"
+
+  skill-icon:
+    name: "&#ff00ae%skill% &d%level_numeral%"
+    lore:
+      - "&8&o%description%"
+      - "&f"
+      - "%rewards%"
+      - "&f"
+      - "&fProgress to next level:"
+      - "&8» &e%percentage_progress%"
+      - "&8» &e%current_xp%&8/&7%required_xp% &fXP"
+      - "&f"
+      - "&eClick to view Level Progression!"
+
+    click:
+      sound: ui_button_click
+      pitch: 1
+
+  close:
+    item: barrier
+    name: "&cClose"
+    location:
+      row: 6
+      column: 5
+
+  # Custom GUI slots; see here for a how-to: https://plugins.auxilor.io/all-plugins/custom-gui-slots
+  custom-slots: [ ]
+
+
+stats-gui:
+  rows: 6
+
+  mask:
+    # The way the mask works is by having a list of materials
+    # And then a pattern to use those materials.
+
+    # The pattern is the rows in the GUI
+    # Each line must be 9 long, and the amount of rows should be the amount of rows in the GUI
+    # A zero represents nothing
+    # A 1 represents the first material
+    # A 2 represents the second material
+    # And so on, you can add up to 9.
+
+    materials:
+      - black_stained_glass_pane
+    pattern:
+      - "111101111"
+      - "111111111"
+      - "1100000111"
+      - "110010011"
+      - "111111111"
+      - "111101111"
+
+  player-info:
+    row: 1
+    column: 5
+
+  stat-icon:
+    name: "%stat%"
+    lore:
+      - "&fLevel: &a%level%"
+      - "&8&o%description%"
+
+    click:
+      sound: ui_button_click
+      pitch: 1
+
+  close:
+    item: barrier
+    name: "&cClose"
+    location:
+      row: 6
+      column: 5
+
+  # Custom GUI slots; see here for a how-to: https://plugins.auxilor.io/all-plugins/custom-gui-slots
+  custom-slots: [ ]
+
+
+level-gui:
+  rows: 6
+
+  mask:
+    # The way the mask works is by having a list of materials
+    # And then a pattern to use those materials.
+
+    # The pattern is the rows in the GUI
+    # Each line must be 9 long, and the amount of rows should be the amount of rows in the GUI
+    # A zero represents nothing
+    # A 1 represents the first material
+    # A 2 represents the second material
+    # And so on, you can add up to 9.
+
+    materials:
+      - black_stained_glass_pane
+    pattern:
+      - "111111111"
+      - "111111111"
+      - "111111111"
+      - "111111111"
+      - "111111111"
+      - "111111111"
+
+  progression-slots:
+    # To set the order of the pattern,
+    # Use 1-9 and then a-z: a goes after 9.
+    pattern:
+      - "109ab0jkl"
+      - "2080c0i0m"
+      - "3070d0h0n"
+      - "4560efg0o"
+      - "00000000p"
+      - "00000000q"
+
+    # If the amount of the item should be the level
+    level-as-amount: true
+
+    prev-page:
+      material: arrow
+      name: "&fPrevious Page"
+      location:
+        row: 6
+        column: 4
+
+    next-page:
+      material: arrow
+      name: "&fNext Page"
+      location:
+        row: 6
+        column: 6
+
+    close:
+      material: barrier
+      name: "&cClose"
+      location:
+        row: 6
+        column: 5
+
+    unlocked:
+      item: lime_stained_glass_pane
+      name: "&a%skill% Level %level_numeral%"
+      lore:
+        - "&f"
+        - "&fRewards:"
+        - "%rewards%"
+        - "&f"
+        - "&aUNLOCKED"
+    in-progress:
+      item: yellow_stained_glass_pane
+      name: "&e%skill% Level %level_numeral%"
+      lore:
+        - "&f"
+        - "&fRewards:"
+        - "%rewards%"
+        - "&f"
+        - "&fProgress:"
+        - "&8» &e%percentage_progress%%"
+        - "&8» &e%current_xp%&8/&7%required_xp% &fXP"
+    locked:
+      item: red_stained_glass_pane
+      name: "&c%skill% Level %level_numeral%"
+      lore:
+        - "&f"
+        - "&fRewards:"
+        - "%rewards%"
+
+  close:
+    material: barrier
+    name: "&cClose"
+    location:
+      row: 6
+      column: 5
+
+  # Custom GUI slots; see here for a how-to: https://plugins.auxilor.io/all-plugins/custom-gui-slots
+  custom-slots: [ ]
+
+
+# A constant action bar showing health and any other information to all players online
+persistent-action-bar:
+  # If the persistent action bar should be enabled
+  enabled: true
+  # If a player's health should be scaled to always display as 10 hearts.
+  scale-health: true
+  # The format
+  format: "&c❤ &f%player_health_rounded%&8/&f%player_max_health_rounded%                 &#e884b0🛡 &f%ecoskills_defense% &8| &#db0000🗡 &f%ecoskills_strength% &8| &#40ffe6✦ &f%ecoskills_speed%"
+  # The worlds that the action bar should be disabled in.
+  disabled-in-worlds: [ ]
+
+level-up:
+  message:
+    enabled: true
+    message:
+      - "&f"
+      - " &#ff00aeYou levelled up &d%skill%&#ff00ae to &eLevel %level_numeral%&#ff00ae!"
+      - "&f"
+      - " &#ff00ae&lREWARDS:"
+      - "%rewards%"
+      - "&f"
+  sound:
+    # If a sound should be played
+    enabled: true
+    # The sound that should be played
+    sound: entity_player_levelup
+    # Pitch between 0.5 and 2
+    pitch: 0.8
+    # The volume
+    volume: 1.0

@@ -2,21 +2,48 @@ package com.willfp.ecoskills.stats
 
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.placeholder.PlayerPlaceholder
+import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.toNiceString
 import com.willfp.eco.util.toNumeral
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.api.getBaseStatLevel
 import com.willfp.ecoskills.api.getBonusStatLevel
+import com.willfp.ecoskills.api.getRequiredXP
+import com.willfp.ecoskills.api.getSkillLevel
+import com.willfp.ecoskills.api.getSkillProgress
+import com.willfp.ecoskills.api.getSkillXP
 import com.willfp.ecoskills.api.getStatLevel
+import com.willfp.ecoskills.gui.components.SkillIcon
+import com.willfp.ecoskills.gui.components.StatIcon
 import com.willfp.ecoskills.obj.LevellableWithHolder
 import com.willfp.ecoskills.util.LevelMap
 import org.bukkit.OfflinePlayer
+import org.bukkit.entity.Player
 
 class Stat(
     id: String,
     config: Config,
     plugin: EcoSkillsPlugin
 ) : LevellableWithHolder(id, config, plugin) {
+    val icon = StatIcon(this, config.getSubsection("gui"), plugin)
+
+    /**
+     * Add stat placeholders into [strings], to be shown to a [player].
+     */
+    fun addPlaceholdersInto(
+        strings: List<String>,
+        player: Player,
+        level: Int = player.getStatLevel(this)
+    ): List<String> {
+        // Replace placeholders in the strings with their actual values.
+        return strings.map { s ->
+            s.replace("%description%", this.getDescription(player))
+                .replace("%stat%", this.name)
+                .replace("%level%", level.toString())
+                .replace("%level_numeral%", level.toNumeral())
+        }.formatEco(player)
+    }
+
     init {
         PlayerPlaceholder(plugin, "${id}_base") {
             it.getBaseStatLevel(this).toNiceString()

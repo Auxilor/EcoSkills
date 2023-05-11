@@ -33,6 +33,7 @@ allprojects {
 
         maven("https://repo.papermc.io/repository/maven-public/")
         maven("https://repo.auxilor.io/repository/maven-public/")
+        maven("https://repo.codemc.org/repository/nms/")
         maven("https://jitpack.io")
     }
 

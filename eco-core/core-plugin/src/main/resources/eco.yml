@@ -6,3 +6,4 @@ options:
   resource-id: 2857
   bstats-id: 16394
   color: "&#ff00ae"
+  proxy-package: "com.willfp.ecoskills.proxy"

@@ -16,6 +16,8 @@ import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.api.getSkillProgress
 import com.willfp.ecoskills.api.getSkillXP
 import com.willfp.ecoskills.effects.Effects
+import com.willfp.ecoskills.gui.components.SkillIcon
+import com.willfp.ecoskills.gui.menus.SkillLevelGUI
 import com.willfp.ecoskills.libreforge.TriggerLevelUpSkill
 import com.willfp.ecoskills.obj.Levellable
 import com.willfp.ecoskills.stats.Stats
@@ -53,6 +55,8 @@ class Skill(
 
     private val requirements = config.getDoublesOrNull("xp-requirements")
 
+    val maxLevel = config.getIntOrNull("max-level") ?: requirements?.size ?: Int.MAX_VALUE
+
     private val rewards = config.getSubsections("rewards").mapNotNull {
         val reward = Effects.getByID(it.getString("reward"))
             ?: Stats.getByID(it.getString("reward")) ?: return@mapNotNull null
@@ -72,6 +76,10 @@ class Skill(
     )
 
     private val rewardMessages = mutableMapOf<Int, List<String>>()
+
+    val levelGUI = SkillLevelGUI(plugin, this)
+
+    val icon = SkillIcon(this, config.getSubsection("gui"), plugin)
 
     init {
         if (xpFormula == null && requirements == null) {

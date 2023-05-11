@@ -2,7 +2,6 @@
 
 package com.willfp.ecoskills.api
 
-import com.willfp.eco.util.toNiceString
 import com.willfp.ecoskills.api.modifiers.StatModifier
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.effects.effects
@@ -14,7 +13,6 @@ import com.willfp.ecoskills.stats.statModifiers
 import com.willfp.ecoskills.stats.stats
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
-import java.util.DoubleSummaryStatistics
 import java.util.UUID
 
 /*
