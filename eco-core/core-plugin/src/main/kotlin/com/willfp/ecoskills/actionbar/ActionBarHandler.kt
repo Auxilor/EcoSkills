@@ -18,6 +18,15 @@ private val blacklist = mutableMapOf<UUID, Long>()
 
 private val whitelist = mutableMapOf<UUID, Long>()
 
+fun Player.sendCompatibleActionBarMessage(message: String) {
+    // Have to use the shit method for compatibility.
+    @Suppress("DEPRECATION")
+    this.spigot().sendMessage(
+        net.md_5.bungee.api.ChatMessageType.ACTION_BAR,
+        *net.md_5.bungee.api.chat.TextComponent.fromLegacyText(message)
+    )
+}
+
 fun Player.pausePersistentActionBar() {
     if (isSendingPersistentActionBar) {
         return
@@ -32,15 +41,9 @@ private val Player.isPersistentActionBarPaused: Boolean
         return time > System.currentTimeMillis()
     }
 
-private fun Player.sendPersistentActionBar(string: String) {
+private fun Player.sendPersistentActionBar(message: String) {
     whitelist[this.uniqueId] = System.currentTimeMillis() + TICK_DURATION
-
-    // Have to use the shit method for compatibility.
-    @Suppress("DEPRECATION")
-    this.spigot().sendMessage(
-        net.md_5.bungee.api.ChatMessageType.ACTION_BAR,
-        *net.md_5.bungee.api.chat.TextComponent.fromLegacyText(string)
-    )
+    sendCompatibleActionBarMessage(message)
 }
 
 private val Player.isSendingPersistentActionBar: Boolean
@@ -53,11 +56,7 @@ object ActionBarGamemodeListener : Listener {
     @EventHandler
     fun handle(event: PlayerGameModeChangeEvent) {
         if (event.newGameMode in setOf(GameMode.CREATIVE, GameMode.SPECTATOR)) {
-            @Suppress("DEPRECATION")
-            event.player.spigot().sendMessage(
-                net.md_5.bungee.api.ChatMessageType.ACTION_BAR,
-                *net.md_5.bungee.api.chat.TextComponent.fromLegacyText("")
-            )
+            event.player.sendCompatibleActionBarMessage("")
         }
     }
 }
@@ -96,7 +95,7 @@ class ActionBarHandler(
         )
     }
 
-    internal fun beginTickingActionBar() {
+    internal fun startTicking() {
         plugin.scheduler.runTimer(5, 5) {
             for (player in Bukkit.getOnlinePlayers()) {
                 trySendMessage(player)

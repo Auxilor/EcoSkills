@@ -33,6 +33,9 @@ fun OfflinePlayer.giveSkillXP(skill: Skill, xp: Double): Unit =
 fun OfflinePlayer.getRequiredXP(skill: Skill) =
     skill.getXPRequired(this.getSkillLevel(skill))
 
+fun OfflinePlayer.getFormattedRequiredXP(skill: Skill) =
+    skill.getFormattedXPRequired(this.getSkillLevel(skill))
+
 fun OfflinePlayer.getSkillProgress(skill: Skill): Double {
     val currentXP = getSkillXP(skill)
     val requiredXP = getRequiredXP(skill)

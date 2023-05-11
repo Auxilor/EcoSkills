@@ -57,7 +57,7 @@ gui:
     lore:
       - "&8&o%description%"
       - "&f"
-      - "%rewards%"
+      - "%gui_lore%"
       - "&f"
       - "&fProgress to next level:"
       - "&8» &e%percentage_progress%"
@@ -230,22 +230,70 @@ persistent-action-bar:
   # The worlds that the action bar should be disabled in.
   disabled-in-worlds: [ ]
 
-level-up:
-  message:
+damage-indicators:
+  # Requires a compatible Hologram plugin to be installed
+  enabled: true
+  final-damage: false # If final damage (with reductions applied) should be used.
+
+  format:
+    normal: "&7%damage%"
+    crit: "&f✧ <gradient:#f953c6>%damage%</gradient:#b91d73> &f✧"
+
+  healing:
     enabled: true
+    format: "&a+%damage%"
+
+  max-x-offset: 0.6
+  max-y-offset: 0.6
+  max-z-offset: 0.6
+
+skills:
+  prevent-levelling-while-afk: true # If the player is AFK then don't give xp
+
+  # Ways to tell the player about skill xp gain
+  gain-xp:
+    action-bar:
+      # If the action bar should be used
+      enabled: true
+      # The actionbar message that should be sent
+      message: "&f%skill% &8| &9(%current_xp%/%required_xp%) &e+%gained_xp%"
+    boss-bar:
+      # If the boss bar should be used
+      enabled: false
+      # The boss bar message that should be sent
+      format: "&f%skill% &8| &9(%current_xp%/%required_xp%)"
+      # The color of the boss bar (from https://hub.spigotmc.org/javadocs/spigot/org/bukkit/boss/BarColor.html)
+      color: blue
+      # The style of the boss bar (from https://hub.spigotmc.org/javadocs/spigot/org/bukkit/boss/BarStyle.html)
+      style: solid
+      # How long the boss bar should last (in milliseconds)
+      duration: 2500
+    sound:
+      # If a sound should be played
+      enabled: true
+      # The sound that should be played
+      sound: entity_experience_orb_pickup
+      # Pitch between 0.5 and 2
+      pitch: 2
+      # The volume
+      volume: 0.1
+
+  level-up:
     message:
-      - "&f"
-      - " &#ff00aeYou levelled up &d%skill%&#ff00ae to &eLevel %level_numeral%&#ff00ae!"
-      - "&f"
-      - " &#ff00ae&lREWARDS:"
-      - "%rewards%"
-      - "&f"
-  sound:
-    # If a sound should be played
-    enabled: true
-    # The sound that should be played
-    sound: entity_player_levelup
-    # Pitch between 0.5 and 2
-    pitch: 0.8
-    # The volume
-    volume: 1.0
+      enabled: true
+      message:
+        - "&f"
+        - " &#ff00aeYou levelled up &d%skill%&#ff00ae to &eLevel %level_numeral%&#ff00ae!"
+        - "&f"
+        - " &#ff00ae&lREWARDS:"
+        - "%rewards%"
+        - "&f"
+    sound:
+      # If a sound should be played
+      enabled: true
+      # The sound that should be played
+      sound: entity_player_levelup
+      # Pitch between 0.5 and 2
+      pitch: 0.8
+      # The volume
+      volume: 1.0

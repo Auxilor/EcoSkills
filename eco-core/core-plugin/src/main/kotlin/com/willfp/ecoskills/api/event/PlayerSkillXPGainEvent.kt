@@ -8,7 +8,7 @@ import org.bukkit.event.HandlerList
 class PlayerSkillXPGainEvent(
     who: Player,
     skill: Skill,
-    var xp: Double
+    var gainedXP: Double
 ) : PlayerSkillEvent(who, skill), Cancellable {
     private var _cancelled = false
 

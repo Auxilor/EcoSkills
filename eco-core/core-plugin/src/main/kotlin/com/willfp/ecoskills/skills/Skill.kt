@@ -11,6 +11,7 @@ import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.toNiceString
 import com.willfp.eco.util.toNumeral
 import com.willfp.ecoskills.EcoSkillsPlugin
+import com.willfp.ecoskills.api.getFormattedRequiredXP
 import com.willfp.ecoskills.api.getRequiredXP
 import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.api.getSkillProgress
@@ -91,7 +92,7 @@ class Skill(
         }.register()
 
         PlayerPlaceholder(plugin, "${id}_required_xp") {
-            getXPRequired(it.getSkillLevel(this)).toNiceString()
+            getFormattedXPRequired(it.getSkillLevel(this))
         }.register()
 
         PlayerPlaceholder(plugin, "${id}_percentage_progress") {
@@ -100,7 +101,7 @@ class Skill(
     }
 
     override fun onRegister() {
-        val accumulator = SkillXPAccumulator(this)
+        val accumulator = SkillXPAccumulator(plugin, this)
 
         for (counter in xpGainMethods) {
             counter.bind(accumulator)
@@ -133,6 +134,15 @@ class Skill(
         return Double.POSITIVE_INFINITY
     }
 
+    fun getFormattedXPRequired(level: Int): String {
+        val required = getXPRequired(level)
+        return if (required.isInfinite()) {
+            plugin.langYml.getFormattedString("infinity")
+        } else {
+            required.toNiceString()
+        }
+    }
+
     /**
      * Add skill placeholders into [strings], to be shown to a [player].
      */
@@ -145,38 +155,38 @@ class Skill(
         val withPlaceholders = strings.map { s ->
             s.replace("%percentage_progress%", (player.getSkillProgress(this) * 100).toNiceString())
                 .replace("%current_xp%", player.getSkillXP(this).toNiceString())
-                .replace("%required_xp%", player.getRequiredXP(this).let { req ->
-                    if (req.isInfinite()) {
-                        plugin.langYml.getFormattedString("infinity")
-                    } else {
-                        req.toNiceString()
-                    }
-                })
+                .replace("%required_xp%", player.getFormattedRequiredXP(this))
                 .replace("%description%", this.getDescription(player))
                 .replace("%skill%", this.name)
                 .replace("%level%", level.toString())
                 .replace("%level_numeral%", level.toNumeral())
         }
 
-        // Replace the placeholder "%rewards%" with level up messages.
-        val processed = withPlaceholders.map { s ->
+        // Replace multi-line placeholders.
+        val processed = withPlaceholders.flatMap { s ->
             val margin = s.count { it == ' ' }
+
             if (s.contains("%rewards%")) {
-                getRewardMessages(level, margin)
+                getRewardMessages(level).addMargin(margin)
+            } else if (s.contains("%gui_lore%")) {
+                config.getStrings("gui.lore").addMargin(margin)
             } else {
                 listOf(s)
             }
         }
 
-        return processed.flatten().formatEco(player)
+        return processed.formatEco(player)
+    }
+
+    private fun List<String>.addMargin(margin: Int): List<String> {
+        return this.map { s -> " ".repeat(margin) + s }
     }
 
     /**
-     * Get the reward messages for a certain [level], with a [margin].
+     * Get the reward messages for a certain [level].
      */
     private fun getRewardMessages(
-        level: Int,
-        margin: Int = 0
+        level: Int
     ): List<String> = rewardMessages.getOrPut(level) {
         // Determine the highest level of messages from the config that is not greater than the provided level.
         val highestConfiguredLevel = config.getSubsection("reward-messages")
@@ -195,7 +205,7 @@ class Skill(
             placeholderContext(
                 injectable = LevelInjectable(level)
             )
-        ).map { " ".repeat(margin) + it }
+        )
     }
 
     internal fun handleLevelUp(player: OfflinePlayer, level: Int) {
