@@ -41,12 +41,6 @@ internal lateinit var plugin: EcoSkillsPlugin
 class EcoSkillsPlugin : LibreforgePlugin() {
     init {
         plugin = this
-
-        registerHolderProvider { player ->
-            (Effects.values() union Stats.values())
-                .map { it.getLevelHolder(it.getActualLevel(player)) }
-                .map { SimpleProvidedHolder(it) }
-        }
     }
 
     override fun loadConfigCategories(): List<ConfigCategory> {
@@ -58,6 +52,12 @@ class EcoSkillsPlugin : LibreforgePlugin() {
     }
 
     override fun handleEnable() {
+        registerHolderProvider { player ->
+            (Effects.values() union Stats.values())
+                .map { it.getLevelHolder(it.getActualLevel(player)) }
+                .map { SimpleProvidedHolder(it) }
+        }
+
         com.willfp.libreforge.effects.Effects.register(EffectAddStat)
         com.willfp.libreforge.effects.Effects.register(EffectMultiplyStat)
         com.willfp.libreforge.effects.Effects.register(EffectSkillXpMultiplier)
