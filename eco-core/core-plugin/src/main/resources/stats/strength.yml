@@ -1,0 +1,21 @@
+name: "&#db0000🗡 Strength"
+placeholder: "%level% * 0.25"
+description: "&8Deal &a%placeholder%%&8 more damage"
+
+gui:
+  position:
+    row: 3
+    column: 4
+
+  icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWRmOTZjY2Q5Mjk5MGRkOGI4NTUzZDJjY2VhYjRjMmM5YjIwOGFhMjI1ZGIxNTc1ODJmY2Q1NjY5MTVkNGJjZiJ9fX0=
+
+effects:
+  - id: damage_multiplier
+    args:
+      multiplier: "1 + (%level% * 0.0025)"
+    triggers:
+      - melee_attack
+      - bow_attack
+      - trident_attack
+
+conditions: [ ]

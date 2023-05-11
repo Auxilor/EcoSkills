@@ -10,7 +10,7 @@ description: "&8Lose &a%placeholder%%&8 less hunger" # The description to be sho
 
 # Options for the stat in the GUI
 gui:
-  enabled: true # If the stat should show up in the GUI
+  enabled: false # (Optional) If the stat should show up in the GUI
 
   position:
     row: 5
