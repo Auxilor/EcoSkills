@@ -17,7 +17,7 @@ class SkillLevelMap(
     }
 
     operator fun set(skill: Skill, level: SkillLevel) {
-        require(level.level >= 1) { "Level must be at least 1" }
+        require(level.level >= 0) { "Level must be positive" }
         require(level.xp >= 0) { "XP must be positive" }
 
         skill.setSavedLevel(player, level.level)
