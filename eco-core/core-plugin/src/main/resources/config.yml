@@ -65,10 +65,6 @@ gui:
       - "&f"
       - "&eClick to view Level Progression!"
 
-    click:
-      sound: ui_button_click
-      pitch: 1
-
   close:
     item: barrier
     name: "&cClose"
@@ -113,10 +109,6 @@ stats-gui:
     lore:
       - "&fLevel: &a%level%"
       - "&8&o%description%"
-
-    click:
-      sound: ui_button_click
-      pitch: 1
 
   close:
     item: barrier

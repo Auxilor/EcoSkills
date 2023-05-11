@@ -5,9 +5,11 @@ import com.willfp.eco.core.gui.onLeftClick
 import com.willfp.eco.core.gui.slot
 import com.willfp.eco.core.items.builder.SkullBuilder
 import com.willfp.eco.core.placeholder.context.placeholderContext
+import com.willfp.eco.core.sound.PlayableSound
 import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.savedDisplayName
 import com.willfp.ecoskills.gui.menus.StatsGUI
+import com.willfp.ecoskills.plugin
 import org.bukkit.inventory.meta.SkullMeta
 
 class PlayerInfoIcon(

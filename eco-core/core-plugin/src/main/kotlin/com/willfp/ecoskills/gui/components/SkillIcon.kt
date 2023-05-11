@@ -6,6 +6,7 @@ import com.willfp.eco.core.gui.onLeftClick
 import com.willfp.eco.core.gui.slot
 import com.willfp.eco.core.items.Items
 import com.willfp.eco.core.items.builder.modify
+import com.willfp.eco.core.sound.PlayableSound
 import com.willfp.eco.util.toNumeral
 import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.skills.Skill
