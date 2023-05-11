@@ -8,12 +8,7 @@ import com.willfp.eco.util.toNumeral
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.api.getBaseStatLevel
 import com.willfp.ecoskills.api.getBonusStatLevel
-import com.willfp.ecoskills.api.getRequiredXP
-import com.willfp.ecoskills.api.getSkillLevel
-import com.willfp.ecoskills.api.getSkillProgress
-import com.willfp.ecoskills.api.getSkillXP
 import com.willfp.ecoskills.api.getStatLevel
-import com.willfp.ecoskills.gui.components.SkillIcon
 import com.willfp.ecoskills.gui.components.StatIcon
 import com.willfp.ecoskills.obj.LevellableWithHolder
 import com.willfp.ecoskills.util.LevelMap
@@ -50,7 +45,12 @@ class Stat(
         }.register()
 
         PlayerPlaceholder(plugin, "${id}_bonus") {
-            it.getBonusStatLevel(this).toNiceString()
+            val bonus = it.getBonusStatLevel(this)
+            when {
+                bonus > 0 -> "+${bonus}"
+                bonus < 0 -> "$bonus"
+                else -> ""
+            }
         }.register()
     }
 
