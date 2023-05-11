@@ -100,7 +100,7 @@ reward-messages:
 
 
 xp-gain-methods:
-  - trigger: break_block
+  - trigger: mine_block
     multiplier: 6
     filters:
       player_placed: false
@@ -118,7 +118,7 @@ xp-gain-methods:
         - acacia_wood
         - dark_oak_wood
 
-  - trigger: break_block
+  - trigger: mine_block
     multiplier: 14
     filters:
       player_placed: false

@@ -122,14 +122,14 @@ reward-messages:
     - "    %ecoskills_dynamic_mining_description%"
 
 xp-gain-methods:
-  - trigger: break_block
+  - trigger: mine_block
     multiplier: 0.5
     filters:
       player_placed: false
       blocks:
         - netherrack
 
-  - trigger: break_block
+  - trigger: mine_block
     multiplier: 1
     filters:
       player_placed: false
@@ -140,7 +140,7 @@ xp-gain-methods:
         - andesite
         - cobblestone
 
-  - trigger: break_block
+  - trigger: mine_block
     multiplier: 1.5
     filters:
       player_placed: false
@@ -149,14 +149,14 @@ xp-gain-methods:
         - blackstone
         - deepslate
 
-  - trigger: break_block
+  - trigger: mine_block
     multiplier: 2.5
     filters:
       player_placed: false
       blocks:
         - calcite
 
-  - trigger: break_block
+  - trigger: mine_block
     multiplier: 3
     filters:
       player_placed: false
@@ -164,14 +164,14 @@ xp-gain-methods:
         - sand
         - end_stone
 
-  - trigger: break_block
+  - trigger: mine_block
     multiplier: 4
     filters:
       player_placed: false
       blocks:
         - gravel
 
-  - trigger: break_block
+  - trigger: mine_block
     multiplier: 5
     filters:
       player_placed: false
@@ -182,14 +182,14 @@ xp-gain-methods:
         - copper_ore
         - amethyst_block
 
-  - trigger: break_block
+  - trigger: mine_block
     multiplier: 6
     filters:
       player_placed: false
       blocks:
         - gold_ore
 
-  - trigger: break_block
+  - trigger: mine_block
     multiplier: 7
     filters:
       player_placed: false
@@ -197,7 +197,7 @@ xp-gain-methods:
         - lapis_ore
         - redstone_ore
 
-  - trigger: break_block
+  - trigger: mine_block
     multiplier: 7.5
     filters:
       player_placed: false
@@ -206,21 +206,21 @@ xp-gain-methods:
         - deepslate_iron_ore
         - deepslate_copper_ore
 
-  - trigger: break_block
+  - trigger: mine_block
     multiplier: 9
     filters:
       player_placed: false
       blocks:
         - emerald_ore
 
-  - trigger: break_block
+  - trigger: mine_block
     multiplier: 9
     filters:
       player_placed: false
       blocks:
         - deepslate_gold_ore
 
-  - trigger: break_block
+  - trigger: mine_block
     multiplier: 10
     filters:
       player_placed: false
@@ -228,7 +228,7 @@ xp-gain-methods:
         - gilded_blackstone
         - diamond_ore
 
-  - trigger: break_block
+  - trigger: mine_block
     multiplier: 10.5
     filters:
       player_placed: false
@@ -236,28 +236,28 @@ xp-gain-methods:
         - deepslate_lapis_ore
         - deepslate_redstone_ore
 
-  - trigger: break_block
+  - trigger: mine_block
     multiplier: 13.5
     filters:
       player_placed: false
       blocks:
         - deepslate_emerald_ore
 
-  - trigger: break_block
+  - trigger: mine_block
     multiplier: 15
     filters:
       player_placed: false
       blocks:
         - deepslate_diamond_ore
 
-  - trigger: break_block
+  - trigger: mine_block
     multiplier: 22
     filters:
       player_placed: false
       blocks:
         - ancient_debris
 
-  - trigger: break_block
+  - trigger: mine_block
     multiplier: 8.5
     filters:
       player_placed: false

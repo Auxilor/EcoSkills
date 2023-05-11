@@ -42,7 +42,7 @@ class SkillIcon(
         }
     }
 
-    override val isEnabled = config.getBool("enabled")
+    override val isEnabled = config.getBoolOrNull("enabled") ?: true
     override val row = config.getInt("position.row")
     override val column = config.getInt("position.column")
 
