@@ -63,6 +63,13 @@ gui:
       - "&f"
       - "&eClick to view Level Progression!"
 
+  unknown-skill-icon:
+    name: "&#964b00Unknown Skill"
+    icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmFkYzA0OGE3Y2U3OGY3ZGFkNzJhMDdkYTI3ZDg1YzA5MTY4ODFlNTUyMmVlZWQxZTNkYWYyMTdhMzhjMWEifX19
+    lore:
+      - "&7Keep playing to learn about"
+      - "&7and progress this skill!"
+
   close:
     item: barrier
     name: "&cClose"

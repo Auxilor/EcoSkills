@@ -26,6 +26,8 @@ messages:
   resetting-all-players: "&fResetting all players... (this may take a while)"
   reset-all-players: "&fReset all players!"
 
+learning-skill: "Learning New Skill..."
+
 line-wrap-color: "&8"
 
 top-line-format: "%rank%. %playername% - %level%"

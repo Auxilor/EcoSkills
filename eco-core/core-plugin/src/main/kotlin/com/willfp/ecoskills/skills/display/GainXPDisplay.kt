@@ -8,6 +8,7 @@ import com.willfp.ecoskills.actionbar.sendCompatibleActionBarMessage
 import com.willfp.ecoskills.api.event.PlayerSkillXPGainEvent
 import com.willfp.ecoskills.api.getFormattedRequiredXP
 import com.willfp.ecoskills.api.getRequiredXP
+import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.api.getSkillProgress
 import com.willfp.ecoskills.api.getSkillXP
 import org.bukkit.boss.BarColor
@@ -72,7 +73,10 @@ class GainXPDisplay(
     }
 
     private fun String.formatMessage(event: PlayerSkillXPGainEvent): String =
-        this.replace("%skill%", event.skill.name)
+        this.replace(
+            "%skill%",
+            if (event.player.getSkillLevel(event.skill) > 0) event.skill.name else plugin.langYml.getString("learning-skill")
+        )
             .replace("%current_xp%", event.player.getSkillXP(event.skill).toNiceString())
             .replace("%required_xp%", event.player.getFormattedRequiredXP(event.skill))
             .replace("%gained_xp%", event.gainedXP.toNiceString())
