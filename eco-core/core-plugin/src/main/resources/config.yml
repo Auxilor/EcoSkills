@@ -58,7 +58,7 @@ gui:
       - "%gui_lore%"
       - "&f"
       - "&fProgress to next level:"
-      - "&8» &e%percentage_progress%"
+      - "&8» &e%percentage_progress%%"
       - "&8» &e%current_xp%&8/&7%required_xp% &fXP"
       - "&f"
       - "&eClick to view Level Progression!"
