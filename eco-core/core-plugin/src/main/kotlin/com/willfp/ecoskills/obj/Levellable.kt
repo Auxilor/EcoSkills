@@ -10,7 +10,9 @@ import com.willfp.eco.core.placeholder.PlayerStaticPlaceholder
 import com.willfp.eco.core.placeholder.PlayerlessPlaceholder
 import com.willfp.eco.core.placeholder.context.placeholderContext
 import com.willfp.eco.core.registry.KRegistrable
+import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.formatEco
+import com.willfp.eco.util.toNiceString
 import com.willfp.eco.util.toNumeral
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.util.DescriptionPlaceholder
@@ -45,12 +47,7 @@ abstract class Levellable(
             }.map { it.uniqueId }
         }
 
-    // Lazy init so config placeholders can inject
-    private val unformattedDescription by lazy {
-        loadDescriptionPlaceholders(config).fold(config.getString("description")) { desc, it ->
-            desc.replace("%${it.id}%", it.expr)
-        }
-    }
+    private val unformattedDescription = config.getString("description")
 
     val name = config.getFormattedString("name")
 
@@ -92,11 +89,20 @@ abstract class Levellable(
     }
 
     fun getDescription(player: Player): String {
-        return unformattedDescription.formatEco(
-            placeholderContext(
-                player = player,
-                injectable = LevelInjectable(getActualLevel(player))
-            )
+        var desc = unformattedDescription
+
+        val context = placeholderContext(
+            player = player,
+            injectable = LevelInjectable(getActualLevel(player))
         )
+
+        for (placeholder in loadDescriptionPlaceholders(config)) {
+            val id = placeholder.id
+            val value = NumberUtils.evaluateExpression(placeholder.expr, context)
+
+            desc = desc.replace("%$id%", value.toNiceString())
+        }
+
+        return desc.formatEco(context)
     }
 }

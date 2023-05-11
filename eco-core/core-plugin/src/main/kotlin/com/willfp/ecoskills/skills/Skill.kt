@@ -12,7 +12,6 @@ import com.willfp.eco.util.toNiceString
 import com.willfp.eco.util.toNumeral
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.api.getFormattedRequiredXP
-import com.willfp.ecoskills.api.getRequiredXP
 import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.api.getSkillProgress
 import com.willfp.ecoskills.api.getSkillXP
@@ -193,17 +192,20 @@ class Skill(
             .filter { it <= level } // Only consider levels not greater than the provided level
             .maxOrNull() ?: 1 // Get the maximum level, default to 1 if no suitable level was found
 
-        val rawMessages = config.getStrings("reward-messages.$highestConfiguredLevel")
+        val messages = config.getStrings("reward-messages.$highestConfiguredLevel").toMutableList()
 
-        val messages = loadDescriptionPlaceholders(config).fold(rawMessages) { desc, placeholder ->
-            desc.map { s -> s.replace("%${placeholder.id}%", placeholder.expr) }
+        val context = placeholderContext(
+            injectable = LevelInjectable(level)
+        )
+
+        for (placeholder in loadDescriptionPlaceholders(config)) {
+            val id = placeholder.id
+            val value = NumberUtils.evaluateExpression(placeholder.expr, context)
+
+            messages.replaceAll { s -> s.replace("%$id%", value.toNiceString()) }
         }
 
-        return messages.formatEco(
-            placeholderContext(
-                injectable = LevelInjectable(level)
-            )
-        )
+        return messages.formatEco(context)
     }
 
     internal fun handleLevelUp(player: OfflinePlayer, level: Int) {
