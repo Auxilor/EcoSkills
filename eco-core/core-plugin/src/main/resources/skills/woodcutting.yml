@@ -1,0 +1,127 @@
+name: Woodcutting
+description: Cut down trees to earn Woodcutting XP
+
+gui:
+  icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjBjZDEzMjIzYThkOWMxNzNjZWRjZTZjNGJlYmViYTA2YTI0YTFiYTI3NWRkM2ViNWM3OTMzZjlhNzRiYTAxMSJ9fX0='
+
+  lore:
+    - "&fImproves Stats:"
+    - "&8» &r%ecoskills_strength_name%"
+    - "&8» &r%ecoskills_crit_damage_name%"
+    - "&f"
+    - "&fEffects:"
+    - "&8» &r&6Craftsmanship %ecoskills_craftsmanship_numeral%"
+    - "   %ecoskills_craftsmanship_description%"
+    - "&8» &r&6Master Lumberjack %ecoskills_master_lumberjack_numeral%"
+    - "   %ecoskills_master_lumberjack_description%"
+
+  position:
+    row: 3
+    column: 7
+
+xp-requirements:
+  - 50
+  - 125
+  - 200
+  - 300
+  - 500
+  - 750
+  - 1000
+  - 1500
+  - 2000
+  - 3500
+  - 5000
+  - 7500
+  - 10000
+  - 15000
+  - 20000
+  - 30000
+  - 50000
+  - 75000
+  - 100000
+  - 200000
+  - 300000
+  - 400000
+  - 500000
+  - 600000
+  - 700000
+  - 800000
+  - 900000
+  - 1000000
+  - 1100000
+  - 1200000
+  - 1300000
+  - 1400000
+  - 1500000
+  - 1600000
+  - 1700000
+  - 1800000
+  - 1900000
+  - 2000000
+  - 2100000
+  - 2200000
+  - 2300000
+  - 2400000
+  - 2500000
+  - 2600000
+  - 2750000
+  - 2900000
+  - 3100000
+  - 3400000
+  - 3700000
+  - 4000000
+  - 5000000
+
+rewards:
+  - reward: strength
+    levels: 2
+
+  - reward: crit_damage
+    levels: 1
+
+  - reward: craftsmanship
+    levels: 1
+
+  - reward: master_lumberjack
+    levels: 1
+
+level-up-effects: [ ]
+
+placeholders: [ ]
+
+reward-messages:
+  1:
+    - " &8» &r&f+2 %ecoskills_strength_name%"
+    - " &8» &r&f+1 %ecoskills_crit_damage_name%"
+    - " &8» &r&6Craftsmanship %ecoskills_craftsmanship_numeral%"
+    - "    %ecoskills_craftsmanship_description%"
+    - " &8» &r&6Master Lumberjack %ecoskills_master_lumberjack_numeral%"
+    - "    %ecoskills_master_lumberjack_description%"
+
+
+xp-gain-methods:
+  - trigger: break_block
+    multiplier: 6
+    filters:
+      player_placed: false
+      blocks:
+        - oak_log
+        - birch_log
+        - spruce_log
+        - jungle_log
+        - acacia_log
+        - dark_oak_log
+        - oak_wood
+        - birch_wood
+        - spruce_wood
+        - jungle_wood
+        - acacia_wood
+        - dark_oak_wood
+
+  - trigger: break_block
+    multiplier: 14
+    filters:
+      player_placed: false
+      blocks:
+        - crimson_stem
+        - warped_stem

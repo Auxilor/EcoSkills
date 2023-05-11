@@ -1,0 +1,146 @@
+name: Combat
+description: Kill mobs to earn XP
+
+gui:
+  icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGVlYmI4YjAzY2QyN2QzNDM1ZTExNTYxNmI4ZWQzNWRjYjQyN2FmNWIwYjFjYzUyNmQzMjY1YTcyZDQ5M2UifX19'
+
+  lore:
+    - "&fImproves Stats:"
+    - "&8» &r%ecoskills_strength_name%"
+    - "&8» &r%ecoskills_ferocity_name%"
+    - "&f"
+    - "&fEffects:"
+    - "&8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
+    - "   %ecoskills_serrated_strikes_description%"
+    - "&8» &r&6Dazzle %ecoskills_dazzle_numeral%"
+    - "   %ecoskills_dazzle_description%"
+    - "&8» &r&6Strong Impact %ecoskills_strong_impact_numeral%"
+    - "   %ecoskills_strong_impact_description%"
+    - "&8» &r&6Endangering %ecoskills_endangering_numeral%"
+    - "   %ecoskills_endangering_description%"
+
+  position:
+    row: 3
+    column: 4
+
+xp-requirements:
+  - 50
+  - 125
+  - 200
+  - 300
+  - 500
+  - 750
+  - 1000
+  - 1500
+  - 2000
+  - 3500
+  - 5000
+  - 7500
+  - 10000
+  - 15000
+  - 20000
+  - 30000
+  - 50000
+  - 75000
+  - 100000
+  - 200000
+  - 300000
+  - 400000
+  - 500000
+  - 600000
+  - 700000
+  - 800000
+  - 900000
+  - 1000000
+  - 1100000
+  - 1200000
+  - 1300000
+  - 1400000
+  - 1500000
+  - 1600000
+  - 1700000
+  - 1800000
+  - 1900000
+  - 2000000
+  - 2100000
+  - 2200000
+  - 2300000
+  - 2400000
+  - 2500000
+  - 2600000
+  - 2750000
+  - 2900000
+  - 3100000
+  - 3400000
+  - 3700000
+  - 4000000
+  - 5000000
+
+rewards:
+  - reward: strength
+    levels: 2
+
+  - reward: ferocity
+    levels: 1
+    start-level: 15
+
+  - reward: serrated_strikes
+    levels: 1
+
+  - reward: dazzle
+    levels: 1
+
+  - reward: strong_impact
+    levels: 1
+    start-level: 10
+
+  - reward: endangering
+    levels: 1
+    start-level: 20
+
+level-up-effects: [ ]
+
+placeholders: [ ]
+
+reward-messages:
+  1:
+    - " &8» &r&f+2 %ecoskills_strength_name%"
+    - " &8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
+    - "    %ecoskills_serrated_strikes_description%"
+    - " &8» &r&6Dazzle %ecoskills_dazzle_numeral%"
+    - "    %ecoskills_dazzle_description%"
+  10:
+    - " &8» &r&f+2 %ecoskills_strength_name%"
+    - " &8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
+    - "    %ecoskills_serrated_strikes_description%"
+    - " &8» &r&6Dazzle %ecoskills_dazzle_numeral%"
+    - "    %ecoskills_dazzle_description%"
+    - " &8» &r&6Strong Impact %ecoskills_strong_impact_numeral%"
+    - "    %ecoskills_strong_impact_description%"
+  15:
+    - " &8» &r&f+2 %ecoskills_strength_name%"
+    - " &8» &r&f+1 %ecoskills_ferocity_name%"
+    - " &8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
+    - "    %ecoskills_serrated_strikes_description%"
+    - " &8» &r&6Dazzle %ecoskills_dazzle_numeral%"
+    - "    %ecoskills_dazzle_description%"
+    - " &8» &r&6Strong Impact %ecoskills_strong_impact_numeral%"
+    - "    %ecoskills_strong_impact_description%"
+  20:
+    - " &8» &r&f+2 %ecoskills_strength_name%"
+    - " &8» &r&f+1 %ecoskills_ferocity_name%"
+    - " &8» &r&6Serrated Strikes %ecoskills_serrated_strikes_numeral%"
+    - "    %ecoskills_serrated_strikes_description%"
+    - " &8» &r&6Dazzle %ecoskills_dazzle_numeral%"
+    - "    %ecoskills_dazzle_description%"
+    - " &8» &r&6Strong Impact %ecoskills_strong_impact_numeral%"
+    - "    %ecoskills_strong_impact_description%"
+    - " &8» &r&6Endangering %ecoskills_endangering_numeral%"
+    - "    %ecoskills_endangering_description%"
+
+
+xp-gain-methods:
+  - trigger: kill
+    multiplier: 0.33
+    filter:
+      from_spawner: false

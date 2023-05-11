@@ -1,0 +1,103 @@
+name: Fishing
+description: Fish to earn XP
+
+gui:
+  icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGRhNzcwYjY4NzRmYWJkMjhhNzM0NTI2YzU3MzlmMGNkNmI2YTk1NDhjYjlkZGI1NmZiMmRjMjVmODQ5NWMxIn19fQ=='
+
+  lore:
+    - "&fImproves Stats:"
+    - "&8» &r%ecoskills_defense_name%"
+    - "&8» &r%ecoskills_wisdom_name%"
+    - "&f"
+    - "&fEffects:"
+    - "&8» &r&6Eye of the Depths %ecoskills_eye_of_the_depths_numeral%"
+    - "   %ecoskills_eye_of_the_depths_description%"
+    - "&8» &r&6Magnetic Rod %ecoskills_magnetic_rod_numeral%"
+    - "   %ecoskills_magnetic_rod_description%"
+
+  position:
+    row: 4
+    column: 3
+
+xp-requirements:
+  - 1
+  - 2
+  - 4
+  - 6
+  - 10
+  - 14
+  - 20
+  - 30
+  - 40
+  - 70
+  - 100
+  - 150
+  - 200
+  - 300
+  - 400
+  - 600
+  - 1000
+  - 1500
+  - 2000
+  - 4000
+  - 6000
+  - 8000
+  - 10000
+  - 12000
+  - 14000
+  - 16000
+  - 18000
+  - 20000
+  - 22000
+  - 24000
+  - 26000
+  - 28000
+  - 30000
+  - 32000
+  - 34000
+  - 36000
+  - 38000
+  - 40000
+  - 42000
+  - 44000
+  - 46000
+  - 48000
+  - 50000
+  - 52000
+  - 55000
+  - 58000
+  - 62000
+  - 68000
+  - 74000
+  - 80000
+  - 100000
+
+rewards:
+  - reward: defense
+    levels: 2
+
+  - reward: wisdom
+    levels: 1
+
+  - reward: eye_of_the_depths
+    levels: 1
+
+  - reward: magnetic_rod
+    levels: 1
+
+level-up-effects: [ ]
+
+placeholders: [ ]
+
+reward-messages:
+  1:
+    - " &8» &r&f+2 %ecoskills_defense_name%"
+    - " &8» &r&f+1 %ecoskills_wisdom_name%"
+    - " &8» &r&6Eye of the Depths %ecoskills_eye_of_the_depths_numeral%"
+    - "    %ecoskills_eye_of_the_depths_description%"
+    - " &8» &r&6Magnetic Rod %ecoskills_magnetic_rod_numeral%"
+    - "    %ecoskills_magnetic_rod_description%"
+
+xp-gain-methods:
+  - trigger: catch_fish
+    multiplier: 0.1

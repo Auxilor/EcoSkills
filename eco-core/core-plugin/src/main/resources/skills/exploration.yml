@@ -1,0 +1,118 @@
+name: Exploration
+description: Move to earn XP
+
+gui:
+  icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODQ0OWI5MzE4ZTMzMTU4ZTY0YTQ2YWIwZGUxMjFjM2Q0MDAwMGUzMzMyYzE1NzQ5MzJiM2M4NDlkOGZhMGRjMiJ9fX0='
+
+  lore:
+    - "&fImproves Stats:"
+    - "&8» &r%ecoskills_speed_name%"
+    - "&8» &r%ecoskills_crit_chance_name%"
+    - "&f"
+    - "&fEffects:"
+    - "&8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
+    - "   %ecoskills_seamless_movement_description%"
+    - "&8» &r&6Dodging %ecoskills_dodging_numeral%"
+    - "   %ecoskills_dodging_description%"
+    - "&8» &r&6Accelerated Escape %ecoskills_accelerated_escape_numeral%"
+    - "   %ecoskills_accelerated_escape_description%"
+
+  position:
+    row: 4
+    column: 7
+
+xp-requirements:
+  - 25
+  - 60
+  - 100
+  - 150
+  - 250
+  - 375
+  - 500
+  - 750
+  - 1000
+  - 1750
+  - 2500
+  - 3750
+  - 5000
+  - 7500
+  - 10000
+  - 15000
+  - 25000
+  - 37500
+  - 50000
+  - 100000
+  - 150000
+  - 200000
+  - 250000
+  - 300000
+  - 350000
+  - 400000
+  - 450000
+  - 500000
+  - 550000
+  - 600000
+  - 650000
+  - 700000
+  - 750000
+  - 800000
+  - 850000
+  - 900000
+  - 950000
+  - 1000000
+  - 1050000
+  - 1100000
+  - 1150000
+  - 1200000
+  - 1250000
+  - 1300000
+  - 1375000
+  - 1450000
+  - 1550000
+  - 1700000
+  - 1850000
+  - 2000000
+  - 2500000
+
+rewards:
+  - reward: speed
+    levels: 2
+
+  - reward: crit_chance
+    levels: 1
+
+  - reward: seamless_movement
+    levels: 1
+
+  - reward: dodging
+    levels: 1
+
+  - reward: accelerated_escape
+    levels: 1
+    start-level: 10
+
+level-up-effects: [ ]
+
+placeholders: [ ]
+
+reward-messages:
+  1:
+    - " &8» &r&f+2 %ecoskills_speed_name%"
+    - " &8» &r&f+1 %ecoskills_crit_chance_name%"
+    - " &8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
+    - "    %ecoskills_seamless_movement_description%"
+    - " &8» &r&6Dodging %ecoskills_dodging_numeral%"
+    - "    %ecoskills_dodging_description%"
+  10:
+    - " &8» &r&f+2 %ecoskills_speed_name%"
+    - " &8» &r&f+1 %ecoskills_crit_chance_name%"
+    - " &8» &r&6Seamless Movement %ecoskills_seamless_movement_numeral%"
+    - "    %ecoskills_seamless_movement_description%"
+    - " &8» &r&6Dodging %ecoskills_dodging_numeral%"
+    - "    %ecoskills_dodging_description%"
+    - " &8» &r&6Accelerated Escape %ecoskills_accelerated_escape_numeral%"
+    - "    %ecoskills_accelerated_escape_description%"
+
+
+xp-gain-methods: [ ]
+# TODO: Add exploration xp gain methods

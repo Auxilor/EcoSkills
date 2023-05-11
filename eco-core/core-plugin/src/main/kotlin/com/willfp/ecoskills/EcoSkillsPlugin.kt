@@ -12,11 +12,13 @@ import com.willfp.ecoskills.libreforge.ConditionHasSkillLevel
 import com.willfp.ecoskills.libreforge.EffectAddStat
 import com.willfp.ecoskills.libreforge.EffectAddStatTemporarily
 import com.willfp.ecoskills.libreforge.EffectGiveSkillXp
+import com.willfp.ecoskills.libreforge.EffectMakeSkillCrit
 import com.willfp.ecoskills.libreforge.EffectMultiplyAllStats
 import com.willfp.ecoskills.libreforge.EffectMultiplyStat
 import com.willfp.ecoskills.libreforge.EffectMultiplyStatTemporarily
 import com.willfp.ecoskills.libreforge.EffectSkillXpMultiplier
 import com.willfp.ecoskills.libreforge.FilterSkill
+import com.willfp.ecoskills.libreforge.FilterSkillCrit
 import com.willfp.ecoskills.libreforge.TriggerGainSkillXp
 import com.willfp.ecoskills.libreforge.TriggerLevelUpSkill
 import com.willfp.ecoskills.skills.EcoSkillsTopPlaceholder
@@ -64,12 +66,14 @@ class EcoSkillsPlugin : LibreforgePlugin() {
         com.willfp.libreforge.effects.Effects.register(EffectSkillXpMultiplier)
         com.willfp.libreforge.effects.Effects.register(EffectGiveSkillXp)
         com.willfp.libreforge.effects.Effects.register(EffectMultiplyAllStats)
+        com.willfp.libreforge.effects.Effects.register(EffectMakeSkillCrit)
         com.willfp.libreforge.effects.Effects.register(EffectAddStatTemporarily(this))
         com.willfp.libreforge.effects.Effects.register(EffectMultiplyStatTemporarily(this))
         Conditions.register(ConditionHasSkillLevel)
         Triggers.register(TriggerGainSkillXp)
         Triggers.register(TriggerLevelUpSkill)
         Filters.register(FilterSkill)
+        Filters.register(FilterSkillCrit)
 
         EcoSkillsTopPlaceholder(this).register()
     }

@@ -1,0 +1,265 @@
+name: Mining
+description: Break blocks earn XP
+
+gui:
+  icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmIxYzI2OGVmZWM4ZDdkODhhMWNiODhjMmJmYTA5N2ZhNTcwMzc5NDIyOTlmN2QyMDIxNTlmYzkzY2QzMDM2ZCJ9fX0='
+
+  lore:
+    - "&fImproves Stats:"
+    - "&8» &r%ecoskills_defense_name%"
+    - "&8» &r%ecoskills_ferocity_name%"
+    - "&f"
+    - "&fEffects:"
+    - "&8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
+    - "   %ecoskills_versatile_tools_description%"
+    - "&8» &r&6Spelunking %ecoskills_spelunking_numeral%"
+    - "   %ecoskills_spelunking_description%"
+    - "&8» &r&6Dynamic Mining %ecoskills_dynamic_mining_numeral%"
+    - "   %ecoskills_dynamic_mining_description%"
+
+  position:
+    row: 3
+    column: 3
+
+xp-requirements:
+  - 50
+  - 125
+  - 200
+  - 300
+  - 500
+  - 750
+  - 1000
+  - 1500
+  - 2000
+  - 3500
+  - 5000
+  - 7500
+  - 10000
+  - 15000
+  - 20000
+  - 30000
+  - 50000
+  - 75000
+  - 100000
+  - 200000
+  - 300000
+  - 400000
+  - 500000
+  - 600000
+  - 700000
+  - 800000
+  - 900000
+  - 1000000
+  - 1100000
+  - 1200000
+  - 1300000
+  - 1400000
+  - 1500000
+  - 1600000
+  - 1700000
+  - 1800000
+  - 1900000
+  - 2000000
+  - 2100000
+  - 2200000
+  - 2300000
+  - 2400000
+  - 2500000
+  - 2600000
+  - 2750000
+  - 2900000
+  - 3100000
+  - 3400000
+  - 3700000
+  - 4000000
+  - 5000000
+
+rewards:
+  - reward: defense
+    levels: 2
+
+  - reward: ferocity
+    levels: 1
+    start-level: 15
+
+  - reward: versatile_tools
+    levels: 1
+
+  - reward: spelunking
+    levels: 1
+    start-level: 10
+
+  - reward: dynamic_mining
+    levels: 1
+
+level-up-effects: [ ]
+
+placeholders: [ ]
+
+reward-messages:
+  1:
+    - " &8» &r&f+2 %ecoskills_defense_name%"
+    - " &8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
+    - "    %ecoskills_versatile_tools_description%"
+    - " &8» &r&6Dynamic Mining %ecoskills_dynamic_mining_numeral%"
+    - "    %ecoskills_dynamic_mining_description%"
+  10:
+    - " &8» &r&f+2 %ecoskills_defense_name%"
+    - " &8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
+    - "    %ecoskills_versatile_tools_description%"
+    - " &8» &r&6Spelunking %ecoskills_spelunking_numeral%"
+    - "    %ecoskills_spelunking_description%"
+    - " &8» &r&6Dynamic Mining %ecoskills_dynamic_mining_numeral%"
+    - "    %ecoskills_dynamic_mining_description%"
+  15:
+    - " &8» &r&f+2 %ecoskills_defense_name%"
+    - " &8» &r&f+1 %ecoskills_ferocity_name%"
+    - " &8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
+    - "    %ecoskills_versatile_tools_description%"
+    - " &8» &r&6Spelunking %ecoskills_spelunking_numeral%"
+    - "    %ecoskills_spelunking_description%"
+    - " &8» &r&6Dynamic Mining %ecoskills_dynamic_mining_numeral%"
+    - "    %ecoskills_dynamic_mining_description%"
+
+xp-gain-methods:
+  - trigger: break_block
+    multiplier: 0.5
+    filters:
+      player_placed: false
+      blocks:
+        - netherrack
+
+  - trigger: break_block
+    multiplier: 1
+    filters:
+      player_placed: false
+      blocks:
+        - stone
+        - diorite
+        - granite
+        - andesite
+        - cobblestone
+
+  - trigger: break_block
+    multiplier: 1.5
+    filters:
+      player_placed: false
+      blocks:
+        - tuff
+        - blackstone
+        - deepslate
+
+  - trigger: break_block
+    multiplier: 2.5
+    filters:
+      player_placed: false
+      blocks:
+        - calcite
+
+  - trigger: break_block
+    multiplier: 3
+    filters:
+      player_placed: false
+      blocks:
+        - sand
+        - end_stone
+
+  - trigger: break_block
+    multiplier: 4
+    filters:
+      player_placed: false
+      blocks:
+        - gravel
+
+  - trigger: break_block
+    multiplier: 5
+    filters:
+      player_placed: false
+      blocks:
+        - nether_quartz_ore
+        - coal_ore
+        - iron_ore
+        - copper_ore
+        - amethyst_block
+
+  - trigger: break_block
+    multiplier: 6
+    filters:
+      player_placed: false
+      blocks:
+        - gold_ore
+
+  - trigger: break_block
+    multiplier: 7
+    filters:
+      player_placed: false
+      blocks:
+        - lapis_ore
+        - redstone_ore
+
+  - trigger: break_block
+    multiplier: 7.5
+    filters:
+      player_placed: false
+      blocks:
+        - deepslate_coal_ore
+        - deepslate_iron_ore
+        - deepslate_copper_ore
+
+  - trigger: break_block
+    multiplier: 9
+    filters:
+      player_placed: false
+      blocks:
+        - emerald_ore
+
+  - trigger: break_block
+    multiplier: 9
+    filters:
+      player_placed: false
+      blocks:
+        - deepslate_gold_ore
+
+  - trigger: break_block
+    multiplier: 10
+    filters:
+      player_placed: false
+      blocks:
+        - gilded_blackstone
+        - diamond_ore
+
+  - trigger: break_block
+    multiplier: 10.5
+    filters:
+      player_placed: false
+      blocks:
+        - deepslate_lapis_ore
+        - deepslate_redstone_ore
+
+  - trigger: break_block
+    multiplier: 13.5
+    filters:
+      player_placed: false
+      blocks:
+        - deepslate_emerald_ore
+
+  - trigger: break_block
+    multiplier: 15
+    filters:
+      player_placed: false
+      blocks:
+        - deepslate_diamond_ore
+
+  - trigger: break_block
+    multiplier: 22
+    filters:
+      player_placed: false
+      blocks:
+        - ancient_debris
+
+  - trigger: break_block
+    multiplier: 8.5
+    filters:
+      player_placed: false
+      blocks:
+        - budding_amethyst
