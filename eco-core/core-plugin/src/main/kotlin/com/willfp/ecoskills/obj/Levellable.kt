@@ -30,7 +30,7 @@ abstract class Levellable(
     val config: Config,
     protected val plugin: EcoSkillsPlugin
 ) : KRegistrable {
-    open val startLevel = 1
+    open val startLevel = 0
 
     private val key by lazy {
         PersistentDataKey(
