@@ -61,7 +61,7 @@ class Skill(
 
         LevelUpReward(
             reward,
-            it.getInt("level"),
+            it.getInt("levels"),
             it.getIntOrNull("start-level"),
             it.getIntOrNull("end-level")
         )
@@ -148,30 +148,34 @@ class Skill(
         player: Player,
         level: Int = player.getSkillLevel(this)
     ): List<String> {
+        val skill = this // I just hate the @ notation kotlin uses
+        fun String.addPlaceholders() = this
+            .replace("%percentage_progress%", (player.getSkillProgress(skill) * 100).toNiceString())
+            .replace("%current_xp%", player.getSkillXP(skill).toNiceString())
+            .replace("%required_xp%", player.getFormattedRequiredXP(skill))
+            .replace("%description%", skill.getDescription(level))
+            .replace("%skill%", skill.name)
+            .replace("%level%", level.toString())
+            .replace("%level_numeral%", level.toNumeral())
+            .injectRewardPlaceholders(level)
+
         // Replace placeholders in the strings with their actual values.
-        val withPlaceholders = strings.map { s ->
-            s.replace("%percentage_progress%", (player.getSkillProgress(this) * 100).toNiceString())
-                .replace("%current_xp%", player.getSkillXP(this).toNiceString())
-                .replace("%required_xp%", player.getFormattedRequiredXP(this))
-                .replace("%description%", this.getDescription(level))
-                .replace("%skill%", this.name)
-                .replace("%level%", level.toString())
-                .replace("%level_numeral%", level.toNumeral())
-                .injectRewardPlaceholders(level)
-        }
+        val withPlaceholders = strings.map { it.addPlaceholders() }
 
         // Replace multi-line placeholders.
         val processed = withPlaceholders.flatMap { s ->
             val margin = s.length - s.trimStart().length
 
             if (s.contains("%rewards%")) {
-                getRewardMessages(level).addMargin(margin)
+                getRewardMessages(level)
+                    .addMargin(margin)
             } else if (s.contains("%gui_lore%")) {
-                config.getStrings("gui.lore").addMargin(margin)
+                config.getStrings("gui.lore")
+                    .addMargin(margin)
             } else {
                 listOf(s)
             }
-        }
+        }.map { it.addPlaceholders() }
 
         return processed.formatEco(
             placeholderContext(
@@ -185,7 +189,7 @@ class Skill(
         var processed = this
 
         for (reward in rewards) {
-            processed = reward.reward.addPlaceholdersInto(this, reward.getCumulativeLevels(level))
+            processed = reward.reward.addPlaceholdersInto(processed, reward.getCumulativeLevels(level))
         }
 
         return processed

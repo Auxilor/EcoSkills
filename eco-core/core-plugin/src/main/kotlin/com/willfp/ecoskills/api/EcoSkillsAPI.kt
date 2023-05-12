@@ -6,6 +6,8 @@ import com.willfp.ecoskills.api.modifiers.StatModifier
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.effects.effects
+import com.willfp.ecoskills.mana.MagicType
+import com.willfp.ecoskills.mana.magic
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.skills.skills
@@ -15,6 +17,7 @@ import com.willfp.ecoskills.stats.statModifiers
 import com.willfp.ecoskills.stats.stats
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
+import sun.jvm.hotspot.oops.CellTypeState.value
 import java.util.UUID
 
 /*
@@ -106,3 +109,17 @@ Effects
 fun OfflinePlayer.getEffectLevel(effect: Effect): Int =
     this.effects[effect]
 
+/*
+
+Mana
+
+ */
+
+fun Player.getMagic(type: MagicType): Int =
+    this.magic[type]
+
+fun Player.setMagic(type: MagicType, amount: Int): Unit =
+    this.magic.set(type, amount)
+
+fun Player.getMaxMagic(type: MagicType): Int =
+    type.getLimit(this)

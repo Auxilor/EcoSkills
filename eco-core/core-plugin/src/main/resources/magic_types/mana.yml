@@ -1,0 +1,5 @@
+name: "&#9003fcᛟ Mana"
+
+regen-rate: "0.02 * %ecoskills_max_mana%"
+
+limit: "100 + %ecoskills_mysticism%"

@@ -80,16 +80,11 @@ abstract class Levellable(
     internal fun setSavedLevel(player: OfflinePlayer, level: Int) = player.profile.write(key, level)
 
     fun addPlaceholdersInto(string: String, level: Int): String {
-        val context = placeholderContext(
-            injectable = LevelInjectable(level)
-        )
-
         // This isn't the best way to do this, but it works!
         return string
             .replace("%ecoskills_${id}_numeral%", level.toNumeral())
             .replace("%ecoskills_${id}_description%", getDescription(level))
             .replace("%ecoskills_${id}%", level.toString())
-            .formatEco(context)
     }
 
     fun getTop(position: Int): LeaderboardEntry? {

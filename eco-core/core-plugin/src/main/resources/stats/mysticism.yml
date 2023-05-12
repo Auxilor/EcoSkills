@@ -1,0 +1,15 @@
+name: "&#9003fc☠ Mysticism"
+placeholder: "100 + %level%"
+description: "&8Gives you &a%placeholder%&8 max %ecoskills_mana_name%"
+
+gui:
+  position:
+    row: 5
+    column: 8
+
+  icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2UzN2RmMjdkMWU5MjVkMmY3OGRlNjkzNDEzYWRhYjc1ZDc5MTg4NDViYWM4ZjYxNzRmZGIyMmVjNTc3NjExZCJ9fX0=
+
+# Defined in config.yml
+effects: [ ]
+
+conditions: [ ]

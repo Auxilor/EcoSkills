@@ -21,6 +21,8 @@ import com.willfp.ecoskills.libreforge.FilterSkill
 import com.willfp.ecoskills.libreforge.FilterSkillCrit
 import com.willfp.ecoskills.libreforge.TriggerGainSkillXp
 import com.willfp.ecoskills.libreforge.TriggerLevelUpSkill
+import com.willfp.ecoskills.mana.MagicHandler
+import com.willfp.ecoskills.mana.MagicTypes
 import com.willfp.ecoskills.skills.EcoSkillsTopPlaceholder
 import com.willfp.ecoskills.skills.SkillCritListener
 import com.willfp.ecoskills.skills.Skills
@@ -48,6 +50,7 @@ class EcoSkillsPlugin : LibreforgePlugin() {
 
     override fun loadConfigCategories(): List<ConfigCategory> {
         return listOf(
+            MagicTypes,
             Stats,
             Effects,
             Skills
@@ -81,6 +84,7 @@ class EcoSkillsPlugin : LibreforgePlugin() {
     override fun handleReload() {
         ActionBarHandler(this).startTicking()
         TemporaryBossBarHandler(this).startTicking()
+        MagicHandler(this).startTicking()
     }
 
     override fun loadPluginCommands(): List<PluginCommand> {
