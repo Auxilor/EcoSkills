@@ -1,6 +1,6 @@
 package com.willfp.ecoskills.util
 
-import com.willfp.ecoskills.obj.Levellable
+import com.willfp.ecoskills.Levellable
 import org.bukkit.OfflinePlayer
 
 class LevelMap<T : Levellable>(

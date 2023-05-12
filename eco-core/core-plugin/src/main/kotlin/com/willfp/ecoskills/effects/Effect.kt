@@ -1,10 +1,8 @@
 package com.willfp.ecoskills.effects
 
 import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.eco.core.registry.KRegistrable
 import com.willfp.ecoskills.EcoSkillsPlugin
-import com.willfp.ecoskills.obj.Levellable
-import com.willfp.ecoskills.obj.LevellableWithHolder
+import com.willfp.ecoskills.LevellableWithHolder
 import com.willfp.ecoskills.util.LevelMap
 import org.bukkit.OfflinePlayer
 

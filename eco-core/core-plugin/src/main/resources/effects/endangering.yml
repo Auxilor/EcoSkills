@@ -1,0 +1,14 @@
+name: "Endangering"
+placeholder: "min(%level% * 3, 100)"
+description: "&a%placeholder%%&8 chance to remove your opponents invulnerability frame"
+
+effects:
+  - id: clear_invulnerability
+    args:
+      chance: "%level% * 3"
+    triggers:
+      - melee_attack
+      - bow_attack
+      - trident_attack
+
+conditions: [ ]

@@ -18,14 +18,15 @@ gui:
     # And so on, you can add up to 9.
 
     materials:
+      - gray_stained_glass_pane
       - black_stained_glass_pane
     pattern:
-      - "111101111"
-      - "111111111"
-      - "110000011"
-      - "110010011"
-      - "111111111"
-      - "111101111"
+      - "211101112"
+      - "211111112"
+      - "210000012"
+      - "210010012"
+      - "211111112"
+      - "211101112"
 
   player-info:
     row: 1
@@ -96,14 +97,15 @@ stats-gui:
     # And so on, you can add up to 9.
 
     materials:
+      - gray_stained_glass_pane
       - black_stained_glass_pane
     pattern:
-      - "111101111"
-      - "111111111"
-      - "101010101"
-      - "110101011"
-      - "111111111"
-      - "011101111"
+      - "211101112"
+      - "211111112"
+      - "201010102"
+      - "210101012"
+      - "211111112"
+      - "211101112"
 
   player-info:
     row: 1
@@ -120,7 +122,7 @@ stats-gui:
     name: "&eGo Back"
     location:
       row: 6
-      column: 1
+      column: 4
 
   close:
     item: barrier
@@ -194,7 +196,7 @@ level-gui:
 
     unlocked:
       item: lime_stained_glass_pane
-      name: "&a%skill% Level %level_numeral%"
+      name: "&a%skill% %level_numeral%"
       lore:
         - "&f"
         - "&fRewards:"
@@ -203,7 +205,7 @@ level-gui:
         - "&aUNLOCKED"
     in-progress:
       item: yellow_stained_glass_pane
-      name: "&e%skill% Level %level_numeral%"
+      name: "&e%skill% %level_numeral%"
       lore:
         - "&f"
         - "&fRewards:"
@@ -214,7 +216,7 @@ level-gui:
         - "&8» &e%current_xp%&8/&7%required_xp% &fXP"
     locked:
       item: red_stained_glass_pane
-      name: "&c%skill% Level %level_numeral%"
+      name: "&c%skill% %level_numeral%"
       lore:
         - "&f"
         - "&fRewards:"

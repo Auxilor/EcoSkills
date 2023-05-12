@@ -1,0 +1,15 @@
+name: "Strong Impact"
+placeholder: "%level% * 0.2"
+description: "&a%placeholder%%&8 chance to deal &a3x&8 damage"
+
+effects:
+  - id: damage_multiplier
+    args:
+      chance: "%level% * 0.2"
+      multiplier: 3
+    triggers:
+      - melee_attack
+      - bow_attack
+      - trident_attack
+
+conditions: [ ]

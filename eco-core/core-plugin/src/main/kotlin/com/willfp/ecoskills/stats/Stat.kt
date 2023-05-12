@@ -10,7 +10,7 @@ import com.willfp.ecoskills.api.getBaseStatLevel
 import com.willfp.ecoskills.api.getBonusStatLevel
 import com.willfp.ecoskills.api.getStatLevel
 import com.willfp.ecoskills.gui.components.StatIcon
-import com.willfp.ecoskills.obj.LevellableWithHolder
+import com.willfp.ecoskills.LevellableWithHolder
 import com.willfp.ecoskills.util.LevelMap
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player

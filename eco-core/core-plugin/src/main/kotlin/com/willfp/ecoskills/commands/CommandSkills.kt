@@ -14,4 +14,11 @@ class CommandSkills(plugin: EcoPlugin) : PluginCommand(
     override fun onExecute(player: Player, args: List<String>) {
         SkillsGUI.open(player)
     }
+
+    override fun getAliases(): List<String> {
+        return listOf(
+            "stats",
+            "skill"
+        )
+    }
 }

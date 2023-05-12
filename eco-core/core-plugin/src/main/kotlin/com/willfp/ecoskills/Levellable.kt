@@ -1,4 +1,4 @@
-package com.willfp.ecoskills.obj
+package com.willfp.ecoskills
 
 import com.github.benmanes.caffeine.cache.Caffeine
 import com.willfp.eco.core.config.interfaces.Config
@@ -14,8 +14,6 @@ import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.toNiceString
 import com.willfp.eco.util.toNumeral
-import com.willfp.ecoskills.EcoSkillsPlugin
-import com.willfp.ecoskills.util.DescriptionPlaceholder
 import com.willfp.ecoskills.util.LeaderboardEntry
 import com.willfp.ecoskills.util.LevelInjectable
 import com.willfp.ecoskills.util.loadDescriptionPlaceholders

@@ -1,7 +1,6 @@
-package com.willfp.ecoskills.obj
+package com.willfp.ecoskills
 
 import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.libreforge.Holder
 import com.willfp.libreforge.ViolationContext
 import com.willfp.libreforge.conditions.ConditionList

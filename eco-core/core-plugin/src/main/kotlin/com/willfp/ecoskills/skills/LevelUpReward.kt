@@ -2,7 +2,7 @@ package com.willfp.ecoskills.skills
 
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.effects.effects
-import com.willfp.ecoskills.obj.Levellable
+import com.willfp.ecoskills.Levellable
 import com.willfp.ecoskills.stats.Stat
 import com.willfp.ecoskills.stats.stats
 import org.bukkit.OfflinePlayer

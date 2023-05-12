@@ -1,0 +1,14 @@
+name: "Bravery"
+placeholder: "%level% * 1.5"
+description: "&8Take &a%placeholder%%&8 less damage from bosses"
+
+effects:
+  - id: damage_multiplier
+    args:
+      multiplier: "1 - (%level% * 0.015)"
+    triggers:
+      - take_entity_damage
+    filters:
+      only_bosses: true
+
+conditions: [ ]
