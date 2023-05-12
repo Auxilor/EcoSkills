@@ -2,9 +2,9 @@ package com.willfp.ecoskills.gui.components
 
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.gui.menu.Menu
-import com.willfp.eco.core.gui.slot.MaskItems
 import com.willfp.eco.core.items.Items
 import com.willfp.eco.core.items.builder.ItemStackBuilder
+import com.willfp.eco.core.map.nestedMap
 import com.willfp.eco.core.placeholder.context.placeholderContext
 import com.willfp.eco.util.evaluateExpression
 import com.willfp.eco.util.lineWrap
@@ -22,14 +22,15 @@ class SkillLevelComponent(
     private val plugin: EcoPlugin,
     private val skill: Skill
 ) : LevelComponent() {
-
-    override val pattern = plugin.configYml.getStrings("level-gui.progression-slots.pattern")
+    override val pattern: List<String> = plugin.configYml.getStrings("level-gui.progression-slots.pattern")
     override val maxLevel = skill.maxLevel
 
-    override fun getLevelItem(player: Player, menu: Menu, level: Int, levelState: LevelState): ItemStack {
-        val key = levelState.name.lowercase().replace("_", "-")
+    private val itemCache = nestedMap<LevelState, Int, ItemStack>()
 
-        return ItemStackBuilder(Items.lookup(plugin.configYml.getString("level-gui.progression-slots.$key.item")))
+    override fun getLevelItem(player: Player, menu: Menu, level: Int, levelState: LevelState): ItemStack {
+        val key = levelState.key
+
+        fun item() = ItemStackBuilder(Items.lookup(plugin.configYml.getString("level-gui.progression-slots.$key.item")))
             .setDisplayName(
                 plugin.configYml.getFormattedString("level-gui.progression-slots.$key.name")
                     .replace("%skill%", skill.name)
@@ -52,6 +53,12 @@ class SkillLevelComponent(
                 ).roundToInt()
             )
             .build()
+
+        return if (levelState != LevelState.IN_PROGRESS) {
+            itemCache[levelState].getOrPut(level) { item() }
+        } else {
+            item()
+        }
     }
 
     override fun getLevelState(player: Player, level: Int): LevelState {
