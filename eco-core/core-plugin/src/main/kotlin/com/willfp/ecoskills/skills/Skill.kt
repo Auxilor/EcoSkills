@@ -6,11 +6,12 @@ import com.willfp.eco.core.data.keys.PersistentDataKeyType
 import com.willfp.eco.core.data.profile
 import com.willfp.eco.core.placeholder.PlayerPlaceholder
 import com.willfp.eco.core.placeholder.context.placeholderContext
-import com.willfp.eco.util.NumberUtils
+import com.willfp.eco.util.evaluateExpression
 import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.toNiceString
 import com.willfp.eco.util.toNumeral
 import com.willfp.ecoskills.EcoSkillsPlugin
+import com.willfp.ecoskills.Levellable
 import com.willfp.ecoskills.api.getFormattedRequiredXP
 import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.api.getSkillProgress
@@ -19,7 +20,6 @@ import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.gui.components.SkillIcon
 import com.willfp.ecoskills.gui.menus.SkillLevelGUI
 import com.willfp.ecoskills.libreforge.TriggerLevelUpSkill
-import com.willfp.ecoskills.Levellable
 import com.willfp.ecoskills.stats.Stats
 import com.willfp.ecoskills.util.InvalidConfigurationException
 import com.willfp.ecoskills.util.LevelInjectable
@@ -116,7 +116,7 @@ class Skill(
      */
     fun getXPRequired(level: Int): Double {
         if (xpFormula != null) {
-            return NumberUtils.evaluateExpression(
+            return evaluateExpression(
                 xpFormula,
                 placeholderContext(
                     injectable = LevelInjectable(level)
@@ -153,15 +153,16 @@ class Skill(
             s.replace("%percentage_progress%", (player.getSkillProgress(this) * 100).toNiceString())
                 .replace("%current_xp%", player.getSkillXP(this).toNiceString())
                 .replace("%required_xp%", player.getFormattedRequiredXP(this))
-                .replace("%description%", this.getDescription(player))
+                .replace("%description%", this.getDescription(level))
                 .replace("%skill%", this.name)
                 .replace("%level%", level.toString())
                 .replace("%level_numeral%", level.toNumeral())
+                .injectRewardPlaceholders(level)
         }
 
         // Replace multi-line placeholders.
         val processed = withPlaceholders.flatMap { s ->
-            val margin = s.count { it == ' ' }
+            val margin = s.length - s.trimStart().length
 
             if (s.contains("%rewards%")) {
                 getRewardMessages(level).addMargin(margin)
@@ -172,7 +173,22 @@ class Skill(
             }
         }
 
-        return processed.formatEco(player)
+        return processed.formatEco(
+            placeholderContext(
+                player = player
+            )
+        )
+    }
+
+    // Total hack, but that's how I did it before and I *really* don't want to change it.
+    private fun String.injectRewardPlaceholders(level: Int): String {
+        var processed = this
+
+        for (reward in rewards) {
+            processed = reward.reward.addPlaceholdersInto(this, reward.getCumulativeLevels(level))
+        }
+
+        return processed
     }
 
     private fun List<String>.addMargin(margin: Int): List<String> {
@@ -200,7 +216,7 @@ class Skill(
 
         for (placeholder in loadDescriptionPlaceholders(config)) {
             val id = placeholder.id
-            val value = NumberUtils.evaluateExpression(placeholder.expr, context)
+            val value = evaluateExpression(placeholder.expr, context)
 
             messages.replaceAll { s -> s.replace("%$id%", value.toNiceString()) }
         }

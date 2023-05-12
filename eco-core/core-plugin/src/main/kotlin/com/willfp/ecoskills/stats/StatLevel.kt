@@ -1,7 +1,6 @@
 package com.willfp.ecoskills.stats
 
 import com.willfp.eco.core.EcoPlugin
-import com.willfp.ecoskills.skills.Skill
 import com.willfp.libreforge.Holder
 import com.willfp.libreforge.conditions.ConditionList
 import com.willfp.libreforge.effects.EffectList

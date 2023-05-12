@@ -7,7 +7,6 @@ import org.bukkit.NamespacedKey
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle
 import org.bukkit.entity.Player
-import java.util.UUID
 
 // Maps BossBar's to their expiry time
 private val bossBars = mutableMapOf<NamespacedKey, Long>()

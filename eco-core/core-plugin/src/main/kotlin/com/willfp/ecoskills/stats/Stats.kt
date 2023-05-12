@@ -8,8 +8,6 @@ import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.api.averageSkillLevel
 import com.willfp.ecoskills.api.totalSkillLevel
 import com.willfp.ecoskills.gui.menus.StatsGUI
-import com.willfp.ecoskills.skills.Skill
-import com.willfp.ecoskills.skills.Skills
 import com.willfp.libreforge.loader.LibreforgePlugin
 import com.willfp.libreforge.loader.configs.ConfigCategory
 

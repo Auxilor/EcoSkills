@@ -1,7 +1,6 @@
 package com.willfp.ecoskills.skills
 
 import com.willfp.eco.core.EcoPlugin
-import com.willfp.eco.core.placeholder.Placeholder
 import com.willfp.eco.core.placeholder.RegistrablePlaceholder
 import com.willfp.eco.core.placeholder.context.PlaceholderContext
 import com.willfp.eco.util.savedDisplayName

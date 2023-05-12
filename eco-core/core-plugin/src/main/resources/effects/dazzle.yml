@@ -8,7 +8,7 @@ effects:
   - id: potion_effect
     args:
       chance: "1.5 * %level%"
-      effect: nausea
+      effect: confusion
       level: 3
       duration: "18 + %level% * 2"
     triggers:

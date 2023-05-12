@@ -4,7 +4,6 @@ import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.registry.Registry
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.gui.menus.SkillsGUI
-import com.willfp.ecoskills.gui.menus.StatsGUI
 import com.willfp.ecoskills.util.InvalidConfigurationException
 import com.willfp.libreforge.loader.LibreforgePlugin
 import com.willfp.libreforge.loader.configs.ConfigCategory

@@ -10,7 +10,7 @@ import com.willfp.eco.core.placeholder.PlayerStaticPlaceholder
 import com.willfp.eco.core.placeholder.PlayerlessPlaceholder
 import com.willfp.eco.core.placeholder.context.placeholderContext
 import com.willfp.eco.core.registry.KRegistrable
-import com.willfp.eco.util.NumberUtils
+import com.willfp.eco.util.evaluateExpression
 import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.toNiceString
 import com.willfp.eco.util.toNumeral
@@ -19,7 +19,6 @@ import com.willfp.ecoskills.util.LevelInjectable
 import com.willfp.ecoskills.util.loadDescriptionPlaceholders
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
-import org.bukkit.entity.Player
 import java.util.UUID
 import java.util.concurrent.TimeUnit
 
@@ -69,12 +68,29 @@ abstract class Levellable(
         PlayerlessPlaceholder(plugin, "${id}_name") {
             name
         }.register()
+
+        PlayerPlaceholder(plugin, "${id}_description") {
+            getDescription(getActualLevel(it))
+        }.register()
     }
 
     internal open fun getActualLevel(player: OfflinePlayer) = getSavedLevel(player)
 
     internal fun getSavedLevel(player: OfflinePlayer) = player.profile.read(key)
     internal fun setSavedLevel(player: OfflinePlayer, level: Int) = player.profile.write(key, level)
+
+    fun addPlaceholdersInto(string: String, level: Int): String {
+        val context = placeholderContext(
+            injectable = LevelInjectable(level)
+        )
+
+        // This isn't the best way to do this, but it works!
+        return string
+            .replace("%ecoskills_${id}_numeral%", level.toNumeral())
+            .replace("%ecoskills_${id}_description%", getDescription(level))
+            .replace("%ecoskills_${id}%", level.toString())
+            .formatEco(context)
+    }
 
     fun getTop(position: Int): LeaderboardEntry? {
         require(position > 0) { "Position must be greater than 0" }
@@ -88,18 +104,16 @@ abstract class Levellable(
         )
     }
 
-    fun getDescription(player: Player): String {
+    fun getDescription(level: Int): String {
         var desc = unformattedDescription
 
         val context = placeholderContext(
-            player = player,
-            injectable = LevelInjectable(getActualLevel(player))
+            injectable = LevelInjectable(level)
         )
 
         for (placeholder in loadDescriptionPlaceholders(config)) {
             val id = placeholder.id
-            val value = NumberUtils.evaluateExpression(placeholder.expr, context)
-
+            val value = evaluateExpression(placeholder.expr, context)
             desc = desc.replace("%$id%", value.toNiceString())
         }
 

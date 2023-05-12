@@ -3,8 +3,6 @@ package com.willfp.ecoskills.effects
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.registry.Registry
 import com.willfp.ecoskills.EcoSkillsPlugin
-import com.willfp.ecoskills.skills.Skill
-import com.willfp.ecoskills.skills.Skills
 import com.willfp.libreforge.loader.LibreforgePlugin
 import com.willfp.libreforge.loader.configs.ConfigCategory
 

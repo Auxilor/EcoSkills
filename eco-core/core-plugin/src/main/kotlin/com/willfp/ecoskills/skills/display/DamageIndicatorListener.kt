@@ -3,8 +3,8 @@ package com.willfp.ecoskills.skills.display
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.Prerequisite
 import com.willfp.eco.core.integrations.hologram.HologramManager
-import com.willfp.eco.util.NumberUtils
 import com.willfp.eco.util.formatEco
+import com.willfp.eco.util.randDouble
 import com.willfp.eco.util.toNiceString
 import com.willfp.ecoskills.skills.isSkillCrit
 import org.bukkit.GameMode
@@ -51,9 +51,9 @@ class DamageIndicatorListener(
         }
 
         text = if (plugin.configYml.getBool("damage-indicators.final-damage")) {
-            text.replace("%damage%", NumberUtils.format(event.finalDamage))
+            text.replace("%damage%", event.finalDamage.toNiceString())
         } else {
-            text.replace("%damage%", NumberUtils.format(event.damage))
+            text.replace("%damage%", event.damage.toNiceString())
         }.formatEco()
 
         val holo = HologramManager.createHologram(location, listOf(text))
@@ -102,9 +102,9 @@ class DamageIndicatorListener(
         val z = plugin.configYml.getDouble("damage-indicators.max-z-offset")
 
         return this.add(
-            NumberUtils.randFloat(-x, x),
-            NumberUtils.randFloat(-y, y),
-            NumberUtils.randFloat(-z, z)
+            randDouble(-x, x),
+            randDouble(-y, y),
+            randDouble(-z, z)
         )
     }
 }

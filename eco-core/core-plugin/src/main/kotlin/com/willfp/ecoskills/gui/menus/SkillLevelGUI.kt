@@ -12,13 +12,10 @@ import com.willfp.eco.core.gui.slot.FillerMask
 import com.willfp.eco.core.gui.slot.MaskItems
 import com.willfp.eco.core.items.Items
 import com.willfp.eco.core.items.builder.ItemStackBuilder
-import com.willfp.eco.util.toNumeral
-import com.willfp.ecomponent.components.LevelComponent
-import com.willfp.ecomponent.components.LevelState
 import com.willfp.ecoskills.api.getSkillLevel
+import com.willfp.ecoskills.gui.components.SkillLevelComponent
 import com.willfp.ecoskills.skills.Skill
 import org.bukkit.entity.Player
-import org.bukkit.inventory.ItemStack
 
 class SkillLevelGUI(
     plugin: EcoPlugin,
@@ -30,45 +27,12 @@ class SkillLevelGUI(
         val maskPattern = plugin.configYml.getStrings("level-gui.mask.pattern").toTypedArray()
         val maskItems = MaskItems.fromItemNames(plugin.configYml.getStrings("level-gui.mask.materials"))
 
-        val progressionPattern = plugin.configYml.getStrings("level-gui.progression-slots.pattern")
-
-        val component = object : LevelComponent(progressionPattern, skill.maxLevel) {
-            override fun getLevelItem(player: Player, menu: Menu, level: Int, levelState: LevelState): ItemStack {
-                val key = levelState.name.lowercase().replace("_", "-")
-
-                return ItemStackBuilder(Items.lookup(plugin.configYml.getString("level-gui.progression-slots.$key.item")))
-                    .setDisplayName(
-                        plugin.configYml.getFormattedString("level-gui.progression-slots.$key.name")
-                            .replace("%skill%", skill.name)
-                            .replace("%level%", level.toString())
-                            .replace("%level_numeral%", level.toNumeral())
-                    )
-                    .addLoreLines(
-                        skill.addPlaceholdersInto(
-                            plugin.configYml.getFormattedStrings("level-gui.progression-slots.$key.lore"),
-                            player,
-                            level = level
-                        )
-                    )
-                    .setAmount(
-                        if (plugin.configYml.getBool("level-gui.progression-slots.level-as-amount")) level else 1
-                    )
-                    .build()
-            }
-
-            override fun getLevelState(player: Player, level: Int): LevelState {
-                return when {
-                    level <= player.getSkillLevel(skill) -> LevelState.UNLOCKED
-                    level == player.getSkillLevel(skill) + 1 -> LevelState.IN_PROGRESS
-                    else -> LevelState.LOCKED
-                }
-            }
-        }
+        val levelComponent = SkillLevelComponent(plugin, skill)
 
         menu = menu(plugin.configYml.getInt("level-gui.rows")) {
             title = skill.name
 
-            maxPages(component.pages)
+            maxPages(levelComponent.pages)
 
             setMask(
                 FillerMask(
@@ -77,7 +41,11 @@ class SkillLevelGUI(
                 )
             )
 
-            addComponent(1, 1, component)
+            addComponent(1, 1, levelComponent)
+
+            defaultPage {
+                levelComponent.getPageOf(it.getSkillLevel(skill))
+            }
 
             // Instead of the page changer, this will show up when on the first page
             addComponent(

@@ -3,6 +3,11 @@
 # by Auxilor
 #
 
+# Even if eco is set up to use a database, you can
+# force EcoSkills to save to local storage to disable
+# cross-server sync.
+use-local-storage: false
+
 gui:
   rows: 6
 
@@ -63,6 +68,7 @@ gui:
       - "&8» &e%current_xp%&8/&7%required_xp% &fXP"
       - "&f"
       - "&eClick to view Level Progression!"
+    line-wrap: 32
 
   unknown-skill-icon:
     name: "&#964b00Unknown Skill"
@@ -170,8 +176,10 @@ level-gui:
       - "00000000p"
       - "00000000q"
 
-    # If the amount of the item should be the level
-    level-as-amount: true
+    # The amount of the item as a function of the level
+    item-amount: "%level%"
+    # For example, increasing every 10 levels would be "ceil((%level% + 1) / 10)"
+    # The value is always rounded down.
 
     prev-page:
       material: arrow

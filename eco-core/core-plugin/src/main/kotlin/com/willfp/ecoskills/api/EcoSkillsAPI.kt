@@ -7,7 +7,6 @@ import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.effects.effects
 import com.willfp.ecoskills.skills.Skill
-import com.willfp.ecoskills.skills.SkillLevel
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.skills.skills
 import com.willfp.ecoskills.stats.Stat

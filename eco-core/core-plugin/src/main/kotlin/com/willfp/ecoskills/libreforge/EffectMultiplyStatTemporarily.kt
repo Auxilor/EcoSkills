@@ -2,7 +2,7 @@ package com.willfp.ecoskills.libreforge
 
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.eco.util.NumberUtils
+import com.willfp.eco.util.randInt
 import com.willfp.ecoskills.api.addStatModifier
 import com.willfp.ecoskills.api.modifiers.ModifierOperation
 import com.willfp.ecoskills.api.modifiers.StatModifier
@@ -34,7 +34,7 @@ class EffectMultiplyStatTemporarily(
         val player = data.player ?: return false
         val stat = Stats.getByID(config.getString("stat")) ?: return false
         val multiplier = config.getDoubleFromExpression("multiplier", data)
-        val uuid = UUID.nameUUIDFromBytes("mst_${NumberUtils.randInt(0, 1000000)}".toByteArray())
+        val uuid = UUID.nameUUIDFromBytes("mst_${randInt(0, 1000000)}".toByteArray())
 
         player.addStatModifier(
             StatModifier(

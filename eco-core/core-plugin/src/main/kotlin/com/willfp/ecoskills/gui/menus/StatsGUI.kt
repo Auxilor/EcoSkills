@@ -10,7 +10,6 @@ import com.willfp.ecoskills.gui.components.BackButton
 import com.willfp.ecoskills.gui.components.CloseButton
 import com.willfp.ecoskills.gui.components.PlayerInfoIcon
 import com.willfp.ecoskills.gui.components.addComponent
-import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.stats.Stats
 import org.bukkit.entity.Player
 

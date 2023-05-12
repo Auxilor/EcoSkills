@@ -6,11 +6,11 @@ import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.toNiceString
 import com.willfp.eco.util.toNumeral
 import com.willfp.ecoskills.EcoSkillsPlugin
+import com.willfp.ecoskills.LevellableWithHolder
 import com.willfp.ecoskills.api.getBaseStatLevel
 import com.willfp.ecoskills.api.getBonusStatLevel
 import com.willfp.ecoskills.api.getStatLevel
 import com.willfp.ecoskills.gui.components.StatIcon
-import com.willfp.ecoskills.LevellableWithHolder
 import com.willfp.ecoskills.util.LevelMap
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
@@ -32,7 +32,7 @@ class Stat(
     ): List<String> {
         // Replace placeholders in the strings with their actual values.
         return strings.map { s ->
-            s.replace("%description%", this.getDescription(player))
+            s.replace("%description%", this.getDescription(level))
                 .replace("%stat%", this.name)
                 .replace("%level%", level.toString())
                 .replace("%level_numeral%", level.toNumeral())
