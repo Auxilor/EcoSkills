@@ -122,6 +122,7 @@ stats-gui:
     lore:
       - "&fLevel: &a%level%"
       - "&8&o%description%"
+    line-wrap: 24
 
   back:
     item: arrow

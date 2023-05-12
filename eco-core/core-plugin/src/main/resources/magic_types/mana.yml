@@ -1,5 +1,5 @@
-name: "&#9003fcᛟ Mana"
+name: "&#40ffe6✿ Mana"
 
-regen-rate: "0.02 * %ecoskills_max_mana%"
+regen-rate: "0.02 * %ecoskills_mana_limit%"
 
-limit: "100 + %ecoskills_mysticism%"
+limit: "100 + %ecoskills_wisdom%"

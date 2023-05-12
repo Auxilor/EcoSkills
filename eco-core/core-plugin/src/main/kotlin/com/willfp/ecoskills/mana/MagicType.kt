@@ -23,7 +23,7 @@ class MagicType(
 
     init {
         PlayerlessPlaceholder(plugin, "${id}_name") {
-            plugin.configYml.getFormattedString("mana.name")
+            config.getFormattedString("name")
         }.register()
 
         PlayerPlaceholder(plugin, id) {
@@ -36,7 +36,7 @@ class MagicType(
 
         PlayerPlaceholder(plugin, "${id}_limit") {
             getLimit(it).toNiceString()
-        }
+        }.register()
     }
 
     override fun onRegister() {
@@ -57,5 +57,13 @@ class MagicType(
         ).toInt()
 
         player.magic[this] += toRegen
+    }
+
+    override fun equals(other: Any?): Boolean {
+        return other is MagicType && other.id == this.id
+    }
+
+    override fun hashCode(): Int {
+        return id.hashCode()
     }
 }

@@ -17,7 +17,6 @@ import com.willfp.ecoskills.stats.statModifiers
 import com.willfp.ecoskills.stats.stats
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
-import sun.jvm.hotspot.oops.CellTypeState.value
 import java.util.UUID
 
 /*

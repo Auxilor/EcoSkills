@@ -1,6 +1,9 @@
-name: "&#42f566✎ Wisdom"
+name: "&#40ffe6✎ Wisdom"
 placeholder: "%level%"
 description: "&8Increases xp gain by &a%placeholder%%"
+
+# Alternative description if using mana:
+# description: "&8Increases xp gain by &a%placeholder%%&8 and max &#40ffe6Mana ✿&8 by &a%placeholder%"
 
 gui:
   position:

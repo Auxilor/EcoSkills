@@ -5,6 +5,7 @@ import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.gui.slot
 import com.willfp.eco.core.items.Items
 import com.willfp.eco.core.items.builder.modify
+import com.willfp.eco.util.lineWrap
 import com.willfp.eco.util.toNumeral
 import com.willfp.ecoskills.api.getStatLevel
 import com.willfp.ecoskills.stats.Stat
@@ -31,7 +32,7 @@ class StatIcon(
                 stat.addPlaceholdersInto(
                     plugin.configYml.getStrings("stats-gui.stat-icon.lore"),
                     player
-                )
+                ).lineWrap(plugin.configYml.getInt("stats-gui.stat-icon.line-wrap"))
             )
         }
     }
