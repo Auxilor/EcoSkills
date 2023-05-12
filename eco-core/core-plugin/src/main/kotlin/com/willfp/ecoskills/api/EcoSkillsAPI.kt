@@ -78,6 +78,9 @@ Stats
 fun OfflinePlayer.getBaseStatLevel(stat: Stat): Int =
     this.stats[stat]
 
+fun OfflinePlayer.setBaseStatLevel(stat: Stat, value: Int) =
+    this.stats.set(stat, value)
+
 fun OfflinePlayer.getStatLevel(stat: Stat): Int =
     if (this is Player) this.statModifiers.getModifiedValue(stat) else this.getBaseStatLevel(stat)
 
