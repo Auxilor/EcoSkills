@@ -19,7 +19,7 @@ class SkillIcon(
     config: Config,
     plugin: EcoPlugin
 ) : PositionedComponent {
-    private val hideBeforeLevel1 = plugin.configYml.getBool("hide-before-level-1")
+    private val hideBeforeLevel1 = plugin.configYml.getBool("skill.hide-before-level-1")
 
     private val baseIcon = Items.lookup(config.getString("icon")).item
 

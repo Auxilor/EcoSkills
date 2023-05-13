@@ -18,7 +18,7 @@ import org.bukkit.event.Listener
 class GainXPDisplay(
     private val plugin: EcoPlugin
 ) : Listener {
-    private val hideBeforeLevel1 = plugin.configYml.getBool("hide-before-level-1")
+    private val hideBeforeLevel1 = plugin.configYml.getBool("skills.hide-before-level-1")
 
     private val sound = if (plugin.configYml.getBool("skills.gain-xp.sound.enabled")) {
         PlayableSound.create(
