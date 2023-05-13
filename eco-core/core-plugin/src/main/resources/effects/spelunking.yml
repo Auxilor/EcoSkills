@@ -11,6 +11,7 @@ effects:
     triggers:
       - block_item_drop
     filters:
+      player_placed: false
       blocks:
         - "nether_quartz_ore"
         - "coal_ore"
@@ -37,6 +38,7 @@ effects:
     triggers:
       - block_item_drop
     filters:
+      player_placed: false
       blocks:
         - "nether_quartz_ore"
         - "coal_ore"

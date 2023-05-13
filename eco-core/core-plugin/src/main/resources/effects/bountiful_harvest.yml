@@ -1,0 +1,45 @@
+name: "Bountiful Harvest"
+placeholders:
+  chance: "(%level% * 8) % 100"
+  multiplier: "floor(%level% * 8 / 100) + 2"
+description: "&a%chance%%&8 chance to get &a%multiplier%x&8 drops from crops"
+
+effects:
+  - id: multiply_drops # Base Multiplier
+    args:
+      multiplier: "floor(%level% * 8 / 100) + 1"
+    triggers:
+      - block_item_drop
+    filters:
+      fully_grown: true
+      blocks:
+        - beetroots
+        - carrots
+        - chorus_flower
+        - kelp
+        - nether_wart
+        - potatoes
+        - twisting_vines
+        - weeping_vines
+        - wheat
+
+  - id: multiply_drops # Bonus Multiplier
+    args:
+      chance: "(%level% * 8) % 100"
+      multiplier: "floor(%level% * 8 / 100) + 2"
+    triggers:
+      - block_item_drop
+    filters:
+      fully_grown: true
+      blocks:
+        - beetroots
+        - carrots
+        - chorus_flower
+        - kelp
+        - nether_wart
+        - potatoes
+        - twisting_vines
+        - weeping_vines
+        - wheat
+
+conditions: [ ]

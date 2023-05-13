@@ -1,0 +1,15 @@
+name: "Serrated Strikes"
+placeholder: "min(%level% * 2, 100)"
+description: "&a%placeholder%%&8 chance to ignore fall damage"
+
+effects:
+  - id: cancel_event
+    args:
+      chance: "%level% * 2"
+    triggers:
+      - take_damage
+    filters:
+      damage_cause:
+        - fall
+
+conditions: [ ]
