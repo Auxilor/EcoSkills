@@ -117,4 +117,4 @@ xp-gain-methods:
   - trigger: move
     args:
       chance: 0.05
-    multiplier: 15 * %v%
+    multiplier: 32
