@@ -113,5 +113,8 @@ reward-messages:
     - "    %ecoskills_accelerated_escape_description%"
 
 
-xp-gain-methods: [ ]
-# TODO: Add exploration xp gain methods
+xp-gain-methods:
+  - trigger: move
+    args:
+      chance: 0.05
+    multiplier: 15 * %v%
