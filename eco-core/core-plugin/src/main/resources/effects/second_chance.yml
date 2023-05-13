@@ -1,0 +1,17 @@
+name: "Second Chance"
+placeholder: "%level% * 0.1"
+description: "&8Items have a &a%placeholder%%&8 chance to instantly repair below &a30&8 durability"
+
+effects:
+  - id: repair_item
+    args:
+      # This will follow a binomial distribution where the amount of trials is the durability check (30 by default, see above)
+      # Since this chance will be called many times, it would be best to have this be low.
+      chance: "%level% * 0.1"
+      damage: 100000 # Big number to fully repair
+    filters:
+      item_durability_below: 30
+    triggers:
+      - damage_item
+
+conditions: [ ]
