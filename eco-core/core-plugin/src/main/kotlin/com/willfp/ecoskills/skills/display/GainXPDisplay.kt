@@ -18,6 +18,8 @@ import org.bukkit.event.Listener
 class GainXPDisplay(
     private val plugin: EcoPlugin
 ) : Listener {
+    private val hideBeforeLevel1 = plugin.configYml.getBool("hide-before-level-1")
+
     private val sound = if (plugin.configYml.getBool("skills.gain-xp.sound.enabled")) {
         PlayableSound.create(
             plugin.configYml.getSubsection("skills.gain-xp.sound")
@@ -74,7 +76,9 @@ class GainXPDisplay(
     private fun String.formatMessage(event: PlayerSkillXPGainEvent): String =
         this.replace(
             "%skill%",
-            if (event.player.getSkillLevel(event.skill) > 0) event.skill.name else plugin.langYml.getString("learning-skill")
+            if (event.player.getSkillLevel(event.skill) > 0 || !hideBeforeLevel1) event.skill.name else plugin.langYml.getString(
+                "learning-skill"
+            )
         )
             .replace("%current_xp%", event.player.getSkillXP(event.skill).toNiceString())
             .replace("%required_xp%", event.player.getFormattedRequiredXP(event.skill))
