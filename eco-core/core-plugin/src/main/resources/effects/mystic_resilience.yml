@@ -1,6 +1,6 @@
 name: "Mystic Resilience"
 placeholder: "%level% * 0.5"
-description: "&a%chance%%&8 chance to ignore negative potion effects"
+description: "&a%placeholder%%&8 chance to ignore negative potion effects"
 
 effects:
   - id: cancel_event
