@@ -10,6 +10,8 @@ import com.willfp.eco.util.evaluateExpression
 import com.willfp.eco.util.toNiceString
 import com.willfp.eco.util.toNumeral
 import com.willfp.ecoskills.EcoSkillsPlugin
+import com.willfp.ecoskills.libreforge.EffectArgumentMagicCost
+import com.willfp.libreforge.effects.arguments.EffectArguments
 import org.bukkit.entity.Player
 
 class MagicType(
@@ -41,6 +43,7 @@ class MagicType(
 
     override fun onRegister() {
         Prices.registerPriceFactory(PriceFactoryMagic(this))
+        EffectArguments.register(EffectArgumentMagicCost(this))
     }
 
     fun getLimit(player: Player) = evaluateExpression(
