@@ -1,0 +1,10 @@
+name: "Overcompensation"
+placeholder: "%level% * 0.75"
+description: "&a%placeholder%%&8 chance to get lapis back after enchanting"
+
+effects:
+  - id: dont_consume_lapis_chance
+    args:
+      chance: "%level% * 0.75"
+
+conditions: [ ]
