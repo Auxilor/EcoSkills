@@ -3,7 +3,7 @@ placeholder: "%level% * 4"
 description: "&8Run &a%placeholder%%&8 faster for &a1.5&8 seconds after taking damage"
 
 effects:
-  - id: give_holder
+  - id: add_holder
     args:
       effects:
         - id: movement_speed_multiplier
