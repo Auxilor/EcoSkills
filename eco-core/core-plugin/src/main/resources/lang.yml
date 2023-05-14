@@ -22,7 +22,7 @@ learning-skill: "Learning New Skill..."
 
 line-wrap-color: "&8"
 
-top-line-format: "%rank%. %playername% - %level%"
+top-line-format: "%rank%. %player% - %level%"
 top:
   format:
     - "---- Skills Leaderboard ----"

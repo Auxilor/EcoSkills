@@ -25,12 +25,18 @@ class CommandTop(plugin: EcoPlugin) :
         val pageIndex = if (skill == null) 0 else 1
         val page = args.getOrNull(pageIndex)?.toIntOrNull() ?: 1
 
-        if (skill == null && args.getOrNull(pageIndex)?.toIntOrNull() == null) {
+        if (
+            skill == null
+            && args.getOrNull(pageIndex)?.toIntOrNull() == null
+            && args.getOrNull(pageIndex)?.isBlank() == false
+        ) {
             sender.sendMessage(plugin.langYml.getMessage("invalid-skill"))
             return
         }
 
-        val positions = ((page)..(page + 9)).toList()
+        val offset = (page - 1) * 10
+
+        val positions = ((offset + page)..(offset + page + 9)).toList()
 
         val top = if (skill == null) {
             positions.mapNotNull { Skills.getTop(it) }
