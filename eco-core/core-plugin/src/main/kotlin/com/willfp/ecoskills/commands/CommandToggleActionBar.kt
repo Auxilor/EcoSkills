@@ -14,7 +14,6 @@ class CommandToggleActionBar(plugin: EcoPlugin) : Subcommand(
 ) {
 
     override fun onExecute(player: Player, args: List<String>) {
-
         when (player.isPersistentActionBarEnabled) {
             true -> {
                 player.sendCompatibleActionBarMessage("")

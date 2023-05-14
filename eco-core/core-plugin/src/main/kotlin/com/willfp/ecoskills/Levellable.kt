@@ -92,7 +92,8 @@ abstract class Levellable(
 
         val uuid = leaderboardCache.get(true).getOrNull(position - 1) ?: return null
 
-        val player = Bukkit.getOfflinePlayer(uuid)
+        val player = Bukkit.getOfflinePlayer(uuid).takeIf { it.hasPlayedBefore() } ?: return null
+
         return LeaderboardEntry(
             player,
             getActualLevel(player)

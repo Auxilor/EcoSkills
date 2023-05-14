@@ -16,6 +16,7 @@ class CommandSkills(plugin: EcoPlugin) : PluginCommand(
 ) {
     init {
         this.addSubcommand(CommandToggleActionBar(plugin))
+            .addSubcommand(CommandTop(plugin))
     }
 
     override fun onExecute(player: Player, args: List<String>) {

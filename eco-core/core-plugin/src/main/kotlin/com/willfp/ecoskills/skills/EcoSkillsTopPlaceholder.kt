@@ -6,7 +6,7 @@ import com.willfp.eco.core.placeholder.context.PlaceholderContext
 import com.willfp.eco.util.savedDisplayName
 import java.util.regex.Pattern
 
-class EcoSkillsTopPlaceholder(
+class EcoSkillsSkillTopPlaceholder(
     private val plugin: EcoPlugin
 ) : RegistrablePlaceholder {
     private val pattern = Pattern.compile("(top_)[a-z]+_[0-9]+_[a-z]+")
@@ -31,7 +31,36 @@ class EcoSkillsTopPlaceholder(
 
         return when (args.last()) {
             "name" -> skill.getTop(place)?.player?.savedDisplayName
-            "amount" -> skill.getTop(place)?.level?.toString()
+            "level", "amount" -> skill.getTop(place)?.level?.toString()
+            else -> null
+        }
+    }
+}
+
+class EcoSkillsTopPlaceholder(
+    private val plugin: EcoPlugin
+) : RegistrablePlaceholder {
+    private val pattern = Pattern.compile("(top_)[0-9]+_[a-z]+")
+
+    override fun getPattern(): Pattern = pattern
+    override fun getPlugin(): EcoPlugin = plugin
+
+    override fun getValue(params: String, ctx: PlaceholderContext): String? {
+        val args = params.split("_")
+
+        if (args.size < 2) {
+            return null
+        }
+
+        if (args[0] != "top") {
+            return null
+        }
+
+        val place = args[1].toIntOrNull() ?: return null
+
+        return when (args.last()) {
+            "name" -> Skills.getTop(place)?.player?.savedDisplayName
+            "level", "amount" -> Skills.getTop(place)?.level?.toString()
             else -> null
         }
     }

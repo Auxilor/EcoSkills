@@ -23,6 +23,7 @@ import com.willfp.ecoskills.libreforge.TriggerGainSkillXp
 import com.willfp.ecoskills.libreforge.TriggerLevelUpSkill
 import com.willfp.ecoskills.mana.MagicHandler
 import com.willfp.ecoskills.mana.MagicTypes
+import com.willfp.ecoskills.skills.EcoSkillsSkillTopPlaceholder
 import com.willfp.ecoskills.skills.EcoSkillsTopPlaceholder
 import com.willfp.ecoskills.skills.SkillCritListener
 import com.willfp.ecoskills.skills.Skills
@@ -79,10 +80,14 @@ class EcoSkillsPlugin : LibreforgePlugin() {
         Filters.register(FilterSkillCrit)
 
         EcoSkillsTopPlaceholder(this).register()
+        EcoSkillsSkillTopPlaceholder(this).register()
     }
 
     override fun handleReload() {
-        ActionBarHandler(this).startTicking()
+        if (this.configYml.getBool("persistent-action-bar.enabled")) {
+            ActionBarHandler(this).startTicking()
+        }
+
         TemporaryBossBarHandler(this).startTicking()
         MagicHandler(this).startTicking()
     }
