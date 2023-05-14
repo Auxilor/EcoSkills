@@ -17,6 +17,7 @@ import com.willfp.ecoskills.stats.statModifiers
 import com.willfp.ecoskills.stats.stats
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
+import sun.jvm.hotspot.oops.CellTypeState.value
 import java.util.UUID
 
 /*
@@ -80,6 +81,10 @@ fun OfflinePlayer.getBaseStatLevel(stat: Stat): Int =
 
 fun OfflinePlayer.setBaseStatLevel(stat: Stat, value: Int) =
     this.stats.set(stat, value)
+
+fun OfflinePlayer.giveBaseStatLevel(stat: Stat, amount: Int) {
+    this.stats[stat] += amount
+}
 
 fun OfflinePlayer.getStatLevel(stat: Stat): Int =
     if (this is Player) this.statModifiers.getModifiedValue(stat) else this.getBaseStatLevel(stat)

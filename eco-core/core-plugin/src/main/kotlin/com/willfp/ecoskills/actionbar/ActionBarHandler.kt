@@ -1,8 +1,12 @@
 package com.willfp.ecoskills.actionbar
 
 import com.willfp.eco.core.EcoPlugin
+import com.willfp.eco.core.data.keys.PersistentDataKey
+import com.willfp.eco.core.data.keys.PersistentDataKeyType
+import com.willfp.eco.core.data.profile
 import com.willfp.eco.core.placeholder.context.placeholderContext
 import com.willfp.eco.util.containsIgnoreCase
+import com.willfp.eco.util.namespacedKeyOf
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.entity.Player
@@ -17,6 +21,19 @@ private const val TICK_DURATION = 50L
 private val blacklist = mutableMapOf<UUID, Long>()
 
 private val whitelist = mutableMapOf<UUID, Long>()
+
+private val actionBarEnabledKey = PersistentDataKey(
+    namespacedKeyOf("ecoskills", "actionbar_enabled"),
+    PersistentDataKeyType.BOOLEAN,
+    true
+)
+
+fun Player.togglePersistentActionBar() {
+    this.profile.write(actionBarEnabledKey, !this.profile.read(actionBarEnabledKey))
+}
+
+val Player.isPersistentActionBarEnabled: Boolean
+    get() = this.profile.read(actionBarEnabledKey)
 
 fun Player.sendCompatibleActionBarMessage(message: String) {
     // Have to use the shit method for compatibility.
@@ -68,7 +85,7 @@ class ActionBarHandler(
         .getStrings("persistent-action-bar.disabled-in-worlds")
 
     private fun trySendMessage(player: Player) {
-        if (player.isPersistentActionBarPaused) {
+        if (player.isPersistentActionBarPaused || !player.isPersistentActionBarEnabled) {
             return
         }
 

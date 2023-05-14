@@ -4,8 +4,12 @@ import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.eco.util.StringUtils
 import com.willfp.eco.util.formatEco
+import com.willfp.ecoskills.api.giveBaseStatLevel
 import com.willfp.ecoskills.api.giveSkillXP
+import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.skills.Skills
+import com.willfp.ecoskills.stats.Stat
+import com.willfp.ecoskills.stats.Stats
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
@@ -20,49 +24,34 @@ class CommandGive(plugin: EcoPlugin) :
     ) {
 
     override fun onExecute(sender: CommandSender, args: List<String>) {
-        if (args.isEmpty()) {
-            sender.sendMessage(plugin.langYml.getMessage("requires-player"))
-            return
+        val player = notifyPlayerRequired(args.getOrNull(0), "invalid-player")
+
+        val obj = notifyNull(
+            Skills.getByID(args.getOrNull(1)) ?: Stats.getByID(args.getOrNull(1)),
+            "invalid-skill-stat"
+        )
+
+        val amount = notifyNull(args.getOrNull(2)?.toIntOrNull(), "invalid-amount")
+
+        val key = when (obj) {
+            is Skill -> {
+                player.giveSkillXP(obj, amount.toDouble())
+                "gave-skill-xp"
+            }
+
+            is Stat -> {
+                player.giveBaseStatLevel(obj, amount)
+                "gave-stat"
+            }
+
+            else -> ""
         }
-
-        if (args.size == 1) {
-            sender.sendMessage(plugin.langYml.getMessage("requires-skill"))
-            return
-        }
-
-        if (args.size == 2) {
-            sender.sendMessage(plugin.langYml.getMessage("requires-amount"))
-            return
-        }
-
-        val player = Bukkit.getPlayer(args[0])
-
-        if (player == null) {
-            sender.sendMessage(plugin.langYml.getMessage("invalid-player"))
-            return
-        }
-
-        val obj = Skills.getByID(args[1].lowercase())
-
-        if (obj == null) {
-            sender.sendMessage(plugin.langYml.getMessage("invalid-skill"))
-            return
-        }
-
-        val amount = args[2].toIntOrNull()
-
-        if (amount == null) {
-            sender.sendMessage(plugin.langYml.getMessage("invalid-amount"))
-            return
-        }
-
-        player.giveSkillXP(obj, amount.toDouble())
 
         sender.sendMessage(
-            this.plugin.langYml.getMessage("gave-skill-xp", StringUtils.FormatOption.WITHOUT_PLACEHOLDERS)
+            this.plugin.langYml.getMessage(key, StringUtils.FormatOption.WITHOUT_PLACEHOLDERS)
                 .replace("%player%", player.name)
                 .replace("%amount%", amount.toString())
-                .replace("%skill%", obj.name)
+                .replace("%obj%", obj.name)
                 .formatEco()
         )
     }
