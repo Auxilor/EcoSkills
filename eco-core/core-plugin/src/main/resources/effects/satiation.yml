@@ -1,6 +1,6 @@
 name: "Satiation"
 placeholder: "%level% * 2"
-description: "&8Lose &a%chance%%&8 less hunger"
+description: "&8Lose &a%placeholder%%&8 less hunger"
 
 effects:
   - id: hunger_multiplier
