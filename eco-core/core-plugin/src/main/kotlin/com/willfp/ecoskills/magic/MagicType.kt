@@ -1,4 +1,4 @@
-package com.willfp.ecoskills.mana
+package com.willfp.ecoskills.magic
 
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.placeholder.PlayerPlaceholder
@@ -22,6 +22,8 @@ class MagicType(
     private val regenRateExpr = config.getString("regen-rate")
 
     private val limitExpr = config.getString("limit")
+
+    val joinOnFull = config.getBool("join-on-full")
 
     init {
         PlayerlessPlaceholder(plugin, "${id}_name") {

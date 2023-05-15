@@ -1,4 +1,4 @@
-package com.willfp.ecoskills.mana
+package com.willfp.ecoskills.magic
 
 import com.willfp.eco.core.map.nestedMap
 import org.bukkit.entity.Player

@@ -1,7 +1,7 @@
 package com.willfp.ecoskills.libreforge
 
-import com.willfp.ecoskills.mana.MagicType
-import com.willfp.ecoskills.mana.magic
+import com.willfp.ecoskills.magic.MagicType
+import com.willfp.ecoskills.magic.magic
 import com.willfp.libreforge.ConfigurableElement
 import com.willfp.libreforge.NoCompileData
 import com.willfp.libreforge.effects.arguments.EffectArgument

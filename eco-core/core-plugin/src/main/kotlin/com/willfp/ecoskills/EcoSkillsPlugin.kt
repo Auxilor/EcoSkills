@@ -21,8 +21,9 @@ import com.willfp.ecoskills.libreforge.FilterSkill
 import com.willfp.ecoskills.libreforge.FilterSkillCrit
 import com.willfp.ecoskills.libreforge.TriggerGainSkillXp
 import com.willfp.ecoskills.libreforge.TriggerLevelUpSkill
-import com.willfp.ecoskills.mana.MagicHandler
-import com.willfp.ecoskills.mana.MagicTypes
+import com.willfp.ecoskills.magic.MagicHandler
+import com.willfp.ecoskills.magic.MagicListener
+import com.willfp.ecoskills.magic.MagicTypes
 import com.willfp.ecoskills.skills.EcoSkillsSkillTopPlaceholder
 import com.willfp.ecoskills.skills.EcoSkillsTopPlaceholder
 import com.willfp.ecoskills.skills.SkillCritListener
@@ -104,6 +105,7 @@ class EcoSkillsPlugin : LibreforgePlugin() {
             LevelUpDisplay(this),
             GainXPDisplay(this),
             DamageIndicatorListener(this),
+            MagicListener(this),
             ActionBarGamemodeListener,
             SkillCritListener
         )

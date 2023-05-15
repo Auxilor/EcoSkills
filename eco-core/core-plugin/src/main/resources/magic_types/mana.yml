@@ -1,5 +1,6 @@
 name: "&#40ffe6🌊 Mana"
 
 regen-rate: "0.02 * %ecoskills_mana_limit%"
-
 limit: "100 + %ecoskills_wisdom%"
+
+join-on-full: true

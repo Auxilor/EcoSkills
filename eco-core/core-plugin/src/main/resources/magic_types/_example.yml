@@ -12,3 +12,6 @@ regen-rate: "0.02 * %ecoskills_mana_limit%"
 
 # The maximum amount of this type a player can have
 limit: "100 + %ecoskills_wisdom%"
+
+# If players should join with full magic (true) or empty magic (false)
+join-on-full: true

@@ -1,4 +1,4 @@
-package com.willfp.ecoskills.mana
+package com.willfp.ecoskills.magic
 
 import com.willfp.eco.core.placeholder.context.PlaceholderContext
 import com.willfp.eco.core.placeholder.context.PlaceholderContextSupplier
