@@ -1,0 +1,28 @@
+name: "Mystic Resilience"
+placeholder: "%level% * 0.5"
+description: "&a%placeholder%%&8 chance to ignore negative potion effects"
+
+effects:
+  - id: cancel_event
+    args:
+      chance: "%level% * 0.5"
+    triggers:
+      - potion_effect
+    filters:
+      potion_effect:
+        - confusion
+        - wither
+        - poison
+        - bad_omen
+        - blindness
+        - darkness
+        - harm
+        - hunger
+        - levitation
+        - slow
+        - slow_digging
+        - unluck
+        - weakness
+        - slow_falling
+
+conditions: [ ]

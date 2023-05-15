@@ -1,0 +1,16 @@
+name: "Accelerated Escape"
+placeholder: "%level% * 4"
+description: "&8Run &a%placeholder%%&8 faster for &a1.5&8 seconds after taking damage"
+
+effects:
+  - id: add_holder
+    args:
+      effects:
+        - id: movement_speed_multiplier
+          args:
+            multiplier: "1 + (%level% * 0.04)"
+      duration: 30
+    triggers:
+      - take_damage
+
+conditions: [ ]

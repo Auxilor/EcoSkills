@@ -1,0 +1,10 @@
+name: "Shamanism"
+placeholder: "%level% * 4"
+description: "&8Heal &a%placeholder%%&8 faster"
+
+effects:
+  - id: regen_multiplier
+    args:
+      multiplier: "1 + (%level% * 0.04)"
+
+conditions: [ ]

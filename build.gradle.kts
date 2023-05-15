@@ -33,12 +33,12 @@ allprojects {
 
         maven("https://repo.papermc.io/repository/maven-public/")
         maven("https://repo.auxilor.io/repository/maven-public/")
+        maven("https://repo.codemc.org/repository/nms/")
         maven("https://jitpack.io")
-        maven("https://repo.dmulloy2.net/repository/public/")
     }
 
     dependencies {
-        compileOnly("com.willfp:eco:6.55.0")
+        compileOnly("com.willfp:eco:6.58.0")
         compileOnly("org.jetbrains:annotations:23.0.0")
         compileOnly("org.jetbrains.kotlin:kotlin-stdlib:1.7.10")
     }
@@ -51,6 +51,7 @@ allprojects {
     tasks {
         shadowJar {
             relocate("com.willfp.libreforge.loader", "com.willfp.ecoskills.libreforge.loader")
+            relocate("com.willfp.ecomponent", "com.willfp.ecoskills.ecomponent")
         }
 
         compileKotlin {

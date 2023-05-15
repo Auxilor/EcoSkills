@@ -1,0 +1,10 @@
+name: "Efficient Brewing"
+placeholder: "%level% * 1.5"
+description: "&8Potions take &a%placeholder%%&8 less time to brew"
+
+effects:
+  - id: brew_time_multiplier
+    args:
+      multiplier: "1 - (%level% * 0.015)"
+
+conditions: [ ]

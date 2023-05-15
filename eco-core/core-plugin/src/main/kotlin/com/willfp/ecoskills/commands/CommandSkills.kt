@@ -2,47 +2,31 @@ package com.willfp.ecoskills.commands
 
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.impl.PluginCommand
-import com.willfp.ecoskills.gui.SkillGUI
+import com.willfp.ecoskills.gui.menus.SkillsGUI
 import com.willfp.ecoskills.skills.Skills
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 
-class CommandSkills(plugin: EcoPlugin) :
-    PluginCommand(
-        plugin,
-        "skills",
-        "ecoskills.command.skills",
-        false
-    ) {
-
+class CommandSkills(plugin: EcoPlugin) : PluginCommand(
+    plugin,
+    "skills",
+    "ecoskills.command.skills",
+    true
+) {
     init {
-        this.addSubcommand(CommandTop(plugin))
-            .addSubcommand(CommandRank(plugin))
-            .addSubcommand(CommandToggleActionbar(plugin))
-            .addSubcommand(CommandToggleSound(plugin))
+        this.addSubcommand(CommandToggleActionBar(plugin))
+            .addSubcommand(CommandTop(plugin))
     }
 
-    override fun onExecute(sender: CommandSender, args: List<String>) {
-        if (sender !is Player) {
-            sender.sendMessage(this.plugin.langYml.getMessage("not-player"))
-            return
-        }
-
+    override fun onExecute(player: Player, args: List<String>) {
         if (args.isEmpty()) {
-            SkillGUI.open(sender)
+            SkillsGUI.open(player)
             return
         }
 
-        val id = args[0].lowercase()
-        val skill = Skills.getByID(id)
-
-        if (skill == null) {
-            sender.sendMessage(this.plugin.langYml.getMessage("invalid-skill"))
-            return
-        }
-
-        skill.gui.menu.open(sender)
+        val skill = notifyNull(Skills.getByID(args.getOrNull(0)), "invalid-skill")
+        skill.levelGUI.open(player)
     }
 
     override fun tabComplete(sender: CommandSender, args: List<String>): List<String> {
@@ -58,5 +42,12 @@ class CommandSkills(plugin: EcoPlugin) :
         }
 
         return emptyList()
+    }
+
+    override fun getAliases(): List<String> {
+        return listOf(
+            "stats",
+            "skill"
+        )
     }
 }

@@ -1,0 +1,22 @@
+name: "&#f7ff85※ Crit Chance"
+placeholder: "min(%level%, 100)"
+description: "&8Gives you a &a%placeholder%%&8 chance to deal crits"
+
+gui:
+  position:
+    row: 3
+    column: 6
+
+  icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmFiMTgwZTgyMGY3MTYyOWYwMWYyNWI2MmJkZWI5YzMyNGQ1MGEzOGFmNzRlNmE5MzIxNDM5NDcxMDQ2ZGM0MSJ9fX0=
+
+effects:
+  - id: make_skill_crit
+    args:
+      chance: "%level%"
+      multiplier: "1.5 + (%ecoskills_crit_damage% * 0.005)"
+    triggers:
+      - melee_attack
+      - bow_attack
+      - trident_attack
+
+conditions: [ ]

@@ -1,7 +1,7 @@
 package com.willfp.ecoskills.libreforge
 
 import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.ecoskills.api.SkillEvent
+import com.willfp.ecoskills.api.event.SkillEvent
 import com.willfp.libreforge.NoCompileData
 import com.willfp.libreforge.filters.Filter
 import com.willfp.libreforge.triggers.TriggerData

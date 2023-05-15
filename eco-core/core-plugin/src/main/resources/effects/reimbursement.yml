@@ -1,0 +1,10 @@
+name: "Reimbursement"
+placeholder: "%level% * 0.5"
+description: "&a%placeholder%%&8 chance to get experience back after enchanting"
+
+effects:
+  - id: dont_consume_xp_chance
+    args:
+      chance: "%level% * 0.5"
+
+conditions: [ ]

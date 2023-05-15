@@ -1,10 +1,25 @@
-name: "Fishing"
-description: "Fish to earn Fishing XP"
-disabled-in-worlds: []
-enabled: true
+name: Fishing
+description: Fish to earn XP
 
-# Add more levels if you want
-level-xp-requirements:
+gui:
+  icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGRhNzcwYjY4NzRmYWJkMjhhNzM0NTI2YzU3MzlmMGNkNmI2YTk1NDhjYjlkZGI1NmZiMmRjMjVmODQ5NWMxIn19fQ==
+
+  lore:
+    - "&fImproves Stats:"
+    - "&8» &r%ecoskills_defense_name%"
+    - "&8» &r%ecoskills_wisdom_name%"
+    - "&f"
+    - "&fEffects:"
+    - "&8» &r&6Eye of the Depths %ecoskills_eye_of_the_depths_numeral%"
+    - "   %ecoskills_eye_of_the_depths_description%"
+    - "&8» &r&6Magnetic Rod %ecoskills_magnetic_rod_numeral%"
+    - "   %ecoskills_magnetic_rod_description%"
+
+  position:
+    row: 4
+    column: 3
+
+xp-requirements:
   - 1
   - 2
   - 4
@@ -53,56 +68,35 @@ level-xp-requirements:
   - 58000
   - 62000
   - 68000
-  - 74000
   - 80000
   - 100000
 
-gui:
-  name: "Fishing"
-  item: 'player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGRhNzcwYjY4NzRmYWJkMjhhNzM0NTI2YzU3MzlmMGNkNmI2YTk1NDhjYjlkZGI1NmZiMmRjMjVmODQ5NWMxIn19fQ=='
-  position:
-    row: 4
-    column: 3
-  lore:
-    - "&fImproves Stats:"
-    - "&8» &r%ecoskills_defense_name%"
-    - "&8» &r%ecoskills_wisdom_name%"
-    - "&f"
-    - "&fEffects:"
-    - "&8» &r&6Eye of the Depths %ecoskills_eye_of_the_depths_numeral%"
-    - "   %ecoskills_eye_of_the_depths_description%"
-    - "&8» &r&6Magnetic Rod %ecoskills_magnetic_rod_numeral%"
-    - "   %ecoskills_magnetic_rod_description%"
-
 rewards:
-  # The actual rewards to be given
-  rewards:
-    - "defense::2"
-    - "wisdom::1"
-    - "eye_of_the_depths::1"
-    - "magnetic_rod::1"
+  - reward: defense
+    levels: 2
 
-  level-commands: []
+  - reward: wisdom
+    levels: 1
 
-  # The chat messages to send on level up
-  chat-messages:
-    1:
-      - " &8» &r&f+2 %ecoskills_defense_name%"
-      - " &8» &r&f+1 %ecoskills_wisdom_name%"
-      - " &8» &r&6Eye of the Depths %ecoskills_eye_of_the_depths_numeral%"
-      - "    %ecoskills_eye_of_the_depths_description%"
-      - " &8» &r&6Magnetic Rod %ecoskills_magnetic_rod_numeral%"
-      - "    %ecoskills_magnetic_rod_description%"
+  - reward: eye_of_the_depths
+    levels: 1
 
-  # The lore to show in the levels gui
-  progression-lore:
-    1:
-      - " &8» &r&f+2 %ecoskills_defense_name%"
-      - " &8» &r&f+1 %ecoskills_wisdom_name%"
-      - " &8» &r&6Eye of the Depths %ecoskills_eye_of_the_depths_numeral%"
-      - "    %ecoskills_eye_of_the_depths_description%"
-      - " &8» &r&6Magnetic Rod %ecoskills_magnetic_rod_numeral%"
-      - "    %ecoskills_magnetic_rod_description%"
+  - reward: magnetic_rod
+    levels: 1
 
-# The experience to give for each in-game experience dropped
-xp-per-experience-dropped: 0.1
+level-up-effects: [ ]
+
+placeholders: [ ]
+
+reward-messages:
+  1:
+    - " &8» &r&f+2 %ecoskills_defense_name%"
+    - " &8» &r&f+1 %ecoskills_wisdom_name%"
+    - " &8» &r&6Eye of the Depths %ecoskills_eye_of_the_depths_numeral%"
+    - "    %ecoskills_eye_of_the_depths_description%"
+    - " &8» &r&6Magnetic Rod %ecoskills_magnetic_rod_numeral%"
+    - "    %ecoskills_magnetic_rod_description%"
+
+xp-gain-methods:
+  - trigger: catch_fish
+    multiplier: 0.1

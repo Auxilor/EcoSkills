@@ -1,0 +1,14 @@
+# The ID of the magic type is the name of the .yml file,
+# for example mana.yml has the ID of mana
+# You can place magic types anywhere in this folder,
+# including in subfolders if you want to organize your magic type configs
+# _example.yml is not loaded.
+
+# The name of the magic type, shown to players
+name: "&#40ffe6 Mana"
+
+# The rate at which the magic type regenerates per second
+regen-rate: "0.02 * %ecoskills_mana_limit%"
+
+# The maximum amount of this type a player can have
+limit: "100 + %ecoskills_wisdom%"

@@ -1,8 +1,8 @@
 package com.willfp.ecoskills.libreforge
 
 import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.ecoskills.api.EcoSkillsAPI
-import com.willfp.ecoskills.api.PlayerSkillLevelUpEvent
+import com.willfp.ecoskills.api.event.PlayerSkillLevelUpEvent
+import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.libreforge.NoCompileData
 import com.willfp.libreforge.arguments
@@ -19,16 +19,13 @@ object ConditionHasSkillLevel : Condition<NoCompileData>("has_skill_level") {
     }
 
     override fun isMet(player: Player, config: Config, compileData: NoCompileData): Boolean {
-        return EcoSkillsAPI.getInstance().getSkillLevel(
-            player,
-            Skills.getByID(config.getString("skill").lowercase()) ?: return false
-        ) >= config.getIntFromExpression("level", player)
+        val skill = Skills.getByID(config.getString("skill").lowercase()) ?: return false
+
+        return player.getSkillLevel(skill) >= config.getIntFromExpression("level", player)
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun handle(event: PlayerSkillLevelUpEvent) {
-        val player = event.player
-
-        player.updateEffects()
+        event.player.updateEffects()
     }
 }

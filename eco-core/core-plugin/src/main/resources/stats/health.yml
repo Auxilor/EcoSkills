@@ -1,0 +1,19 @@
+name: "&c❤ Health"
+placeholder: "%level%"
+description: "&8Gives &a+%placeholder%&8 health"
+
+gui:
+  enabled: false
+
+  position:
+    row: 5
+    column: 4
+
+  icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWNhYTc0NDZiZTg3NGJmMWExNGVkMWZjZWZjYzBhMDkyMzM2YzFiZjViZjQ2NWU5ZDI1NGRlZTM0YWZlYTc5In19fQ==
+
+effects:
+  - id: bonus_health
+    args:
+      health: "%level%"
+
+conditions: [ ]

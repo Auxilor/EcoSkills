@@ -1,0 +1,10 @@
+name: "Potionmaster"
+placeholder: "%level% * 4"
+description: "&8Brewed potions last &a%placeholder%%&8 longer"
+
+effects:
+  - id: potion_duration_multiplier
+    args:
+      multiplier: "1 + (%level% * 0.04)"
+
+conditions: [ ]

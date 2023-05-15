@@ -1,10 +1,25 @@
-name: "Woodcutting"
-description: "Cut down trees to earn Woodcutting XP"
-disabled-in-worlds: []
-enabled: true
+name: Woodcutting
+description: Cut down trees to earn XP
 
-# Add more levels if you want
-level-xp-requirements:
+gui:
+  icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjBjZDEzMjIzYThkOWMxNzNjZWRjZTZjNGJlYmViYTA2YTI0YTFiYTI3NWRkM2ViNWM3OTMzZjlhNzRiYTAxMSJ9fX0=
+
+  lore:
+    - "&fImproves Stats:"
+    - "&8» &r%ecoskills_strength_name%"
+    - "&8» &r%ecoskills_crit_damage_name%"
+    - "&f"
+    - "&fEffects:"
+    - "&8» &r&6Craftsmanship %ecoskills_craftsmanship_numeral%"
+    - "   %ecoskills_craftsmanship_description%"
+    - "&8» &r&6Master Lumberjack %ecoskills_master_lumberjack_numeral%"
+    - "   %ecoskills_master_lumberjack_description%"
+
+  position:
+    row: 3
+    column: 7
+
+xp-requirements:
   - 50
   - 125
   - 200
@@ -55,69 +70,57 @@ level-xp-requirements:
   - 3400000
   - 3700000
   - 4000000
-  - 5000000
-
-gui:
-  name: "Woodcutting"
-  item: 'player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjBjZDEzMjIzYThkOWMxNzNjZWRjZTZjNGJlYmViYTA2YTI0YTFiYTI3NWRkM2ViNWM3OTMzZjlhNzRiYTAxMSJ9fX0='
-  position:
-    row: 3
-    column: 7
-  lore:
-    - "&fImproves Stats:"
-    - "&8» &r%ecoskills_strength_name%"
-    - "&8» &r%ecoskills_crit_damage_name%"
-    - "&f"
-    - "&fEffects:"
-    - "&8» &r&6Craftsmanship %ecoskills_craftsmanship_numeral%"
-    - "   %ecoskills_craftsmanship_description%"
-    - "&8» &r&6Master Lumberjack %ecoskills_master_lumberjack_numeral%"
-    - "   %ecoskills_master_lumberjack_description%"
 
 rewards:
-  # The actual rewards to be given
-  rewards:
-    - "strength::2"
-    - "crit_damage::1"
-    - "craftsmanship::1"
-    - "master_lumberjack::1"
+  - reward: strength
+    levels: 2
 
-  level-commands: []
+  - reward: crit_damage
+    levels: 1
 
-  # The chat messages to send on level up
-  chat-messages:
-    1:
-      - " &8» &r&f+2 %ecoskills_strength_name%"
-      - " &8» &r&f+1 %ecoskills_crit_damage_name%"
-      - " &8» &r&6Craftsmanship %ecoskills_craftsmanship_numeral%"
-      - "    %ecoskills_craftsmanship_description%"
-      - " &8» &r&6Master Lumberjack %ecoskills_master_lumberjack_numeral%"
-      - "    %ecoskills_master_lumberjack_description%"
+  - reward: craftsmanship
+    levels: 1
 
-  # The lore to show in the levels gui
-  progression-lore:
-    1:
-      - " &8» &r&f+2 %ecoskills_strength_name%"
-      - " &8» &r&f+1 %ecoskills_crit_damage_name%"
-      - " &8» &r&6Craftsmanship %ecoskills_craftsmanship_numeral%"
-      - "    %ecoskills_craftsmanship_description%"
-      - " &8» &r&6Master Lumberjack %ecoskills_master_lumberjack_numeral%"
-      - "    %ecoskills_master_lumberjack_description%"
+  - reward: master_lumberjack
+    levels: 1
 
-# The xp rewards for each crop type
-# Specify with type:xp
-xp-rewards:
-  - "oak_log:6"
-  - "birch_log:6"
-  - "spruce_log:6"
-  - "jungle_log:6"
-  - "acacia_log:6"
-  - "dark_oak_log:6"
-  - "oak_wood:6"
-  - "birch_wood:6"
-  - "spruce_wood:6"
-  - "jungle_wood:6"
-  - "acacia_wood:6"
-  - "dark_oak_wood:6"
-  - "crimson_stem:14"
-  - "warped_stem:14"
+level-up-effects: [ ]
+
+placeholders: [ ]
+
+reward-messages:
+  1:
+    - " &8» &r&f+2 %ecoskills_strength_name%"
+    - " &8» &r&f+1 %ecoskills_crit_damage_name%"
+    - " &8» &r&6Craftsmanship %ecoskills_craftsmanship_numeral%"
+    - "    %ecoskills_craftsmanship_description%"
+    - " &8» &r&6Master Lumberjack %ecoskills_master_lumberjack_numeral%"
+    - "    %ecoskills_master_lumberjack_description%"
+
+
+xp-gain-methods:
+  - trigger: mine_block
+    multiplier: 6
+    filters:
+      player_placed: false
+      blocks:
+        - oak_log
+        - birch_log
+        - spruce_log
+        - jungle_log
+        - acacia_log
+        - dark_oak_log
+        - oak_wood
+        - birch_wood
+        - spruce_wood
+        - jungle_wood
+        - acacia_wood
+        - dark_oak_wood
+
+  - trigger: mine_block
+    multiplier: 14
+    filters:
+      player_placed: false
+      blocks:
+        - crimson_stem
+        - warped_stem

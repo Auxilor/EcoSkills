@@ -2,11 +2,12 @@ package com.willfp.ecoskills.commands
 
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.impl.Subcommand
-import com.willfp.eco.util.PlayerUtils
-import com.willfp.eco.util.StringUtils
-import com.willfp.ecoskills.data.LeaderboardHandler
-import com.willfp.ecoskills.getTotalSkillLevel
+import com.willfp.eco.core.placeholder.context.placeholderContext
+import com.willfp.eco.util.formatEco
+import com.willfp.eco.util.savedDisplayName
+import com.willfp.ecoskills.skills.Skills
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 
 
@@ -19,45 +20,59 @@ class CommandTop(plugin: EcoPlugin) :
     ) {
 
     override fun onExecute(sender: CommandSender, args: List<String>) {
-        val page = args.firstOrNull()?.toIntOrNull() ?: 1
-        val top = LeaderboardHandler.getPage(page)
+        val skill = Skills.getByID(args.getOrNull(0))
+
+        val pageIndex = if (skill == null) 0 else 1
+        val page = args.getOrNull(pageIndex)?.toIntOrNull() ?: 1
+
+        if (
+            skill == null
+            && args.getOrNull(pageIndex)?.toIntOrNull() == null
+            && args.getOrNull(pageIndex)?.isBlank() == false
+        ) {
+            sender.sendMessage(plugin.langYml.getMessage("invalid-skill"))
+            return
+        }
+
+        val offset = (page - 1) * 10
+
+        val positions = ((offset + page)..(offset + page + 9)).toList()
+
+        val top = if (skill == null) {
+            positions.mapNotNull { Skills.getTop(it) }
+        } else {
+            positions.mapNotNull { skill.getTop(it) }
+        }
 
         val messages = plugin.langYml.getStrings("top.format")
         val lines = mutableListOf<String>()
 
-        val useDisplayName = plugin.configYml.getBool("commands.top.use-display-name")
+        for ((index, entry) in top.withIndex()) {
+            val (player, level) = entry
 
-        for ((rank, player) in top) {
-            var line = plugin.langYml.getString("top-line-format")
-                .replace("%rank%", rank.toString())
-                .replace("%level%", player.getTotalSkillLevel().toString())
-
-            var name: String
-
-            @Suppress("SENSELESS_COMPARISON")
-            if (player == null) {
-                name = "Unknown Player"
-            } else {
-                name = player.name ?: "Unknown Player"
-
-                if (useDisplayName) {
-                    name = PlayerUtils.getSavedDisplayName(player)
-                }
-            }
-
-            line = line.replace("%playername%", name)
+            val line = plugin.langYml.getString("top-line-format")
+                .replace("%rank%", positions[index].toString())
+                .replace("%level%", level.toString())
+                .replace("%player%", player.savedDisplayName)
 
             lines.add(line)
         }
 
         val linesIndex = messages.indexOf("%lines%")
+
         if (linesIndex != -1) {
             messages.removeAt(linesIndex)
             messages.addAll(linesIndex, lines)
         }
 
         for (message in messages) {
-            sender.sendMessage(StringUtils.format(message))
+            sender.sendMessage(
+                message.formatEco(
+                    placeholderContext(
+                        player = sender as? Player
+                    )
+                )
+            )
         }
     }
 
@@ -67,7 +82,7 @@ class CommandTop(plugin: EcoPlugin) :
         if (args.size == 1) {
             StringUtil.copyPartialMatches(
                 args[0],
-                TabCompleteHelper.NUMBERS,
+                listOf(1, 2, 3, 4, 5).map { it.toString() },
                 completions
             )
             return completions

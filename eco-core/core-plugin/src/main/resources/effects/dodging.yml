@@ -1,0 +1,12 @@
+name: "Dodging"
+placeholder: "%level% * 0.5"
+description: "&a%placeholder%%&8 chance to ignore incoming damage"
+
+effects:
+  - id: cancel_event
+    args:
+      chance: "%level% * 0.5"
+    triggers:
+      - take_damage
+
+conditions: [ ]

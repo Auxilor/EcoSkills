@@ -3,7 +3,7 @@ environment:
     value: ${libreforgeVersion}
 
 options:
-  resource-id: 1351
-  bstats-id: 13052
+  resource-id: 2857
+  bstats-id: 16394
   color: "&#ff00ae"
-  uses-reflective-reload: false
+  proxy-package: "com.willfp.ecoskills.proxy"

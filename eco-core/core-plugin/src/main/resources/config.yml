@@ -3,12 +3,13 @@
 # by Auxilor
 #
 
-# Go to /plugins/eco/config.yml to change MySQL settings
+# Even if eco is set up to use a database, you can
+# force EcoSkills to save to local storage to disable
+# cross-server sync.
+use-local-storage: false
 
 gui:
   rows: 6
-
-  line-wrap: 40
 
   mask:
     # The way the mask works is by having a list of materials
@@ -22,22 +23,22 @@ gui:
     # And so on, you can add up to 9.
 
     materials:
+      - gray_stained_glass_pane
       - black_stained_glass_pane
     pattern:
-      - "111101111"
-      - "111111111"
-      - "110000011"
-      - "110010011"
-      - "111111111"
-      - "111101111"
+      - "211101112"
+      - "211111112"
+      - "210000012"
+      - "210010012"
+      - "211111112"
+      - "211101112"
 
   player-info:
     row: 1
     column: 5
 
-    click-to-open-stats: true
-
     name: "&f%player%&f's &fStats:"
+
     lore:
       - "&f"
       - " %ecoskills_defense_name%&f %ecoskills_defense_base% &e%ecoskills_defense_bonus%"
@@ -50,31 +51,42 @@ gui:
       - "&f"
       - "&7Total Skill Level: &f%ecoskills_total_skill_level%"
       - "&7Average Skill Level: &f%ecoskills_average_skill_level%"
+
+    view-more:
       - ""
       - "&eClick to view more!"
-
-  close:
-    material: barrier
-    name: "&cClose"
-    location:
-      row: 6
-      column: 5
 
   skill-icon:
     name: "&#ff00ae%skill% &d%level_numeral%"
     lore:
       - "&8&o%description%"
       - "&f"
-      - "%skill_specific%"
+      - "%gui_lore%"
       - "&f"
       - "&fProgress to next level:"
-      - "&8» &e%percentage_progress%"
+      - "&8» &e%percentage_progress%%"
       - "&8» &e%current_xp%&8/&7%required_xp% &fXP"
       - "&f"
       - "&eClick to view Level Progression!"
-      -
+    line-wrap: 32
+
+  unknown-skill-icon:
+    name: "&#964b00Unknown Skill"
+    icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmFkYzA0OGE3Y2U3OGY3ZGFkNzJhMDdkYTI3ZDg1YzA5MTY4ODFlNTUyMmVlZWQxZTNkYWYyMTdhMzhjMWEifX19
+    lore:
+      - "&7Keep playing to learn about"
+      - "&7and progress this skill!"
+
+  close:
+    item: barrier
+    name: "&cClose"
+    location:
+      row: 6
+      column: 5
+
   # Custom GUI slots; see here for a how-to: https://plugins.auxilor.io/all-plugins/custom-gui-slots
   custom-slots: [ ]
+
 
 stats-gui:
   rows: 6
@@ -91,42 +103,44 @@ stats-gui:
     # And so on, you can add up to 9.
 
     materials:
+      - gray_stained_glass_pane
       - black_stained_glass_pane
     pattern:
-      - "111101111"
-      - "111111111"
-      - "101010101"
-      - "110101011"
-      - "111111111"
-      - "011111111"
+      - "211101112"
+      - "211111112"
+      - "201010102"
+      - "210101012"
+      - "211111112"
+      - "211101112"
 
   player-info:
     row: 1
     column: 5
 
-    name: "&f%player%&f's &fStats:"
+  stat-icon:
+    name: "%stat%"
     lore:
-      - "&f"
-      - " %ecoskills_defense_name%&f %ecoskills_defense_base% &e%ecoskills_defense_bonus%"
-      - " %ecoskills_strength_name%&f %ecoskills_strength_base% &e%ecoskills_strength_bonus%"
-      - " %ecoskills_crit_chance_name%&f %ecoskills_crit_chance_base%% &e%ecoskills_crit_chance_bonus%"
-      - " %ecoskills_crit_damage_name%&f %ecoskills_crit_damage_base% &e%ecoskills_crit_damage_bonus%"
-      - " %ecoskills_speed_name%&f %ecoskills_speed_base% &e%ecoskills_speed_bonus%"
-      - " %ecoskills_wisdom_name%&f %ecoskills_wisdom_base% &e%ecoskills_wisdom_bonus%"
-      - " %ecoskills_ferocity_name%&f %ecoskills_ferocity_base% &e%ecoskills_ferocity_bonus%"
-      - "&f"
-      - "&7Total Skill Level: &f%ecoskills_total_skill_level%"
-      - "&7Average Skill Level: &f%ecoskills_average_skill_level%"
+      - "&fLevel: &a%level%"
+      - "&8&o%description%"
+    line-wrap: 24
 
   back:
-    material: arrow
-    name: "&fBack"
+    item: arrow
+    name: "&eGo Back"
     location:
       row: 6
-      column: 1
+      column: 4
+
+  close:
+    item: barrier
+    name: "&cClose"
+    location:
+      row: 6
+      column: 5
 
   # Custom GUI slots; see here for a how-to: https://plugins.auxilor.io/all-plugins/custom-gui-slots
   custom-slots: [ ]
+
 
 level-gui:
   rows: 6
@@ -163,8 +177,10 @@ level-gui:
       - "00000000p"
       - "00000000q"
 
-    # If the amount of the item should be the level
-    level-as-amount: true
+    # The amount of the item as a function of the level
+    item-amount: "%level%"
+    # For example, increasing every 10 levels would be "ceil((%level% + 1) / 10)"
+    # The value is always rounded down.
 
     prev-page:
       material: arrow
@@ -188,8 +204,8 @@ level-gui:
         column: 5
 
     unlocked:
-      material: lime_stained_glass_pane
-      name: "&a%skill% Level %level_numeral%"
+      item: lime_stained_glass_pane
+      name: "&a%skill% %level_numeral%"
       lore:
         - "&f"
         - "&fRewards:"
@@ -197,19 +213,19 @@ level-gui:
         - "&f"
         - "&aUNLOCKED"
     in-progress:
-      material: yellow_stained_glass_pane
-      name: "&e%skill% Level %level_numeral%"
+      item: yellow_stained_glass_pane
+      name: "&e%skill% %level_numeral%"
       lore:
         - "&f"
         - "&fRewards:"
         - "%rewards%"
         - "&f"
         - "&fProgress:"
-        - "&8» &e%percentage_progress%"
+        - "&8» &e%percentage_progress%%"
         - "&8» &e%current_xp%&8/&7%required_xp% &fXP"
     locked:
-      material: red_stained_glass_pane
-      name: "&c%skill% Level %level_numeral%"
+      item: red_stained_glass_pane
+      name: "&c%skill% %level_numeral%"
       lore:
         - "&f"
         - "&fRewards:"
@@ -222,31 +238,53 @@ level-gui:
       row: 6
       column: 5
 
-  skill-icon:
-    name: "&#ff00ae%skill% &d%level_numeral%"
-    lore:
-      - "&8&o%description%"
-      - "&f"
-      - "%skill_specific%"
-      - "&f"
-      - "&fProgress to next level:"
-      - "&8» &e%percentage_progress%"
-      - "&8» &e%current_xp%&8/&7%required_xp% &fXP"
-      - "&f"
-      - "&eClick to view Level Progression!"
   # Custom GUI slots; see here for a how-to: https://plugins.auxilor.io/all-plugins/custom-gui-slots
   custom-slots: [ ]
 
-skills:
-  prevent-levelling-while-afk: true # If the player is afk (Essentials) then don't give xp
 
-  # Ways to tell the player about skill progress
-  progress:
+# A constant action bar showing health and any other information to all players online
+persistent-action-bar:
+  # If the persistent action bar should be enabled
+  enabled: true
+  # If a player's health should be scaled to always display as 10 hearts.
+  scale-health: true
+  # The format
+  format: "&c❤ &f%player_health_rounded%&8/&f%player_max_health_rounded%                 &#e884b0🛡 &f%ecoskills_defense% &8| &#db0000🗡 &f%ecoskills_strength% &8| &#40ffe6✦ &f%ecoskills_speed%"
+
+  # Optional format if mana is being used.
+  # format: "&c❤ &f%player_health_rounded%&8/&f%player_max_health_rounded%                 &f%ecoskills_mana%&8/&f%ecoskills_mana_limit% &#40ffe6🌊"
+
+  # The worlds that the action bar should be disabled in.
+  disabled-in-worlds: [ ]
+
+damage-indicators:
+  # Requires a compatible Hologram plugin to be installed
+  enabled: true
+  final-damage: false # If final damage (with reductions applied) should be used.
+
+  format:
+    normal: "&7%damage%"
+    crit: "&f✧ <gradient:#f953c6>%damage%</gradient:#b91d73> &f✧"
+
+  healing:
+    enabled: true
+    format: "&a+%damage%"
+
+  max-x-offset: 0.6
+  max-y-offset: 0.6
+  max-z-offset: 0.6
+
+skills:
+  prevent-levelling-while-afk: true # If the player is AFK then don't give xp
+  hide-before-level-1: true # If skills should be hidden before level 1
+
+  # Ways to tell the player about skill xp gain
+  gain-xp:
     action-bar:
       # If the action bar should be used
       enabled: true
       # The actionbar message that should be sent
-      format: "&f%skill% &8| &9(%current_xp%/%required_xp%) &e+%gained_xp%"
+      message: "&f%skill% &8| &9(%current_xp%/%required_xp%) &e+%gained_xp%"
     boss-bar:
       # If the boss bar should be used
       enabled: false
@@ -262,20 +300,18 @@ skills:
       # If a sound should be played
       enabled: true
       # The sound that should be played
-      id: entity_experience_orb_pickup
+      sound: entity_experience_orb_pickup
       # Pitch between 0.5 and 2
       pitch: 2
       # The volume
       volume: 0.1
 
-  # Ways to tell the player about levelling up
   level-up:
     message:
-      level-as-numeral: true
       enabled: true
       message:
         - "&f"
-        - " &#ff00aeYou levelled up &d%skill%&#ff00ae to &eLevel %level%&#ff00ae!"
+        - " &#ff00aeYou levelled up &d%skill%&#ff00ae to &eLevel %level_numeral%&#ff00ae!"
         - "&f"
         - " &#ff00ae&lREWARDS:"
         - "%rewards%"
@@ -284,234 +320,8 @@ skills:
       # If a sound should be played
       enabled: true
       # The sound that should be played
-      id: entity_player_levelup
+      sound: entity_player_levelup
       # Pitch between 0.5 and 2
       pitch: 0.8
-
-stats:
-  defense:
-    name: "&#e884b0🛡 Defense"
-
-    description: "&8Take &a%percent_less_damage%%&8 less damage" # The description to be shown in lore and messages
-
-    stats-gui:
-      enabled: true
-      position:
-        row: 3
-        column: 2
-      item:
-        item: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjlhODczZjI0OGMzOTExMjIxODg3OWNjOWMwMzM0N2VkMTZlN2Y2MDIzOTBhYzdhNjgwNmY4ZTg0OTI3OTRkNSJ9fX0=
-        name: "%stat%"
-        lore:
-          - "&fLevel: &a%level%"
-          - "&8&o%description%"
-
-    # Disabled worlds
-    disabled-in-worlds: [ ]
-    # 100% halves the incoming damage
-    percent-less-damage-per-level: 0.25
-  strength:
-    name: "&#db0000🗡 Strength"
-
-    description: "&8Deal &a%percent_more_damage%%&8 more damage" # The description to be shown in lore and messages
-
-    stats-gui:
-      enabled: true
-      position:
-        row: 3
-        column: 4
-      item:
-        item: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWRmOTZjY2Q5Mjk5MGRkOGI4NTUzZDJjY2VhYjRjMmM5YjIwOGFhMjI1ZGIxNTc1ODJmY2Q1NjY5MTVkNGJjZiJ9fX0=
-        name: "%stat%"
-        lore:
-          - "&fLevel: &a%level%"
-          - "&8&o%description%"
-
-    # Disabled worlds
-    disabled-in-worlds: [ ]
-    # 100% is double damage
-    percent-more-damage-per-level: 0.25
-  crit_chance:
-    name: "&#f7ff85☣ Crit Chance"
-
-    description: "&8Gives you a &a%chance%%&8 chance to deal crits" # The description to be shown in lore and messages
-
-    stats-gui:
-      enabled: true
-      position:
-        row: 3
-        column: 6
-      item:
-        item: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmFiMTgwZTgyMGY3MTYyOWYwMWYyNWI2MmJkZWI5YzMyNGQ1MGEzOGFmNzRlNmE5MzIxNDM5NDcxMDQ2ZGM0MSJ9fX0=
-        name: "%stat%"
-        lore:
-          - "&fLevel: &a%level%"
-          - "&8&o%description%"
-
-    # Nothing happens above 100%, 200% is the same as it.
-    chance-per-level: 1
-  crit_damage:
-    name: "&9☠ Crit Damage"
-
-    description: "&8Crits deal &a%percent_more_damage%%&8 more damage" # The description to be shown in lore and messages
-
-    stats-gui:
-      enabled: true
-      position:
-        row: 3
-        column: 8
-      item:
-        item: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2UzN2RmMjdkMWU5MjVkMmY3OGRlNjkzNDEzYWRhYjc1ZDc5MTg4NDViYWM4ZjYxNzRmZGIyMmVjNTc3NjExZCJ9fX0=
-        name: "%stat%"
-        lore:
-          - "&fLevel: &a%level%"
-          - "&8&o%description%"
-
-    # Disabled worlds
-    disabled-in-worlds: [ ]
-    # The percent more damage to deal on crits for each level.
-    percent-more-damage-per-level: 0.5
-    # The amount more damage to deal on crits by default.
-    base-percent-more: 50
-  speed:
-    name: "&#40ffe6✦ Speed"
-
-    description: "&8Makes you move &a%percent_faster%%&8 faster" # The description to be shown in lore and messages
-
-    stats-gui:
-      enabled: true
-      position:
-        row: 4
-        column: 3
-      item:
-        item: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODYyNGJhY2I1ZjE5ODZlNjQ3N2FiY2U0YWU3ZGNhMTgyMGE1MjYwYjYyMzNiNTViYTFkOWJhOTM2Yzg0YiJ9fX0=
-        name: "%stat%"
-        lore:
-          - "&fLevel: &a%level%"
-          - "&8&o%description%"
-
-    # Disabled worlds
-    disabled-in-worlds: [ ]
-    # The percent more speed to give for the speed attribute (internal in the game)
-    # for each level
-    percent-faster-per-level: 1
-  wisdom:
-    name: "&#42f566✎ Wisdom"
-
-    description: "&8Increases xp gain by &a%percent_more_xp%%" # The description to be shown in lore and messages
-
-    stats-gui:
-      enabled: true
-      position:
-        row: 4
-        column: 5
-      item:
-        item: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzA1NGMyOWM3ODA5MDQ3MWMxZWEwNThiZDY0MTg5NzM5MWM5ZTQ2OTRhYTlkMTQwYWZiYmE4ZDBjYzQzNjM3In19fQ==
-        name: "%stat%"
-        lore:
-          - "&fLevel: &a%level%"
-          - "&8&o%description%"
-
-    # Disabled worlds
-    disabled-in-worlds: [ ]
-    # The percent more xp to gain from orbs for each level of the stat.
-    percent-more-xp-gain: 1
-  ferocity:
-    name: "&#6b0000⫽ Ferocity"
-
-    description: "&8Gives a &a%chance%%&8 chance to deal damage twice" # The description to be shown in lore and messages
-
-    stats-gui:
-      enabled: true
-      position:
-        row: 4
-        column: 7
-      item:
-        item: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjk2YTYzNTMwZjhmNGVkMzBhMWQzNjg2ZTk4OGY2NzYzMDBlNGYxODE0MDllMDc4YWUzMGY5ZTA2NDZmYjI3ZCJ9fX0=
-        name: "%stat%"
-        lore:
-          - "&fLevel: &a%level%"
-          - "&8&o%description%"
-
-    # Disabled worlds
-    disabled-in-worlds: [ ]
-    # The percent chance to deal damage twice
-    chance-per-level: 0.5
-  health:
-    name: "&c❤ Health"
-
-    description: "&8Gives &a+%health%&8 health" # The description to be shown in lore and messages
-
-    stats-gui:
-      enabled: false
-      position:
-        row: 5
-        column: 4
-      item:
-        item: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOWNhYTc0NDZiZTg3NGJmMWExNGVkMWZjZWZjYzBhMDkyMzM2YzFiZjViZjQ2NWU5ZDI1NGRlZTM0YWZlYTc5In19fQ==
-        name: "%stat%"
-        lore:
-          - "&fLevel: &a%level%"
-          - "&8&o%description%"
-
-    # Disabled worlds
-    disabled-in-worlds: [ ]
-    # The extra hp per level
-    health-per-level: 1
-  attack_speed:
-    name: "&#fcba03⚔ Attack Speed"
-
-    description: "&8Increases your attack speed by &a%percent_faster%%" # The description to be shown in lore and messages
-
-    stats-gui:
-      enabled: false
-      position:
-        row: 5
-        column: 6
-      item:
-        item: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmJiOGQ3MjU5YzhlNzI1ZTdjZjc1ODFjNzY5YWRkNDIyMmU3NjY3NWZlOTZlZDAxYWQ3YjRkYjdkNTU0ZjRhMyJ9fX0=
-        name: "%stat%"
-        lore:
-          - "&fLevel: &a%level%"
-          - "&8&o%description%"
-
-    # Disabled worlds
-    disabled-in-worlds: [ ]
-    # The percent more speed to give for the speed attribute (internal in the game)
-    # for each level
-    percent-faster-per-level: 1
-
-damage-indicators:
-  # Requires HolographicDisplays/GHolo/CMI to be installed
-  enabled: true
-  final-damage: false # If final damage (with reductions applied) should be used.
-  format:
-    normal: "&7%damage%"
-    crit: "&f✧ <gradient:#f953c6>%damage%</gradient:#b91d73> &f✧"
-  healing:
-    enabled: true
-    format: "&a+%damage%"
-  max-x-offset: 0.6
-  max-y-offset: 0.6
-  max-z-offset: 0.6
-
-# A constant action bar showing health and any other information to all players online
-persistent-action-bar:
-  # If the persistent action bar should be enabled
-  enabled: true
-  # If a player's health should be scaled to always display as 10 hearts.
-  scale-health: true
-  # The format
-  format: "&c❤ &f%player_health_rounded%&8/&f%player_max_health_rounded%                 &#e884b0🛡 &f%ecoskills_defense% &8| &#db0000🗡 &f%ecoskills_strength% &8| &#40ffe6✦ &f%ecoskills_speed%"
-  # Time from blacklist -> unblacklist (in milliseconds). Action bar messages are 2000 + 1000 fade,
-  # you can set it to a lower value to last for less of the fade.
-  reset-time: 3000
-  # Time between action bar updates (in ticks).
-  update-time: 5
-  # The worlds that the action bar should be disabled in.
-  disabled-in-worlds: [ ]
-
-commands:
-  top:
-    # If displayname (including rank) should be used
-    use-display-name: true
+      # The volume
+      volume: 1.0

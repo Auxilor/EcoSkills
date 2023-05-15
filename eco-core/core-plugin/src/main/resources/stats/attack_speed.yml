@@ -1,0 +1,19 @@
+name: "&#fcba03⚔ Attack Speed"
+placeholder: "%level%"
+description: "&8Increases your attack speed by &a%placeholder%%"
+
+gui:
+  enabled: false
+
+  position:
+    row: 5
+    column: 6
+
+  icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmJiOGQ3MjU5YzhlNzI1ZTdjZjc1ODFjNzY5YWRkNDIyMmU3NjY3NWZlOTZlZDAxYWQ3YjRkYjdkNTU0ZjRhMyJ9fX0=
+
+effects:
+  - id: attack_speed_multiplier
+    args:
+      multiplier: "1 + (%level% * 0.01)"
+
+conditions: [ ]

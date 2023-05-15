@@ -1,0 +1,15 @@
+name: "Serrated Strikes"
+placeholder: "%level% * 2"
+description: "&a%placeholder%%&8 chance to make your opponent bleed"
+
+effects:
+  - id: bleed
+    args:
+      chance: "%level% * 2"
+      damage: 2
+      amount: 4
+      interval: 15
+    triggers:
+      - melee_attack
+
+conditions: [ ]

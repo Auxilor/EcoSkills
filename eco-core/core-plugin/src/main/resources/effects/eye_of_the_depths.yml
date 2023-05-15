@@ -1,0 +1,23 @@
+name: "Eye of the Depths"
+placeholder: "0.1 * %level%"
+description: "&a%placeholder%%&8 chance to get rare drops from fishing"
+
+effects:
+  - id: drop_random_item_for_player
+    args:
+      chance: "0.1 * %level%"
+      items:
+        - diamond
+        - ancient_debris
+        - gold_ingot
+        - gold_nugget
+        - iron_ingot
+        - diamond 2
+        - ancient_debris 2
+        - gold_ingot 2
+        - gold_nugget 2
+        - iron_ingot 2
+    triggers:
+      - catch_fish
+
+conditions: [ ]

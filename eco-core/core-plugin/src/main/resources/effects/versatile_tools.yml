@@ -1,0 +1,20 @@
+name: "Versatile Tools"
+placeholder: "%level% * 4"
+description: "&8Deal &a%placeholder%%&8 more damage with pickaxes"
+
+effects:
+  - id: damage_multiplier
+    args:
+      multiplier: "1 + (%level% * 0.04)"
+    triggers:
+      - melee_attack
+    filters:
+      items:
+        - "*wooden_pickaxe"
+        - "*stone_pickaxe"
+        - "*iron_pickaxe"
+        - "*golden_pickaxe"
+        - "*diamond_pickaxe"
+        - "*netherite_pickaxe"
+
+conditions: [ ]

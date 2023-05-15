@@ -1,0 +1,20 @@
+name: "Craftsmanship"
+placeholder: "%level% * 2"
+description: "&8Axes take &a%placeholder%%&8 less durability damage"
+
+effects:
+  - id: cancel_event
+    args:
+      chance: "%level% * 2"
+    triggers:
+      - damage_item
+    filters:
+      items:
+        - "*wooden_axe"
+        - "*stone_axe"
+        - "*iron_axe"
+        - "*golden_axe"
+        - "*diamond_axe"
+        - "*netherite_axe"
+
+conditions: [ ]

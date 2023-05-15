@@ -1,0 +1,20 @@
+name: "&#40ffe6✎ Wisdom"
+placeholder: "%level%"
+description: "&8Increases xp gain by &a%placeholder%%"
+
+# Alternative description if using mana:
+# description: "&8Increases xp gain by &a%placeholder%%&8 and max &#40ffe6Mana 🌊&8 by &a%placeholder%"
+
+gui:
+  position:
+    row: 4
+    column: 5
+
+  icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzA1NGMyOWM3ODA5MDQ3MWMxZWEwNThiZDY0MTg5NzM5MWM5ZTQ2OTRhYTlkMTQwYWZiYmE4ZDBjYzQzNjM3In19fQ==
+
+effects:
+  - id: xp_multiplier
+    args:
+      multiplier: "1 + (%level% * 0.01)"
+
+conditions: [ ]

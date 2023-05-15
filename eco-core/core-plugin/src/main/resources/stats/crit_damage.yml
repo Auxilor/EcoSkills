@@ -1,0 +1,15 @@
+name: "&9☠ Crit Damage"
+placeholder: "50 + %level% * 0.5"
+description: "&8Crits deal &a%placeholder%%&8 more damage"
+
+gui:
+  position:
+    row: 3
+    column: 8
+
+  icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2UzN2RmMjdkMWU5MjVkMmY3OGRlNjkzNDEzYWRhYjc1ZDc5MTg4NDViYWM4ZjYxNzRmZGIyMmVjNTc3NjExZCJ9fX0=
+
+# Defined in crit_chance.yml
+effects: [ ]
+
+conditions: [ ]

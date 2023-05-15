@@ -1,6 +1,6 @@
 package com.willfp.ecoskills.libreforge
 
-import com.willfp.ecoskills.api.PlayerSkillExpGainEvent
+import com.willfp.ecoskills.api.event.PlayerSkillXPGainEvent
 import com.willfp.libreforge.triggers.Trigger
 import com.willfp.libreforge.triggers.TriggerData
 import com.willfp.libreforge.triggers.TriggerParameter
@@ -14,7 +14,7 @@ object TriggerGainSkillXp : Trigger("gain_skill_xp") {
     )
 
     @EventHandler(ignoreCancelled = true)
-    fun handle(event: PlayerSkillExpGainEvent) {
+    fun handle(event: PlayerSkillXPGainEvent) {
         val player = event.player
 
         this.dispatch(
@@ -23,7 +23,7 @@ object TriggerGainSkillXp : Trigger("gain_skill_xp") {
                 player = player,
                 location = player.location,
                 event = event,
-                value = event.amount
+                value = event.gainedXP
             )
         )
     }

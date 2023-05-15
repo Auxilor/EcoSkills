@@ -1,9 +1,10 @@
 package com.willfp.ecoskills.libreforge
 
 import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.ecoskills.api.EcoSkillsAPI
-import com.willfp.ecoskills.api.modifier.ModifierOperation
-import com.willfp.ecoskills.api.modifier.PlayerStatModifier
+import com.willfp.ecoskills.api.addStatModifier
+import com.willfp.ecoskills.api.modifiers.ModifierOperation
+import com.willfp.ecoskills.api.modifiers.StatModifier
+import com.willfp.ecoskills.api.removeStatModifier
 import com.willfp.ecoskills.stats.Stats
 import com.willfp.libreforge.NoCompileData
 import com.willfp.libreforge.ProvidedHolder
@@ -18,12 +19,19 @@ object EffectMultiplyStat : Effect<NoCompileData>("multiply_stat") {
         require("multiplier", "You must specify the multiplier!")
     }
 
-    override fun onEnable(player: Player, config: Config, identifiers: Identifiers, holder: ProvidedHolder, compileData: NoCompileData) {
-        EcoSkillsAPI.getInstance().addStatModifier(
-            player,
-            PlayerStatModifier(
-                identifiers.key,
-                Stats.getByID(config.getString("stat")) ?: return,
+    override fun onEnable(
+        player: Player,
+        config: Config,
+        identifiers: Identifiers,
+        holder: ProvidedHolder,
+        compileData: NoCompileData
+    ) {
+        val stat = Stats.getByID(config.getString("stat")) ?: return
+
+        player.addStatModifier(
+            StatModifier(
+                identifiers.uuid,
+                stat,
                 config.getDoubleFromExpression("multiplier", player),
                 ModifierOperation.MULTIPLY
             )
@@ -31,9 +39,6 @@ object EffectMultiplyStat : Effect<NoCompileData>("multiply_stat") {
     }
 
     override fun onDisable(player: Player, identifiers: Identifiers, holder: ProvidedHolder) {
-        EcoSkillsAPI.getInstance().removeStatModifier(
-            player,
-            identifiers.key
-        )
+        player.removeStatModifier(identifiers.uuid)
     }
 }

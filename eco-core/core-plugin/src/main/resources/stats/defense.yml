@@ -1,0 +1,19 @@
+name: "&#e884b0🛡 Defense"
+placeholder: "%level% * 0.25"
+description: "&8Take &a%placeholder%%&8 less damage"
+
+gui:
+  position:
+    row: 3
+    column: 2
+
+  icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNjlhODczZjI0OGMzOTExMjIxODg3OWNjOWMwMzM0N2VkMTZlN2Y2MDIzOTBhYzdhNjgwNmY4ZTg0OTI3OTRkNSJ9fX0=
+
+effects:
+  - id: damage_multiplier
+    args:
+      multiplier: "1 - (%level% * 0.0025)"
+    triggers:
+      - take_damage
+
+conditions: [ ]

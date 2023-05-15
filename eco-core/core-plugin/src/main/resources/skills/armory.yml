@@ -1,10 +1,27 @@
-name: "Armory"
-description: "Take damage to earn Armory XP"
-disabled-in-worlds: []
-enabled: true
+name: Armory
+description: Take damage to earn XP
 
-# Add more levels if you want
-level-xp-requirements:
+gui:
+  icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTI2Yjc3MjMyOWNmMzJmODY0M2M0OTI4NjI2YjZhMzI1MjMzZmY2MWFhOWM3NzI1ODczYTRiZDY2ZGIzZDY5MiJ9fX0=
+
+  lore:
+    - "&fImproves Stats:"
+    - "&8» &r%ecoskills_defense_name%"
+    - "&8» &r%ecoskills_speed_name%"
+    - "&f"
+    - "&fEffects:"
+    - "&8» &r&6Shamanism %ecoskills_shamanism_numeral%"
+    - "   %ecoskills_shamanism_description%"
+    - "&8» &r&6Infernal Resistance %ecoskills_infernal_resistance_numeral%"
+    - "   %ecoskills_infernal_resistance_description%"
+    - "&8» &r&6Bravery %ecoskills_bravery_numeral%"
+    - "   %ecoskills_bravery_description%"
+
+  position:
+    row: 4
+    column: 6
+
+xp-requirements:
   - 50
   - 125
   - 200
@@ -55,76 +72,47 @@ level-xp-requirements:
   - 3400000
   - 3700000
   - 4000000
-  - 5000000
-
-gui:
-  name: "Armory"
-  item: 'player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTI2Yjc3MjMyOWNmMzJmODY0M2M0OTI4NjI2YjZhMzI1MjMzZmY2MWFhOWM3NzI1ODczYTRiZDY2ZGIzZDY5MiJ9fX0='
-  position:
-    row: 4
-    column: 6
-  lore:
-    - "&fImproves Stats:"
-    - "&8» &r%ecoskills_defense_name%"
-    - "&8» &r%ecoskills_speed_name%"
-    - "&f"
-    - "&fEffects:"
-    - "&8» &r&6Shamanism %ecoskills_shamanism_numeral%"
-    - "   %ecoskills_shamanism_description%"
-    - "&8» &r&6Infernal Resistance %ecoskills_infernal_resistance_numeral%"
-    - "   %ecoskills_infernal_resistance_description%"
-    - "&8» &r&6Bravery %ecoskills_bravery_numeral%"
-    - "   %ecoskills_bravery_description%"
 
 rewards:
-  # The actual rewards to be given
-  rewards:
-    - "defense::2"
-    - "speed::1"
-    - "shamanism::1"
-    - "infernal_resistance::1"
-    - "bravery::1:10:100"
+  - reward: defense
+    levels: 2
 
-  level-commands: []
+  - reward: speed
+    levels: 1
 
-  # The chat messages to send on level up
-  chat-messages:
-    1:
-      - " &8» &r&f+2 %ecoskills_defense_name%"
-      - " &8» &r&f+1 %ecoskills_speed_name%"
-      - " &8» &r&6Shamanism %ecoskills_shamanism_numeral%"
-      - "    %ecoskills_shamanism_description%"
-      - " &8» &r&6Infernal Resistance %ecoskills_infernal_resistance_numeral%"
-      - "    %ecoskills_infernal_resistance_description%"
-    10:
-      - " &8» &r&f+2 %ecoskills_defense_name%"
-      - " &8» &r&f+1 %ecoskills_speed_name%"
-      - " &8» &r&6Shamanism %ecoskills_shamanism_numeral%"
-      - "    %ecoskills_shamanism_description%"
-      - " &8» &r&6Infernal Resistance %ecoskills_infernal_resistance_numeral%"
-      - "    %ecoskills_infernal_resistance_description%"
-      - " &8» &r&6Bravery %ecoskills_bravery_numeral%"
-      - "    %ecoskills_bravery_description%"
+  - reward: shamanism
+    levels: 1
 
-  # The lore to show in the levels gui
-  progression-lore:
-    1:
-      - " &8» &r&f+2 %ecoskills_defense_name%"
-      - " &8» &r&f+1 %ecoskills_speed_name%"
-      - " &8» &r&6Shamanism %ecoskills_shamanism_numeral%"
-      - "    %ecoskills_shamanism_description%"
-      - " &8» &r&6Infernal Resistance %ecoskills_infernal_resistance_numeral%"
-      - "    %ecoskills_infernal_resistance_description%"
-    10:
-      - " &8» &r&f+2 %ecoskills_defense_name%"
-      - " &8» &r&f+1 %ecoskills_speed_name%"
-      - " &8» &r&6Shamanism %ecoskills_shamanism_numeral%"
-      - "    %ecoskills_shamanism_description%"
-      - " &8» &r&6Infernal Resistance %ecoskills_infernal_resistance_numeral%"
-      - "    %ecoskills_infernal_resistance_description%"
-      - " &8» &r&6Bravery %ecoskills_bravery_numeral%"
-      - "    %ecoskills_bravery_description%"
+  - reward: infernal_resistance
+    levels: 1
+
+  - reward: bravery
+    levels: 1
+    start-level: 10
+
+level-up-effects: [ ]
+
+placeholders: [ ]
+
+reward-messages:
+  1:
+    - " &8» &r&f+2 %ecoskills_defense_name%"
+    - " &8» &r&f+1 %ecoskills_speed_name%"
+    - " &8» &r&6Shamanism %ecoskills_shamanism_numeral%"
+    - "    %ecoskills_shamanism_description%"
+    - " &8» &r&6Infernal Resistance %ecoskills_infernal_resistance_numeral%"
+    - "    %ecoskills_infernal_resistance_description%"
+  10:
+    - " &8» &r&f+2 %ecoskills_defense_name%"
+    - " &8» &r&f+1 %ecoskills_speed_name%"
+    - " &8» &r&6Shamanism %ecoskills_shamanism_numeral%"
+    - "    %ecoskills_shamanism_description%"
+    - " &8» &r&6Infernal Resistance %ecoskills_infernal_resistance_numeral%"
+    - "    %ecoskills_infernal_resistance_description%"
+    - " &8» &r&6Bravery %ecoskills_bravery_numeral%"
+    - "    %ecoskills_bravery_description%"
 
 
-# The experience to give for each hp of damage taken
-xp-per-hp: 1.44
+xp-gain-methods:
+  - trigger: take_damage
+    multiplier: 1.44

@@ -1,10 +1,27 @@
-name: "Alchemy"
-description: "Brew potions to earn Alchemy XP"
-disabled-in-worlds: []
-enabled: true
+name: Alchemy
+description: Brew potions to earn XP
 
-# Add more levels if you want
-level-xp-requirements:
+gui:
+  icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTExYTNjZWM3YWFmOTA0MjEyY2NmOTNiYjY3YTNjYWYzZDY0OTc4M2JhOTBiOGI2MGJiNjNjNzY4N2ViMzlmIn19fQ==
+
+  lore:
+    - "&fImproves Stats:"
+    - "&8» &r%ecoskills_crit_chance_name%"
+    - "&8» &r%ecoskills_wisdom_name%"
+    - "&f"
+    - "&fEffects:"
+    - "&8» &r&6Potionmaster %ecoskills_potionmaster_numeral%"
+    - "   %ecoskills_potionmaster_description%"
+    - "&8» &r&6Efficient Brewing %ecoskills_efficient_brewing_numeral%"
+    - "   %ecoskills_efficient_brewing_description%"
+    - "&8» &r&6Mystic Resilience %ecoskills_mystic_resilience_numeral%"
+    - "   %ecoskills_mystic_resilience_description%"
+
+  position:
+    row: 4
+    column: 4
+
+xp-requirements:
   - 1
   - 5
   - 10
@@ -55,93 +72,96 @@ level-xp-requirements:
   - 170000
   - 185000
   - 200000
-  - 250000
-
-gui:
-  name: "Alchemy"
-  item: 'player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTExYTNjZWM3YWFmOTA0MjEyY2NmOTNiYjY3YTNjYWYzZDY0OTc4M2JhOTBiOGI2MGJiNjNjNzY4N2ViMzlmIn19fQ=='
-  position:
-    row: 4
-    column: 4
-  lore:
-    - "&fImproves Stats:"
-    - "&8» &r%ecoskills_crit_chance_name%"
-    - "&8» &r%ecoskills_wisdom_name%"
-    - "&f"
-    - "&fEffects:"
-    - "&8» &r&6Potionmaster %ecoskills_potionmaster_numeral%"
-    - "   %ecoskills_potionmaster_description%"
-    - "&8» &r&6Efficient Brewing %ecoskills_efficient_brewing_numeral%"
-    - "   %ecoskills_efficient_brewing_description%"
-    - "&8» &r&6Mystic Resilience %ecoskills_mystic_resilience_numeral%"
-    - "   %ecoskills_mystic_resilience_description%"
 
 rewards:
-  # The actual rewards to be given
-  rewards:
-    - "crit_chance::2"
-    - "wisdom::1"
-    - "potionmaster::1"
-    - "efficient_brewing::1:10:100"
-    - "mystic_resilience::1"
+  - reward: crit_chance
+    levels: 2
 
-  level-commands: []
+  - reward: wisdom
+    levels: 1
 
-  # The chat messages to send on level up
-  chat-messages:
-    1:
-      - " &8» &r&f+2 %ecoskills_crit_chance_name%"
-      - " &8» &r&f+1 %ecoskills_wisdom_name%"
-      - " &8» &r&6Potionmaster %ecoskills_potionmaster_numeral%"
-      - "    %ecoskills_potionmaster_description%"
-      - " &8» &r&6Mystic Resilience %ecoskills_mystic_resilience_numeral%"
-      - "    %ecoskills_mystic_resilience_description%"
-    10:
-      - " &8» &r&f+2 %ecoskills_crit_chance_name%"
-      - " &8» &r&f+1 %ecoskills_wisdom_name%"
-      - " &8» &r&6Potionmaster %ecoskills_potionmaster_numeral%"
-      - "    %ecoskills_potionmaster_description%"
-      - " &8» &r&6Efficient Brewing %ecoskills_efficient_brewing_numeral%"
-      - "    %ecoskills_efficient_brewing_description%"
-      - " &8» &r&6Mystic Resilience %ecoskills_mystic_resilience_numeral%"
-      - "    %ecoskills_mystic_resilience_description%"
+  - reward: potionmaster
+    levels: 1
 
-  # The lore to show in the levels gui
-  progression-lore:
-    1:
-      - " &8» &r&f+2 %ecoskills_crit_chance_name%"
-      - " &8» &r&f+1 %ecoskills_wisdom_name%"
-      - " &8» &r&6Potionmaster %ecoskills_potionmaster_numeral%"
-      - "    %ecoskills_potionmaster_description%"
-      - " &8» &r&6Mystic Resilience %ecoskills_mystic_resilience_numeral%"
-      - "    %ecoskills_mystic_resilience_description%"
-    10:
-      - " &8» &r&f+2 %ecoskills_crit_chance_name%"
-      - " &8» &r&f+1 %ecoskills_wisdom_name%"
-      - " &8» &r&6Potionmaster %ecoskills_potionmaster_numeral%"
-      - "    %ecoskills_potionmaster_description%"
-      - " &8» &r&6Efficient Brewing %ecoskills_efficient_brewing_numeral%"
-      - "    %ecoskills_efficient_brewing_description%"
-      - " &8» &r&6Mystic Resilience %ecoskills_mystic_resilience_numeral%"
-      - "    %ecoskills_mystic_resilience_description%"
+  - reward: mystic_resilience
+    levels: 1
+
+  - reward: efficient_brewing
+    levels: 1
+    start-level: 10
+
+level-up-effects: [ ]
+
+placeholders: [ ]
+
+reward-messages:
+  1:
+    - " &8» &r&f+2 %ecoskills_crit_chance_name%"
+    - " &8» &r&f+1 %ecoskills_wisdom_name%"
+    - " &8» &r&6Potionmaster %ecoskills_potionmaster_numeral%"
+    - "    %ecoskills_potionmaster_description%"
+    - " &8» &r&6Mystic Resilience %ecoskills_mystic_resilience_numeral%"
+    - "    %ecoskills_mystic_resilience_description%"
+  10:
+    - " &8» &r&f+2 %ecoskills_crit_chance_name%"
+    - " &8» &r&f+1 %ecoskills_wisdom_name%"
+    - " &8» &r&6Potionmaster %ecoskills_potionmaster_numeral%"
+    - "    %ecoskills_potionmaster_description%"
+    - " &8» &r&6Efficient Brewing %ecoskills_efficient_brewing_numeral%"
+    - "    %ecoskills_efficient_brewing_description%"
+    - " &8» &r&6Mystic Resilience %ecoskills_mystic_resilience_numeral%"
+    - "    %ecoskills_mystic_resilience_description%"
 
 
-# The experience to give for each brewing ingredient
-xp-rewards:
-  - "nether_wart:1"
-  - "redstone:1"
-  - "glowstone_dust:1"
-  - "fermented_spider_eye:1"
-  - "gunpowder:1"
-  - "dragon_breath:12"
-  - "sugar:3"
-  - "rabbit_foot:6"
-  - "glistering_melon_slice:6"
-  - "spider_eye:2"
-  - "pufferfish:4"
-  - "magma_cream:4"
-  - "golden_carrot:6"
-  - "blaze_powder:6"
-  - "ghast_tear:4"
-  - "turtle_helmet:20"
-  - "phantom_membrane:12"
+xp-gain-methods:
+  - trigger: brew_ingredient
+    multiplier: 1
+    filters:
+      items:
+        - nether_wart
+        - redstone
+        - glowstone_dust
+        - fermented_spider_eye
+        - gunpowder
+
+  - trigger: brew_ingredient
+    multiplier: 2
+    filters:
+      items:
+        - spider_eye
+
+  - trigger: brew_ingredient
+    multiplier: 3
+    filters:
+      items:
+        - sugar
+
+  - trigger: brew_ingredient
+    multiplier: 4
+    filters:
+      items:
+        - pufferfish
+        - magma_cream
+        - ghast_tear
+
+  - trigger: brew_ingredient
+    multiplier: 6
+    filters:
+      items:
+        - rabbit_foot
+        - glistering_melon_slice
+        - golden_carrot
+        - blaze_powder
+
+  - trigger: brew_ingredient
+    multiplier: 12
+    filters:
+      items:
+        - dragon_breath
+        - phantom_membrane
+
+  - trigger: brew_ingredient
+    multiplier: 20
+    filters:
+      items:
+        - turtle_helmet

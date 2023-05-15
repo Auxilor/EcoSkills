@@ -1,0 +1,18 @@
+name: "Dynamic Mining"
+placeholders:
+  chance: "%level% * 0.1"
+  seconds: "(18 % %level% * 2) / 20"
+description: "&a%chance%%&8 chance to get Haste III for &a%seconds%&8 seconds when breaking blocks"
+
+effects:
+  - id: potion_effect
+    args:
+      chance: "0.1 * %level%"
+      effect: fast_digging
+      level: 3
+      duration: "18 + %level% * 2"
+      apply-to-player: true
+    triggers:
+      - mine_block
+
+conditions: [ ]

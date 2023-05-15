@@ -1,0 +1,17 @@
+name: "Dazzle"
+placeholders:
+  chance: "%level% * 1.5"
+  seconds: "(18 % %level% * 2) / 20"
+description: "&a%chance%%&8 chance to give your opponent nausea for &a%seconds%&8 seconds"
+
+effects:
+  - id: potion_effect
+    args:
+      chance: "1.5 * %level%"
+      effect: confusion
+      level: 3
+      duration: "18 + %level% * 2"
+    triggers:
+      - mine_block
+
+conditions: [ ]

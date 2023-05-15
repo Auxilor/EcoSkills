@@ -4,7 +4,8 @@ package com.willfp.ecoskills.commands
 
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.impl.Subcommand
-import com.willfp.ecoskills.resetSkills
+import com.willfp.ecoskills.api.resetSkills
+import com.willfp.ecoskills.util.offlinePlayers
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
@@ -18,24 +19,21 @@ class CommandReset(plugin: EcoPlugin) :
     ) {
 
     override fun onExecute(sender: CommandSender, args: List<String>) {
-        if (args.isEmpty()) {
-            sender.sendMessage(plugin.langYml.getMessage("requires-player"))
-            return
+        val players = offlinePlayers(args, 0, "invalid-player")
+
+        if (players.size > 1) {
+            sender.sendMessage(plugin.langYml.getMessage("resetting-all-players"))
         }
 
-        if (args[0].equals("all", ignoreCase = true)) {
-            sender.sendMessage(plugin.langYml.getMessage("resetting-all-players"))
-            Bukkit.getOfflinePlayers().forEach { it.resetSkills() }
-            sender.sendMessage(plugin.langYml.getMessage("reset-all-players"))
-        } else {
-            val player = Bukkit.getOfflinePlayer(args[0])
-            if (!player.hasPlayedBefore()) {
-                sender.sendMessage(plugin.langYml.getMessage("invalid-player"))
-                return
-            }
-
-            sender.sendMessage(plugin.langYml.getMessage("reset-player"))
+        for (player in players) {
             player.resetSkills()
+        }
+
+        if (players.size > 1) {
+            sender.sendMessage(plugin.langYml.getMessage("reset-all-players"))
+            return
+        } else {
+            sender.sendMessage(plugin.langYml.getMessage("reset-player"))
         }
     }
 
@@ -45,7 +43,7 @@ class CommandReset(plugin: EcoPlugin) :
         if (args.size == 1) {
             StringUtil.copyPartialMatches(
                 args[0],
-                Bukkit.getOnlinePlayers().map { player -> player.name }.toMutableList(),
+                listOf("all") union Bukkit.getOnlinePlayers().map { player -> player.name },
                 completions
             )
             return completions

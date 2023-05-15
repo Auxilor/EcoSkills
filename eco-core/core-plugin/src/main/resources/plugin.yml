@@ -6,11 +6,8 @@ authors: [ Auxilor ]
 website: willfp.com
 depend:
   - eco
-  - ProtocolLib
 softdepend:
-  - EnchantGui
   - libreforge
-  - EcoEnchants
 
 commands:
   ecoskills:

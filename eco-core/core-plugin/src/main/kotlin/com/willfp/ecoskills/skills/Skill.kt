@@ -1,377 +1,259 @@
 package com.willfp.ecoskills.skills
 
-import com.github.benmanes.caffeine.cache.Cache
-import com.github.benmanes.caffeine.cache.Caffeine
-import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.eco.core.data.keys.PersistentDataKeyType
-import com.willfp.eco.core.integrations.afk.AFKManager
+import com.willfp.eco.core.data.profile
 import com.willfp.eco.core.placeholder.PlayerPlaceholder
-import com.willfp.eco.core.placeholder.PlayerlessPlaceholder
-import com.willfp.eco.core.registry.Registrable
-import com.willfp.eco.util.NumberUtils
-import com.willfp.eco.util.StringUtils
-import com.willfp.eco.util.containsIgnoreCase
+import com.willfp.eco.core.placeholder.context.placeholderContext
+import com.willfp.eco.util.evaluateExpression
+import com.willfp.eco.util.formatEco
+import com.willfp.eco.util.toNiceString
+import com.willfp.eco.util.toNumeral
 import com.willfp.ecoskills.EcoSkillsPlugin
-import com.willfp.ecoskills.SkillObject
-import com.willfp.ecoskills.config.SkillConfig
-import com.willfp.ecoskills.effects.Effect
+import com.willfp.ecoskills.Levellable
+import com.willfp.ecoskills.api.getFormattedRequiredXP
+import com.willfp.ecoskills.api.getSkillLevel
+import com.willfp.ecoskills.api.getSkillProgress
+import com.willfp.ecoskills.api.getSkillXP
 import com.willfp.ecoskills.effects.Effects
-import com.willfp.ecoskills.getAverageSkillLevel
-import com.willfp.ecoskills.getSkillLevel
-import com.willfp.ecoskills.getSkillProgress
-import com.willfp.ecoskills.getTotalSkillLevel
+import com.willfp.ecoskills.gui.components.SkillIcon
+import com.willfp.ecoskills.gui.menus.SkillLevelGUI
+import com.willfp.ecoskills.libreforge.TriggerLevelUpSkill
 import com.willfp.ecoskills.stats.Stats
-import org.bukkit.Bukkit
-import org.bukkit.GameMode
-import org.bukkit.NamespacedKey
+import com.willfp.ecoskills.util.InvalidConfigurationException
+import com.willfp.ecoskills.util.LevelInjectable
+import com.willfp.ecoskills.util.loadDescriptionPlaceholders
+import com.willfp.libreforge.EmptyProvidedHolder
+import com.willfp.libreforge.NamedValue
+import com.willfp.libreforge.ViolationContext
+import com.willfp.libreforge.counters.Counters
+import com.willfp.libreforge.effects.executors.impl.NormalExecutorFactory
+import com.willfp.libreforge.triggers.DispatchedTrigger
+import com.willfp.libreforge.triggers.TriggerData
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
-import org.bukkit.event.Listener
-import java.time.Duration
 
-abstract class Skill @JvmOverloads constructor(
-    val id: String,
-    forceConfig: Config? = null
-) : Listener, Registrable {
-    protected val plugin: EcoPlugin = EcoSkillsPlugin.getInstance()
-    val leaderBoardCache: Cache<Int, LeaderboardCacheEntry?> = Caffeine.newBuilder()
-        .expireAfterWrite(Duration.ofSeconds(plugin.configYml.getInt("cache-expire-after").toLong()))
-        .build()
-
-    val key: NamespacedKey = plugin.namespacedKeyFactory.create(id)
-
-    val dataKey = PersistentDataKey(
-        plugin.namespacedKeyFactory.create(id),
-        PersistentDataKeyType.INT,
-        0
-    )
-
-    val dataXPKey = PersistentDataKey(
-        plugin.namespacedKeyFactory.create("${id}_xp"),
+class Skill(
+    id: String,
+    config: Config,
+    plugin: EcoSkillsPlugin
+) : Levellable(id, config, plugin) {
+    private val xpKey = PersistentDataKey(
+        plugin.createNamespacedKey("${id}_xp"),
         PersistentDataKeyType.DOUBLE,
         0.0
     )
 
-    val config: Config
+    private val xpGainMethods = config.getSubsections("xp-gain-methods").mapNotNull {
+        Counters.compile(it, ViolationContext(plugin, "Skill $id xp-gain-methods"))
+    }
 
-    val xpRequirements: MutableList<Int>
+    private val xpFormula = config.getStringOrNull("xp-formula")
 
-    lateinit var name: String
-    lateinit var levelName: String
+    private val requirements = config.getDoublesOrNull("xp-requirements")
 
-    lateinit var description: String
+    val maxLevel = config.getIntOrNull("max-level") ?: requirements?.size ?: Int.MAX_VALUE
 
-    lateinit var gui: SkillLevelGUI
+    private val rewards = config.getSubsections("rewards").mapNotNull {
+        val reward = Effects.getByID(it.getString("reward"))
+            ?: Stats.getByID(it.getString("reward")) ?: return@mapNotNull null
 
-    var maxLevel: Int = 50
+        LevelUpReward(
+            reward,
+            it.getInt("levels"),
+            it.getIntOrNull("start-level"),
+            it.getIntOrNull("end-level")
+        )
+    }
 
-    private val rewards = mutableListOf<SkillObjectReward>()
+    private val levelUpEffects = com.willfp.libreforge.effects.Effects.compileChain(
+        config.getSubsections("level-up-effects"),
+        NormalExecutorFactory.create(),
+        ViolationContext(plugin, "Skill $id level-up-effects")
+    )
 
-    private val levelCommands = mutableMapOf<Int, MutableList<String>>()
+    private val rewardMessages = mutableMapOf<Int, List<String>>()
 
-    var enabled: Boolean
+    val levelGUI = SkillLevelGUI(plugin, this)
 
-    // Cached values
-    private val guiLoreCache = Caffeine.newBuilder()
-        .build<Int, List<String>>()
-    private val messagesCache = Caffeine.newBuilder()
-        .build<Int, List<String>>()
+    val icon = SkillIcon(this, config.getSubsection("gui"), plugin)
 
     init {
-        config = forceConfig ?: SkillConfig(this.id, this.javaClass, plugin)
-        enabled = config.getBoolOrNull("enabled") ?: true
-        xpRequirements = config.getInts("level-xp-requirements").toMutableList()
-
-        finishLoading()
-    }
-
-    private fun finishLoading() {
-        Skills.registerNewSkill(this)
-    }
-
-    protected fun Player?.filterSkillEnabled(): Player? {
-        val player = this ?: return null
-
-        with(this@Skill) {
-            if (!this.enabled) {
-                return null
-            }
-
-            if (this.config.getStrings("disabled-in-worlds").containsIgnoreCase(player.world.name)) {
-                return null
-            }
-
-            if (player.gameMode == GameMode.CREATIVE || player.gameMode == GameMode.SPECTATOR) {
-                return null
-            }
-
-            if (plugin.configYml.getBool("skills.prevent-levelling-while-afk") && AFKManager.isAfk(player)) {
-                return null
-            }
-
-            return player
-        }
-    }
-
-    fun update() {
-        enabled = config.getBoolOrNull("enabled") ?: true
-        name = config.getFormattedString("name")
-        levelName = config.getFormattedStringOrNull("gui.name") ?: name
-        description = config.getFormattedString("description")
-
-        xpRequirements.clear()
-        xpRequirements.addAll(config.getInts("level-xp-requirements"))
-
-        maxLevel = xpRequirements.size - 1
-
-        rewards.clear()
-
-        for (string in config.getStrings("rewards.rewards")) {
-            val split = string.split("::")
-            val asEffect = Effects.getByID(split[0].lowercase())
-            val asStat = Stats.getByID(split[0].lowercase())
-            if (asEffect != null) {
-                rewards.add(SkillObjectReward(asEffect, SkillObjectOptions(split[1])))
-            }
-            if (asStat != null) {
-                rewards.add(SkillObjectReward(asStat, SkillObjectOptions(split[1])))
-            }
+        if (xpFormula == null && requirements == null) {
+            throw InvalidConfigurationException("Skill $id has no requirements or xp formula")
         }
 
-        levelCommands.clear()
-
-        for (string in config.getStrings("rewards.level-commands")) {
-            val split = string.split(":")
-
-            if (split.size == 1) {
-                for (level in 1..maxLevel) {
-                    val commands = levelCommands[level] ?: mutableListOf()
-                    commands.add(string)
-                    levelCommands[level] = commands
-                }
-            } else {
-                val level = split[0].toInt()
-
-                val command = string.removePrefix("$level:")
-                val commands = levelCommands[level] ?: mutableListOf()
-                commands.add(command)
-                levelCommands[level] = commands
-            }
-        }
-
-        PlayerPlaceholder(
-            plugin,
-            id
-        ) { player -> player.getSkillLevel(this).toString() }.register()
-
-        PlayerPlaceholder(
-            plugin,
-            "${id}_percentage_progress"
-        ) {
-            val currentXP = it.getSkillProgress(this)
-            val requiredXP = this.getExpForLevel(it.getSkillLevel(this) + 1)
-            NumberUtils.format((currentXP / requiredXP) * 100)
+        PlayerPlaceholder(plugin, "${id}_current_xp") {
+            getSavedXP(it).toNiceString()
         }.register()
 
-        PlayerPlaceholder(
-            plugin,
-            "${id}_current_xp"
-        ) {
-            NumberUtils.format(it.getSkillProgress(this))
+        PlayerPlaceholder(plugin, "${id}_required_xp") {
+            getFormattedXPRequired(it.getSkillLevel(this))
         }.register()
 
-        PlayerPlaceholder(
-            plugin,
-            "${id}_required_xp"
-        ) {
-            this.getExpForLevel(it.getSkillLevel(this) + 1).toString()
+        PlayerPlaceholder(plugin, "${id}_percentage_progress") {
+            (it.getSkillProgress(this) * 100).toNiceString()
         }.register()
-
-        PlayerPlaceholder(
-            plugin,
-            "${id}_numeral"
-        ) { player -> NumberUtils.toNumeral(player.getSkillLevel(this)) }.register()
-
-        PlayerlessPlaceholder(
-            plugin,
-            "${id}_name"
-        ) { this.name }.register()
-
-        PlayerPlaceholder(
-            plugin,
-            "average_skill_level"
-        ) { player -> NumberUtils.format(player.getAverageSkillLevel()) }.register()
-
-        PlayerPlaceholder(
-            plugin,
-            "total_skill_level"
-        ) { player -> player.getTotalSkillLevel().toString() }.register()
-
-        postUpdate()
-
-        guiLoreCache.invalidateAll()
-        messagesCache.invalidateAll()
-
-        gui = SkillLevelGUI(plugin, this)
     }
 
-    fun getLevelUpRewards(): MutableList<SkillObjectReward> {
-        return ArrayList(rewards)
-    }
+    override fun onRegister() {
+        val accumulator = SkillXPAccumulator(plugin, this)
 
-    fun getLevelUpReward(skillObjectReward: SkillObjectReward, to: Int): Int {
-        for (reward in rewards) {
-            if (reward != skillObjectReward) {
-                continue
-            }
-
-            val opt = reward.options
-            if (opt.startLevel > to || opt.endLevel < to) {
-                continue
-            }
-
-            return reward.options.amountPerLevel
-        }
-
-        return 0
-    }
-
-    fun getCumulativeLevelUpReward(skillObjectReward: SkillObjectReward, to: Int): Int {
-        var levels = 0
-        for (i in 1..to) {
-            levels += getLevelUpReward(skillObjectReward, i)
-        }
-
-        return levels
-    }
-
-    fun getTop(place: Int): LeaderboardCacheEntry? {
-        return leaderBoardCache.get(place) {
-            val top = Bukkit.getOfflinePlayers()
-                .sortedByDescending { it.getSkillLevel(this) }.getOrNull(place - 1)
-
-            if (top == null) {
-                null
-            } else LeaderboardCacheEntry(top, top.getSkillLevel(this))
+        for (counter in xpGainMethods) {
+            counter.bind(accumulator)
         }
     }
 
-    fun getRewardsMessages(player: Player?, level: Int): List<String> {
-        val raw = messagesCache.get(level) {
-            val parentSection = this.config.getSubsection("rewards.chat-messages")
-
-            var highestConfiguredLevel = 1
-            for (messagesLevel in parentSection.getKeys(false).map { it.toInt() }) {
-                if (messagesLevel > level) {
-                    continue
-                }
-
-                if (messagesLevel > highestConfiguredLevel) {
-                    highestConfiguredLevel = messagesLevel
-                }
-            }
-
-            val messages = mutableListOf<String>()
-
-            for (string in this.config.getStrings("rewards.chat-messages.$highestConfiguredLevel")) {
-                var msg = string
-
-                for (levelUpReward in this.getLevelUpRewards()) {
-                    val skillObject = levelUpReward.obj
-
-                    if (skillObject is Effect) {
-                        val objLevel = this.getCumulativeLevelUpReward(levelUpReward, level)
-                        msg = msg.replace(
-                            "%ecoskills_${skillObject.id}_description%",
-                            skillObject.getDescription(objLevel)
-                        )
-                    }
-                }
-
-                messages.add(msg)
-            }
-
-            messages
-        }
-
-        return StringUtils.formatList(raw, player)
-    }
-
-    fun getGUIRewardsMessages(player: Player?, level: Int): MutableList<String> {
-        val raw = guiLoreCache.get(level) {
-            val parentSection = this.config.getSubsection("rewards.progression-lore")
-
-            var highestConfiguredLevel = 1
-            for (messagesLevel in parentSection.getKeys(false).map { it.toInt() }) {
-                if (messagesLevel > level) {
-                    continue
-                }
-
-                if (messagesLevel > highestConfiguredLevel) {
-                    highestConfiguredLevel = messagesLevel
-                }
-            }
-
-            val messages = mutableListOf<String>()
-
-            for (string in this.config.getStrings("rewards.progression-lore.$highestConfiguredLevel")) {
-                var s = string
-
-                for (levelUpReward in this.getLevelUpRewards()) {
-                    val skillObject = levelUpReward.obj
-                    val objLevel = this.getCumulativeLevelUpReward(levelUpReward, level)
-
-                    s = s.replace("%ecoskills_${skillObject.id}%", objLevel.toString())
-                    s = s.replace("%ecoskills_${skillObject.id}_numeral%", NumberUtils.toNumeral(objLevel))
-
-                    if (skillObject is Effect) {
-                        s = s.replace("%ecoskills_${skillObject.id}_description%", skillObject.getDescription(objLevel))
-                    }
-                }
-
-                messages.add(s)
-            }
-
-            messages
-        }
-
-        return StringUtils.formatList(raw, player)
-    }
-
-    fun getGUILore(player: Player): MutableList<String> {
-        val lore = mutableListOf<String>()
-        for (string in this.config.getStrings("gui.lore")) {
-            lore.add(StringUtils.format(string, player))
-        }
-        return lore
-    }
-
-    fun executeLevelCommands(player: Player, level: Int) {
-        val commands = levelCommands[level] ?: emptyList()
-
-        for (command in commands) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", player.name))
+    override fun onRemove() {
+        for (counter in xpGainMethods) {
+            counter.unbind()
         }
     }
 
-    open fun postUpdate() {
-        // Override when needed
+    /**
+     * Get the XP required to reach the next level, if currently at [level].
+     */
+    fun getXPRequired(level: Int): Double {
+        if (xpFormula != null) {
+            return evaluateExpression(
+                xpFormula,
+                placeholderContext(
+                    injectable = LevelInjectable(level)
+                )
+            )
+        }
+
+        if (requirements != null) {
+            return requirements.getOrNull(level) ?: Double.POSITIVE_INFINITY
+        }
+
+        return Double.POSITIVE_INFINITY
     }
 
-    override fun getID(): String {
-        return id
-    }
-
-    fun getExpForLevel(level: Int): Int {
-        val req = xpRequirements
-        return if (maxLevel < level) {
-            Int.MAX_VALUE
+    fun getFormattedXPRequired(level: Int): String {
+        val required = getXPRequired(level)
+        return if (required.isInfinite()) {
+            plugin.langYml.getFormattedString("infinity")
         } else {
-            req[level - 1]
+            required.toNiceString()
         }
     }
+
+    /**
+     * Add skill placeholders into [strings], to be shown to a [player].
+     */
+    fun addPlaceholdersInto(
+        strings: List<String>,
+        player: Player,
+        level: Int = player.getSkillLevel(this)
+    ): List<String> {
+        val skill = this // I just hate the @ notation kotlin uses
+        fun String.addPlaceholders() = this
+            .replace("%percentage_progress%", (player.getSkillProgress(skill) * 100).toNiceString())
+            .replace("%current_xp%", player.getSkillXP(skill).toNiceString())
+            .replace("%required_xp%", player.getFormattedRequiredXP(skill))
+            .replace("%description%", skill.getDescription(level))
+            .replace("%skill%", skill.name)
+            .replace("%level%", level.toString())
+            .replace("%level_numeral%", level.toNumeral())
+            .injectRewardPlaceholders(level)
+
+        // Replace placeholders in the strings with their actual values.
+        val withPlaceholders = strings.map { it.addPlaceholders() }
+
+        // Replace multi-line placeholders.
+        val processed = withPlaceholders.flatMap { s ->
+            val margin = s.length - s.trimStart().length
+
+            if (s.contains("%rewards%")) {
+                getRewardMessages(level)
+                    .addMargin(margin)
+            } else if (s.contains("%gui_lore%")) {
+                config.getStrings("gui.lore")
+                    .addMargin(margin)
+            } else {
+                listOf(s)
+            }
+        }.map { it.addPlaceholders() }
+
+        return processed.formatEco(
+            placeholderContext(
+                player = player
+            )
+        )
+    }
+
+    // Total hack, but that's how I did it before and I *really* don't want to change it.
+    private fun String.injectRewardPlaceholders(level: Int): String {
+        var processed = this
+
+        for (reward in rewards) {
+            processed = reward.reward.addPlaceholdersInto(processed, reward.getCumulativeLevels(level))
+        }
+
+        return processed
+    }
+
+    private fun List<String>.addMargin(margin: Int): List<String> {
+        return this.map { s -> " ".repeat(margin) + s }
+    }
+
+    /**
+     * Get the reward messages for a certain [level].
+     */
+    private fun getRewardMessages(
+        level: Int
+    ): List<String> = rewardMessages.getOrPut(level) {
+        // Determine the highest level of messages from the config that is not greater than the provided level.
+        val highestConfiguredLevel = config.getSubsection("reward-messages")
+            .getKeys(false)
+            .mapNotNull { it.toIntOrNull() } // Convert strings to Int, ignoring any that cannot be converted
+            .filter { it <= level } // Only consider levels not greater than the provided level
+            .maxOrNull() ?: 1 // Get the maximum level, default to 1 if no suitable level was found
+
+        val messages = config.getStrings("reward-messages.$highestConfiguredLevel").toMutableList()
+
+        val context = placeholderContext(
+            injectable = LevelInjectable(level)
+        )
+
+        for (placeholder in loadDescriptionPlaceholders(config)) {
+            val id = placeholder.id
+            val value = evaluateExpression(placeholder.expr, context)
+
+            messages.replaceAll { s -> s.replace("%$id%", value.toNiceString()) }
+        }
+
+        return messages.formatEco(context)
+    }
+
+    internal fun handleLevelUp(player: OfflinePlayer, level: Int) {
+        for (reward in rewards) {
+            reward.giveTo(player, level)
+        }
+
+        if (player is Player) {
+            // I don't really know a way to clean this up
+            levelUpEffects?.trigger(
+                DispatchedTrigger(
+                    player,
+                    TriggerLevelUpSkill,
+                    TriggerData(
+                        holder = EmptyProvidedHolder,
+                        player = player
+                    )
+                ).apply {
+                    addPlaceholder(NamedValue("level", level))
+                    addPlaceholder(NamedValue("level_numeral", level.toNumeral()))
+                }
+            )
+        }
+    }
+
+    internal fun getSavedXP(player: OfflinePlayer): Double = player.profile.read(xpKey)
+    internal fun setSavedXP(player: OfflinePlayer, xp: Double) = player.profile.write(xpKey, xp)
 }
 
-data class LeaderboardCacheEntry(val player: OfflinePlayer, val amount: Int)
+internal val OfflinePlayer.skills: SkillLevelMap
+    get() = SkillLevelMap(this)

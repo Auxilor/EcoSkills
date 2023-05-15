@@ -1,10 +1,27 @@
-name: "Farming"
-description: "Harvest crops to earn Farming XP"
-disabled-in-worlds: []
-enabled: true
+name: Farming
+description: Harvest crops to earn XP
 
-# Add more levels if you want
-level-xp-requirements:
+gui:
+  icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjdjMzNjZDBjMTRiYTgzMGRhMTQ5OTA3ZjdhNmFhZTgzNWI2YTM1YWVhMDFlMGNlMDczZmIzYzU5Y2M0NjMyNiJ9fX0=
+
+  lore:
+    - "&fImproves Stats:"
+    - "&8» &r%ecoskills_crit_damage_name%"
+    - "&8» &r%ecoskills_wisdom_name%"
+    - "&f"
+    - "&fEffects:"
+    - "&8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
+    - "   %ecoskills_bountiful_harvest_description%"
+    - "&8» &r&6Satiation %ecoskills_satiation_numeral%"
+    - "   %ecoskills_satiation_description%"
+    - "&8» &r&6Golden Yield %ecoskills_golden_yield_numeral%"
+    - "   %ecoskills_golden_yield_description%"
+
+  position:
+    row: 3
+    column: 6
+
+xp-requirements:
   - 50
   - 125
   - 200
@@ -55,89 +72,93 @@ level-xp-requirements:
   - 3400000
   - 3700000
   - 4000000
-  - 5000000
-
-gui:
-  name: "Farming"
-  item: 'player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjdjMzNjZDBjMTRiYTgzMGRhMTQ5OTA3ZjdhNmFhZTgzNWI2YTM1YWVhMDFlMGNlMDczZmIzYzU5Y2M0NjMyNiJ9fX0='
-  position:
-    row: 3
-    column: 6
-  lore:
-    - "&fImproves Stats:"
-    - "&8» &r%ecoskills_crit_damage_name%"
-    - "&8» &r%ecoskills_wisdom_name%"
-    - "&f"
-    - "&fEffects:"
-    - "&8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
-    - "   %ecoskills_bountiful_harvest_description%"
-    - "&8» &r&6Satiation %ecoskills_satiation_numeral%"
-    - "   %ecoskills_satiation_description%"
-    - "&8» &r&6Golden Yield %ecoskills_golden_yield_numeral%"
-    - "   %ecoskills_golden_yield_description%"
 
 rewards:
-  # The actual rewards to be given
-  rewards:
-    - "crit_damage::2"
-    - "wisdom::1"
-    - "bountiful_harvest::1"
-    - "satiation::1"
-    - "golden_yield::1:10:100"
+  - reward: crit_damage
+    levels: 2
 
-  level-commands: []
+  - reward: wisdom
+    levels: 1
 
-  # The chat messages to send on level up
-  chat-messages:
-    1:
-      - " &8» &r&f+2 %ecoskills_crit_damage_name%"
-      - " &8» &r&f+1 %ecoskills_wisdom_name%"
-      - " &8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
-      - "    %ecoskills_bountiful_harvest_description%"
-      - " &8» &r&6Satiation %ecoskills_satiation_numeral%"
-      - "    %ecoskills_satiation_description%"
-    10:
-      - " &8» &r&f+2 %ecoskills_crit_damage_name%"
-      - " &8» &r&f+1 %ecoskills_wisdom_name%"
-      - " &8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
-      - "    %ecoskills_bountiful_harvest_description%"
-      - " &8» &r&6Satiation %ecoskills_satiation_numeral%"
-      - "    %ecoskills_satiation_description%"
-      - " &8» &r&6Golden Yield %ecoskills_golden_yield_numeral%"
-      - "    %ecoskills_golden_yield_description%"
+  - reward: bountiful_harvest
+    levels: 1
 
-  # The lore to show in the levels gui
-  progression-lore:
-    1:
-      - " &8» &r&f+2 %ecoskills_crit_damage_name%"
-      - " &8» &r&f+1 %ecoskills_wisdom_name%"
-      - " &8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
-      - "    %ecoskills_bountiful_harvest_description%"
-      - " &8» &r&6Satiation %ecoskills_satiation_numeral%"
-      - "    %ecoskills_satiation_description%"
-    10:
-      - " &8» &r&f+2 %ecoskills_crit_damage_name%"
-      - " &8» &r&f+1 %ecoskills_wisdom_name%"
-      - " &8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
-      - "    %ecoskills_bountiful_harvest_description%"
-      - " &8» &r&6Satiation %ecoskills_satiation_numeral%"
-      - "    %ecoskills_satiation_description%"
-      - " &8» &r&6Golden Yield %ecoskills_golden_yield_numeral%"
-      - "    %ecoskills_golden_yield_description%"
+  - reward: satiation
+    levels: 1
 
-# The xp rewards for each crop type
-# Specify with type:xp
-xp-rewards:
-  - "wheat:4"
-  - "potatoes:5"
-  - "beetroots:5"
-  - "carrots:4"
-  - "melon:4"
-  - "pumpkin:4.5"
-  - "cactus:2"
-  - "sugar_cane:2"
-  - "cocoa:3"
-  - "nether_wart:4"
-  - "bamboo:1"
-  - "sweet_berries:3"
-  - "glow_berries:3"
+  - reward: golden_yield
+    levels: 1
+    start-level: 10
+
+level-up-effects: [ ]
+
+placeholders: [ ]
+
+reward-messages:
+  1:
+    - " &8» &r&f+2 %ecoskills_crit_damage_name%"
+    - " &8» &r&f+1 %ecoskills_wisdom_name%"
+    - " &8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
+    - "    %ecoskills_bountiful_harvest_description%"
+    - " &8» &r&6Satiation %ecoskills_satiation_numeral%"
+    - "    %ecoskills_satiation_description%"
+  10:
+    - " &8» &r&f+2 %ecoskills_crit_damage_name%"
+    - " &8» &r&f+1 %ecoskills_wisdom_name%"
+    - " &8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
+    - "    %ecoskills_bountiful_harvest_description%"
+    - " &8» &r&6Satiation %ecoskills_satiation_numeral%"
+    - "    %ecoskills_satiation_description%"
+    - " &8» &r&6Golden Yield %ecoskills_golden_yield_numeral%"
+    - "    %ecoskills_golden_yield_description%"
+
+
+xp-gain-methods:
+  - trigger: mine_block
+    multiplier: 1
+    filters:
+      fully_grown: true
+      items:
+        - bamboo
+
+  - trigger: mine_block
+    multiplier: 2
+    filters:
+      fully_grown: true
+      items:
+        - cactus
+        - sugar_cane
+
+  - trigger: mine_block
+    multiplier: 3
+    filters:
+      fully_grown: true
+      items:
+        - cocoa
+        - sweet_berries
+        - glow_berries
+
+  - trigger: mine_block
+    multiplier: 4
+    filters:
+      fully_grown: true
+      items:
+        - wheat
+        - carrots
+        - melon
+        - nether_wart
+
+  - trigger: mine_block
+    multiplier: 4.5
+    filters:
+      fully_grown: true
+      items:
+        - pumpkin
+
+  - trigger: mine_block
+    multiplier: 5
+    filters:
+      fully_grown: true
+      items:
+        - potatoes
+        - beetroot

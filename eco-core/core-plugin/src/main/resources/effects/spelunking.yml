@@ -1,0 +1,61 @@
+name: "Spelunking"
+placeholders:
+  chance: "(%level% * 8) % 100"
+  multiplier: "floor(%level% * 8 / 100) + 2"
+description: "&a%chance%%&8 chance to get &a%multiplier%x&8 drops from ores"
+
+effects:
+  - id: multiply_drops # Base Multiplier
+    args:
+      multiplier: "floor(%level% * 8 / 100) + 1"
+    triggers:
+      - block_item_drop
+    filters:
+      player_placed: false
+      blocks:
+        - "nether_quartz_ore"
+        - "coal_ore"
+        - "deepslate_coal_ore"
+        - "iron_ore"
+        - "deepslate_iron_ore"
+        - "gold_ore"
+        - "deepslate_gold_ore"
+        - "gilded_blackstone"
+        - "lapis_lazuli_ore"
+        - "deepslate_lapis_lazuli_ore"
+        - "redstone_ore"
+        - "deepslate_redstone_ore"
+        - "emerald_ore"
+        - "deepslate_emerald_ore"
+        - "diamond_ore"
+        - "deepslate_diamond_ore"
+        - "ancient_debris"
+
+  - id: multiply_drops # Bonus Multiplier
+    args:
+      chance: "(%level% * 8) % 100"
+      multiplier: "floor(%level% * 8 / 100) + 2"
+    triggers:
+      - block_item_drop
+    filters:
+      player_placed: false
+      blocks:
+        - "nether_quartz_ore"
+        - "coal_ore"
+        - "deepslate_coal_ore"
+        - "iron_ore"
+        - "deepslate_iron_ore"
+        - "gold_ore"
+        - "deepslate_gold_ore"
+        - "gilded_blackstone"
+        - "lapis_lazuli_ore"
+        - "deepslate_lapis_lazuli_ore"
+        - "redstone_ore"
+        - "deepslate_redstone_ore"
+        - "emerald_ore"
+        - "deepslate_emerald_ore"
+        - "diamond_ore"
+        - "deepslate_diamond_ore"
+        - "ancient_debris"
+
+conditions: [ ]
