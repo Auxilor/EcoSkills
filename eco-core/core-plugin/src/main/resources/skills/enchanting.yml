@@ -109,7 +109,7 @@ reward-messages:
     - "    %ecoskills_second_chance_description%"
     - " &8» &r&6Reimbursement %ecoskills_reimbursement_numeral%"
     - "    %ecoskills_reimbursement_description%"
-    - " &8» &r&6Overcompensation %ecoskills_over_compensation_numeral%"
+    - " &8» &r&6Overcompensation %ecoskills_overcompensation_numeral%"
     - "    %ecoskills_overcompensation_description%"
 
 
