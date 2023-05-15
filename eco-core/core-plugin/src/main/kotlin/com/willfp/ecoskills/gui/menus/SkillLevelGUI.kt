@@ -44,7 +44,7 @@ class SkillLevelGUI(
             addComponent(1, 1, levelComponent)
 
             defaultPage {
-                levelComponent.getPageOf(it.getSkillLevel(skill))
+                levelComponent.getPageOf(it.getSkillLevel(skill)).coerceAtLeast(1)
             }
 
             // Instead of the page changer, this will show up when on the first page

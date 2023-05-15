@@ -71,7 +71,7 @@ class CommandGive(plugin: EcoPlugin) :
         if (args.size == 2) {
             StringUtil.copyPartialMatches(
                 args[1],
-                Skills.values().map { it.id },
+                (Skills.values() union Stats.values()).map { it.id },
                 completions
             )
             return completions

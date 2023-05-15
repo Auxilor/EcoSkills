@@ -82,6 +82,16 @@ class CommandTop(plugin: EcoPlugin) :
         if (args.size == 1) {
             StringUtil.copyPartialMatches(
                 args[0],
+                listOf(1, 2, 3, 4, 5).map { it.toString() }
+                        + Skills.values().map { it.id },
+                completions
+            )
+            return completions
+        }
+
+        if (args.size == 2 && Skills.getByID(args[0]) != null) {
+            StringUtil.copyPartialMatches(
+                args[1],
                 listOf(1, 2, 3, 4, 5).map { it.toString() },
                 completions
             )

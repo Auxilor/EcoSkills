@@ -118,14 +118,14 @@ xp-gain-methods:
     multiplier: 1
     filters:
       fully_grown: true
-      items:
+      blocks:
         - bamboo
 
   - trigger: mine_block
     multiplier: 2
     filters:
       fully_grown: true
-      items:
+      blocks:
         - cactus
         - sugar_cane
 
@@ -133,7 +133,7 @@ xp-gain-methods:
     multiplier: 3
     filters:
       fully_grown: true
-      items:
+      blocks:
         - cocoa
         - sweet_berries
         - glow_berries
@@ -142,7 +142,7 @@ xp-gain-methods:
     multiplier: 4
     filters:
       fully_grown: true
-      items:
+      blocks:
         - wheat
         - carrots
         - melon
@@ -152,13 +152,13 @@ xp-gain-methods:
     multiplier: 4.5
     filters:
       fully_grown: true
-      items:
+      blocks:
         - pumpkin
 
   - trigger: mine_block
     multiplier: 5
     filters:
       fully_grown: true
-      items:
+      blocks:
         - potatoes
         - beetroot

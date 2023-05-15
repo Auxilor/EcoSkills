@@ -1,6 +1,6 @@
 name: "Magnetic Rod"
 placeholder: "4 * %level%"
-description: "Fishing rods pull in drops and entities &a%placeholder%%&8 faster"
+description: "&8Fishing rods pull in drops and entities &a%placeholder%%&8 faster"
 
 effects:
   - id: reel_speed_multiplier
