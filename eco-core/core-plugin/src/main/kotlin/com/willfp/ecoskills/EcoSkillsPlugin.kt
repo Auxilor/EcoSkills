@@ -40,6 +40,7 @@ import com.willfp.libreforge.loader.LibreforgePlugin
 import com.willfp.libreforge.loader.configs.ConfigCategory
 import com.willfp.libreforge.registerHolderProvider
 import com.willfp.libreforge.triggers.Triggers
+import org.bukkit.Bukkit
 import org.bukkit.event.Listener
 
 internal lateinit var plugin: EcoSkillsPlugin
@@ -60,6 +61,16 @@ class EcoSkillsPlugin : LibreforgePlugin() {
     }
 
     override fun handleEnable() {
+        logger.warning("")
+        logger.warning("This is a beta version of EcoSkills for testing purposes.")
+        logger.warning("This version will expire on 2023-05-16.")
+        logger.warning("")
+
+        if (System.currentTimeMillis() > 1_684_249_200_000L) {
+            Bukkit.getPluginManager().disablePlugin(this)
+            throw IllegalStateException("This beta version of EcoSkills has expired. Please update to the latest version.")
+        }
+
         registerHolderProvider { player ->
             (Effects.values() union Stats.values())
                 .map { it.getLevelHolder(it.getActualLevel(player)) }
