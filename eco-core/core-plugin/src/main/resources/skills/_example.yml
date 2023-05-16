@@ -127,6 +127,8 @@ rewards:
 
 # Effects to run when an item levels up
 # %level% is the level the item leveled up to.
+# If you want to restrict this to certain levels, you can use
+# require: %level% == 20, or require: %level% < 50, etc.
 level-up-effects:
   - id: give_money
     args:

@@ -5,7 +5,7 @@
 # _example.yml is not loaded.
 
 # The name of the magic type, shown to players
-name: "&#40ffe6 Mana"
+name: "&#40ffe6🌊 Mana"
 
 # The rate at which the magic type regenerates per second
 regen-rate: "0.02 * %ecoskills_mana_limit%"
