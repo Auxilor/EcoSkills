@@ -228,10 +228,14 @@ class Skill(
         return messages.formatEco(context)
     }
 
-    internal fun handleLevelUp(player: OfflinePlayer, level: Int) {
+    fun giveRewards(player: OfflinePlayer, level: Int) {
         for (reward in rewards) {
             reward.giveTo(player, level)
         }
+    }
+
+    internal fun handleLevelUp(player: OfflinePlayer, level: Int) {
+        giveRewards(player, level)
 
         if (player is Player) {
             // I don't really know a way to clean this up

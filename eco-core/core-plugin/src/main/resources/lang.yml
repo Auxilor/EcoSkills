@@ -8,6 +8,7 @@ messages:
   invalid-player: "&cInvalid player!"
   invalid-skill: "&cInvalid skill!"
   reset-player: "&fReset player!"
+  recounted-player: "&fRecounted player!"
   invalid-skill-stat: "&cInvalid skill or stat!"
   invalid-amount: "&cInvalid amount!"
   gave-skill-xp: "Gave %player% %amount% %obj% experience!"
@@ -17,6 +18,8 @@ messages:
   actionbar-disabled: "&cThe action bar is disabled on this server."
   resetting-all-players: "&fResetting all players... (this may take a while)"
   reset-all-players: "&fReset all players!"
+  recounting-all-players: "&fRecounting all players... (this may take a while)"
+  recounted-all-players: "&fRecounted all players!"
 
 learning-skill: "Learning New Skill..."
 

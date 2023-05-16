@@ -33,10 +33,8 @@ permissions:
       ecoskills.command.skills: true
       ecoskills.command.give: true
       ecoskills.command.top: true
-      ecoskills.command.rank: true
       ecoskills.command.recount: true
       ecoskills.command.toggleactionbar: true
-      ecoskills.command.togglesound: true
 
   ecoskills.command.reload:
     description: Allows reloading the config
@@ -53,9 +51,6 @@ permissions:
   ecoskills.command.top:
     description: Allows the use of /ecoskills top.
     default: true
-  ecoskills.command.rank:
-    description: Allows the use of /ecoskills rank.
-    default: true
   ecoskills.command.give:
     description: Allows the use of /ecoskills give.
     default: op
@@ -64,9 +59,6 @@ permissions:
     default: op
   ecoskills.command.toggleactionbar:
     description: Allows the use of /skills toggleactionbar.
-    default: op
-  ecoskills.command.togglesound:
-    description: Allows the use of /skills togglesound.
     default: op
 
   ecoskills.xpmultiplier.50percent:
