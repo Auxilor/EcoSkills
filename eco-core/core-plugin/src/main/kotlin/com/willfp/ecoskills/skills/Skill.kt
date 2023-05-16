@@ -4,6 +4,7 @@ import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.eco.core.data.keys.PersistentDataKeyType
 import com.willfp.eco.core.data.profile
+import com.willfp.eco.core.map.defaultMap
 import com.willfp.eco.core.placeholder.PlayerPlaceholder
 import com.willfp.eco.core.placeholder.context.placeholderContext
 import com.willfp.eco.util.evaluateExpression
@@ -188,8 +189,14 @@ class Skill(
     private fun String.injectRewardPlaceholders(level: Int): String {
         var processed = this
 
+        // Fixes visual bug with repeated rewards
+        val levels = defaultMap<Levellable, Int>(0)
         for (reward in rewards) {
-            processed = reward.reward.addPlaceholdersInto(processed, reward.getCumulativeLevels(level))
+            levels[reward.reward] += reward.getCumulativeLevels(level)
+        }
+
+        for ((reward, lvl) in levels) {
+            processed = reward.addPlaceholdersInto(processed, lvl)
         }
 
         return processed
