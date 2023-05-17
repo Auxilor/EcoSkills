@@ -249,10 +249,10 @@ persistent-action-bar:
   # If a player's health should be scaled to always display as 10 hearts.
   scale-health: true
   # The format
-  format: "&c❤ &f%player_health_rounded%&8/&f%player_max_health_rounded%                 &#e884b0🛡 &f%ecoskills_defense% &8| &#db0000🗡 &f%ecoskills_strength% &8| &#40ffe6✦ &f%ecoskills_speed%"
+  format: "&c❤ &f%health%&8/&f%max_health%                 &#e884b0🛡 &f%ecoskills_defense% &8| &#db0000🗡 &f%ecoskills_strength% &8| &#40ffe6✦ &f%ecoskills_speed%"
 
   # Optional format if mana is being used.
-  # format: "&c❤ &f%player_health_rounded%&8/&f%player_max_health_rounded%                 &f%ecoskills_mana%&8/&f%ecoskills_mana_limit% &#40ffe6🌊"
+  # format: "&c❤ &f%health%&8/&f%max_health%                  &f%ecoskills_mana%&8/&f%ecoskills_mana_limit% &#40ffe6🌊"
 
   # The worlds that the action bar should be disabled in.
   disabled-in-worlds: [ ]
