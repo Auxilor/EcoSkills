@@ -8,12 +8,16 @@ import com.willfp.ecoskills.actionbar.ActionBarHandler
 import com.willfp.ecoskills.commands.CommandEcoSkills
 import com.willfp.ecoskills.commands.CommandSkills
 import com.willfp.ecoskills.effects.Effects
+import com.willfp.ecoskills.libreforge.ConditionHasMagic
 import com.willfp.ecoskills.libreforge.ConditionHasSkillLevel
 import com.willfp.ecoskills.libreforge.EffectAddStat
 import com.willfp.ecoskills.libreforge.EffectAddStatTemporarily
+import com.willfp.ecoskills.libreforge.EffectGiveMagic
 import com.willfp.ecoskills.libreforge.EffectGiveSkillXp
+import com.willfp.ecoskills.libreforge.EffectGiveSkillXpNaturally
 import com.willfp.ecoskills.libreforge.EffectMakeSkillCrit
 import com.willfp.ecoskills.libreforge.EffectMultiplyAllStats
+import com.willfp.ecoskills.libreforge.EffectMultiplyMagic
 import com.willfp.ecoskills.libreforge.EffectMultiplyStat
 import com.willfp.ecoskills.libreforge.EffectMultiplyStatTemporarily
 import com.willfp.ecoskills.libreforge.EffectSkillXpMultiplier
@@ -72,9 +76,13 @@ class EcoSkillsPlugin : LibreforgePlugin() {
         com.willfp.libreforge.effects.Effects.register(EffectGiveSkillXp)
         com.willfp.libreforge.effects.Effects.register(EffectMultiplyAllStats)
         com.willfp.libreforge.effects.Effects.register(EffectMakeSkillCrit)
+        com.willfp.libreforge.effects.Effects.register(EffectGiveMagic)
+        com.willfp.libreforge.effects.Effects.register(EffectMultiplyMagic)
+        com.willfp.libreforge.effects.Effects.register(EffectGiveSkillXpNaturally)
         com.willfp.libreforge.effects.Effects.register(EffectAddStatTemporarily(this))
         com.willfp.libreforge.effects.Effects.register(EffectMultiplyStatTemporarily(this))
         Conditions.register(ConditionHasSkillLevel)
+        Conditions.register(ConditionHasMagic)
         Triggers.register(TriggerGainSkillXp)
         Triggers.register(TriggerLevelUpSkill)
         Filters.register(FilterSkill)

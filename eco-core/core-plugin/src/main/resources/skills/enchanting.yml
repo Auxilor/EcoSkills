@@ -120,3 +120,6 @@ xp-gain-methods:
   - trigger: enchant_special # EcoEnchants integration, disable if not using.
     multiplier: 175
 
+# Conditions that must be met to gain XP. While you can add conditions to xp
+# gain methods, if you have many this can be annoying, so this is global.
+conditions: [ ]

@@ -28,6 +28,7 @@ import com.willfp.ecoskills.util.loadDescriptionPlaceholders
 import com.willfp.libreforge.EmptyProvidedHolder
 import com.willfp.libreforge.NamedValue
 import com.willfp.libreforge.ViolationContext
+import com.willfp.libreforge.conditions.Conditions
 import com.willfp.libreforge.counters.Counters
 import com.willfp.libreforge.effects.executors.impl.NormalExecutorFactory
 import com.willfp.libreforge.triggers.DispatchedTrigger
@@ -49,6 +50,11 @@ class Skill(
     private val xpGainMethods = config.getSubsections("xp-gain-methods").mapNotNull {
         Counters.compile(it, ViolationContext(plugin, "Skill $id xp-gain-methods"))
     }
+
+    val conditions = Conditions.compile(
+        config.getSubsections("conditions"),
+        ViolationContext(plugin, "Skill $id conditions")
+    )
 
     private val xpFormula = config.getStringOrNull("xp-formula")
 

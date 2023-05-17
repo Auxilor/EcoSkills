@@ -100,3 +100,7 @@ reward-messages:
 xp-gain-methods:
   - trigger: catch_fish
     multiplier: 0.1
+
+# Conditions that must be met to gain XP. While you can add conditions to xp
+# gain methods, if you have many this can be annoying, so this is global.
+conditions: [ ]

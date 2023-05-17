@@ -4,6 +4,7 @@ import com.github.benmanes.caffeine.cache.Caffeine
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.integrations.afk.AFKManager
 import com.willfp.ecoskills.api.gainSkillXP
+import com.willfp.libreforge.EmptyProvidedHolder
 import com.willfp.libreforge.counters.Accumulator
 import org.bukkit.GameMode
 import org.bukkit.entity.Player
@@ -20,6 +21,10 @@ class SkillXPAccumulator(
         }
 
         if (player.gameMode in setOf(GameMode.CREATIVE, GameMode.SPECTATOR)) {
+            return
+        }
+
+        if (!skill.conditions.areMet(player, EmptyProvidedHolder)) {
             return
         }
 

@@ -118,3 +118,7 @@ xp-gain-methods:
     args:
       chance: 0.05
     multiplier: 32
+
+# Conditions that must be met to gain XP. While you can add conditions to xp
+# gain methods, if you have many this can be annoying, so this is global.
+conditions: [ ]

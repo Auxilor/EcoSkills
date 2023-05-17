@@ -143,3 +143,7 @@ xp-gain-methods:
     multiplier: 0.33
     filter:
       from_spawner: false
+
+# Conditions that must be met to gain XP. While you can add conditions to xp
+# gain methods, if you have many this can be annoying, so this is global.
+conditions: [ ]
