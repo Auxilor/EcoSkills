@@ -10,9 +10,9 @@ gui:
     - "&8» &r%ecoskills_crit_damage_name%"
     - "&f"
     - "&fEffects:"
-    - "&8» &r&6Craftsmanship %ecoskills_craftsmanship_numeral%"
+    - "&8» &r&6%ecoskills_craftsmanship_name% %ecoskills_craftsmanship_numeral%"
     - "   %ecoskills_craftsmanship_description%"
-    - "&8» &r&6Master Lumberjack %ecoskills_master_lumberjack_numeral%"
+    - "&8» &r&6%ecoskills_master_lumberjack_name% %ecoskills_master_lumberjack_numeral%"
     - "   %ecoskills_master_lumberjack_description%"
 
   position:
@@ -92,9 +92,9 @@ reward-messages:
   1:
     - " &8» &r&f+2 %ecoskills_strength_name%"
     - " &8» &r&f+1 %ecoskills_crit_damage_name%"
-    - " &8» &r&6Craftsmanship %ecoskills_craftsmanship_numeral%"
+    - " &8» &r&6%ecoskills_craftsmanship_name% %ecoskills_craftsmanship_numeral%"
     - "    %ecoskills_craftsmanship_description%"
-    - " &8» &r&6Master Lumberjack %ecoskills_master_lumberjack_numeral%"
+    - " &8» &r&6%ecoskills_master_lumberjack_name% %ecoskills_master_lumberjack_numeral%"
     - "    %ecoskills_master_lumberjack_description%"
 
 

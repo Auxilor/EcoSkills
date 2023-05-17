@@ -10,11 +10,11 @@ gui:
     - "&8» &r%ecoskills_speed_name%"
     - "&f"
     - "&fEffects:"
-    - "&8» &r&6Shamanism %ecoskills_shamanism_numeral%"
+    - "&8» &r&6%ecoskills_shamanism_name% %ecoskills_shamanism_numeral%"
     - "   %ecoskills_shamanism_description%"
-    - "&8» &r&6Infernal Resistance %ecoskills_infernal_resistance_numeral%"
+    - "&8» &r&6%ecoskills_infernal_resistance_name% %ecoskills_infernal_resistance_numeral%"
     - "   %ecoskills_infernal_resistance_description%"
-    - "&8» &r&6Bravery %ecoskills_bravery_numeral%"
+    - "&8» &r&6%ecoskills_bravery_name% %ecoskills_bravery_numeral%"
     - "   %ecoskills_bravery_description%"
 
   position:
@@ -98,18 +98,18 @@ reward-messages:
   1:
     - " &8» &r&f+2 %ecoskills_defense_name%"
     - " &8» &r&f+1 %ecoskills_speed_name%"
-    - " &8» &r&6Shamanism %ecoskills_shamanism_numeral%"
+    - " &8» &r&6%ecoskills_shamanism_name% %ecoskills_shamanism_numeral%"
     - "    %ecoskills_shamanism_description%"
-    - " &8» &r&6Infernal Resistance %ecoskills_infernal_resistance_numeral%"
+    - " &8» &r&6%ecoskills_infernal_resistance_name% %ecoskills_infernal_resistance_numeral%"
     - "    %ecoskills_infernal_resistance_description%"
   10:
     - " &8» &r&f+2 %ecoskills_defense_name%"
     - " &8» &r&f+1 %ecoskills_speed_name%"
-    - " &8» &r&6Shamanism %ecoskills_shamanism_numeral%"
+    - " &8» &r&6%ecoskills_shamanism_name% %ecoskills_shamanism_numeral%"
     - "    %ecoskills_shamanism_description%"
-    - " &8» &r&6Infernal Resistance %ecoskills_infernal_resistance_numeral%"
+    - " &8» &r&6%ecoskills_infernal_resistance_name% %ecoskills_infernal_resistance_numeral%"
     - "    %ecoskills_infernal_resistance_description%"
-    - " &8» &r&6Bravery %ecoskills_bravery_numeral%"
+    - " &8» &r&6%ecoskills_bravery_name% %ecoskills_bravery_numeral%"
     - "    %ecoskills_bravery_description%"
 
 

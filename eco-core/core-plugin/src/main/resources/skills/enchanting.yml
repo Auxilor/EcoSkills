@@ -10,11 +10,11 @@ gui:
     - "&8» &r%ecoskills_crit_chance_name%"
     - "&f"
     - "&fEffects:"
-    - "&8» &r&6Second Chance %ecoskills_second_chance_numeral%"
+    - "&8» &r&6%ecoskills_second_chance_name% %ecoskills_second_chance_numeral%"
     - "   %ecoskills_second_chance_description%"
-    - "&8» &r&6Reimbursement %ecoskills_reimbursement_numeral%"
+    - "&8» &r&6%ecoskills_reimbursement_name% %ecoskills_reimbursement_numeral%"
     - "   %ecoskills_reimbursement_description%"
-    - "&8» &r&6Overcompensation %ecoskills_overcompensation_numeral%"
+    - "&8» &r&6%ecoskills_overcompensation_name% %ecoskills_overcompensation_numeral%"
     - "   %ecoskills_overcompensation_description%"
 
   position:
@@ -98,18 +98,18 @@ reward-messages:
   1:
     - " &8» &r&f+2 %ecoskills_wisdom_name%"
     - " &8» &r&f+1 %ecoskills_crit_chance_name%"
-    - " &8» &r&6Second Chance %ecoskills_second_chance_numeral%"
+    - " &8» &r&6%ecoskills_second_chance_name% %ecoskills_second_chance_numeral%"
     - "    %ecoskills_second_chance_description%"
-    - " &8» &r&6Reimbursement %ecoskills_reimbursement_numeral%"
+    - " &8» &r&6%ecoskills_reimbursement_name% %ecoskills_reimbursement_numeral%"
     - "    %ecoskills_reimbursement_description%"
   10:
     - " &8» &r&f+2 %ecoskills_wisdom_name%"
     - " &8» &r&f+1 %ecoskills_crit_chance_name%"
-    - " &8» &r&6Second Chance %ecoskills_second_chance_numeral%"
+    - " &8» &r&6%ecoskills_second_chance_name% %ecoskills_second_chance_numeral%"
     - "    %ecoskills_second_chance_description%"
-    - " &8» &r&6Reimbursement %ecoskills_reimbursement_numeral%"
+    - " &8» &r&6%ecoskills_reimbursement_name% %ecoskills_reimbursement_numeral%"
     - "    %ecoskills_reimbursement_description%"
-    - " &8» &r&6Overcompensation %ecoskills_overcompensation_numeral%"
+    - " &8» &r&6%ecoskills_overcompensation_name% %ecoskills_overcompensation_numeral%"
     - "    %ecoskills_overcompensation_description%"
 
 

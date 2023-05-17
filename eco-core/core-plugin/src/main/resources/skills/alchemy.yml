@@ -10,11 +10,11 @@ gui:
     - "&8» &r%ecoskills_wisdom_name%"
     - "&f"
     - "&fEffects:"
-    - "&8» &r&6Potionmaster %ecoskills_potionmaster_numeral%"
+    - "&8» &r&6%ecoskills_potionmaster_name% %ecoskills_potionmaster_numeral%"
     - "   %ecoskills_potionmaster_description%"
-    - "&8» &r&6Efficient Brewing %ecoskills_efficient_brewing_numeral%"
+    - "&8» &r&6%ecoskills_efficient_brewing_name% %ecoskills_efficient_brewing_numeral%"
     - "   %ecoskills_efficient_brewing_description%"
-    - "&8» &r&6Mystic Resilience %ecoskills_mystic_resilience_numeral%"
+    - "&8» &r&6%ecoskills_mystic_resilience_name% %ecoskills_mystic_resilience_numeral%"
     - "   %ecoskills_mystic_resilience_description%"
 
   position:
@@ -98,18 +98,18 @@ reward-messages:
   1:
     - " &8» &r&f+2 %ecoskills_crit_chance_name%"
     - " &8» &r&f+1 %ecoskills_wisdom_name%"
-    - " &8» &r&6Potionmaster %ecoskills_potionmaster_numeral%"
+    - " &8» &r&6%ecoskills_potionmaster_name% %ecoskills_potionmaster_numeral%"
     - "    %ecoskills_potionmaster_description%"
-    - " &8» &r&6Mystic Resilience %ecoskills_mystic_resilience_numeral%"
+    - " &8» &r&6%ecoskills_mystic_resilience_name% %ecoskills_mystic_resilience_numeral%"
     - "    %ecoskills_mystic_resilience_description%"
   10:
     - " &8» &r&f+2 %ecoskills_crit_chance_name%"
     - " &8» &r&f+1 %ecoskills_wisdom_name%"
-    - " &8» &r&6Potionmaster %ecoskills_potionmaster_numeral%"
+    - " &8» &r&6%ecoskills_potionmaster_name% %ecoskills_potionmaster_numeral%"
     - "    %ecoskills_potionmaster_description%"
-    - " &8» &r&6Efficient Brewing %ecoskills_efficient_brewing_numeral%"
+    - " &8» &r&6%ecoskills_efficient_brewing_name% %ecoskills_efficient_brewing_numeral%"
     - "    %ecoskills_efficient_brewing_description%"
-    - " &8» &r&6Mystic Resilience %ecoskills_mystic_resilience_numeral%"
+    - " &8» &r&6%ecoskills_mystic_resilience_name% %ecoskills_mystic_resilience_numeral%"
     - "    %ecoskills_mystic_resilience_description%"
 
 

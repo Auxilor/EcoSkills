@@ -20,11 +20,11 @@ gui:
     - "&8» &r%ecoskills_ferocity_name%"
     - "&f"
     - "&fEffects:"
-    - "&8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
+    - "&8» &r&6%ecoskills_versatile_tools_name% %ecoskills_versatile_tools_numeral%"
     - "   %ecoskills_versatile_tools_description%"
-    - "&8» &r&6Spelunking %ecoskills_spelunking_numeral%"
+    - "&8» &r&6%ecoskills_spelunking_name% %ecoskills_spelunking_numeral%"
     - "   %ecoskills_spelunking_description%"
-    - "&8» &r&6Dynamic Mining %ecoskills_dynamic_mining_numeral%"
+    - "&8» &r&6%ecoskills_dynamic_mining_name% %ecoskills_dynamic_mining_numeral%"
     - "   %ecoskills_dynamic_mining_description%"
 
   position:
@@ -151,26 +151,26 @@ placeholders:
 reward-messages:
   1:
     - " &8» &r&f+2 %ecoskills_defense_name%"
-    - " &8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
+    - " &8» &r&6%ecoskills_versatile_tools_name% %ecoskills_versatile_tools_numeral%"
     - "    %ecoskills_versatile_tools_description%"
-    - " &8» &r&6Dynamic Mining %ecoskills_dynamic_mining_numeral%"
+    - " &8» &r&6%ecoskills_dynamic_mining_name% %ecoskills_dynamic_mining_numeral%"
     - "    %ecoskills_dynamic_mining_description%"
   10:
     - " &8» &r&f+2 %ecoskills_defense_name%"
-    - " &8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
+    - " &8» &r&6%ecoskills_versatile_tools_name% %ecoskills_versatile_tools_numeral%"
     - "    %ecoskills_versatile_tools_description%"
-    - " &8» &r&6Spelunking %ecoskills_spelunking_numeral%"
+    - " &8» &r&6%ecoskills_spelunking_name% %ecoskills_spelunking_numeral%"
     - "    %ecoskills_spelunking_description%"
-    - " &8» &r&6Dynamic Mining %ecoskills_dynamic_mining_numeral%"
+    - " &8» &r&6%ecoskills_dynamic_mining_name% %ecoskills_dynamic_mining_numeral%"
     - "    %ecoskills_dynamic_mining_description%"
   15:
     - " &8» &r&f+2 %ecoskills_defense_name%"
     - " &8» &r&f+1 %ecoskills_ferocity_name%"
-    - " &8» &r&6Versatile Tools %ecoskills_versatile_tools_numeral%"
+    - " &8» &r&6%ecoskills_versatile_tools_name% %ecoskills_versatile_tools_numeral%"
     - "    %ecoskills_versatile_tools_description%"
-    - " &8» &r&6Spelunking %ecoskills_spelunking_numeral%"
+    - " &8» &r&6%ecoskills_spelunking_name% %ecoskills_spelunking_numeral%"
     - "    %ecoskills_spelunking_description%"
-    - " &8» &r&6Dynamic Mining %ecoskills_dynamic_mining_numeral%"
+    - " &8» &r&6%ecoskills_dynamic_mining_name% %ecoskills_dynamic_mining_numeral%"
     - "    %ecoskills_dynamic_mining_description%"
 
 

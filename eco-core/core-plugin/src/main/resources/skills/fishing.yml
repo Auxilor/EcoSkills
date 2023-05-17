@@ -10,9 +10,9 @@ gui:
     - "&8» &r%ecoskills_wisdom_name%"
     - "&f"
     - "&fEffects:"
-    - "&8» &r&6Eye of the Depths %ecoskills_eye_of_the_depths_numeral%"
+    - "&8» &r&6%ecoskills_eye_of_the_depths_name% %ecoskills_eye_of_the_depths_numeral%"
     - "   %ecoskills_eye_of_the_depths_description%"
-    - "&8» &r&6Magnetic Rod %ecoskills_magnetic_rod_numeral%"
+    - "&8» &r&6%ecoskills_magnetic_rod_name% %ecoskills_magnetic_rod_numeral%"
     - "   %ecoskills_magnetic_rod_description%"
 
   position:
@@ -92,9 +92,9 @@ reward-messages:
   1:
     - " &8» &r&f+2 %ecoskills_defense_name%"
     - " &8» &r&f+1 %ecoskills_wisdom_name%"
-    - " &8» &r&6Eye of the Depths %ecoskills_eye_of_the_depths_numeral%"
+    - " &8» &r&6%ecoskills_eye_of_the_depths_name% %ecoskills_eye_of_the_depths_numeral%"
     - "    %ecoskills_eye_of_the_depths_description%"
-    - " &8» &r&6Magnetic Rod %ecoskills_magnetic_rod_numeral%"
+    - " &8» &r&6%ecoskills_magnetic_rod_name% %ecoskills_magnetic_rod_numeral%"
     - "    %ecoskills_magnetic_rod_description%"
 
 xp-gain-methods:

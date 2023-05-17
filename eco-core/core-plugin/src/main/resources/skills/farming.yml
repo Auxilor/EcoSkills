@@ -10,11 +10,11 @@ gui:
     - "&8» &r%ecoskills_wisdom_name%"
     - "&f"
     - "&fEffects:"
-    - "&8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
+    - "&8» &r&6%ecoskills_bountiful_harvest_name% %ecoskills_bountiful_harvest_numeral%"
     - "   %ecoskills_bountiful_harvest_description%"
-    - "&8» &r&6Satiation %ecoskills_satiation_numeral%"
+    - "&8» &r&6%ecoskills_satiation_name% %ecoskills_satiation_numeral%"
     - "   %ecoskills_satiation_description%"
-    - "&8» &r&6Golden Yield %ecoskills_golden_yield_numeral%"
+    - "&8» &r&6%ecoskills_golden_yield_name% %ecoskills_golden_yield_numeral%"
     - "   %ecoskills_golden_yield_description%"
 
   position:
@@ -98,18 +98,18 @@ reward-messages:
   1:
     - " &8» &r&f+2 %ecoskills_crit_damage_name%"
     - " &8» &r&f+1 %ecoskills_wisdom_name%"
-    - " &8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
+    - " &8» &r&6%ecoskills_bountiful_harvest_name% %ecoskills_bountiful_harvest_numeral%"
     - "    %ecoskills_bountiful_harvest_description%"
-    - " &8» &r&6Satiation %ecoskills_satiation_numeral%"
+    - " &8» &r&6%ecoskills_satiation_name% %ecoskills_satiation_numeral%"
     - "    %ecoskills_satiation_description%"
   10:
     - " &8» &r&f+2 %ecoskills_crit_damage_name%"
     - " &8» &r&f+1 %ecoskills_wisdom_name%"
-    - " &8» &r&6Bountiful Harvest %ecoskills_bountiful_harvest_numeral%"
+    - " &8» &r&6%ecoskills_bountiful_harvest_name% %ecoskills_bountiful_harvest_numeral%"
     - "    %ecoskills_bountiful_harvest_description%"
-    - " &8» &r&6Satiation %ecoskills_satiation_numeral%"
+    - " &8» &r&6%ecoskills_satiation_name% %ecoskills_satiation_numeral%"
     - "    %ecoskills_satiation_description%"
-    - " &8» &r&6Golden Yield %ecoskills_golden_yield_numeral%"
+    - " &8» &r&6%ecoskills_golden_yield_name% %ecoskills_golden_yield_numeral%"
     - "    %ecoskills_golden_yield_description%"
 
 
