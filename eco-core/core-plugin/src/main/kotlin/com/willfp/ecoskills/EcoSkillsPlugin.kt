@@ -8,7 +8,8 @@ import com.willfp.ecoskills.actionbar.ActionBarHandler
 import com.willfp.ecoskills.commands.CommandEcoSkills
 import com.willfp.ecoskills.commands.CommandSkills
 import com.willfp.ecoskills.effects.Effects
-import com.willfp.ecoskills.libreforge.ConditionHasMagic
+import com.willfp.ecoskills.libreforge.ConditionAboveMagic
+import com.willfp.ecoskills.libreforge.ConditionBelowMagic
 import com.willfp.ecoskills.libreforge.ConditionHasSkillLevel
 import com.willfp.ecoskills.libreforge.EffectAddStat
 import com.willfp.ecoskills.libreforge.EffectAddStatTemporarily
@@ -82,7 +83,8 @@ class EcoSkillsPlugin : LibreforgePlugin() {
         com.willfp.libreforge.effects.Effects.register(EffectAddStatTemporarily(this))
         com.willfp.libreforge.effects.Effects.register(EffectMultiplyStatTemporarily(this))
         Conditions.register(ConditionHasSkillLevel)
-        Conditions.register(ConditionHasMagic)
+        Conditions.register(ConditionBelowMagic)
+        Conditions.register(ConditionAboveMagic)
         Triggers.register(TriggerGainSkillXp)
         Triggers.register(TriggerLevelUpSkill)
         Filters.register(FilterSkill)

@@ -8,7 +8,7 @@ import com.willfp.libreforge.arguments
 import com.willfp.libreforge.conditions.Condition
 import org.bukkit.entity.Player
 
-object ConditionHasMagic : Condition<NoCompileData>("has_magic") {
+object ConditionAboveMagic : Condition<NoCompileData>("above_magic") {
     override val arguments = arguments {
         require("type", "You must specify the magic type!")
         require("amount", "You must specify the amount!")
