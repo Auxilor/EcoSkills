@@ -1,4 +1,4 @@
-name: "Bountiful Harvest"
+name: "Golden Yield"
 placeholders:
   chance: "min(%level% * 0.5, 100)"
   multiplier: 6

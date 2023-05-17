@@ -1,4 +1,4 @@
-name: "Serrated Strikes"
+name: "Seamless Movement"
 placeholder: "min(%level% * 2, 100)"
 description: "&a%placeholder%%&8 chance to ignore fall damage"
 
