@@ -31,7 +31,7 @@ class SkillLevelMap(
 
         val required = skill.getXPRequired(current.level)
 
-        return if (current.xp + xp >= required) {
+        return if (current.xp + xp >= required && current.level < skill.maxLevel) {
             val overshoot = current.xp + xp - required
 
             this[skill] = SkillLevel(
