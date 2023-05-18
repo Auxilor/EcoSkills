@@ -13,6 +13,7 @@ import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.libreforge.EffectArgumentMagicCost
 import com.willfp.libreforge.effects.arguments.EffectArguments
 import org.bukkit.entity.Player
+import kotlin.math.ceil
 
 class MagicType(
     override val id: String,
@@ -55,9 +56,11 @@ class MagicType(
     ).toInt()
 
     internal fun tick(player: Player) {
-        val toRegen = evaluateExpression(
-            regenRateExpr, placeholderContext(
-                player = player
+        val toRegen = ceil(
+            evaluateExpression(
+                regenRateExpr, placeholderContext(
+                    player = player
+                )
             )
         ).toInt()
 
