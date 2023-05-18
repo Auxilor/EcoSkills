@@ -53,9 +53,9 @@ class GainXPDisplay(
         player.sendTemporaryBossBar(
             message,
             event.skill.id,
-            this.plugin.configYml.getInt("skills.progress.boss-bar.duration"),
-            BarColor.valueOf(this.plugin.configYml.getString("skills.progress.boss-bar.color").uppercase()),
-            BarStyle.valueOf(this.plugin.configYml.getString("skills.progress.boss-bar.style").uppercase()),
+            this.plugin.configYml.getInt("skills.gain-xp.boss-bar.duration"),
+            BarColor.valueOf(this.plugin.configYml.getString("skills.gain-xp.boss-bar.color").uppercase()),
+            BarStyle.valueOf(this.plugin.configYml.getString("skills.gain-xp.boss-bar.style").uppercase()),
             player.getSkillProgress(skill).coerceIn(0.0..1.0)
         )
     }
