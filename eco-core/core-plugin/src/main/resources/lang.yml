@@ -15,6 +15,8 @@ messages:
   gave-stat: "Gave %player% %amount% %obj%&r!"
   enabled-actionbar: "&fYou have &aenabled &fthe action bar!"
   disabled-actionbar: "&fYou have &cdisabled &fthe action bar!"
+  enabled-xp-gain-sound: "&fYou have &aenabled &fXP gain sounds!"
+  disabled-xp-gain-sound: "&fYou have &cdisabled &fXP gain sounds!"
   actionbar-disabled: "&cThe action bar is disabled on this server."
   resetting-all-players: "&fResetting all players... (this may take a while)"
   reset-all-players: "&fReset all players!"

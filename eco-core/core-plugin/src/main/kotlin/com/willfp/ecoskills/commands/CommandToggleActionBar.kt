@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package com.willfp.ecoskills.commands
 
 import com.willfp.eco.core.EcoPlugin
