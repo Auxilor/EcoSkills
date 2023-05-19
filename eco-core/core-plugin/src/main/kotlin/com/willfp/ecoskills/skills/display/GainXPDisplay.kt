@@ -67,7 +67,7 @@ class GainXPDisplay(
         val player = event.player
         val skill = event.skill
 
-        val message = plugin.configYml.getString("skills.gain-xp.boss-bar.message")
+        val message = plugin.configYml.getString("skills.gain-xp.boss-bar.format")
             .formatMessage(event)
 
         player.sendTemporaryBossBar(
