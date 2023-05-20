@@ -2,14 +2,18 @@
 
 package com.willfp.ecoskills.stats
 
+import com.willfp.eco.core.map.nestedMap
 import com.willfp.ecoskills.api.getBaseStatLevel
 import com.willfp.ecoskills.api.modifiers.ModifierOperation
 import com.willfp.ecoskills.api.modifiers.StatModifier
-import com.willfp.ecoskills.plugin
 import org.bukkit.entity.Player
+import org.bukkit.event.EventHandler
+import org.bukkit.event.Listener
+import org.bukkit.event.player.PlayerQuitEvent
 import java.util.UUID
 
-private const val KEY_MODIFIERS = "ecoskills:stat_modifiers"
+// Player UUID -> Stat Modifier UUID -> Stat Modifier
+private val trackedStatModifiers = nestedMap<UUID, UUID, StatModifier>()
 
 internal val Player.statModifiers: StatModifiers
     get() = StatModifiers(this)
@@ -18,31 +22,13 @@ class StatModifiers(
     private val player: Player
 ) {
     fun add(modifier: StatModifier) {
-        if (!player.hasMetadata(KEY_MODIFIERS)) {
-            player.setMetadata(KEY_MODIFIERS, plugin.createMetadataValue(mutableMapOf<UUID, StatModifier>()))
-        }
-
-        val modifiers = player.getMetadata(KEY_MODIFIERS).first().value() as MutableMap<UUID, StatModifier>
-
-        modifiers[modifier.uuid] = modifier
-
-        player.setMetadata(KEY_MODIFIERS, plugin.createMetadataValue(modifiers))
+        trackedStatModifiers[player.uniqueId][modifier.uuid] = modifier
     }
 
     operator fun plusAssign(modifier: StatModifier) = add(modifier)
 
     fun remove(uuid: UUID): StatModifier? {
-        if (!player.hasMetadata(KEY_MODIFIERS)) {
-            return null
-        }
-
-        val modifiers = player.getMetadata(KEY_MODIFIERS).first().value() as MutableMap<UUID, StatModifier>
-
-        val modifier = modifiers.remove(uuid)
-
-        player.setMetadata(KEY_MODIFIERS, plugin.createMetadataValue(modifiers))
-
-        return modifier
+        return trackedStatModifiers[player.uniqueId].remove(uuid)
     }
 
     operator fun minusAssign(uuid: UUID) {
@@ -54,13 +40,7 @@ class StatModifiers(
     }
 
     fun getModifiers(): List<StatModifier> {
-        if (!player.hasMetadata(KEY_MODIFIERS)) {
-            return emptyList()
-        }
-
-        val modifiers = player.getMetadata(KEY_MODIFIERS).first().value() as MutableMap<UUID, StatModifier>
-
-        return modifiers.values.toList()
+        return trackedStatModifiers[player.uniqueId].values.toList()
     }
 
     fun getModifiers(stat: Stat): List<StatModifier> {
@@ -84,16 +64,24 @@ class StatModifiers(
     fun getModifiedValue(stat: Stat): Int {
         val modifiers = getModifiers(stat)
 
-        var base = player.getBaseStatLevel(stat).toDouble()
+        var level = player.getBaseStatLevel(stat).toDouble()
 
         modifiers.filter { it.operation == ModifierOperation.ADD }.forEach {
-            base += it.modifier
+            level += it.modifier
         }
 
         modifiers.filter { it.operation == ModifierOperation.MULTIPLY }.forEach {
-            base *= it.modifier
+            level *= it.modifier
         }
 
-        return base.toInt()
+        return level.toInt()
+    }
+}
+
+// Little fixer-upper
+object StatModifierListener : Listener {
+    @EventHandler
+    fun onLeave(event: PlayerQuitEvent) {
+        trackedStatModifiers.remove(event.player.uniqueId)
     }
 }

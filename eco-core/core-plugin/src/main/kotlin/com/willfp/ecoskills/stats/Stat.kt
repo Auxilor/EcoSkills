@@ -57,6 +57,14 @@ class Stat(
     override fun getActualLevel(player: OfflinePlayer): Int {
         return player.getStatLevel(this)
     }
+
+    override fun equals(other: Any?): Boolean {
+        return other is Stat && other.id == id
+    }
+
+    override fun hashCode(): Int {
+        return id.hashCode()
+    }
 }
 
 internal val OfflinePlayer.stats: LevelMap<Stat>

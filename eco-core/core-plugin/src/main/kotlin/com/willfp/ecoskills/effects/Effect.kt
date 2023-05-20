@@ -10,7 +10,15 @@ class Effect(
     id: String,
     config: Config,
     plugin: EcoSkillsPlugin
-) : LevellableWithHolder(id, config, plugin)
+) : LevellableWithHolder(id, config, plugin) {
+    override fun equals(other: Any?): Boolean {
+        return other is Effect && other.id == id
+    }
+
+    override fun hashCode(): Int {
+        return id.hashCode()
+    }
+}
 
 
 internal val OfflinePlayer.effects: LevelMap<Effect>

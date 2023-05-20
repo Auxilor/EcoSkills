@@ -37,6 +37,7 @@ import com.willfp.ecoskills.skills.display.DamageIndicatorListener
 import com.willfp.ecoskills.skills.display.GainXPDisplay
 import com.willfp.ecoskills.skills.display.LevelUpDisplay
 import com.willfp.ecoskills.skills.display.TemporaryBossBarHandler
+import com.willfp.ecoskills.stats.StatModifierListener
 import com.willfp.ecoskills.stats.Stats
 import com.willfp.libreforge.SimpleProvidedHolder
 import com.willfp.libreforge.conditions.Conditions
@@ -117,7 +118,8 @@ class EcoSkillsPlugin : LibreforgePlugin() {
             DamageIndicatorListener(this),
             MagicListener(this),
             ActionBarGamemodeListener,
-            SkillCritListener
+            SkillCritListener,
+            StatModifierListener
         )
     }
 

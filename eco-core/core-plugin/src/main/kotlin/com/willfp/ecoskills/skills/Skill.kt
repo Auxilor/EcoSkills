@@ -270,6 +270,14 @@ class Skill(
 
     internal fun getSavedXP(player: OfflinePlayer): Double = player.profile.read(xpKey)
     internal fun setSavedXP(player: OfflinePlayer, xp: Double) = player.profile.write(xpKey, xp)
+
+    override fun equals(other: Any?): Boolean {
+        return other is Skill && other.id == id
+    }
+
+    override fun hashCode(): Int {
+        return id.hashCode()
+    }
 }
 
 internal val OfflinePlayer.skills: SkillLevelMap
