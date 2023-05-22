@@ -11,6 +11,7 @@ import com.willfp.ecoskills.stats.Stats
 import com.willfp.libreforge.NoCompileData
 import com.willfp.libreforge.arguments
 import com.willfp.libreforge.effects.Effect
+import com.willfp.libreforge.effects.RunOrder
 import com.willfp.libreforge.getDoubleFromExpression
 import com.willfp.libreforge.getIntFromExpression
 import com.willfp.libreforge.triggers.TriggerData
@@ -20,6 +21,8 @@ import java.util.UUID
 class EffectMultiplyStatTemporarily(
     private val plugin: EcoPlugin
 ) : Effect<NoCompileData>("add_stat_temporarily") {
+    override val runOrder = RunOrder.START // Not sure if this is necessary
+
     override val parameters = setOf(
         TriggerParameter.PLAYER
     )

@@ -11,9 +11,12 @@ import com.willfp.libreforge.ProvidedHolder
 import com.willfp.libreforge.arguments
 import com.willfp.libreforge.effects.Effect
 import com.willfp.libreforge.effects.Identifiers
+import com.willfp.libreforge.effects.RunOrder
 import org.bukkit.entity.Player
 
 object EffectMultiplyAllStats : Effect<NoCompileData>("multiply_all_stats") {
+    override val runOrder = RunOrder.START
+
     override val arguments = arguments {
         require("multiplier", "You must specify the multiplier!")
     }
