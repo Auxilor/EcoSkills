@@ -30,8 +30,8 @@ class EcoSkillsSkillTopPlaceholder(
         val place = args[2].toIntOrNull() ?: return null
 
         return when (args.last()) {
-            "name" -> skill.getTop(place)?.player?.savedDisplayName
-            "level", "amount" -> skill.getTop(place)?.level?.toString()
+            "name" -> skill.getTop(place)?.player?.savedDisplayName ?: "N/A"
+            "level", "amount" -> skill.getTop(place)?.level?.toString() ?: "N/A"
             else -> null
         }
     }
@@ -59,8 +59,8 @@ class EcoSkillsTopPlaceholder(
         val place = args[1].toIntOrNull() ?: return null
 
         return when (args.last()) {
-            "name" -> Skills.getTop(place)?.player?.savedDisplayName
-            "level", "amount" -> Skills.getTop(place)?.level?.toString()
+            "name" -> Skills.getTop(place)?.player?.savedDisplayName ?: "N/A"
+            "level", "amount" -> Skills.getTop(place)?.level?.toString() ?: "N/A"
             else -> null
         }
     }
