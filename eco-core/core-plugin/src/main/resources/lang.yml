@@ -29,6 +29,7 @@ line-wrap-color: "&8"
 
 top-line-format: "%rank%. %player% - %level%"
 top:
+  empty-position: "&cN/A"
   format:
     - "---- Skills Leaderboard ----"
     - "%lines%"

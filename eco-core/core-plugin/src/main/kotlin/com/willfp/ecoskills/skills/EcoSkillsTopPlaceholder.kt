@@ -15,6 +15,7 @@ class EcoSkillsSkillTopPlaceholder(
     override fun getPlugin(): EcoPlugin = plugin
 
     override fun getValue(params: String, ctx: PlaceholderContext): String? {
+        val emptyposition: String = plugin.langYml.getString("top.empty-position")
         val args = params.split("_")
 
         if (args.size < 3) {
@@ -30,8 +31,8 @@ class EcoSkillsSkillTopPlaceholder(
         val place = args[2].toIntOrNull() ?: return null
 
         return when (args.last()) {
-            "name" -> skill.getTop(place)?.player?.savedDisplayName
-            "level", "amount" -> skill.getTop(place)?.level?.toString()
+            "name" -> skill.getTop(place)?.player?.savedDisplayName ?: emptyposition
+            "level", "amount" -> skill.getTop(place)?.level?.toString() ?: emptyposition
             else -> null
         }
     }
@@ -46,6 +47,7 @@ class EcoSkillsTopPlaceholder(
     override fun getPlugin(): EcoPlugin = plugin
 
     override fun getValue(params: String, ctx: PlaceholderContext): String? {
+        val emptyposition: String = plugin.langYml.getString("top.empty-position")
         val args = params.split("_")
 
         if (args.size < 2) {
@@ -59,8 +61,8 @@ class EcoSkillsTopPlaceholder(
         val place = args[1].toIntOrNull() ?: return null
 
         return when (args.last()) {
-            "name" -> Skills.getTop(place)?.player?.savedDisplayName
-            "level", "amount" -> Skills.getTop(place)?.level?.toString()
+            "name" -> Skills.getTop(place)?.player?.savedDisplayName ?: emptyposition
+            "level", "amount" -> Skills.getTop(place)?.level?.toString() ?: emptyposition
             else -> null
         }
     }
