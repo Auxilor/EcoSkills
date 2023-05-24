@@ -20,7 +20,7 @@ import java.util.UUID
 
 class EffectMultiplyStatTemporarily(
     private val plugin: EcoPlugin
-) : Effect<NoCompileData>("add_stat_temporarily") {
+) : Effect<NoCompileData>("multiply_stat_temporarily") {
     override val runOrder = RunOrder.START // Not sure if this is necessary
 
     override val parameters = setOf(
@@ -29,7 +29,7 @@ class EffectMultiplyStatTemporarily(
 
     override val arguments = arguments {
         require("stat", "You must specify the stat!")
-        require("amount", "You must specify the amount to add/remove!")
+        require("multiplier", "You must specify the multiplier!")
         require("duration", "You must specify the duration for the boost!")
     }
 
