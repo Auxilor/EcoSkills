@@ -5,6 +5,7 @@ import com.willfp.eco.core.packet.PacketListener
 import com.willfp.ecoskills.actionbar.ActionBarCompatibilityProxy
 import com.willfp.ecoskills.actionbar.ActionBarGamemodeListener
 import com.willfp.ecoskills.actionbar.ActionBarHandler
+import com.willfp.ecoskills.actionbar.HealthScaleDisabler
 import com.willfp.ecoskills.commands.CommandEcoSkills
 import com.willfp.ecoskills.commands.CommandSkills
 import com.willfp.ecoskills.effects.Effects
@@ -117,6 +118,7 @@ class EcoSkillsPlugin : LibreforgePlugin() {
             GainXPDisplay(this),
             DamageIndicatorListener(this),
             MagicListener(this),
+            HealthScaleDisabler(this),
             ActionBarGamemodeListener,
             SkillCritListener,
             StatModifierListener
