@@ -113,5 +113,5 @@ class GainXPDisplay(
             .replace("%current_xp%", event.player.getSkillXP(event.skill).toNiceString())
             .replace("%required_xp%", event.player.getFormattedRequiredXP(event.skill))
             .replace("%gained_xp%", event.gainedXP.toNiceString())
-            .formatEco(event.player)
+            .formatEco(event.player, true)
 }
