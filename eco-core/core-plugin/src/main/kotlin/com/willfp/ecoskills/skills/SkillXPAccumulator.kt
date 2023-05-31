@@ -16,7 +16,8 @@ class SkillXPAccumulator(
     private val skill: Skill
 ) : Accumulator {
     override fun accept(player: Player, count: Double) {
-        if (plugin.configYml.getBool("skills.prevent-levelling-while-afk") && AFKManager.isAfk(player)) {
+        val option = "prevent-levelling-while-afk"
+        if ((skill.getConfigFor(option)).getBool(option) && AFKManager.isAfk(player)) {
             return
         }
 

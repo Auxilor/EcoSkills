@@ -47,6 +47,8 @@ class Skill(
         0.0
     )
 
+    val settings = SkillSettings(config)
+
     private val xpGainMethods = config.getSubsections("xp-gain-methods").mapNotNull {
         Counters.compile(it, ViolationContext(plugin, "Skill $id xp-gain-methods"))
     }
@@ -145,6 +147,10 @@ class Skill(
         } else {
             required.toNiceString()
         }
+    }
+
+    fun getConfigFor(path: String): Config {
+        return settings.getConfigFor(path)
     }
 
     /**

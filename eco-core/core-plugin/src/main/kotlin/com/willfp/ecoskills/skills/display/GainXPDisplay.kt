@@ -14,6 +14,7 @@ import com.willfp.ecoskills.api.getFormattedRequiredXP
 import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.api.getSkillProgress
 import com.willfp.ecoskills.api.getSkillXP
+import com.willfp.ecoskills.skills.Skill
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle
 import org.bukkit.entity.Player
@@ -36,13 +37,17 @@ val Player.isXPGainSoundEnabled: Boolean
 class GainXPDisplay(
     private val plugin: EcoPlugin
 ) : Listener {
-    private val hideBeforeLevel1 = plugin.configYml.getBool("skills.hide-before-level-1")
+    private fun getHideBeforeLevel1(skill: Skill): Boolean {
+        return (skill.getConfigFor("hide-before-level-1")).getBool("hide-before-level-1")
+    }
 
-    private val sound = if (plugin.configYml.getBool("skills.gain-xp.sound.enabled")) {
-        PlayableSound.create(
-            plugin.configYml.getSubsection("skills.gain-xp.sound")
-        )
-    } else null
+    private fun getSound(skill: Skill): PlayableSound? {
+        return if (skill.getConfigFor("gain-xp.sound.enabled").getBool("gain-xp.sound.enabled")) {
+            PlayableSound.create(
+                skill.getConfigFor("gain-xp.sound").getSubsection("gain-xp.sound")
+            )
+        } else null
+    }
 
     @EventHandler
     fun handle(event: PlayerSkillXPGainEvent) {
@@ -54,40 +59,45 @@ class GainXPDisplay(
             handleBossBar(event)
 
             if (player.isXPGainSoundEnabled) {
-                sound?.playTo(player)
+                getSound(event.skill)?.playTo(player)
             }
         }
     }
 
     private fun handleBossBar(event: PlayerSkillXPGainEvent) {
-        if (!plugin.configYml.getBool("skills.gain-xp.boss-bar.enabled")) {
+        if (!(event.skill.getConfigFor("gain-xp.boss-bar.enabled")).getBool("gain-xp.boss-bar.enabled")) {
             return
         }
 
         val player = event.player
         val skill = event.skill
 
-        val message = plugin.configYml.getString("skills.gain-xp.boss-bar.format")
+        val message = (event.skill.getConfigFor("gain-xp.boss-bar.format"))
+            .getString("gain-xp.boss-bar.format")
             .formatMessage(event)
 
         player.sendTemporaryBossBar(
             message,
             event.skill.id,
-            this.plugin.configYml.getInt("skills.gain-xp.boss-bar.duration"),
-            BarColor.valueOf(this.plugin.configYml.getString("skills.gain-xp.boss-bar.color").uppercase()),
-            BarStyle.valueOf(this.plugin.configYml.getString("skills.gain-xp.boss-bar.style").uppercase()),
+            (event.skill.getConfigFor("gain-xp.boss-bar.duration")).getInt("gain-xp.boss-bar.duration"),
+            BarColor.valueOf((event.skill.getConfigFor("gain-xp.boss-bar.color"))
+                .getString("gain-xp.boss-bar.color").uppercase()),
+            BarStyle.valueOf((event.skill.getConfigFor("gain-xp.boss-bar.style"))
+                .getString("gain-xp.boss-bar.style").uppercase()),
             player.getSkillProgress(skill).coerceIn(0.0..1.0)
         )
     }
 
     private fun handleActionBar(event: PlayerSkillXPGainEvent) {
-        if (!plugin.configYml.getBool("skills.gain-xp.action-bar.enabled")) {
+        if (!(event.skill.getConfigFor("gain-xp.action-bar.enabled"))
+                .getBool("gain-xp.action-bar.enabled")) {
             return
         }
 
         val player = event.player
 
-        val message = plugin.configYml.getString("skills.gain-xp.action-bar.message")
+        val message = (event.skill.getConfigFor("gain-xp.action-bar.message"))
+            .getString("gain-xp.action-bar.message")
             .formatMessage(event)
 
         player.sendCompatibleActionBarMessage(message)
@@ -96,7 +106,7 @@ class GainXPDisplay(
     private fun String.formatMessage(event: PlayerSkillXPGainEvent): String =
         this.replace(
             "%skill%",
-            if (event.player.getSkillLevel(event.skill) > 0 || !hideBeforeLevel1) event.skill.name else plugin.langYml.getString(
+            if (event.player.getSkillLevel(event.skill) > 0 || !getHideBeforeLevel1(event.skill)) event.skill.name else plugin.langYml.getString(
                 "learning-skill"
             )
         )
