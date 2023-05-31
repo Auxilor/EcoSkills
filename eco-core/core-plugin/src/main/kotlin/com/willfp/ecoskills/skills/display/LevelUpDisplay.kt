@@ -55,9 +55,12 @@ class LevelUpDisplay(
                 formatted[0].toComponent(),
                 formatted[1].toComponent(),
                 Title.Times.times(
-                    Duration.ofSeconds((skill.getConfigFor("level-up.title.fade-in").getInt("level-up.title.fade-in")/20).toLong()),
-                    Duration.ofSeconds((skill.getConfigFor("level-up.title.fade-in").getInt("level-up.title.stay")/20).toLong()),
-                    Duration.ofSeconds((skill.getConfigFor("level-up.title.fade-in").getInt("level-up.title.fade-out")/20).toLong())
+                    Duration.ofSeconds((skill.getConfigFor("level-up.title.fade-in")
+                        .getInt("level-up.title.fade-in")/20).toLong()),
+                    Duration.ofSeconds((skill.getConfigFor("level-up.title.fade-in")
+                        .getInt("level-up.title.stay")/20).toLong()),
+                    Duration.ofSeconds((skill.getConfigFor("level-up.title.fade-in")
+                        .getInt("level-up.title.fade-out")/20).toLong())
                 )
             ))
         }
