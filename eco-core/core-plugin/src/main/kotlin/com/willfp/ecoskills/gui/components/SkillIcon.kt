@@ -21,12 +21,13 @@ class SkillIcon(
 ) : PositionedComponent {
     private val hideBeforeLevel1 = (skill.getConfigFor("hide-before-level-1")).getBool("hide-before-level-1")
 
-    private val baseIcon = Items.lookup(config.getString("icon")).item
+    val baseIcon = Items.lookup(config.getString("icon")).item
+        get() = field.clone()
 
     private val slot = slot({ player, _ ->
         val level = player.getSkillLevel(skill)
 
-        baseIcon.clone().modify {
+        baseIcon.modify {
             setDisplayName(
                 plugin.configYml.getFormattedString("gui.skill-icon.name")
                     .replace("%level%", level.toString())

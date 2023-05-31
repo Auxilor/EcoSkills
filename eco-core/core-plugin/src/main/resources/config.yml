@@ -232,12 +232,12 @@ level-gui:
         - "&fRewards:"
         - "%rewards%"
 
-  close:
-    material: barrier
-    name: "&cClose"
-    location:
-      row: 6
-      column: 5
+    skill-icon:
+      enabled: false
+      name: "%skill%"
+      location:
+        row: 6
+        column: 5
 
   # Custom GUI slots; see here for a how-to: https://plugins.auxilor.io/all-plugins/custom-gui-slots
   custom-slots: [ ]
