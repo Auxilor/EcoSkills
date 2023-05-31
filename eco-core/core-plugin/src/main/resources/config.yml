@@ -143,6 +143,7 @@ stats-gui:
 
 
 level-gui:
+  title: "&7%skill%"
   rows: 6
 
   mask:
