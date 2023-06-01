@@ -4,10 +4,12 @@ import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.eco.core.data.keys.PersistentDataKeyType
 import com.willfp.eco.core.data.profile
+import com.willfp.eco.core.placeholder.context.placeholderContext
 import com.willfp.eco.core.sound.PlayableSound
 import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.namespacedKeyOf
 import com.willfp.eco.util.toNiceString
+import com.willfp.ecoskills.actionbar.ActionBarHandler
 import com.willfp.ecoskills.actionbar.sendCompatibleActionBarMessage
 import com.willfp.ecoskills.api.event.PlayerSkillXPGainEvent
 import com.willfp.ecoskills.api.getFormattedRequiredXP
@@ -113,5 +115,8 @@ class GainXPDisplay(
             .replace("%current_xp%", event.player.getSkillXP(event.skill).toNiceString())
             .replace("%required_xp%", event.player.getFormattedRequiredXP(event.skill))
             .replace("%gained_xp%", event.gainedXP.toNiceString())
-            .formatEco(event.player, true)
+            .formatEco(placeholderContext(
+                event.player,
+                injectable = ActionBarHandler.PlayerHealthInjectable
+            ))
 }

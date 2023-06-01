@@ -84,9 +84,9 @@ class Skill(
 
     private val rewardMessages = mutableMapOf<Int, List<String>>()
 
-    val levelGUI = SkillLevelGUI(plugin, this)
-
     val icon = SkillIcon(this, config.getSubsection("gui"), plugin)
+
+    val levelGUI = SkillLevelGUI(plugin, this)
 
     init {
         if (xpFormula == null && requirements == null) {

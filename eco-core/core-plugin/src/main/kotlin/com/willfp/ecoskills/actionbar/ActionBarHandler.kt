@@ -126,7 +126,7 @@ class ActionBarHandler(
         }
     }
 
-    private object PlayerHealthInjectable : PlaceholderInjectable {
+    object PlayerHealthInjectable : PlaceholderInjectable {
         private val injections = listOf(
             PlayerStaticPlaceholder(
                 "health"
