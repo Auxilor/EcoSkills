@@ -27,7 +27,7 @@ class LevelUpDisplay(
         val skill = event.skill
         val level = event.level
 
-        if ((skill.getConfigFor("gain-xp.boss-bar.color")).getBool("gain-xp.boss-bar.color")) {
+        if ((skill.getConfigFor("level-up.message.enabled")).getBool("level-up.message.enabled")) {
             val rawMessage = skill.getConfigFor("level-up.message.message")
                 .getStrings("level-up.message.message")
 
