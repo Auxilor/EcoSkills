@@ -322,8 +322,8 @@ skills:
       fade-in: 10
       stay: 40
       fade-out: 10
-      title: "&a%skill% &levelled up!"
-      subtitle: "&66%level_previous_numeral% &8» &6%level_numeral%"
+      title: "&a%skill% &6levelled up!"
+      subtitle: "&6%level_previous_numeral% &8» &6%level_numeral%"
     sound:
       # If a sound should be played
       enabled: true
