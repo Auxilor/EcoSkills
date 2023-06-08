@@ -30,7 +30,7 @@ abstract class LevellableWithHolder(
         )
     }
 
-    fun getLevelHolder(level: Int): Holder = levels.getOrPut(level) {
+    fun getLevelHolder(level: Int): Holder? = if (level == 0) null else levels.getOrPut(level) {
         LevelHolder(level, conditions, effects)
     }
 

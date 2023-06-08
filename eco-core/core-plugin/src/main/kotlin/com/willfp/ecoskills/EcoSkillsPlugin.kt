@@ -69,7 +69,7 @@ class EcoSkillsPlugin : LibreforgePlugin() {
     override fun handleEnable() {
         registerHolderProvider { player ->
             (Effects.values() union Stats.values())
-                .map { it.getLevelHolder(it.getActualLevel(player)) }
+                .mapNotNull { it.getLevelHolder(it.getActualLevel(player)) }
                 .map { SimpleProvidedHolder(it) }
         }
 
