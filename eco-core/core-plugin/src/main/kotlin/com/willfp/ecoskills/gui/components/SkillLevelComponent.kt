@@ -31,13 +31,13 @@ class SkillLevelComponent(
 
         fun item() = ItemStackBuilder(Items.lookup(plugin.configYml.getString("level-gui.progression-slots.$key.item")))
             .setDisplayName(
-                plugin.configYml.getFormattedString("level-gui.progression-slots.$key.name")
+                plugin.configYml.getString("level-gui.progression-slots.$key.name")
                     .replace("%skill%", skill.name)
                     .let { skill.addPlaceholdersInto(it, level) }
             )
             .addLoreLines(
                 skill.addPlaceholdersInto(
-                    plugin.configYml.getFormattedStrings("level-gui.progression-slots.$key.lore"),
+                    plugin.configYml.getStrings("level-gui.progression-slots.$key.lore"),
                     player,
                     level = level
                 ).lineWrap(plugin.configYml.getInt("gui.skill-icon.line-wrap"))

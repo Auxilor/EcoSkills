@@ -239,7 +239,7 @@ class Skill(
             messages.replaceAll { s -> s.replace("%$id%", value.toNiceString()) }
         }
 
-        return messages.formatEco(context)
+        return messages
     }
 
     fun giveRewards(player: OfflinePlayer, level: Int) {
