@@ -82,7 +82,10 @@ class Skill(
         ViolationContext(plugin, "Skill $id level-up-effects")
     )
 
+
     private val rewardMessages = mutableMapOf<Int, List<String>>()
+
+    val levelGUI = SkillLevelGUI(plugin, this)
 
     val icon = SkillIcon(this, config.getSubsection("gui"), plugin)
 
@@ -182,7 +185,7 @@ class Skill(
             val margin = s.length - s.trimStart().length
 
             if (s.contains("%rewards%")) {
-                getRewardMessages(level)
+                getRewardMessages(level, player)
                     .addMargin(margin)
             } else if (s.contains("%gui_lore%")) {
                 config.getStrings("gui.lore")
@@ -224,8 +227,14 @@ class Skill(
      * Get the reward messages for a certain [level].
      */
     private fun getRewardMessages(
-        level: Int
-    ): List<String> = rewardMessages.getOrPut(level) {
+        level: Int,
+        player: Player
+    ): List<String> {
+        val context = placeholderContext(
+            injectable = LevelInjectable(level),
+            player = player
+        )
+
         // Determine the highest level of messages from the config that is not greater than the provided level.
         val highestConfiguredLevel = config.getSubsection("reward-messages")
             .getKeys(false)
@@ -234,10 +243,6 @@ class Skill(
             .maxOrNull() ?: 1 // Get the maximum level, default to 1 if no suitable level was found
 
         val messages = config.getStrings("reward-messages.$highestConfiguredLevel").toMutableList()
-
-        val context = placeholderContext(
-            injectable = LevelInjectable(level)
-        )
 
         for (placeholder in loadDescriptionPlaceholders(config)) {
             val id = placeholder.id
