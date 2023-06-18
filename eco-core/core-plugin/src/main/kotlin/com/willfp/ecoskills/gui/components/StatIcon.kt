@@ -6,7 +6,6 @@ import com.willfp.eco.core.gui.slot
 import com.willfp.eco.core.items.Items
 import com.willfp.eco.core.items.builder.modify
 import com.willfp.eco.util.lineWrap
-import com.willfp.eco.util.toNumeral
 import com.willfp.ecoskills.api.getStatLevel
 import com.willfp.ecoskills.stats.Stat
 
@@ -23,9 +22,8 @@ class StatIcon(
         baseIcon.clone().modify {
             setDisplayName(
                 plugin.configYml.getFormattedString("stats-gui.stat-icon.name")
-                    .replace("%level%", level.toString())
-                    .replace("%level_numeral%", level.toNumeral())
                     .replace("%stat%", stat.name)
+                    .let { stat.addPlaceholdersInto(it, level) }
             )
 
             addLoreLines(

@@ -85,6 +85,10 @@ abstract class Levellable(
             .replace("%ecoskills_${id}_numeral%", level.toNumeral())
             .replace("%ecoskills_${id}_description%", getDescription(level))
             .replace("%ecoskills_${id}%", level.toString())
+            .replace("%level%", level.toString())
+            .replace("%level_numeral%", level.toNumeral())
+            .replace("%previous_level%", (level - 1).toString())
+            .replace("%previous_level_numeral%", (level - 1).toNumeral())
     }
 
     fun getTop(position: Int): LeaderboardEntry? {

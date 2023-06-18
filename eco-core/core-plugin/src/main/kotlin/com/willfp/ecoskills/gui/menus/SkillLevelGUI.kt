@@ -12,6 +12,7 @@ import com.willfp.eco.core.gui.slot.FillerMask
 import com.willfp.eco.core.gui.slot.MaskItems
 import com.willfp.eco.core.items.Items
 import com.willfp.eco.core.items.builder.ItemStackBuilder
+import com.willfp.eco.util.formatEco
 import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.gui.components.SkillLevelComponent
 import com.willfp.ecoskills.skills.Skill
@@ -30,7 +31,9 @@ class SkillLevelGUI(
         val levelComponent = SkillLevelComponent(plugin, skill)
 
         menu = menu(plugin.configYml.getInt("level-gui.rows")) {
-            title = skill.name
+            title = plugin.configYml.getString("level-gui.title")
+                .replace("%skill%", skill.name)
+                .formatEco()
 
             maxPages(levelComponent.pages)
 

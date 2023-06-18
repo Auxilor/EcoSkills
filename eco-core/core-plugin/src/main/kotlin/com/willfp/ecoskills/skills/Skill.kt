@@ -84,6 +84,8 @@ class Skill(
 
     val icon = SkillIcon(this, config.getSubsection("gui"), plugin)
 
+    val isHiddenBeforeLevel1 = config.getBool("hide-before-level-1")
+
     init {
         if (xpFormula == null && requirements == null) {
             throw InvalidConfigurationException("Skill $id has no requirements or xp formula")
@@ -160,8 +162,7 @@ class Skill(
             .replace("%required_xp%", player.getFormattedRequiredXP(skill))
             .replace("%description%", skill.getDescription(level))
             .replace("%skill%", skill.name)
-            .replace("%level%", level.toString())
-            .replace("%level_numeral%", level.toNumeral())
+            .let { addPlaceholdersInto(it, level) }
             .injectRewardPlaceholders(level)
 
         // Replace placeholders in the strings with their actual values.

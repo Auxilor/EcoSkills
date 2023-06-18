@@ -8,7 +8,6 @@ import com.willfp.eco.core.map.nestedMap
 import com.willfp.eco.core.placeholder.context.placeholderContext
 import com.willfp.eco.util.evaluateExpression
 import com.willfp.eco.util.lineWrap
-import com.willfp.eco.util.toNumeral
 import com.willfp.ecomponent.components.LevelComponent
 import com.willfp.ecomponent.components.LevelState
 import com.willfp.ecoskills.api.getSkillLevel
@@ -34,8 +33,7 @@ class SkillLevelComponent(
             .setDisplayName(
                 plugin.configYml.getFormattedString("level-gui.progression-slots.$key.name")
                     .replace("%skill%", skill.name)
-                    .replace("%level%", level.toString())
-                    .replace("%level_numeral%", level.toNumeral())
+                    .let { skill.addPlaceholdersInto(it, level) }
             )
             .addLoreLines(
                 skill.addPlaceholdersInto(

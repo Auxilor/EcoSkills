@@ -4,10 +4,12 @@ import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.eco.core.data.keys.PersistentDataKeyType
 import com.willfp.eco.core.data.profile
+import com.willfp.eco.core.placeholder.context.placeholderContext
 import com.willfp.eco.core.sound.PlayableSound
 import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.namespacedKeyOf
 import com.willfp.eco.util.toNiceString
+import com.willfp.ecoskills.actionbar.ActionBarHandler
 import com.willfp.ecoskills.actionbar.sendCompatibleActionBarMessage
 import com.willfp.ecoskills.api.event.PlayerSkillXPGainEvent
 import com.willfp.ecoskills.api.getFormattedRequiredXP
@@ -36,8 +38,6 @@ val Player.isXPGainSoundEnabled: Boolean
 class GainXPDisplay(
     private val plugin: EcoPlugin
 ) : Listener {
-    private val hideBeforeLevel1 = plugin.configYml.getBool("skills.hide-before-level-1")
-
     private val sound = if (plugin.configYml.getBool("skills.gain-xp.sound.enabled")) {
         PlayableSound.create(
             plugin.configYml.getSubsection("skills.gain-xp.sound")
@@ -96,12 +96,17 @@ class GainXPDisplay(
     private fun String.formatMessage(event: PlayerSkillXPGainEvent): String =
         this.replace(
             "%skill%",
-            if (event.player.getSkillLevel(event.skill) > 0 || !hideBeforeLevel1) event.skill.name else plugin.langYml.getString(
+            if (event.player.getSkillLevel(event.skill) > 0 || !event.skill.isHiddenBeforeLevel1) event.skill.name else plugin.langYml.getString(
                 "learning-skill"
             )
         )
             .replace("%current_xp%", event.player.getSkillXP(event.skill).toNiceString())
             .replace("%required_xp%", event.player.getFormattedRequiredXP(event.skill))
             .replace("%gained_xp%", event.gainedXP.toNiceString())
-            .formatEco(event.player)
+            .formatEco(
+                placeholderContext(
+                    event.player,
+                    injectable = ActionBarHandler.PlayerHealthInjectable
+                )
+            )
 }

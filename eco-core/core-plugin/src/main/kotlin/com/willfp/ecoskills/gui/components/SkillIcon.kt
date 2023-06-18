@@ -9,7 +9,6 @@ import com.willfp.eco.core.gui.slot.Slot
 import com.willfp.eco.core.items.Items
 import com.willfp.eco.core.items.builder.modify
 import com.willfp.eco.util.lineWrap
-import com.willfp.eco.util.toNumeral
 import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.skills.Skill
 import org.bukkit.entity.Player
@@ -19,19 +18,17 @@ class SkillIcon(
     config: Config,
     plugin: EcoPlugin
 ) : PositionedComponent {
-    private val hideBeforeLevel1 = plugin.configYml.getBool("skills.hide-before-level-1")
-
     private val baseIcon = Items.lookup(config.getString("icon")).item
+        get() = field.clone()
 
     private val slot = slot({ player, _ ->
         val level = player.getSkillLevel(skill)
 
-        baseIcon.clone().modify {
+        baseIcon.modify {
             setDisplayName(
                 plugin.configYml.getFormattedString("gui.skill-icon.name")
-                    .replace("%level%", level.toString())
-                    .replace("%level_numeral%", level.toNumeral())
                     .replace("%skill%", skill.name)
+                    .let { skill.addPlaceholdersInto(it, level) }
             )
 
             addLoreLines(
@@ -64,7 +61,7 @@ class SkillIcon(
     override val column = config.getInt("position.column")
 
     override fun getSlotAt(row: Int, column: Int, player: Player, menu: Menu): Slot {
-        return if (player.getSkillLevel(skill) > 0 || !hideBeforeLevel1) {
+        return if (player.getSkillLevel(skill) > 0 || !skill.isHiddenBeforeLevel1) {
             slot
         } else {
             unknownSlot
