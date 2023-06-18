@@ -9,7 +9,6 @@ import com.willfp.eco.core.gui.slot.Slot
 import com.willfp.eco.core.items.Items
 import com.willfp.eco.core.items.builder.modify
 import com.willfp.eco.util.lineWrap
-import com.willfp.eco.util.toNumeral
 import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.skills.Skill
 import org.bukkit.entity.Player
@@ -30,11 +29,8 @@ class SkillIcon(
         baseIcon.modify {
             setDisplayName(
                 plugin.configYml.getFormattedString("gui.skill-icon.name")
-                    .replace("%level%", level.toString())
-                    .replace("%level_numeral%", level.toNumeral())
                     .replace("%skill%", skill.name)
-                    .replace("%level_previous%", (level-1).toString())
-                    .replace("%level_previous_numeral%", (level-1).toNumeral())
+                    .let { skill.addPlaceholdersInto(it, level) }
             )
 
             addLoreLines(
