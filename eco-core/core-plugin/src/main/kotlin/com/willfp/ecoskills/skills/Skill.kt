@@ -47,6 +47,8 @@ class Skill(
         0.0
     )
 
+    val settings = SkillSettings(config)
+
     private val xpGainMethods = config.getSubsections("xp-gain-methods").mapNotNull {
         Counters.compile(it, ViolationContext(plugin, "Skill $id xp-gain-methods"))
     }
@@ -80,9 +82,14 @@ class Skill(
         ViolationContext(plugin, "Skill $id level-up-effects")
     )
 
+
+    private val rewardMessages = mutableMapOf<Int, List<String>>()
+
     val levelGUI = SkillLevelGUI(plugin, this)
 
     val icon = SkillIcon(this, config.getSubsection("gui"), plugin)
+
+    val levelGUI = SkillLevelGUI(plugin, this)
 
     init {
         if (xpFormula == null && requirements == null) {
@@ -145,6 +152,10 @@ class Skill(
         }
     }
 
+    fun getConfigFor(path: String): Config {
+        return settings.getConfigFor(path)
+    }
+
     /**
      * Add skill placeholders into [strings], to be shown to a [player].
      */
@@ -162,6 +173,8 @@ class Skill(
             .replace("%skill%", skill.name)
             .replace("%level%", level.toString())
             .replace("%level_numeral%", level.toNumeral())
+            .replace("%level_previous%", (level-1).toString())
+            .replace("%level_previous_numeral%", (level-1).toNumeral())
             .injectRewardPlaceholders(level)
 
         // Replace placeholders in the strings with their actual values.

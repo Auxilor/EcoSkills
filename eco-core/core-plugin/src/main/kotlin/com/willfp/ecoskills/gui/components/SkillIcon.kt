@@ -19,19 +19,22 @@ class SkillIcon(
     config: Config,
     plugin: EcoPlugin
 ) : PositionedComponent {
-    private val hideBeforeLevel1 = plugin.configYml.getBool("skills.hide-before-level-1")
+    private val hideBeforeLevel1 = (skill.getConfigFor("hide-before-level-1")).getBool("hide-before-level-1")
 
-    private val baseIcon = Items.lookup(config.getString("icon")).item
+    val baseIcon = Items.lookup(config.getString("icon")).item
+        get() = field.clone()
 
     private val slot = slot({ player, _ ->
         val level = player.getSkillLevel(skill)
 
-        baseIcon.clone().modify {
+        baseIcon.modify {
             setDisplayName(
                 plugin.configYml.getFormattedString("gui.skill-icon.name")
                     .replace("%level%", level.toString())
                     .replace("%level_numeral%", level.toNumeral())
                     .replace("%skill%", skill.name)
+                    .replace("%level_previous%", (level-1).toString())
+                    .replace("%level_previous_numeral%", (level-1).toNumeral())
             )
 
             addLoreLines(

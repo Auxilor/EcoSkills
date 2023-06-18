@@ -143,6 +143,7 @@ stats-gui:
 
 
 level-gui:
+  title: "&7%skill%"
   rows: 6
 
   mask:
@@ -231,12 +232,12 @@ level-gui:
         - "&fRewards:"
         - "%rewards%"
 
-  close:
-    material: barrier
-    name: "&cClose"
-    location:
-      row: 6
-      column: 5
+    skill-icon:
+      enabled: false
+      name: "%skill%"
+      location:
+        row: 6
+        column: 5
 
   # Custom GUI slots; see here for a how-to: https://plugins.auxilor.io/all-plugins/custom-gui-slots
   custom-slots: [ ]
@@ -316,6 +317,13 @@ skills:
         - " &#ff00ae&lREWARDS:"
         - "%rewards%"
         - "&f"
+    title:
+      enabled: true
+      fade-in: 10
+      stay: 40
+      fade-out: 10
+      title: "&a%skill% &6levelled up!"
+      subtitle: "&6%level_previous_numeral% &8» &6%level_numeral%"
     sound:
       # If a sound should be played
       enabled: true

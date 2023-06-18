@@ -26,6 +26,8 @@ class StatIcon(
                     .replace("%level%", level.toString())
                     .replace("%level_numeral%", level.toNumeral())
                     .replace("%stat%", stat.name)
+                    .replace("%level_previous%", (level-1).toString())
+                    .replace("%level_previous_numeral%", (level-1).toNumeral())
             )
 
             addLoreLines(
