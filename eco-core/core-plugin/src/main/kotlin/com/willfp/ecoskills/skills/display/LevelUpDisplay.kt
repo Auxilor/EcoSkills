@@ -46,15 +46,17 @@ class LevelUpDisplay(
                 level = level
             )
 
-            player.showTitle(Title.title(
-                formatted[0].toComponent(),
-                formatted[1].toComponent(),
-                Title.Times.times(
-                    Duration.ofSeconds((plugin.configYml.getInt("skills.level-up.title.fade-in")/20).toLong()),
-                    Duration.ofSeconds((plugin.configYml.getInt("skills.level-up.title.stay")/20).toLong()),
-                    Duration.ofSeconds((plugin.configYml.getInt("skills.level-up.title.fade-out")/20).toLong())
+            player.showTitle(
+                Title.title(
+                    formatted[0].toComponent(),
+                    formatted[1].toComponent(),
+                    Title.Times.times(
+                        Duration.ofMillis((plugin.configYml.getDouble("skills.level-up.title.fade-in") * 1000).toLong()),
+                        Duration.ofMillis((plugin.configYml.getDouble("skills.level-up.title.stay") * 1000).toLong()),
+                        Duration.ofMillis((plugin.configYml.getDouble("skills.level-up.title.fade-out") * 1000).toLong())
+                    )
                 )
-            ))
+            )
         }
 
         sound?.playTo(player)

@@ -18,8 +18,6 @@ class SkillIcon(
     config: Config,
     plugin: EcoPlugin
 ) : PositionedComponent {
-    private val hideBeforeLevel1 = plugin.configYml.getBool("skills.hide-before-level-1")
-
     val baseIcon = Items.lookup(config.getString("icon")).item
         get() = field.clone()
 
@@ -63,7 +61,7 @@ class SkillIcon(
     override val column = config.getInt("position.column")
 
     override fun getSlotAt(row: Int, column: Int, player: Player, menu: Menu): Slot {
-        return if (player.getSkillLevel(skill) > 0 || !hideBeforeLevel1) {
+        return if (player.getSkillLevel(skill) > 0 || !skill.isHiddenBeforeLevel1) {
             slot
         } else {
             unknownSlot

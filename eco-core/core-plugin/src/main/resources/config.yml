@@ -277,7 +277,6 @@ damage-indicators:
 
 skills:
   prevent-levelling-while-afk: true # If the player is AFK then don't give xp
-  hide-before-level-1: true # If skills should be hidden before level 1
 
   # Ways to tell the player about skill xp gain
   gain-xp:
@@ -318,10 +317,13 @@ skills:
         - "%rewards%"
         - "&f"
     title:
-      enabled: true
-      fade-in: 10
-      stay: 40
-      fade-out: 10
+      enabled: false
+
+      # Durations are in seconds
+      fade-in: 0.5
+      stay: 2
+      fade-out: 0.5
+
       title: "&a%skill% &6levelled up!"
       subtitle: "&6%level_previous_numeral% &8» &6%level_numeral%"
     sound:

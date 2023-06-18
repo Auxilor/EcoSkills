@@ -87,6 +87,8 @@ class Skill(
 
     val icon = SkillIcon(this, config.getSubsection("gui"), plugin)
 
+    val isHiddenBeforeLevel1 = config.getBool("hide-before-level-1")
+
     init {
         if (xpFormula == null && requirements == null) {
             throw InvalidConfigurationException("Skill $id has no requirements or xp formula")
