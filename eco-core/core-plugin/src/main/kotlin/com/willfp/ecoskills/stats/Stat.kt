@@ -4,7 +4,6 @@ import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.placeholder.PlayerPlaceholder
 import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.toNiceString
-import com.willfp.eco.util.toNumeral
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.LevellableWithHolder
 import com.willfp.ecoskills.api.getBaseStatLevel
@@ -34,10 +33,7 @@ class Stat(
         return strings.map { s ->
             s.replace("%description%", this.getDescription(level))
                 .replace("%stat%", this.name)
-                .replace("%level%", level.toString())
-                .replace("%level_numeral%", level.toNumeral())
-                .replace("%level_previous%", (level-1).toString())
-                .replace("%level_previous_numeral%", (level-1).toNumeral())
+                .let { addPlaceholdersInto(it, level) }
         }.formatEco(player)
     }
 
