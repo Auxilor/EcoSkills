@@ -80,9 +80,6 @@ class Skill(
         ViolationContext(plugin, "Skill $id level-up-effects")
     )
 
-
-    private val rewardMessages = mutableMapOf<Int, List<String>>()
-
     val levelGUI = SkillLevelGUI(plugin, this)
 
     val icon = SkillIcon(this, config.getSubsection("gui"), plugin)
