@@ -100,19 +100,6 @@ class SkillLevelGUI(
                 }
             )
 
-            if (plugin.configYml.getBool("level-gui.progression-slots.skill-icon.enabled"))
-                setSlot(
-                    plugin.configYml.getInt("level-gui.progression-slots.skill-icon.location.row"),
-                    plugin.configYml.getInt("level-gui.progression-slots.skill-icon.location.column"),
-                    slot(
-                        ItemStackBuilder(skill.icon.baseIcon)
-                            .setDisplayName(plugin.configYml.getString("level-gui.progression-slots.skill-icon.name")
-                                .replace("%skill%", skill.name))
-                            .build()
-                    )
-                )
-
-
             for (config in plugin.configYml.getSubsections("level-gui.custom-slots")) {
                 setSlot(
                     config.getInt("row"),

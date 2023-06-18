@@ -18,7 +18,7 @@ class SkillIcon(
     config: Config,
     plugin: EcoPlugin
 ) : PositionedComponent {
-    val baseIcon = Items.lookup(config.getString("icon")).item
+    private val baseIcon = Items.lookup(config.getString("icon")).item
         get() = field.clone()
 
     private val slot = slot({ player, _ ->
