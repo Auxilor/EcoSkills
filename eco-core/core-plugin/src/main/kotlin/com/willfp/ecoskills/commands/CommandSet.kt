@@ -4,12 +4,16 @@ import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.eco.util.StringUtils
 import com.willfp.eco.util.formatEco
+import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.api.setBaseStatLevel
 import com.willfp.ecoskills.api.setSkillLevel
+import com.willfp.ecoskills.effects.Effects
+import com.willfp.ecoskills.effects.effects
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.stats.Stat
 import com.willfp.ecoskills.stats.Stats
+import com.willfp.ecoskills.stats.stats
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
@@ -35,6 +39,20 @@ class CommandSet(plugin: EcoPlugin) :
         val key = when (obj) {
             is Skill -> {
                 player.setSkillLevel(obj, level)
+                for (stat in Stats.values()) {
+                    player.stats.reset(stat)
+                }
+                for (effect in Effects.values()) {
+                    player.effects.reset(effect)
+                }
+                for (skill in Skills.values()) {
+                    val level = player.getSkillLevel(skill)
+                    if (level > 0) {
+                        for (i in (1..level)) {
+                            skill.giveRewards(player, level)
+                        }
+                    }
+                }
                 "set-skill-level"
             }
 
