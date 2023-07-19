@@ -34,11 +34,11 @@ class CommandSet(plugin: EcoPlugin) :
             "invalid-skill-stat"
         )
 
-        val level = notifyNull(args.getOrNull(2)?.toIntOrNull(), "invalid-amount")
+        val amount = notifyNull(args.getOrNull(2)?.toIntOrNull(), "invalid-amount")
 
         val key = when (obj) {
             is Skill -> {
-                player.setSkillLevel(obj, level)
+                player.setSkillLevel(obj, amount)
                 for (stat in Stats.values()) {
                     player.stats.reset(stat)
                 }
@@ -57,7 +57,7 @@ class CommandSet(plugin: EcoPlugin) :
             }
 
             is Stat -> {
-                player.setBaseStatLevel(obj, level)
+                player.setBaseStatLevel(obj, amount)
                 "set-stat"
             }
 
@@ -67,7 +67,7 @@ class CommandSet(plugin: EcoPlugin) :
         sender.sendMessage(
             this.plugin.langYml.getMessage(key, StringUtils.FormatOption.WITHOUT_PLACEHOLDERS)
                 .replace("%player%", player.name)
-                .replace("%amount%", level.toString())
+                .replace("%amount%", amount.toString())
                 .replace("%obj%", obj.name)
                 .formatEco()
         )
