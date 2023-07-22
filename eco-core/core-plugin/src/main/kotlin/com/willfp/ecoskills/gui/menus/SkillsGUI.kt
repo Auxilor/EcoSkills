@@ -21,7 +21,7 @@ object SkillsGUI {
 
     private fun buildMenu(plugin: EcoPlugin): Menu {
         return menu(plugin.configYml.getInt("gui.rows")) {
-            title = plugin.langYml.getString("menu.title")
+            title = plugin.langYml.getFormattedString("menu.title")
 
             setMask(
                 FillerMask(
