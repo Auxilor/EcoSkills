@@ -118,6 +118,10 @@ reward-messages:
 xp-gain-methods:
   - trigger: take_damage
     multiplier: 1.44
+    filters:
+      not_damage_cause:
+        - KILL
+        - SUICIDE
 
 # Conditions that must be met to gain XP. While you can add conditions to xp
 # gain methods, if you have many this can be annoying, so this is global.
