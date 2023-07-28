@@ -47,7 +47,6 @@ class CommandSkills(plugin: EcoPlugin) : PluginCommand(
 
     override fun getAliases(): List<String> {
         return listOf(
-            "stats",
             "skill"
         )
     }
