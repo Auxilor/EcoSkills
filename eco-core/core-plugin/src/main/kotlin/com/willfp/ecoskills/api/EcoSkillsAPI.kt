@@ -37,6 +37,9 @@ fun OfflinePlayer.resetSkills() {
     }
 }
 
+fun OfflinePlayer.resetSkill(skill: Skill) =
+    this.skills.reset(skill)
+
 fun OfflinePlayer.getSkillXP(skill: Skill): Double =
     this.skills[skill].xp
 
