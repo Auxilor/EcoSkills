@@ -1,5 +1,7 @@
 package com.willfp.ecoskills.skills.display
 
+import com.github.benmanes.caffeine.cache.Cache
+import com.github.benmanes.caffeine.cache.Caffeine
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.eco.core.data.keys.PersistentDataKeyType
@@ -16,11 +18,13 @@ import com.willfp.ecoskills.api.getFormattedRequiredXP
 import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.api.getSkillProgress
 import com.willfp.ecoskills.api.getSkillXP
+import com.willfp.ecoskills.skills.Skill
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import java.time.Duration
 
 private val xpGainSoundEnabledKey = PersistentDataKey(
     namespacedKeyOf("ecoskills", "gain_sound_enabled"),
@@ -38,6 +42,9 @@ val Player.isXPGainSoundEnabled: Boolean
 class GainXPDisplay(
     private val plugin: EcoPlugin
 ) : Listener {
+    private val gainCache: Cache<Skill, Double> = Caffeine.newBuilder().expireAfterWrite(Duration.ofSeconds(3))
+        .build()
+
     private val sound = if (plugin.configYml.getBool("skills.gain-xp.sound.enabled")) {
         PlayableSound.create(
             plugin.configYml.getSubsection("skills.gain-xp.sound")
@@ -47,6 +54,8 @@ class GainXPDisplay(
     @EventHandler
     fun handle(event: PlayerSkillXPGainEvent) {
         val player = event.player
+        val current = gainCache.get(event.skill) { 0.0 }
+        gainCache.put(event.skill, current + event.gainedXP)
 
         // Run next tick because level up calls before xp is added
         plugin.scheduler.run {
@@ -102,7 +111,7 @@ class GainXPDisplay(
         )
             .replace("%current_xp%", event.player.getSkillXP(event.skill).toNiceString())
             .replace("%required_xp%", event.player.getFormattedRequiredXP(event.skill))
-            .replace("%gained_xp%", event.gainedXP.toNiceString())
+            .replace("%gained_xp%", gainCache.get(event.skill) { 0.0 }.toNiceString())
             .formatEco(
                 placeholderContext(
                     event.player,
