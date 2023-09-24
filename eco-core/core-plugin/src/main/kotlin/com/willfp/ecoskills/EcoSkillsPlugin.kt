@@ -17,16 +17,19 @@ import com.willfp.ecoskills.libreforge.EffectAddStatTemporarily
 import com.willfp.ecoskills.libreforge.EffectGiveMagic
 import com.willfp.ecoskills.libreforge.EffectGiveSkillXp
 import com.willfp.ecoskills.libreforge.EffectGiveSkillXpNaturally
+import com.willfp.ecoskills.libreforge.EffectMagicRegenMultiplier
 import com.willfp.ecoskills.libreforge.EffectMakeSkillCrit
 import com.willfp.ecoskills.libreforge.EffectMultiplyAllStats
 import com.willfp.ecoskills.libreforge.EffectMultiplyMagic
 import com.willfp.ecoskills.libreforge.EffectMultiplyStat
 import com.willfp.ecoskills.libreforge.EffectMultiplyStatTemporarily
 import com.willfp.ecoskills.libreforge.EffectSkillXpMultiplier
+import com.willfp.ecoskills.libreforge.FilterMagicType
 import com.willfp.ecoskills.libreforge.FilterSkill
 import com.willfp.ecoskills.libreforge.FilterSkillCrit
 import com.willfp.ecoskills.libreforge.TriggerGainSkillXp
 import com.willfp.ecoskills.libreforge.TriggerLevelUpSkill
+import com.willfp.ecoskills.libreforge.TriggerRegenMagic
 import com.willfp.ecoskills.magic.MagicHandler
 import com.willfp.ecoskills.magic.MagicListener
 import com.willfp.ecoskills.magic.MagicTypes
@@ -84,13 +87,16 @@ class EcoSkillsPlugin : LibreforgePlugin() {
         com.willfp.libreforge.effects.Effects.register(EffectGiveSkillXpNaturally)
         com.willfp.libreforge.effects.Effects.register(EffectAddStatTemporarily(this))
         com.willfp.libreforge.effects.Effects.register(EffectMultiplyStatTemporarily(this))
+        com.willfp.libreforge.effects.Effects.register(EffectMagicRegenMultiplier)
         Conditions.register(ConditionHasSkillLevel)
         Conditions.register(ConditionBelowMagic)
         Conditions.register(ConditionAboveMagic)
         Triggers.register(TriggerGainSkillXp)
         Triggers.register(TriggerLevelUpSkill)
+        Triggers.register(TriggerRegenMagic)
         Filters.register(FilterSkill)
         Filters.register(FilterSkillCrit)
+        Filters.register(FilterMagicType)
 
         EcoSkillsTopPlaceholder(this).register()
         EcoSkillsSkillTopPlaceholder(this).register()
