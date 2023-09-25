@@ -3,6 +3,7 @@ package com.willfp.ecoskills.skills
 import com.github.benmanes.caffeine.cache.Caffeine
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.integrations.afk.AFKManager
+import com.willfp.eco.util.containsIgnoreCase
 import com.willfp.ecoskills.api.gainSkillXP
 import com.willfp.libreforge.EmptyProvidedHolder
 import com.willfp.libreforge.counters.Accumulator
@@ -16,6 +17,10 @@ class SkillXPAccumulator(
     private val skill: Skill
 ) : Accumulator {
     override fun accept(player: Player, count: Double) {
+        if (player.isInDisabledWorld) {
+            return
+        }
+
         if (plugin.configYml.getBool("skills.prevent-levelling-while-afk") && AFKManager.isAfk(player)) {
             return
         }

@@ -8,6 +8,11 @@
 # cross-server sync.
 use-local-storage: false
 
+# Worlds that EcoSkills should be disabled in
+disabled-in-worlds:
+  - world_1
+  - world_2
+
 gui:
   rows: 6
 

@@ -7,6 +7,7 @@ import com.willfp.eco.core.data.profile
 import com.willfp.eco.core.map.defaultMap
 import com.willfp.eco.core.placeholder.PlayerPlaceholder
 import com.willfp.eco.core.placeholder.context.placeholderContext
+import com.willfp.eco.util.containsIgnoreCase
 import com.willfp.eco.util.evaluateExpression
 import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.toNiceString
@@ -21,6 +22,7 @@ import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.gui.components.SkillIcon
 import com.willfp.ecoskills.gui.menus.SkillLevelGUI
 import com.willfp.ecoskills.libreforge.TriggerLevelUpSkill
+import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.stats.Stats
 import com.willfp.ecoskills.util.InvalidConfigurationException
 import com.willfp.ecoskills.util.LevelInjectable
@@ -283,3 +285,6 @@ class Skill(
 
 internal val OfflinePlayer.skills: SkillLevelMap
     get() = SkillLevelMap(this)
+
+val Player.isInDisabledWorld: Boolean
+    get() = plugin.configYml.getStrings("disabled-in-worlds").containsIgnoreCase(world.name)

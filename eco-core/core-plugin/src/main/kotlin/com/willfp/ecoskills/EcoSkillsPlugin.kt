@@ -2,6 +2,7 @@ package com.willfp.ecoskills
 
 import com.willfp.eco.core.command.impl.PluginCommand
 import com.willfp.eco.core.packet.PacketListener
+import com.willfp.eco.util.containsIgnoreCase
 import com.willfp.ecoskills.actionbar.ActionBarCompatibilityProxy
 import com.willfp.ecoskills.actionbar.ActionBarGamemodeListener
 import com.willfp.ecoskills.actionbar.ActionBarHandler
@@ -41,6 +42,7 @@ import com.willfp.ecoskills.skills.display.DamageIndicatorListener
 import com.willfp.ecoskills.skills.display.GainXPDisplay
 import com.willfp.ecoskills.skills.display.LevelUpDisplay
 import com.willfp.ecoskills.skills.display.TemporaryBossBarHandler
+import com.willfp.ecoskills.skills.isInDisabledWorld
 import com.willfp.ecoskills.stats.StatModifierListener
 import com.willfp.ecoskills.stats.Stats
 import com.willfp.libreforge.SimpleProvidedHolder
@@ -71,9 +73,10 @@ class EcoSkillsPlugin : LibreforgePlugin() {
 
     override fun handleEnable() {
         registerHolderProvider { player ->
-            (Effects.values() union Stats.values())
-                .mapNotNull { it.getLevelHolder(it.getActualLevel(player)) }
-                .map { SimpleProvidedHolder(it) }
+            if (player.isInDisabledWorld) emptyList() else
+                (Effects.values() union Stats.values())
+                    .mapNotNull { it.getLevelHolder(it.getActualLevel(player)) }
+                    .map { SimpleProvidedHolder(it) }
         }
 
         com.willfp.libreforge.effects.Effects.register(EffectAddStat)
