@@ -31,16 +31,16 @@ class CommandGive(plugin: EcoPlugin) :
             "invalid-skill-stat"
         )
 
-        val amount = notifyNull(args.getOrNull(2)?.toIntOrNull(), "invalid-amount")
+        val amount = notifyNull(args.getOrNull(2)?.toDoubleOrNull(), "invalid-amount")
 
         val key = when (obj) {
             is Skill -> {
-                player.giveSkillXP(obj, amount.toDouble())
+                player.giveSkillXP(obj, amount)
                 "gave-skill-xp"
             }
 
             is Stat -> {
-                player.giveBaseStatLevel(obj, amount)
+                player.giveBaseStatLevel(obj, amount.toInt())
                 "gave-stat"
             }
 
