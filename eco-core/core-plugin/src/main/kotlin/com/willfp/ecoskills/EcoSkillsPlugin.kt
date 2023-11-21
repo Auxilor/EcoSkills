@@ -51,7 +51,9 @@ import com.willfp.libreforge.filters.Filters
 import com.willfp.libreforge.loader.LibreforgePlugin
 import com.willfp.libreforge.loader.configs.ConfigCategory
 import com.willfp.libreforge.registerHolderProvider
+import com.willfp.libreforge.registerSpecificHolderProvider
 import com.willfp.libreforge.triggers.Triggers
+import org.bukkit.entity.Player
 import org.bukkit.event.Listener
 
 internal lateinit var plugin: EcoSkillsPlugin
@@ -72,7 +74,7 @@ class EcoSkillsPlugin : LibreforgePlugin() {
     }
 
     override fun handleEnable() {
-        registerHolderProvider { player ->
+        registerSpecificHolderProvider<Player> { player ->
             if (player.isInDisabledWorld) emptyList() else
                 (Effects.values() union Stats.values())
                     .mapNotNull { it.getLevelHolder(it.getActualLevel(player)) }

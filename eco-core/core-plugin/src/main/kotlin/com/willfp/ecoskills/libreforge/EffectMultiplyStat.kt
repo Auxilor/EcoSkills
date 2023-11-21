@@ -6,12 +6,14 @@ import com.willfp.ecoskills.api.modifiers.ModifierOperation
 import com.willfp.ecoskills.api.modifiers.StatModifier
 import com.willfp.ecoskills.api.removeStatModifier
 import com.willfp.ecoskills.stats.Stats
+import com.willfp.libreforge.Dispatcher
 import com.willfp.libreforge.NoCompileData
 import com.willfp.libreforge.ProvidedHolder
 import com.willfp.libreforge.arguments
 import com.willfp.libreforge.effects.Effect
 import com.willfp.libreforge.effects.Identifiers
 import com.willfp.libreforge.effects.RunOrder
+import com.willfp.libreforge.get
 import org.bukkit.entity.Player
 
 object EffectMultiplyStat : Effect<NoCompileData>("multiply_stat") {
@@ -23,12 +25,13 @@ object EffectMultiplyStat : Effect<NoCompileData>("multiply_stat") {
     }
 
     override fun onEnable(
-        player: Player,
+        dispatcher: Dispatcher<*>,
         config: Config,
         identifiers: Identifiers,
         holder: ProvidedHolder,
         compileData: NoCompileData
     ) {
+        val player = dispatcher.get<Player>() ?: return
         val stat = Stats.getByID(config.getString("stat")) ?: return
 
         player.addStatModifier(
@@ -41,7 +44,9 @@ object EffectMultiplyStat : Effect<NoCompileData>("multiply_stat") {
         )
     }
 
-    override fun onDisable(player: Player, identifiers: Identifiers, holder: ProvidedHolder) {
+    override fun onDisable(dispatcher: Dispatcher<*>, identifiers: Identifiers, holder: ProvidedHolder) {
+        val player = dispatcher.get<Player>() ?: return
+
         player.removeStatModifier(identifiers.uuid)
     }
 }

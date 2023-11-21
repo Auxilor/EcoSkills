@@ -33,6 +33,7 @@ import com.willfp.libreforge.ViolationContext
 import com.willfp.libreforge.conditions.Conditions
 import com.willfp.libreforge.counters.Counters
 import com.willfp.libreforge.effects.executors.impl.NormalExecutorFactory
+import com.willfp.libreforge.toDispatcher
 import com.willfp.libreforge.triggers.DispatchedTrigger
 import com.willfp.libreforge.triggers.TriggerData
 import org.bukkit.OfflinePlayer
@@ -257,7 +258,7 @@ class Skill(
             // I don't really know a way to clean this up
             levelUpEffects?.trigger(
                 DispatchedTrigger(
-                    player,
+                    player.toDispatcher(),
                     TriggerLevelUpSkill,
                     TriggerData(
                         holder = EmptyProvidedHolder,

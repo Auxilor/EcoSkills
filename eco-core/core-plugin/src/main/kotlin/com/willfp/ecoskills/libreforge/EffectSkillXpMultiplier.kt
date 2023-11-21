@@ -4,6 +4,7 @@ import com.willfp.ecoskills.api.event.PlayerSkillXPGainEvent
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.libreforge.effects.templates.MultiMultiplierEffect
+import com.willfp.libreforge.toDispatcher
 import org.bukkit.event.EventHandler
 
 object EffectSkillXpMultiplier : MultiMultiplierEffect<Skill>("skill_xp_multiplier") {
@@ -21,6 +22,6 @@ object EffectSkillXpMultiplier : MultiMultiplierEffect<Skill>("skill_xp_multipli
     fun handle(event: PlayerSkillXPGainEvent) {
         val player = event.player
 
-        event.gainedXP *= getMultiplier(player, event.skill)
+        event.gainedXP *= getMultiplier(player.toDispatcher(), event.skill)
     }
 }

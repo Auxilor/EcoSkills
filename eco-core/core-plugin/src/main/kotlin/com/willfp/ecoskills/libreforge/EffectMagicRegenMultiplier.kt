@@ -4,6 +4,7 @@ import com.willfp.ecoskills.api.event.PlayerRegenMagicEvent
 import com.willfp.ecoskills.magic.MagicType
 import com.willfp.ecoskills.magic.MagicTypes
 import com.willfp.libreforge.effects.templates.MultiMultiplierEffect
+import com.willfp.libreforge.toDispatcher
 import org.bukkit.event.EventHandler
 import kotlin.math.roundToInt
 
@@ -22,6 +23,6 @@ object EffectMagicRegenMultiplier : MultiMultiplierEffect<MagicType>("magic_rege
     fun handle(event: PlayerRegenMagicEvent) {
         val player = event.player
 
-        event.amount *= getMultiplier(player, event.magicType).roundToInt()
+        event.amount *= getMultiplier(player.toDispatcher(), event.magicType).roundToInt()
     }
 }

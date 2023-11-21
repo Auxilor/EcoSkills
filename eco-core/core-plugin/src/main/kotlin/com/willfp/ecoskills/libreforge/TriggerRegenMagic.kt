@@ -1,6 +1,7 @@
 package com.willfp.ecoskills.libreforge
 
 import com.willfp.ecoskills.api.event.PlayerRegenMagicEvent
+import com.willfp.libreforge.toDispatcher
 import com.willfp.libreforge.triggers.Trigger
 import com.willfp.libreforge.triggers.TriggerData
 import com.willfp.libreforge.triggers.TriggerParameter
@@ -18,7 +19,7 @@ object TriggerRegenMagic : Trigger("regen_magic") {
         val player = event.player
 
         this.dispatch(
-            player,
+            player.toDispatcher(),
             TriggerData(
                 player = player,
                 location = player.location,

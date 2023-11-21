@@ -4,9 +4,13 @@ import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.ecoskills.api.event.PlayerSkillLevelUpEvent
 import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.skills.Skills
+import com.willfp.libreforge.Dispatcher
 import com.willfp.libreforge.NoCompileData
+import com.willfp.libreforge.ProvidedHolder
 import com.willfp.libreforge.arguments
 import com.willfp.libreforge.conditions.Condition
+import com.willfp.libreforge.get
+import com.willfp.libreforge.toDispatcher
 import com.willfp.libreforge.updateEffects
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -18,7 +22,14 @@ object ConditionHasSkillLevel : Condition<NoCompileData>("has_skill_level") {
         require("level", "You must specify the skill level!")
     }
 
-    override fun isMet(player: Player, config: Config, compileData: NoCompileData): Boolean {
+    override fun isMet(
+        dispatcher: Dispatcher<*>,
+        config: Config,
+        holder: ProvidedHolder,
+        compileData: NoCompileData
+    ): Boolean {
+        val player = dispatcher.get<Player>() ?: return false
+
         val skill = Skills.getByID(config.getString("skill").lowercase()) ?: return false
 
         return player.getSkillLevel(skill) >= config.getIntFromExpression("level", player)
@@ -26,6 +37,6 @@ object ConditionHasSkillLevel : Condition<NoCompileData>("has_skill_level") {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun handle(event: PlayerSkillLevelUpEvent) {
-        event.player.updateEffects()
+        event.player.toDispatcher().updateEffects()
     }
 }

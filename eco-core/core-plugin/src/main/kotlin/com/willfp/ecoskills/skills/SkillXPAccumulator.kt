@@ -7,6 +7,7 @@ import com.willfp.eco.util.containsIgnoreCase
 import com.willfp.ecoskills.api.gainSkillXP
 import com.willfp.libreforge.EmptyProvidedHolder
 import com.willfp.libreforge.counters.Accumulator
+import com.willfp.libreforge.toDispatcher
 import org.bukkit.GameMode
 import org.bukkit.entity.Player
 import java.util.concurrent.TimeUnit
@@ -29,7 +30,7 @@ class SkillXPAccumulator(
             return
         }
 
-        if (!skill.conditions.areMet(player, EmptyProvidedHolder)) {
+        if (!skill.conditions.areMet(player.toDispatcher(), EmptyProvidedHolder)) {
             return
         }
 
