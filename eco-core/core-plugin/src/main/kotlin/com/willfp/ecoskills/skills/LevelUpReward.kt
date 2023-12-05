@@ -11,7 +11,8 @@ class LevelUpReward(
     val reward: Levellable,
     private val levels: Int,
     private val startLevel: Int?,
-    private val endLevel: Int?
+    private val endLevel: Int?,
+    private val every: Int?
 ) {
     fun getCumulativeLevels(level: Int): Int {
         var sum = 0
@@ -23,6 +24,17 @@ class LevelUpReward(
 
             if (endLevel != null && skillLevel > endLevel) {
                 continue
+            }
+
+            if (every != null) {
+                if (endLevel != null) {
+                    val num = ((startLevel ?: 1)..endLevel).indexOf(skillLevel) + 1
+                    if (num % every != 0) {
+                        continue
+                    }
+                } else if ((skillLevel - (startLevel ?: 0)) % every != 0) {
+                    continue
+                }
             }
 
             sum += levels
@@ -38,6 +50,17 @@ class LevelUpReward(
 
         if (endLevel != null && level > endLevel) {
             return
+        }
+
+        if (every != null) {
+            if (endLevel != null) {
+                val num = ((startLevel ?: 1)..endLevel).indexOf(level) + 1
+                if (num % every != 0) {
+                    return
+                }
+            } else if ((level - (startLevel ?: 0)) % every != 0) {
+                return
+            }
         }
 
         when (reward) {
