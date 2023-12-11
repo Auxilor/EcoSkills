@@ -2,7 +2,6 @@ package com.willfp.ecoskills
 
 import com.willfp.eco.core.command.impl.PluginCommand
 import com.willfp.eco.core.packet.PacketListener
-import com.willfp.eco.util.containsIgnoreCase
 import com.willfp.ecoskills.actionbar.ActionBarCompatibilityProxy
 import com.willfp.ecoskills.actionbar.ActionBarGamemodeListener
 import com.willfp.ecoskills.actionbar.ActionBarHandler
@@ -30,7 +29,6 @@ import com.willfp.libreforge.conditions.Conditions
 import com.willfp.libreforge.filters.Filters
 import com.willfp.libreforge.loader.LibreforgePlugin
 import com.willfp.libreforge.loader.configs.ConfigCategory
-import com.willfp.libreforge.registerHolderProvider
 import com.willfp.libreforge.registerSpecificHolderProvider
 import com.willfp.libreforge.triggers.Triggers
 import org.bukkit.entity.Player
@@ -73,8 +71,8 @@ class EcoSkillsPlugin : LibreforgePlugin() {
         com.willfp.libreforge.effects.Effects.register(EffectAddStatTemporarily(this))
         com.willfp.libreforge.effects.Effects.register(EffectMultiplyStatTemporarily(this))
         com.willfp.libreforge.effects.Effects.register(EffectMagicRegenMultiplier)
-        Conditions.register(ConditionAboveStat)
-        Conditions.register(ConditionBelowStat)
+        Conditions.register(ConditionStatAbove)
+        Conditions.register(ConditionStatBelow)
         Conditions.register(ConditionStatEquals)
         Conditions.register(ConditionHasSkillLevel)
         Conditions.register(ConditionBelowMagic)

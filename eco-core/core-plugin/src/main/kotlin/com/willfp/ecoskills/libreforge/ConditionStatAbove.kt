@@ -1,9 +1,7 @@
 package com.willfp.ecoskills.libreforge
 
 import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.ecoskills.api.getMagic
 import com.willfp.ecoskills.api.getStatLevel
-import com.willfp.ecoskills.magic.MagicTypes
 import com.willfp.ecoskills.stats.Stats
 import com.willfp.libreforge.Dispatcher
 import com.willfp.libreforge.NoCompileData
@@ -13,10 +11,10 @@ import com.willfp.libreforge.conditions.Condition
 import com.willfp.libreforge.get
 import org.bukkit.entity.Player
 
-object ConditionBelowStat : Condition<NoCompileData>("below_stat") {
+object ConditionStatAbove : Condition<NoCompileData>("stat_above") {
     override val arguments = arguments {
         require("stat", "You must specify the stat!")
-        require("amount", "You must specify the amount!")
+        require("level", "You must specify the level!")
     }
 
     override fun isMet(
@@ -29,6 +27,6 @@ object ConditionBelowStat : Condition<NoCompileData>("below_stat") {
 
         val type = Stats.getByID(config.getString("stat").lowercase()) ?: return false
 
-        return player.getStatLevel(type) < config.getIntFromExpression("amount", player)
+        return player.getStatLevel(type) >= config.getIntFromExpression("level", player)
     }
 }

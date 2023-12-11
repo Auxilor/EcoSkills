@@ -1,9 +1,7 @@
 package com.willfp.ecoskills.libreforge
 
 import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.ecoskills.api.getMagic
 import com.willfp.ecoskills.api.getStatLevel
-import com.willfp.ecoskills.magic.MagicTypes
 import com.willfp.ecoskills.stats.Stats
 import com.willfp.libreforge.Dispatcher
 import com.willfp.libreforge.NoCompileData
@@ -16,7 +14,7 @@ import org.bukkit.entity.Player
 object ConditionStatEquals : Condition<NoCompileData>("stat_equals") {
     override val arguments = arguments {
         require("stat", "You must specify the stat!")
-        require("amount", "You must specify the amount!")
+        require("level", "You must specify the level!")
     }
 
     override fun isMet(
