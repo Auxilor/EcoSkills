@@ -40,6 +40,7 @@ permissions:
       ecoskills.command.skills: true
       ecoskills.command.stats: true
       ecoskills.command.give: true
+      ecoskills.command.set: true
       ecoskills.command.top: true
       ecoskills.command.recount: true
       ecoskills.command.toggleactionbar: true
@@ -65,6 +66,9 @@ permissions:
     default: true
   ecoskills.command.give:
     description: Allows the use of /ecoskills give.
+    default: op
+  ecoskills.command.set:
+    description: Allows the use of /ecoskills set.
     default: op
   ecoskills.command.recount:
     description: Allows the use of /ecoskills recount.
