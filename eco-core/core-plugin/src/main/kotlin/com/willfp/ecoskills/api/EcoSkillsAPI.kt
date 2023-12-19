@@ -9,6 +9,7 @@ import com.willfp.ecoskills.effects.effects
 import com.willfp.ecoskills.magic.MagicType
 import com.willfp.ecoskills.magic.magic
 import com.willfp.ecoskills.skills.Skill
+import com.willfp.ecoskills.skills.SkillLevel
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.skills.skills
 import com.willfp.ecoskills.stats.Stat
@@ -64,6 +65,9 @@ fun OfflinePlayer.getSkillProgress(skill: Skill): Double {
 
 fun OfflinePlayer.getSkillLevel(skill: Skill): Int =
     this.skills[skill].level
+
+fun OfflinePlayer.setSkillLevel(skill: Skill, level: Int) =
+    this.skills.set(skill, SkillLevel(level, 0.0))
 
 val OfflinePlayer.totalSkillLevel: Int
     get() = Skills.values().sumOf { this.getSkillLevel(it) }
