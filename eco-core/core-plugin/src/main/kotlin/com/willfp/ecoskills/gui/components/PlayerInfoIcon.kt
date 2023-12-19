@@ -10,21 +10,22 @@ import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.savedDisplayName
 import com.willfp.ecoskills.gui.menus.StatsGUI
 import com.willfp.ecoskills.plugin
+import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.SkullMeta
 import java.util.UUID
 import java.util.concurrent.TimeUnit
 
-private val skullBuilderCache = Caffeine.newBuilder()
-    .expireAfterWrite(plugin.configYml.getInt("gui.refresh-time").toLong(), TimeUnit.SECONDS)
-    .build<UUID, SkullBuilder>()
+private val skullCache = Caffeine.newBuilder()
+    .expireAfterWrite(plugin.configYml.getInt("gui.cache-ttl").toLong(), TimeUnit.MILLISECONDS)
+    .build<UUID, ItemStack>()
 
 class PlayerInfoIcon(
     config: Config,
     opensStatMenu: Boolean
 ) : PositionedComponent {
     private val slot = slot({ player, _ ->
-        val skullBuilder = skullBuilderCache.get(player.uniqueId) {
-            SkullBuilder()
+        skullCache.get(player.uniqueId) {
+            val skullBuilder = SkullBuilder()
                 .setDisplayName(
                     config.getString("name")
                         .replace("%player%", player.savedDisplayName)
@@ -50,14 +51,13 @@ class PlayerInfoIcon(
                         )
                     }
                 }
+
+            skullBuilder.build().apply {
+                val meta = itemMeta as SkullMeta
+                meta.owningPlayer = player
+                itemMeta = meta
+            }
         }
-
-        val skull = skullBuilder.build()
-
-        val meta = skull.itemMeta as SkullMeta
-        meta.owningPlayer = player
-        skull.itemMeta = meta
-        skull
     }) {
         if (opensStatMenu) {
             onLeftClick { player, _, _, _ ->

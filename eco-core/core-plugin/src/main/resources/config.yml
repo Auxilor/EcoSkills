@@ -16,8 +16,9 @@ disabled-in-worlds:
 gui:
   rows: 6
 
-  # Time in seconds to refresh icons in gui (placeholders, values, etc)
-  refresh-time: 5
+  # The amount of time (in milliseconds) that the GUI icons should be cached for
+  # Prevents spamming the GUI to cause lag
+  cache-ttl: 2000
 
   mask:
     # The way the mask works is by having a list of materials

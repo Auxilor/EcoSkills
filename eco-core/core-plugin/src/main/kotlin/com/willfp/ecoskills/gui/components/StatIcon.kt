@@ -14,9 +14,9 @@ import org.bukkit.inventory.ItemStack
 import java.util.UUID
 import java.util.concurrent.TimeUnit
 
-private val itemBuilderCache = Caffeine.newBuilder()
-    .expireAfterWrite(plugin.configYml.getInt("gui.refresh-time").toLong(), TimeUnit.SECONDS)
-    .build<MutableMap<UUID, Stat>, ItemStack>()
+private val itemCache = Caffeine.newBuilder()
+    .expireAfterWrite(plugin.configYml.getInt("gui.cache-ttl").toLong(), TimeUnit.MILLISECONDS)
+    .build<Int, ItemStack>()
 
 class StatIcon(
     stat: Stat,
@@ -26,7 +26,7 @@ class StatIcon(
     private val baseIcon = Items.lookup(config.getString("icon")).item
 
     private val slot = slot { player, _ ->
-        itemBuilderCache.get(mutableMapOf(player.uniqueId to stat)) {
+        itemCache.get(player.hashCode() xor stat.hashCode()) {
             val level = player.getStatLevel(stat)
 
             baseIcon.clone().modify {

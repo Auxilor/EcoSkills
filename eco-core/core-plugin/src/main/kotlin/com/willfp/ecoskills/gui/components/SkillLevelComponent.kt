@@ -17,13 +17,12 @@ import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.util.LevelInjectable
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import java.util.UUID
 import java.util.concurrent.TimeUnit
 import kotlin.math.roundToInt
 
-private val itemStackBuilderCache = Caffeine.newBuilder()
-    .expireAfterWrite(plugin.configYml.getInt("gui.refresh-time").toLong(), TimeUnit.SECONDS)
-    .build<MutableMap<UUID, MutableMap<Skill, Int>>, ItemStack>()
+private val levelItemCache = Caffeine.newBuilder()
+    .expireAfterWrite(plugin.configYml.getInt("gui.cache-ttl").toLong(), TimeUnit.MILLISECONDS)
+    .build<Int, ItemStack>()
 
 class SkillLevelComponent(
     private val plugin: EcoPlugin,
@@ -37,7 +36,7 @@ class SkillLevelComponent(
     override fun getLevelItem(player: Player, menu: Menu, level: Int, levelState: LevelState): ItemStack {
         val key = levelState.key
 
-        fun item() = itemStackBuilderCache.get(mutableMapOf(player.uniqueId to mutableMapOf(skill to level))) {
+        fun item() = levelItemCache.get(player.hashCode() xor skill.hashCode() xor level.hashCode()) {
             ItemStackBuilder(Items.lookup(plugin.configYml.getString("level-gui.progression-slots.$key.item")))
                 .setDisplayName(
                     plugin.configYml.getString("level-gui.progression-slots.$key.name")

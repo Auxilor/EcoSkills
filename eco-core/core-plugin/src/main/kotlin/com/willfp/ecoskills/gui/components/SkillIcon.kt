@@ -18,9 +18,9 @@ import org.bukkit.inventory.ItemStack
 import java.util.UUID
 import java.util.concurrent.TimeUnit
 
-private val itemStackBuilderCache = Caffeine.newBuilder()
-    .expireAfterWrite(plugin.configYml.getInt("gui.refresh-time").toLong(), TimeUnit.SECONDS)
-    .build<MutableMap<UUID, Skill>, ItemStack>()
+private val iconCache = Caffeine.newBuilder()
+    .expireAfterWrite(plugin.configYml.getInt("gui.cache-ttl").toLong(), TimeUnit.MILLISECONDS)
+    .build<Int, ItemStack>()
 
 class SkillIcon(
     private val skill: Skill,
@@ -31,7 +31,7 @@ class SkillIcon(
         get() = field.clone()
 
     private val slot = slot({ player, _ ->
-        itemStackBuilderCache.get(mutableMapOf(player.uniqueId to skill)) {
+        iconCache.get(player.uniqueId.hashCode() xor skill.hashCode()) {
             val level = player.getSkillLevel(skill)
 
             baseIcon.modify {
