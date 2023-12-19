@@ -39,20 +39,6 @@ class CommandSet(plugin: EcoPlugin) :
         val key = when (obj) {
             is Skill -> {
                 player.setSkillLevel(obj, amount)
-                for (stat in Stats.values()) {
-                    player.stats.reset(stat)
-                }
-                for (effect in Effects.values()) {
-                    player.effects.reset(effect)
-                }
-                for (skill in Skills.values()) {
-                    val level = player.getSkillLevel(skill)
-                    if (level > 0) {
-                        for (i in (1..level)) {
-                            skill.giveRewards(player, level)
-                        }
-                    }
-                }
                 "set-skill-level"
             }
 
