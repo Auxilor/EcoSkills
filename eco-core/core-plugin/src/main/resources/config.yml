@@ -16,6 +16,9 @@ disabled-in-worlds:
 gui:
   rows: 6
 
+  # Time in seconds to refresh icons in gui (placeholders, values, etc)
+  refresh-time: 5
+
   mask:
     # The way the mask works is by having a list of materials
     # And then a pattern to use those materials.

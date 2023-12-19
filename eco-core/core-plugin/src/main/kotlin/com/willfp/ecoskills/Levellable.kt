@@ -46,6 +46,10 @@ abstract class Levellable(
             }.map { it.uniqueId }
         }
 
+    private val descCache = Caffeine.newBuilder()
+        .expireAfterWrite(plugin.configYml.getInt("gui.refresh-time").toLong(), TimeUnit.SECONDS)
+        .build<MutableMap<String, Int>, String>()
+
     private val unformattedDescription = config.getString("description")
 
     val name = config.getFormattedString("name")
@@ -105,18 +109,20 @@ abstract class Levellable(
     }
 
     fun getDescription(level: Int): String {
-        var desc = unformattedDescription
+        return descCache.get(mutableMapOf(id to level)) {
+            var desc = unformattedDescription
 
-        val context = placeholderContext(
-            injectable = LevelInjectable(level)
-        )
+            val context = placeholderContext(
+                injectable = LevelInjectable(level)
+            )
 
-        for (placeholder in loadDescriptionPlaceholders(config)) {
-            val id = placeholder.id
-            val value = evaluateExpression(placeholder.expr, context)
-            desc = desc.replace("%$id%", value.toNiceString())
+            for (placeholder in loadDescriptionPlaceholders(config)) {
+                val id = placeholder.id
+                val value = evaluateExpression(placeholder.expr, context)
+                desc = desc.replace("%$id%", value.toNiceString())
+            }
+
+            desc.formatEco(context)
         }
-
-        return desc.formatEco(context)
     }
 }
