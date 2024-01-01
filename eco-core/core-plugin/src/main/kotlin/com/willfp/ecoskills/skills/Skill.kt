@@ -262,7 +262,6 @@ class Skill(
                     player.toDispatcher(),
                     TriggerLevelUpSkill,
                     TriggerData(
-                        holder = EmptyProvidedHolder,
                         player = player
                     )
                 ).apply {
