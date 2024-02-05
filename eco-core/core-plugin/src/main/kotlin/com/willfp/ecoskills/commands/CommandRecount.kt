@@ -3,7 +3,9 @@ package com.willfp.ecoskills.commands
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.ecoskills.api.getSkillLevel
+import com.willfp.ecoskills.api.getSkillProgress
 import com.willfp.ecoskills.api.giveSkillXP
+import com.willfp.ecoskills.api.setSkillLevel
 import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.effects.effects
 import com.willfp.ecoskills.skills.Skills
@@ -40,9 +42,7 @@ class CommandRecount(plugin: EcoPlugin) :
                 val level = player.getSkillLevel(skill)
                 if (level > 0) {
                     for (i in (0 until level)) {
-                        val xpReq = skill.getXPRequired(i)
-                        player.giveSkillXP(skill, xpReq)
-                        skill.giveRewards(player, level)
+                        skill.giveRewards(player, i)
                     }
                 }
             }
