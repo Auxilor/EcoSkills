@@ -27,6 +27,6 @@ object ConditionStatEquals : Condition<NoCompileData>("stat_equals") {
 
         val type = Stats.getByID(config.getString("stat").lowercase()) ?: return false
 
-        return player.getStatLevel(type) == config.getIntFromExpression("amount", player)
+        return player.getStatLevel(type) == config.getIntFromExpression("level", player)
     }
 }
