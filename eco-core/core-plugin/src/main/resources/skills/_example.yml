@@ -5,15 +5,13 @@
 # _example.yml is not loaded.
 
 # The name and description, shown to players.
-name: Mining
-description: Break blocks to earn XP
+name: Mining # The display name of the skill
+description: Break blocks to earn XP # The description of the skill
 
 # Options for the GUI
 gui:
   enabled: true # (Optional) If this skill should be shown in the GUI
-
-  icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmIxYzI2OGVmZWM4ZDdkODhhMWNiODhjMmJmYTA5N2ZhNTcwMzc5NDIyOTlmN2QyMDIxNTlmYzkzY2QzMDM2ZCJ9fX0=
-
+  icon: player_head texture:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmIxYzI2OGVmZWM4ZDdkODhhMWNiODhjMmJmYTA5N2ZhNTcwMzc5NDIyOTlmN2QyMDIxNTlmYzkzY2QzMDM2ZCJ9fX0="
   lore:
     - "&fImproves Stats:"
     - "&8» &r%ecoskills_defense_name%"
@@ -26,13 +24,11 @@ gui:
     - "   %ecoskills_spelunking_description%"
     - "&8» &r&6%ecoskills_dynamic_mining_name% %ecoskills_dynamic_mining_numeral%"
     - "   %ecoskills_dynamic_mining_description%"
-
   position:
     row: 3
     column: 3
 
 hide-before-level-1: true # If this skill should be hidden before level 1
-
 
 # There are two ways to specify level XP requirements:
 #  1. A formula to calculate for infinite levels
@@ -65,37 +61,6 @@ xp-requirements:
   - 100000
   - 200000
   - 300000
-  - 400000
-  - 500000
-  - 600000
-  - 700000
-  - 800000
-  - 900000
-  - 1000000
-  - 1100000
-  - 1200000
-  - 1300000
-  - 1400000
-  - 1500000
-  - 1600000
-  - 1700000
-  - 1800000
-  - 1900000
-  - 2000000
-  - 2100000
-  - 2200000
-  - 2300000
-  - 2400000
-  - 2500000
-  - 2600000
-  - 2750000
-  - 2900000
-  - 3100000
-  - 3400000
-  - 3700000
-  - 4000000
-  - 5000000
-
 
 # The rewards given on level up
 # You specify a reward (either a stat or an effect),
@@ -126,16 +91,14 @@ rewards:
   - reward: dynamic_mining
     levels: 1
 
-
 # Effects to run when an item levels up
 # %level% is the level the item leveled up to.
 # If you want to restrict this to certain levels, you can use
-# require: %level% == 20, or require: %level% < 50, etc.
+# require: %level% = 20, or require: %level% < 50, etc.
 level-up-effects:
   - id: give_money
     args:
       amount: 1000 * %level%
-
 
 # Custom placeholders to be used in descriptions,
 # Don't add % to the IDs, this is done automatically
@@ -143,7 +106,6 @@ level-up-effects:
 placeholders:
   money: "%level% * 0.4"
   blocks: "ceil(10 - %level% / 10)"
-
 
 # The chat messages to send on level up,
 # and the lore that will be shown with %rewards% in the GUI
@@ -175,13 +137,12 @@ reward-messages:
     - " &8» &r&6%ecoskills_dynamic_mining_name% %ecoskills_dynamic_mining_numeral%"
     - "    %ecoskills_dynamic_mining_description%"
 
-
-# An XP Gain method takes a trigger, a multiplier, conditions, and filters.
-# The multiplier takes the value produced by the trigger and multiplies it
-# by some value to calculate the experience that should be given
+# An XP gain method takes a trigger, a multiplier, conditions, and filters.
+# The 'multiplier' takes the value produced by the trigger and multiplies it
+# Alternatively, you can use 'value' to count a specific number and not a multiplier
 xp-gain-methods:
   - trigger: break_block
-    multiplier: 0.5
+    multiplier: 0.5 # You can also use "value" here (see above comment)
     filters:
       blocks:
         - netherrack

@@ -12,6 +12,6 @@ effects:
       level: 3
       duration: "18 + %level% * 2"
     triggers:
-      - mine_block
+      - melee_attack
 
 conditions: [ ]
