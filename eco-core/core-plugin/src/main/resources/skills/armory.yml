@@ -21,6 +21,8 @@ gui:
     row: 4
     column: 6
 
+hide-before-level-1: true
+
 xp-requirements:
   - 50
   - 125
@@ -116,6 +118,10 @@ reward-messages:
 xp-gain-methods:
   - trigger: take_damage
     multiplier: 1.44
+    filters:
+      not_damage_cause:
+        - KILL
+        - SUICIDE
 
 # Conditions that must be met to gain XP. While you can add conditions to xp
 # gain methods, if you have many this can be annoying, so this is global.

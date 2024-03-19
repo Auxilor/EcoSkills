@@ -46,6 +46,10 @@ abstract class Levellable(
             }.map { it.uniqueId }
         }
 
+    private val descCache = Caffeine.newBuilder()
+        .expireAfterWrite(plugin.configYml.getInt("gui.cache-ttl").toLong(), TimeUnit.MILLISECONDS)
+        .build<Int, String>()
+
     private val unformattedDescription = config.getString("description")
 
     val name = config.getFormattedString("name")
@@ -85,6 +89,10 @@ abstract class Levellable(
             .replace("%ecoskills_${id}_numeral%", level.toNumeral())
             .replace("%ecoskills_${id}_description%", getDescription(level))
             .replace("%ecoskills_${id}%", level.toString())
+            .replace("%level%", level.toString())
+            .replace("%level_numeral%", level.toNumeral())
+            .replace("%previous_level%", (level - 1).toString())
+            .replace("%previous_level_numeral%", (level - 1).toNumeral())
     }
 
     fun getTop(position: Int): LeaderboardEntry? {
@@ -101,18 +109,20 @@ abstract class Levellable(
     }
 
     fun getDescription(level: Int): String {
-        var desc = unformattedDescription
+        return descCache.get(level) {
+            var desc = unformattedDescription
 
-        val context = placeholderContext(
-            injectable = LevelInjectable(level)
-        )
+            val context = placeholderContext(
+                injectable = LevelInjectable(level)
+            )
 
-        for (placeholder in loadDescriptionPlaceholders(config)) {
-            val id = placeholder.id
-            val value = evaluateExpression(placeholder.expr, context)
-            desc = desc.replace("%$id%", value.toNiceString())
+            for (placeholder in loadDescriptionPlaceholders(config)) {
+                val id = placeholder.id
+                val value = evaluateExpression(placeholder.expr, context)
+                desc = desc.replace("%$id%", value.toNiceString())
+            }
+
+            desc.formatEco(context)
         }
-
-        return desc.formatEco(context)
     }
 }

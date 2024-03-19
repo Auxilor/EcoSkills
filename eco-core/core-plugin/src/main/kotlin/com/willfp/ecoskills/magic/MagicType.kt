@@ -10,8 +10,10 @@ import com.willfp.eco.util.evaluateExpression
 import com.willfp.eco.util.toNiceString
 import com.willfp.eco.util.toNumeral
 import com.willfp.ecoskills.EcoSkillsPlugin
+import com.willfp.ecoskills.api.event.PlayerRegenMagicEvent
 import com.willfp.ecoskills.libreforge.EffectArgumentMagicCost
 import com.willfp.libreforge.effects.arguments.EffectArguments
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import kotlin.math.ceil
 
@@ -56,7 +58,7 @@ class MagicType(
     ).toInt()
 
     internal fun tick(player: Player) {
-        val toRegen = ceil(
+        val baseToRegen = ceil(
             evaluateExpression(
                 regenRateExpr, placeholderContext(
                     player = player
@@ -64,7 +66,10 @@ class MagicType(
             )
         ).toInt()
 
-        player.magic[this] += toRegen
+        val event = PlayerRegenMagicEvent(player, this, baseToRegen)
+        Bukkit.getPluginManager().callEvent(event)
+
+        player.magic[this] += event.amount
     }
 
     override fun equals(other: Any?): Boolean {

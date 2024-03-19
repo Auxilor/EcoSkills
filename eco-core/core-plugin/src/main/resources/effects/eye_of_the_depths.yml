@@ -3,7 +3,7 @@ placeholder: "0.1 * %level%"
 description: "&a%placeholder%%&8 chance to get rare drops from fishing"
 
 effects:
-  - id: drop_random_item_for_player
+  - id: drop_random_item
     args:
       chance: "0.1 * %level%"
       items:

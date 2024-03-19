@@ -5,27 +5,11 @@ import com.willfp.eco.core.packet.PacketListener
 import com.willfp.ecoskills.actionbar.ActionBarCompatibilityProxy
 import com.willfp.ecoskills.actionbar.ActionBarGamemodeListener
 import com.willfp.ecoskills.actionbar.ActionBarHandler
+import com.willfp.ecoskills.actionbar.HealthScaleDisabler
 import com.willfp.ecoskills.commands.CommandEcoSkills
 import com.willfp.ecoskills.commands.CommandSkills
 import com.willfp.ecoskills.effects.Effects
-import com.willfp.ecoskills.libreforge.ConditionAboveMagic
-import com.willfp.ecoskills.libreforge.ConditionBelowMagic
-import com.willfp.ecoskills.libreforge.ConditionHasSkillLevel
-import com.willfp.ecoskills.libreforge.EffectAddStat
-import com.willfp.ecoskills.libreforge.EffectAddStatTemporarily
-import com.willfp.ecoskills.libreforge.EffectGiveMagic
-import com.willfp.ecoskills.libreforge.EffectGiveSkillXp
-import com.willfp.ecoskills.libreforge.EffectGiveSkillXpNaturally
-import com.willfp.ecoskills.libreforge.EffectMakeSkillCrit
-import com.willfp.ecoskills.libreforge.EffectMultiplyAllStats
-import com.willfp.ecoskills.libreforge.EffectMultiplyMagic
-import com.willfp.ecoskills.libreforge.EffectMultiplyStat
-import com.willfp.ecoskills.libreforge.EffectMultiplyStatTemporarily
-import com.willfp.ecoskills.libreforge.EffectSkillXpMultiplier
-import com.willfp.ecoskills.libreforge.FilterSkill
-import com.willfp.ecoskills.libreforge.FilterSkillCrit
-import com.willfp.ecoskills.libreforge.TriggerGainSkillXp
-import com.willfp.ecoskills.libreforge.TriggerLevelUpSkill
+import com.willfp.ecoskills.libreforge.*
 import com.willfp.ecoskills.magic.MagicHandler
 import com.willfp.ecoskills.magic.MagicListener
 import com.willfp.ecoskills.magic.MagicTypes
@@ -37,6 +21,7 @@ import com.willfp.ecoskills.skills.display.DamageIndicatorListener
 import com.willfp.ecoskills.skills.display.GainXPDisplay
 import com.willfp.ecoskills.skills.display.LevelUpDisplay
 import com.willfp.ecoskills.skills.display.TemporaryBossBarHandler
+import com.willfp.ecoskills.skills.isInDisabledWorld
 import com.willfp.ecoskills.stats.StatModifierListener
 import com.willfp.ecoskills.stats.Stats
 import com.willfp.libreforge.SimpleProvidedHolder
@@ -44,8 +29,9 @@ import com.willfp.libreforge.conditions.Conditions
 import com.willfp.libreforge.filters.Filters
 import com.willfp.libreforge.loader.LibreforgePlugin
 import com.willfp.libreforge.loader.configs.ConfigCategory
-import com.willfp.libreforge.registerHolderProvider
+import com.willfp.libreforge.registerSpecificHolderProvider
 import com.willfp.libreforge.triggers.Triggers
+import org.bukkit.entity.Player
 import org.bukkit.event.Listener
 
 internal lateinit var plugin: EcoSkillsPlugin
@@ -66,10 +52,11 @@ class EcoSkillsPlugin : LibreforgePlugin() {
     }
 
     override fun handleEnable() {
-        registerHolderProvider { player ->
-            (Effects.values() union Stats.values())
-                .map { it.getLevelHolder(it.getActualLevel(player)) }
-                .map { SimpleProvidedHolder(it) }
+        registerSpecificHolderProvider<Player> { player ->
+            if (player.isInDisabledWorld) emptyList() else
+                (Effects.values() union Stats.values())
+                    .mapNotNull { it.getLevelHolder(it.getActualLevel(player)) }
+                    .map { SimpleProvidedHolder(it) }
         }
 
         com.willfp.libreforge.effects.Effects.register(EffectAddStat)
@@ -83,13 +70,19 @@ class EcoSkillsPlugin : LibreforgePlugin() {
         com.willfp.libreforge.effects.Effects.register(EffectGiveSkillXpNaturally)
         com.willfp.libreforge.effects.Effects.register(EffectAddStatTemporarily(this))
         com.willfp.libreforge.effects.Effects.register(EffectMultiplyStatTemporarily(this))
+        com.willfp.libreforge.effects.Effects.register(EffectMagicRegenMultiplier)
+        Conditions.register(ConditionStatAbove)
+        Conditions.register(ConditionStatBelow)
+        Conditions.register(ConditionStatEquals)
         Conditions.register(ConditionHasSkillLevel)
         Conditions.register(ConditionBelowMagic)
         Conditions.register(ConditionAboveMagic)
         Triggers.register(TriggerGainSkillXp)
         Triggers.register(TriggerLevelUpSkill)
+        Triggers.register(TriggerRegenMagic)
         Filters.register(FilterSkill)
         Filters.register(FilterSkillCrit)
+        Filters.register(FilterMagicType)
 
         EcoSkillsTopPlaceholder(this).register()
         EcoSkillsSkillTopPlaceholder(this).register()
@@ -117,6 +110,7 @@ class EcoSkillsPlugin : LibreforgePlugin() {
             GainXPDisplay(this),
             DamageIndicatorListener(this),
             MagicListener(this),
+            HealthScaleDisabler(this),
             ActionBarGamemodeListener,
             SkillCritListener,
             StatModifierListener

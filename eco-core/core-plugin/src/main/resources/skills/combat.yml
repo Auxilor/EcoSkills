@@ -23,6 +23,8 @@ gui:
     row: 3
     column: 4
 
+hide-before-level-1: true
+
 xp-requirements:
   - 50
   - 125

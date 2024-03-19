@@ -6,12 +6,14 @@ import com.willfp.ecoskills.api.modifiers.ModifierOperation
 import com.willfp.ecoskills.api.modifiers.StatModifier
 import com.willfp.ecoskills.api.removeStatModifier
 import com.willfp.ecoskills.stats.Stats
+import com.willfp.libreforge.Dispatcher
 import com.willfp.libreforge.NoCompileData
 import com.willfp.libreforge.ProvidedHolder
 import com.willfp.libreforge.arguments
 import com.willfp.libreforge.effects.Effect
 import com.willfp.libreforge.effects.Identifiers
 import com.willfp.libreforge.effects.RunOrder
+import com.willfp.libreforge.get
 import org.bukkit.entity.Player
 
 object EffectMultiplyAllStats : Effect<NoCompileData>("multiply_all_stats") {
@@ -22,12 +24,14 @@ object EffectMultiplyAllStats : Effect<NoCompileData>("multiply_all_stats") {
     }
 
     override fun onEnable(
-        player: Player,
+        dispatcher: Dispatcher<*>,
         config: Config,
         identifiers: Identifiers,
         holder: ProvidedHolder,
         compileData: NoCompileData
     ) {
+        val player = dispatcher.get<Player>() ?: return
+
         val factory = identifiers.makeFactory()
 
         for ((offset, stat) in Stats.values().withIndex()) {
@@ -42,7 +46,9 @@ object EffectMultiplyAllStats : Effect<NoCompileData>("multiply_all_stats") {
         }
     }
 
-    override fun onDisable(player: Player, identifiers: Identifiers, holder: ProvidedHolder) {
+    override fun onDisable(dispatcher: Dispatcher<*>, identifiers: Identifiers, holder: ProvidedHolder) {
+        val player = dispatcher.get<Player>() ?: return
+
         val factory = identifiers.makeFactory()
 
         for (offset in Stats.values().indices) {

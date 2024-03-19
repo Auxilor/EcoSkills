@@ -1,5 +1,6 @@
 package com.willfp.ecoskills.gui.components
 
+import com.github.benmanes.caffeine.cache.Caffeine
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.gui.menu.Menu
@@ -9,37 +10,44 @@ import com.willfp.eco.core.gui.slot.Slot
 import com.willfp.eco.core.items.Items
 import com.willfp.eco.core.items.builder.modify
 import com.willfp.eco.util.lineWrap
-import com.willfp.eco.util.toNumeral
 import com.willfp.ecoskills.api.getSkillLevel
+import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.skills.Skill
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemStack
+import java.util.UUID
+import java.util.concurrent.TimeUnit
+
+private val iconCache = Caffeine.newBuilder()
+    .expireAfterWrite(plugin.configYml.getInt("gui.cache-ttl").toLong(), TimeUnit.MILLISECONDS)
+    .build<Int, ItemStack>()
 
 class SkillIcon(
     private val skill: Skill,
     config: Config,
     plugin: EcoPlugin
 ) : PositionedComponent {
-    private val hideBeforeLevel1 = plugin.configYml.getBool("skills.hide-before-level-1")
-
     private val baseIcon = Items.lookup(config.getString("icon")).item
+        get() = field.clone()
 
     private val slot = slot({ player, _ ->
-        val level = player.getSkillLevel(skill)
+        iconCache.get(player.uniqueId.hashCode() xor skill.hashCode()) {
+            val level = player.getSkillLevel(skill)
 
-        baseIcon.clone().modify {
-            setDisplayName(
-                plugin.configYml.getFormattedString("gui.skill-icon.name")
-                    .replace("%level%", level.toString())
-                    .replace("%level_numeral%", level.toNumeral())
-                    .replace("%skill%", skill.name)
-            )
+            baseIcon.modify {
+                setDisplayName(
+                    plugin.configYml.getFormattedString("gui.skill-icon.name")
+                        .replace("%skill%", skill.name)
+                        .let { skill.addPlaceholdersInto(it, level) }
+                )
 
-            addLoreLines(
-                skill.addPlaceholdersInto(
-                    plugin.configYml.getStrings("gui.skill-icon.lore"),
-                    player
-                ).lineWrap(plugin.configYml.getInt("gui.skill-icon.line-wrap"))
-            )
+                addLoreLines(
+                    skill.addPlaceholdersInto(
+                        plugin.configYml.getStrings("gui.skill-icon.lore"),
+                        player
+                    ).lineWrap(plugin.configYml.getInt("gui.skill-icon.line-wrap"))
+                )
+            }
         }
     }) {
         onLeftClick { player, _, _, _ ->
@@ -64,7 +72,7 @@ class SkillIcon(
     override val column = config.getInt("position.column")
 
     override fun getSlotAt(row: Int, column: Int, player: Player, menu: Menu): Slot {
-        return if (player.getSkillLevel(skill) > 0 || !hideBeforeLevel1) {
+        return if (player.getSkillLevel(skill) > 0 || !skill.isHiddenBeforeLevel1) {
             slot
         } else {
             unknownSlot

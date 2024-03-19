@@ -3,9 +3,11 @@ package com.willfp.ecoskills.skills
 import com.github.benmanes.caffeine.cache.Caffeine
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.integrations.afk.AFKManager
+import com.willfp.eco.util.containsIgnoreCase
 import com.willfp.ecoskills.api.gainSkillXP
 import com.willfp.libreforge.EmptyProvidedHolder
 import com.willfp.libreforge.counters.Accumulator
+import com.willfp.libreforge.toDispatcher
 import org.bukkit.GameMode
 import org.bukkit.entity.Player
 import java.util.concurrent.TimeUnit
@@ -16,6 +18,10 @@ class SkillXPAccumulator(
     private val skill: Skill
 ) : Accumulator {
     override fun accept(player: Player, count: Double) {
+        if (player.isInDisabledWorld) {
+            return
+        }
+
         if (plugin.configYml.getBool("skills.prevent-levelling-while-afk") && AFKManager.isAfk(player)) {
             return
         }
@@ -24,7 +30,7 @@ class SkillXPAccumulator(
             return
         }
 
-        if (!skill.conditions.areMet(player, EmptyProvidedHolder)) {
+        if (!skill.conditions.areMet(player.toDispatcher(), EmptyProvidedHolder)) {
             return
         }
 

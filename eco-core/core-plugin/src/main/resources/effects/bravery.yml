@@ -9,6 +9,6 @@ effects:
     triggers:
       - take_entity_damage
     filters:
-      only_bosses: true
+      is_boss: true
 
 conditions: [ ]

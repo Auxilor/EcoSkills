@@ -17,6 +17,7 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerGameModeChangeEvent
+import org.bukkit.event.player.PlayerJoinEvent
 import java.util.UUID
 
 private const val ACTION_BAR_DURATION = 2700L
@@ -125,7 +126,7 @@ class ActionBarHandler(
         }
     }
 
-    private object PlayerHealthInjectable : PlaceholderInjectable {
+    object PlayerHealthInjectable : PlaceholderInjectable {
         private val injections = listOf(
             PlayerStaticPlaceholder(
                 "health"
@@ -145,6 +146,17 @@ class ActionBarHandler(
 
         override fun clearInjectedPlaceholders() {
             return
+        }
+    }
+}
+
+class HealthScaleDisabler(
+    private val plugin: EcoPlugin
+) : Listener {
+    @EventHandler
+    fun handle(event: PlayerJoinEvent) {
+        if (!plugin.configYml.getBool("persistent-action-bar.scale-health")) {
+            event.player.isHealthScaled = false
         }
     }
 }

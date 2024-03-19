@@ -31,6 +31,8 @@ gui:
     row: 3
     column: 3
 
+hide-before-level-1: true # If this skill should be hidden before level 1
+
 
 # There are two ways to specify level XP requirements:
 #  1. A formula to calculate for infinite levels

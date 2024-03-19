@@ -7,6 +7,7 @@ import com.willfp.eco.core.data.profile
 import com.willfp.eco.core.map.defaultMap
 import com.willfp.eco.core.placeholder.PlayerPlaceholder
 import com.willfp.eco.core.placeholder.context.placeholderContext
+import com.willfp.eco.util.containsIgnoreCase
 import com.willfp.eco.util.evaluateExpression
 import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.toNiceString
@@ -21,6 +22,7 @@ import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.gui.components.SkillIcon
 import com.willfp.ecoskills.gui.menus.SkillLevelGUI
 import com.willfp.ecoskills.libreforge.TriggerLevelUpSkill
+import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.stats.Stats
 import com.willfp.ecoskills.util.InvalidConfigurationException
 import com.willfp.ecoskills.util.LevelInjectable
@@ -31,6 +33,7 @@ import com.willfp.libreforge.ViolationContext
 import com.willfp.libreforge.conditions.Conditions
 import com.willfp.libreforge.counters.Counters
 import com.willfp.libreforge.effects.executors.impl.NormalExecutorFactory
+import com.willfp.libreforge.toDispatcher
 import com.willfp.libreforge.triggers.DispatchedTrigger
 import com.willfp.libreforge.triggers.TriggerData
 import org.bukkit.OfflinePlayer
@@ -70,7 +73,8 @@ class Skill(
             reward,
             it.getInt("levels"),
             it.getIntOrNull("start-level"),
-            it.getIntOrNull("end-level")
+            it.getIntOrNull("end-level"),
+            it.getIntOrNull("every")
         )
     }
 
@@ -80,11 +84,11 @@ class Skill(
         ViolationContext(plugin, "Skill $id level-up-effects")
     )
 
-    private val rewardMessages = mutableMapOf<Int, List<String>>()
-
     val levelGUI = SkillLevelGUI(plugin, this)
 
     val icon = SkillIcon(this, config.getSubsection("gui"), plugin)
+
+    val isHiddenBeforeLevel1 = config.getBool("hide-before-level-1")
 
     init {
         if (xpFormula == null && requirements == null) {
@@ -162,8 +166,7 @@ class Skill(
             .replace("%required_xp%", player.getFormattedRequiredXP(skill))
             .replace("%description%", skill.getDescription(level))
             .replace("%skill%", skill.name)
-            .replace("%level%", level.toString())
-            .replace("%level_numeral%", level.toNumeral())
+            .let { addPlaceholdersInto(it, level) }
             .injectRewardPlaceholders(level)
 
         // Replace placeholders in the strings with their actual values.
@@ -174,7 +177,7 @@ class Skill(
             val margin = s.length - s.trimStart().length
 
             if (s.contains("%rewards%")) {
-                getRewardMessages(level)
+                getRewardMessages(level, player)
                     .addMargin(margin)
             } else if (s.contains("%gui_lore%")) {
                 config.getStrings("gui.lore")
@@ -216,8 +219,14 @@ class Skill(
      * Get the reward messages for a certain [level].
      */
     private fun getRewardMessages(
-        level: Int
-    ): List<String> = rewardMessages.getOrPut(level) {
+        level: Int,
+        player: Player
+    ): List<String> {
+        val context = placeholderContext(
+            injectable = LevelInjectable(level),
+            player = player
+        )
+
         // Determine the highest level of messages from the config that is not greater than the provided level.
         val highestConfiguredLevel = config.getSubsection("reward-messages")
             .getKeys(false)
@@ -227,10 +236,6 @@ class Skill(
 
         val messages = config.getStrings("reward-messages.$highestConfiguredLevel").toMutableList()
 
-        val context = placeholderContext(
-            injectable = LevelInjectable(level)
-        )
-
         for (placeholder in loadDescriptionPlaceholders(config)) {
             val id = placeholder.id
             val value = evaluateExpression(placeholder.expr, context)
@@ -238,7 +243,7 @@ class Skill(
             messages.replaceAll { s -> s.replace("%$id%", value.toNiceString()) }
         }
 
-        return messages.formatEco(context)
+        return messages
     }
 
     fun giveRewards(player: OfflinePlayer, level: Int) {
@@ -254,10 +259,9 @@ class Skill(
             // I don't really know a way to clean this up
             levelUpEffects?.trigger(
                 DispatchedTrigger(
-                    player,
+                    player.toDispatcher(),
                     TriggerLevelUpSkill,
                     TriggerData(
-                        holder = EmptyProvidedHolder,
                         player = player
                     )
                 ).apply {
@@ -282,3 +286,6 @@ class Skill(
 
 internal val OfflinePlayer.skills: SkillLevelMap
     get() = SkillLevelMap(this)
+
+val Player.isInDisabledWorld: Boolean
+    get() = plugin.configYml.getStrings("disabled-in-worlds").containsIgnoreCase(world.name)
