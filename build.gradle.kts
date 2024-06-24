@@ -3,7 +3,7 @@ plugins {
     `java-library`
     `maven-publish`
     kotlin("jvm") version "1.9.20"
-    id("com.github.johnrengelman.shadow") version "8.0.0"
+    id("io.github.goooler.shadow") version "8.1.7"
     id("com.willfp.libreforge-gradle-plugin") version "1.0.0"
 }
 
@@ -25,7 +25,7 @@ allprojects {
     apply(plugin = "java")
     apply(plugin = "kotlin")
     apply(plugin = "maven-publish")
-    apply(plugin = "com.github.johnrengelman.shadow")
+    apply(plugin = "io.github.goooler.shadow")
 
     repositories {
         mavenLocal()
@@ -45,7 +45,7 @@ allprojects {
 
     java {
         withSourcesJar()
-        toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+        toolchain.languageVersion.set(JavaLanguageVersion.of(21))
     }
 
     tasks {
@@ -56,7 +56,7 @@ allprojects {
 
         compileKotlin {
             kotlinOptions {
-                jvmTarget = "17"
+                jvmTarget = "21"
             }
         }
 
