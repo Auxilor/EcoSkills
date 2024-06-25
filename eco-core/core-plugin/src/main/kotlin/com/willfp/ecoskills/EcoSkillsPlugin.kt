@@ -8,6 +8,7 @@ import com.willfp.ecoskills.actionbar.ActionBarHandler
 import com.willfp.ecoskills.actionbar.HealthScaleDisabler
 import com.willfp.ecoskills.commands.CommandEcoSkills
 import com.willfp.ecoskills.commands.CommandSkills
+import com.willfp.ecoskills.commands.CommandStats
 import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.libreforge.*
 import com.willfp.ecoskills.magic.MagicHandler
@@ -100,7 +101,8 @@ class EcoSkillsPlugin : LibreforgePlugin() {
     override fun loadPluginCommands(): List<PluginCommand> {
         return listOf(
             CommandEcoSkills(this),
-            CommandSkills(this)
+            CommandSkills(this),
+            CommandStats(this)
         )
     }
 
