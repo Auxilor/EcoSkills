@@ -35,9 +35,9 @@ class CommandTop(plugin: EcoPlugin) :
                 return@runAsync
             }
 
-            val offset = (page - 1) * 10
-
-            val positions = ((offset + page)..(offset + page + 9)).toList()
+            val start = (page - 1) * 10 + 1
+            val end = start + 9 + (page - 1)
+            val positions = (start..end).toList()
 
             val top = if (skill == null) {
                 positions.mapNotNull { Skills.getTop(it) }
