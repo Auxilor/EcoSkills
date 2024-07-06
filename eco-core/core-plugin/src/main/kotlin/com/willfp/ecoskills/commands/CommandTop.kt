@@ -36,7 +36,7 @@ class CommandTop(plugin: EcoPlugin) :
             }
 
             val start = (page - 1) * 10 + 1
-            val end = start + 9 + (page - 1)
+            val end = start + 9
             val positions = (start..end).toList()
 
             val top = if (skill == null) {

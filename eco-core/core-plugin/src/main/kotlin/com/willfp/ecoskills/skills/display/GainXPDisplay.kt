@@ -111,7 +111,7 @@ class GainXPDisplay(
         )
             .replace("%current_xp%", event.player.getSkillXP(event.skill).toNiceString())
             .replace("%required_xp%", event.player.getFormattedRequiredXP(event.skill))
-            .replace("%gained_xp%", gainCache.get(event.player.uniqueId) { event.skill.id to 0.0 }.toNiceString())
+            .replace("%gained_xp%", gainCache.get(event.player.uniqueId) { event.skill.id to 0.0 }.second.toNiceString())
             .formatEco(
                 placeholderContext(
                     event.player,
