@@ -1,11 +1,11 @@
 package com.willfp.ecoskills.magic
 
 import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.ecoskills.CategoryWithRegistry
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.libreforge.loader.LibreforgePlugin
+import com.willfp.libreforge.loader.configs.RegistrableCategory
 
-object MagicTypes : CategoryWithRegistry<MagicType>("magic_type", "magic_types") {
+object MagicTypes : RegistrableCategory<MagicType>("magic_type", "magic_types") {
     override val supportsSharing = false
 
     override fun clear(plugin: LibreforgePlugin) {

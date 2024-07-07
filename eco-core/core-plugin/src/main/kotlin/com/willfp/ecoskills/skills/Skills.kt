@@ -2,18 +2,18 @@ package com.willfp.ecoskills.skills
 
 import com.github.benmanes.caffeine.cache.Caffeine
 import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.ecoskills.CategoryWithRegistry
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.api.totalSkillLevel
 import com.willfp.ecoskills.gui.menus.SkillsGUI
 import com.willfp.ecoskills.util.InvalidConfigurationException
 import com.willfp.ecoskills.util.LeaderboardEntry
 import com.willfp.libreforge.loader.LibreforgePlugin
+import com.willfp.libreforge.loader.configs.RegistrableCategory
 import org.bukkit.Bukkit
 import java.util.UUID
 import java.util.concurrent.TimeUnit
 
-object Skills : CategoryWithRegistry<Skill>("skill", "skills") {
+object Skills : RegistrableCategory<Skill>("skill", "skills") {
     // Totally not copied over from Levellable
     private val leaderboardCache = Caffeine.newBuilder()
         .expireAfterWrite(1, TimeUnit.MINUTES)
