@@ -22,6 +22,7 @@ import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
+import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import java.time.Duration
 import java.util.UUID
@@ -42,7 +43,7 @@ val Player.isXPGainSoundEnabled: Boolean
 class GainXPDisplay(
     private val plugin: EcoPlugin
 ) : Listener {
-    private val gainCache: Cache<UUID, Pair<String, Double>> = Caffeine.newBuilder().expireAfterWrite(Duration.ofSeconds(3))
+    private val gainCache: Cache<Pair<UUID, String>, Double> = Caffeine.newBuilder().expireAfterWrite(Duration.ofSeconds(3))
         .build()
 
     private val sound = if (plugin.configYml.getBool("skills.gain-xp.sound.enabled")) {
@@ -51,11 +52,11 @@ class GainXPDisplay(
         )
     } else null
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     fun handle(event: PlayerSkillXPGainEvent) {
         val player = event.player
-        val current = gainCache.get(player.uniqueId) { event.skill.id to 0.0 }
-        gainCache.put(player.uniqueId, event.skill.id to (current.second + event.gainedXP))
+        val current = gainCache.get(player.uniqueId to event.skill.id) { 0.0 }
+        gainCache.put(player.uniqueId to event.skill.id, current + event.gainedXP)
 
         // Run next tick because level up calls before xp is added
         plugin.scheduler.run {
@@ -111,7 +112,7 @@ class GainXPDisplay(
         )
             .replace("%current_xp%", event.player.getSkillXP(event.skill).toNiceString())
             .replace("%required_xp%", event.player.getFormattedRequiredXP(event.skill))
-            .replace("%gained_xp%", gainCache.get(event.player.uniqueId) { event.skill.id to 0.0 }.second.toNiceString())
+            .replace("%gained_xp%", gainCache.get(event.player.uniqueId to event.skill.id) { 0.0 }.toNiceString())
             .formatEco(
                 placeholderContext(
                     event.player,
