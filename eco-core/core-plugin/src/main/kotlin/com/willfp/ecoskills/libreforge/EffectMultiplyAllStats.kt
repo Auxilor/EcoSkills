@@ -23,6 +23,8 @@ object EffectMultiplyAllStats : Effect<NoCompileData>("multiply_all_stats") {
         require("multiplier", "You must specify the multiplier!")
     }
 
+    override val shouldReload = false
+
     override fun onEnable(
         dispatcher: Dispatcher<*>,
         config: Config,

@@ -24,6 +24,8 @@ object EffectAddStat : Effect<NoCompileData>("add_stat") {
         require("amount", "You must specify the amount to add/remove!")
     }
 
+    override val shouldReload = false
+
     override fun onEnable(
         dispatcher: Dispatcher<*>,
         config: Config,
