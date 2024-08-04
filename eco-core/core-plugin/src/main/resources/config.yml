@@ -272,6 +272,52 @@ damage-indicators:
   enabled: true
   final-damage: false # If final damage (with reductions applied) should be used.
 
+  disabled-for-entities:
+    - area_effect_cloud
+    - armor_stand
+    - arrow
+    - block_display
+    - dragon_fireball
+    - dropped_item
+    - egg
+    - ender_crystal
+    - ender_pearl
+    - ender_signal
+    - evoker_fangs
+    - experience_orb
+    - fireball
+    - falling_block
+    - firework_rocket
+    - fishing_hook
+    - glow_item_frame
+    - interaction
+    - item_display
+    - item_frame
+    - leash_hitch
+    - lightning
+    - llama_spit
+    - marker
+    - minecart
+    - minecart_chest
+    - minecart_command
+    - minecart_furnace
+    - minecart_hopper
+    - minecart_mob_spawner
+    - minecart_tnt
+    - painting
+    - primed_tnt
+    - shulker_bullet
+    - small_fireball
+    - snowball
+    - spectral_arrow
+    - splash_potion
+    - text_display
+    - thrown_exp_bottle
+    - trident
+    - unknown
+    - wind_charge
+    - wither_skull
+
   format:
     normal: "&7%damage%"
     crit: "&f✧ <gradient:#f953c6>%damage%</gradient:#b91d73> &f✧"
