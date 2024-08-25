@@ -27,15 +27,13 @@ abstract class Levellable(
     val config: Config,
     protected val plugin: EcoSkillsPlugin
 ) : KRegistrable {
-    open val startLevel = 0
+    val startLevel = 0
 
-    private val key by lazy {
-        PersistentDataKey(
-            plugin.createNamespacedKey(id),
-            PersistentDataKeyType.INT,
-            startLevel
-        )
-    }
+    private val key = PersistentDataKey(
+        plugin.createNamespacedKey(id),
+        PersistentDataKeyType.INT,
+        startLevel
+    )
 
     // Not the best way to do this, but it works!
     private val leaderboardCache = Caffeine.newBuilder()
