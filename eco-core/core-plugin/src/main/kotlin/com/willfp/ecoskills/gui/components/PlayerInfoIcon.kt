@@ -23,7 +23,7 @@ class PlayerInfoIcon(
     config: Config,
     opensStatMenu: Boolean
 ) : PositionedComponent {
-    override val isEnabled = config.getBoolOrNull("enabled") ?: true
+    override val isEnabled = config.getBool("enabled")
     private val slot = if (isEnabled) {
         slot({ player, _ ->
             skullCache.get(player.uniqueId) {
