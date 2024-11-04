@@ -12,3 +12,15 @@ configurations.compileOnly {
         force("org.spigotmc:spigot:$spigotVersion")
     }
 }
+
+tasks {
+    compileJava {
+        options.release = 21
+    }
+
+    compileKotlin {
+        kotlinOptions {
+            jvmTarget = "21"
+        }
+    }
+}
