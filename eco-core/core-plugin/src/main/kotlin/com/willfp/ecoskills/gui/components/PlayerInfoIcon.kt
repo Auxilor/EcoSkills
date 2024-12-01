@@ -23,47 +23,48 @@ class PlayerInfoIcon(
     config: Config,
     opensStatMenu: Boolean
 ) : PositionedComponent {
-    private val slot = slot({ player, _ ->
-        skullCache.get(player.uniqueId) {
-            val skullBuilder = SkullBuilder()
-                .setDisplayName(
-                    config.getString("name")
-                        .replace("%player%", player.savedDisplayName)
-                        .formatEco(player, true)
-                )
-                .addLoreLines(
-                    config.getFormattedStrings(
-                        "lore",
-                        placeholderContext(
-                            player = player
+    override val isEnabled = config.getBoolOrNull("enabled") ?: true
+    private val slot = if (isEnabled) {
+        slot({ player, _ ->
+            skullCache.get(player.uniqueId) {
+                val skullBuilder = SkullBuilder()
+                    .setDisplayName(
+                        config.getString("name")
+                            .replace("%player%", player.savedDisplayName)
+                            .formatEco(player, true)
+                    )
+                    .addLoreLines(
+                        config.getFormattedStrings(
+                            "lore", // Ensure correct path for lore
+                            placeholderContext(player = player)
                         )
                     )
-                )
-                .apply {
-                    if (opensStatMenu) {
-                        addLoreLines(
-                            config.getFormattedStrings(
-                                "view-more",
-                                placeholderContext(
-                                    player = player
+                    .apply {
+                        if (opensStatMenu) {
+                            addLoreLines(
+                                config.getFormattedStrings(
+                                    "view-more",
+                                    placeholderContext(player = player)
                                 )
                             )
-                        )
+                        }
                     }
-                }
 
-            skullBuilder.build().apply {
-                val meta = itemMeta as SkullMeta
-                meta.owningPlayer = player
-                itemMeta = meta
+                skullBuilder.build().apply {
+                    val meta = itemMeta as SkullMeta
+                    meta.owningPlayer = player
+                    itemMeta = meta
+                }
+            }
+        }) {
+            if (opensStatMenu) {
+                onLeftClick { player, _, _, _ ->
+                    StatsGUI.open(player)
+                }
             }
         }
-    }) {
-        if (opensStatMenu) {
-            onLeftClick { player, _, _, _ ->
-                StatsGUI.open(player)
-            }
-        }
+    } else {
+        null
     }
 
     override val row: Int = config.getInt("row")
