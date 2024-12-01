@@ -151,9 +151,16 @@ xp-gain-methods:
         - nether_wart
 
   - trigger: mine_block
+    multiplier: 4
+    filters:
+      player_placed: false
+      blocks:
+        - melon
+
+  - trigger: mine_block
     multiplier: 4.5
     filters:
-      fully_grown: true
+      player_placed: false
       blocks:
         - pumpkin
 
