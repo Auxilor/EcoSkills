@@ -37,7 +37,7 @@ class CommandTop(plugin: EcoPlugin) :
 
             val offset = (page - 1) * 10
 
-            val positions = ((offset + page)..(offset + page + 9)).toList()
+            val positions = ((offset + 1)..(offset + 10)).toList()
 
             val top = if (skill == null) {
                 positions.mapNotNull { Skills.getTop(it) }
@@ -52,7 +52,7 @@ class CommandTop(plugin: EcoPlugin) :
                 val (player, level) = entry
 
                 val line = plugin.langYml.getString("top-line-format")
-                    .replace("%rank%", positions[index].toString())
+                    .replace("%rank%", (offset + index + 1).toString())
                     .replace("%level%", level.toString())
                     .replace("%player%", player.savedDisplayName)
 
