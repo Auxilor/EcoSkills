@@ -107,6 +107,7 @@ xp-requirements:
 #   levels: 1
 #   start-level: 10
 #   end-level: 20
+#   every: 2
 
 rewards:
   - reward: defense
@@ -130,11 +131,20 @@ rewards:
 # Effects to run when an item levels up
 # %level% is the level the item leveled up to.
 # If you want to restrict this to certain levels, you can use
-# require: %level% == 20, or require: %level% < 50, etc.
+# require: %level% = 20, or require: %level% < 50, etc.
+# If you want this to run every x levels, you can use
+# every: <levels>
 level-up-effects:
   - id: give_money
     args:
       amount: 1000 * %level%
+      require: "%level% > 50"
+
+  - id: give_money
+    args:
+      amount: 3000 * %level%
+      every: 2
+      require: "%level% >= 50"
 
 
 # Custom placeholders to be used in descriptions,
@@ -143,7 +153,6 @@ level-up-effects:
 placeholders:
   money: "%level% * 0.4"
   blocks: "ceil(10 - %level% / 10)"
-
 
 # The chat messages to send on level up,
 # and the lore that will be shown with %rewards% in the GUI
