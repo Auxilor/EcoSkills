@@ -68,7 +68,7 @@ fun OfflinePlayer.getSkillProgressBar(skill: Skill, length: Int): String {
     val filled = (progress * length).toInt()
     val empty = length - filled
 
-    return "&a:".repeat(filled) + "&8:".repeat(empty)
+    return "&a█".repeat(filled) + "&7█".repeat(empty)
 }
 
 fun OfflinePlayer.getSkillLevel(skill: Skill): Int =
