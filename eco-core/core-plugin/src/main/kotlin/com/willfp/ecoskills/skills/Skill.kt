@@ -14,10 +14,7 @@ import com.willfp.eco.util.toNiceString
 import com.willfp.eco.util.toNumeral
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.Levellable
-import com.willfp.ecoskills.api.getFormattedRequiredXP
-import com.willfp.ecoskills.api.getSkillLevel
-import com.willfp.ecoskills.api.getSkillProgress
-import com.willfp.ecoskills.api.getSkillXP
+import com.willfp.ecoskills.api.*
 import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.gui.components.SkillIcon
 import com.willfp.ecoskills.gui.menus.SkillLevelGUI
@@ -105,6 +102,10 @@ class Skill(
 
         PlayerPlaceholder(plugin, "${id}_percentage_progress") {
             (it.getSkillProgress(this) * 100).toNiceString()
+        }.register()
+
+        PlayerPlaceholder(plugin, "${id}_current_xp_progress_bar") {
+            it.getSkillProgressBar(this, 10)
         }.register()
     }
 
