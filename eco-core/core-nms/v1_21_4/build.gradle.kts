@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 group = "com.willfp"
 version = rootProject.version
 
-val spigotVersion = "1.21.3-R0.1-SNAPSHOT"
+val spigotVersion = "1.21.4-R0.1-SNAPSHOT"
 
 dependencies {
     compileOnly("org.spigotmc:spigot:$spigotVersion")
