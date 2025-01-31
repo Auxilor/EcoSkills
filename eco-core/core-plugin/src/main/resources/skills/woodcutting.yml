@@ -114,6 +114,7 @@ xp-gain-methods:
         - dark_oak_log
         - mangrove_log
         - cherry_log
+        - pale_oak_log
         - oak_wood
         - birch_wood
         - spruce_wood
@@ -122,6 +123,7 @@ xp-gain-methods:
         - dark_oak_wood
         - mangrove_wood
         - cherry_wood
+        - pale_oak_wood
 
   - trigger: mine_block
     multiplier: 14

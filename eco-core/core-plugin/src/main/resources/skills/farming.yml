@@ -150,6 +150,13 @@ xp-gain-methods:
         - nether_wart
 
   - trigger: mine_block
+    multiplier: 4
+    filters:
+      player_placed: false
+      blocks:
+        - melon
+
+  - trigger: mine_block
     multiplier: 4.5
     filters:
       player_placed: false
@@ -163,7 +170,7 @@ xp-gain-methods:
       fully_grown: true
       blocks:
         - potatoes
-        - beetroot
+        - beetroots
 
 # Conditions that must be met to gain XP. While you can add conditions to xp
 # gain methods, if you have many this can be annoying, so this is global.
