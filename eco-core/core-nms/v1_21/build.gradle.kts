@@ -1,7 +1,7 @@
 group = "com.willfp"
 version = rootProject.version
 
-val spigotVersion = "1.21-R0.1-SNAPSHOT"
+val spigotVersion = "1.21.1-R0.1-SNAPSHOT"
 
 dependencies {
     compileOnly("org.spigotmc:spigot:$spigotVersion")

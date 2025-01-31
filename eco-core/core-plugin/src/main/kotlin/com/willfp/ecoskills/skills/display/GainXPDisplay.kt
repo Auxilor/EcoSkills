@@ -18,14 +18,14 @@ import com.willfp.ecoskills.api.getFormattedRequiredXP
 import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.api.getSkillProgress
 import com.willfp.ecoskills.api.getSkillXP
-import com.willfp.ecoskills.skills.Skill
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
+import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import java.time.Duration
-import java.util.*
+import java.util.UUID
 
 private val xpGainSoundEnabledKey = PersistentDataKey(
     namespacedKeyOf("ecoskills", "gain_sound_enabled"),
@@ -61,7 +61,7 @@ class GainXPDisplay(
         )
     } else null
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     fun handle(event: PlayerSkillXPGainEvent) {
         val player = event.player
         val current = gainCache.get(playerSkill(player, event.skill)) { 0.0 }
