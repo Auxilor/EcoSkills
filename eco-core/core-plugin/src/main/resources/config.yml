@@ -123,6 +123,7 @@ stats-gui:
       - "211101112"
 
   player-info:
+    enabled: true
     row: 1
     column: 5
 

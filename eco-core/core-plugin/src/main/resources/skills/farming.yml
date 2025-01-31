@@ -147,7 +147,6 @@ xp-gain-methods:
       blocks:
         - wheat
         - carrots
-        - melon
         - nether_wart
 
   - trigger: mine_block
@@ -163,6 +162,7 @@ xp-gain-methods:
       player_placed: false
       blocks:
         - pumpkin
+        - melon
 
   - trigger: mine_block
     multiplier: 5

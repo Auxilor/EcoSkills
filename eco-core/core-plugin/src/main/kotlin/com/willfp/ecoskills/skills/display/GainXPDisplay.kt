@@ -18,13 +18,14 @@ import com.willfp.ecoskills.api.getFormattedRequiredXP
 import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.api.getSkillProgress
 import com.willfp.ecoskills.api.getSkillXP
-import com.willfp.ecoskills.skills.Skill
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
+import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import java.time.Duration
+import java.util.UUID
 
 private val xpGainSoundEnabledKey = PersistentDataKey(
     namespacedKeyOf("ecoskills", "gain_sound_enabled"),
@@ -36,13 +37,22 @@ fun Player.toggleXPGainSound() {
     this.profile.write(xpGainSoundEnabledKey, !this.profile.read(xpGainSoundEnabledKey))
 }
 
+data class PlayerSkill(
+    val player: UUID,
+    val skill: String
+)
+
+private fun playerSkill(player: Player, skill: Skill): PlayerSkill {
+    return PlayerSkill(player.uniqueId, skill.id)
+}
+
 val Player.isXPGainSoundEnabled: Boolean
     get() = this.profile.read(xpGainSoundEnabledKey)
 
 class GainXPDisplay(
     private val plugin: EcoPlugin
 ) : Listener {
-    private val gainCache: Cache<Skill, Double> = Caffeine.newBuilder().expireAfterWrite(Duration.ofSeconds(3))
+    private val gainCache: Cache<PlayerSkill, Double> = Caffeine.newBuilder().expireAfterWrite(Duration.ofSeconds(3))
         .build()
 
     private val sound = if (plugin.configYml.getBool("skills.gain-xp.sound.enabled")) {
@@ -51,11 +61,11 @@ class GainXPDisplay(
         )
     } else null
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     fun handle(event: PlayerSkillXPGainEvent) {
         val player = event.player
-        val current = gainCache.get(event.skill) { 0.0 }
-        gainCache.put(event.skill, current + event.gainedXP)
+        val current = gainCache.get(playerSkill(player, event.skill)) { 0.0 }
+        gainCache.put(playerSkill(player, event.skill), current + event.gainedXP)
 
         // Run next tick because level up calls before xp is added
         plugin.scheduler.run {
@@ -111,7 +121,7 @@ class GainXPDisplay(
         )
             .replace("%current_xp%", event.player.getSkillXP(event.skill).toNiceString())
             .replace("%required_xp%", event.player.getFormattedRequiredXP(event.skill))
-            .replace("%gained_xp%", gainCache.get(event.skill) { 0.0 }.toNiceString())
+            .replace("%gained_xp%", gainCache.get(playerSkill(event.player, event.skill)) { 0.0 }.toNiceString())
             .formatEco(
                 placeholderContext(
                     event.player,
