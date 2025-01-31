@@ -3,6 +3,7 @@ package com.willfp.ecoskills.skills.display
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.Prerequisite
 import com.willfp.eco.core.integrations.hologram.HologramManager
+import com.willfp.eco.util.containsIgnoreCase
 import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.randDouble
 import com.willfp.eco.util.toNiceString
@@ -37,6 +38,13 @@ class DamageIndicatorListener(
         }
 
         if (victim is Player && victim.isBlocking) {
+            return
+        }
+
+        val disabledForEntities = plugin.configYml
+            .getStrings("damage-indicators.disabled-for-entities")
+
+        if (disabledForEntities.containsIgnoreCase(victim.type.name)) {
             return
         }
 
