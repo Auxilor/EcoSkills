@@ -315,7 +315,6 @@ damage-indicators:
     - text_display
     - thrown_exp_bottle
     - trident
-    - unknown
     - wind_charge
     - wither_skull
 
