@@ -46,6 +46,7 @@ gui:
     row: 1
     column: 5
 
+    enabled: true
     name: "&f%player%&f's &fStats:"
 
     lore:
@@ -123,7 +124,6 @@ stats-gui:
       - "211101112"
 
   player-info:
-    enabled: true
     row: 1
     column: 5
 
