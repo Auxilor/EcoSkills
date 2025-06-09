@@ -15,7 +15,6 @@ import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.skills.Skill
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import java.util.UUID
 import java.util.concurrent.TimeUnit
 
 private val iconCache = Caffeine.newBuilder()
