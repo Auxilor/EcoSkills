@@ -1,4 +1,4 @@
-package com.willfp.ecoskills.proxy.v1_21_6
+package com.willfp.ecoskills.proxy.v1_21_7
 
 import com.willfp.eco.core.packet.PacketEvent
 import com.willfp.ecoskills.actionbar.ActionBarCompatibilityProxy
