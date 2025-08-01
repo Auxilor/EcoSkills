@@ -82,15 +82,25 @@ abstract class Levellable(
     internal fun setSavedLevel(player: OfflinePlayer, level: Int) = player.profile.write(key, level)
 
     fun addPlaceholdersInto(string: String, level: Int): String {
-        // This isn't the best way to do this, but it works!
-        return string
+        var result = string
             .replace("%ecoskills_${id}_numeral%", level.toNumeral())
             .replace("%ecoskills_${id}_description%", getDescription(level))
             .replace("%ecoskills_${id}%", level.toString())
             .replace("%level%", level.toString())
             .replace("%level_numeral%", level.toNumeral())
-            .replace("%previous_level%", (level - 1).toString())
-            .replace("%previous_level_numeral%", (level - 1).toNumeral())
+
+        // Regex for %level_X% and %level_X_numeral%
+        val regex = Regex("%level_(-?\\d+)(_numeral)?%")
+
+        result = regex.replace(result) { match ->
+            val offset = match.groupValues[1].toIntOrNull() ?: return@replace match.value
+            val isNumeral = match.groupValues[2].isNotEmpty()
+            val newLevel = level + offset
+
+            if (isNumeral) newLevel.toNumeral() else newLevel.toString()
+        }
+
+        return result
     }
 
     fun getTop(position: Int): LeaderboardEntry? {
