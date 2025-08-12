@@ -81,7 +81,7 @@ abstract class Levellable(
             getDescription(getActualLevel(it))
         }.register()
 
-        PlayerPlaceholder(plugin, "top_position_${id}") { player ->
+        PlayerPlaceholder(plugin, "${id}_leaderboard_rank") { player ->
             val emptyPosition = plugin.langYml.getString("top.empty-position")
             val position = getPosition(player.uniqueId)
             position?.toString() ?: emptyPosition

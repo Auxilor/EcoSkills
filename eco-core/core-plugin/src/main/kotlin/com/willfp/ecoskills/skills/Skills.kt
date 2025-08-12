@@ -44,7 +44,7 @@ object Skills : RegistrableCategory<Skill>("skill", "skills") {
     }
 
     fun registerPlaceholders(plugin: EcoSkillsPlugin) {
-        PlayerPlaceholder(plugin, "top_position") { player ->
+        PlayerPlaceholder(plugin, "leaderboard_rank") { player ->
             val emptyPosition = plugin.langYml.getString("top.empty-position")
             val position = getPosition(player.uniqueId)
             position?.toString() ?: emptyPosition
