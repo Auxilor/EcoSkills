@@ -166,7 +166,7 @@ class Skill(
             .replace("%required_xp%", player.getFormattedRequiredXP(skill))
             .replace("%description%", skill.getDescription(level))
             .replace("%skill%", skill.name)
-            .replace("%skill_leaderboard_rank%", skill.getPosition(player.uniqueId)?.toString() ?: plugin.langYml.getString("top.empty-position"))
+            .replace("%rank%", skill.getPosition(player.uniqueId)?.toString() ?: plugin.langYml.getString("top.empty-position"))
             .let { addPlaceholdersInto(it, level) }
             .injectRewardPlaceholders(level)
 
