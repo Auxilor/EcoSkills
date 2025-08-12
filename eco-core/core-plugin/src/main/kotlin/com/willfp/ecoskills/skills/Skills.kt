@@ -9,6 +9,7 @@ import com.willfp.ecoskills.util.InvalidConfigurationException
 import com.willfp.ecoskills.util.LeaderboardEntry
 import com.willfp.libreforge.loader.LibreforgePlugin
 import com.willfp.libreforge.loader.configs.RegistrableCategory
+import com.willfp.eco.core.placeholder.PlayerPlaceholder
 import org.bukkit.Bukkit
 import java.util.UUID
 import java.util.concurrent.TimeUnit
@@ -34,6 +35,20 @@ object Skills : RegistrableCategory<Skill>("skill", "skills") {
             player,
             player.totalSkillLevel
         )
+    }
+
+    fun getPosition(uuid: UUID): Int? {
+        val leaderboard = leaderboardCache.get(true)
+        val index = leaderboard.indexOf(uuid)
+        return if (index == -1) null else index + 1
+    }
+
+    fun registerPlaceholders(plugin: EcoSkillsPlugin) {
+        PlayerPlaceholder(plugin, "leaderboard_rank") { player ->
+            val emptyPosition = plugin.langYml.getString("top.empty-position")
+            val position = getPosition(player.uniqueId)
+            position?.toString() ?: emptyPosition
+        }.register()
     }
 
     override fun clear(plugin: LibreforgePlugin) {

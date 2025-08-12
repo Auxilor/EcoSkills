@@ -9,30 +9,26 @@ import java.util.regex.Pattern
 class EcoSkillsSkillTopPlaceholder(
     private val plugin: EcoPlugin
 ) : RegistrablePlaceholder {
-    private val pattern = Pattern.compile("(top_)[a-z]+_[0-9]+_[a-z]+")
+    private val pattern = Pattern.compile("top_([a-z0-9_]+)_(\\d+)_(name|level|amount)")
 
     override fun getPattern(): Pattern = pattern
     override fun getPlugin(): EcoPlugin = plugin
 
     override fun getValue(params: String, ctx: PlaceholderContext): String? {
-        val emptyposition: String = plugin.langYml.getString("top.empty-position")
-        val args = params.split("_")
+        val emptyPosition: String = plugin.langYml.getString("top.empty-position")
+        val matcher = pattern.matcher(params)
 
-        if (args.size < 3) {
-            return null
-        }
+        if (!matcher.matches()) return null
 
-        if (args[0] != "top") {
-            return null
-        }
+        val skillId = matcher.group(1) // Skill ID (allows underscores)
+        val place = matcher.group(2).toIntOrNull() ?: return null
+        val type = matcher.group(3)
 
-        val skill = Skills.getByID(args[1]) ?: return null
+        val skill = Skills.getByID(skillId) ?: return null
 
-        val place = args[2].toIntOrNull() ?: return null
-
-        return when (args.last()) {
-            "name" -> skill.getTop(place)?.player?.savedDisplayName ?: emptyposition
-            "level", "amount" -> skill.getTop(place)?.level?.toString() ?: emptyposition
+        return when (type) {
+            "name" -> skill.getTop(place)?.player?.savedDisplayName ?: emptyPosition
+            "level", "amount" -> skill.getTop(place)?.level?.toString() ?: emptyPosition
             else -> null
         }
     }
@@ -41,28 +37,23 @@ class EcoSkillsSkillTopPlaceholder(
 class EcoSkillsTopPlaceholder(
     private val plugin: EcoPlugin
 ) : RegistrablePlaceholder {
-    private val pattern = Pattern.compile("(top_)[0-9]+_[a-z]+")
+    private val pattern = Pattern.compile("top_(\\d+)_(name|level|amount)")
 
     override fun getPattern(): Pattern = pattern
     override fun getPlugin(): EcoPlugin = plugin
 
     override fun getValue(params: String, ctx: PlaceholderContext): String? {
-        val emptyposition: String = plugin.langYml.getString("top.empty-position")
-        val args = params.split("_")
+        val emptyPosition: String = plugin.langYml.getString("top.empty-position")
+        val matcher = pattern.matcher(params)
 
-        if (args.size < 2) {
-            return null
-        }
+        if (!matcher.matches()) return null
 
-        if (args[0] != "top") {
-            return null
-        }
+        val place = matcher.group(1).toIntOrNull() ?: return null
+        val type = matcher.group(2)
 
-        val place = args[1].toIntOrNull() ?: return null
-
-        return when (args.last()) {
-            "name" -> Skills.getTop(place)?.player?.savedDisplayName ?: emptyposition
-            "level", "amount" -> Skills.getTop(place)?.level?.toString() ?: emptyposition
+        return when (type) {
+            "name" -> Skills.getTop(place)?.player?.savedDisplayName ?: emptyPosition
+            "level", "amount" -> Skills.getTop(place)?.level?.toString() ?: emptyPosition
             else -> null
         }
     }

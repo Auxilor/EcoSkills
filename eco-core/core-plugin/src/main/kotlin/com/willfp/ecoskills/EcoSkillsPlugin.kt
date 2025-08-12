@@ -87,6 +87,7 @@ class EcoSkillsPlugin : LibreforgePlugin() {
 
         EcoSkillsTopPlaceholder(this).register()
         EcoSkillsSkillTopPlaceholder(this).register()
+        Skills.registerPlaceholders(this)
     }
 
     override fun handleReload() {

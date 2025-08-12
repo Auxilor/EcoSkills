@@ -44,6 +44,12 @@ abstract class Levellable(
             }.map { it.uniqueId }
         }
 
+    fun getPosition(uuid: UUID): Int? {
+        val leaderboard = leaderboardCache.get(true)
+        val index = leaderboard.indexOf(uuid)
+        return if (index == -1) null else index + 1
+    }
+
     private val descCache = Caffeine.newBuilder()
         .expireAfterWrite(plugin.configYml.getInt("gui.cache-ttl").toLong(), TimeUnit.MILLISECONDS)
         .build<Int, String>()
@@ -73,6 +79,12 @@ abstract class Levellable(
 
         PlayerPlaceholder(plugin, "${id}_description") {
             getDescription(getActualLevel(it))
+        }.register()
+
+        PlayerPlaceholder(plugin, "${id}_leaderboard_rank") { player ->
+            val emptyPosition = plugin.langYml.getString("top.empty-position")
+            val position = getPosition(player.uniqueId)
+            position?.toString() ?: emptyPosition
         }.register()
     }
 
