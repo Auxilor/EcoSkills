@@ -74,7 +74,8 @@ class Skill(
             it.getInt("levels"),
             it.getIntOrNull("start-level"),
             it.getIntOrNull("end-level"),
-            it.getIntOrNull("every")
+            it.getIntOrNull("every"),
+            it.getIntsOrNull("level-list")
         )
     }
 
