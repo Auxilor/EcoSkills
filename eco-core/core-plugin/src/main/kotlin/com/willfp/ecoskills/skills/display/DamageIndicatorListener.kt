@@ -1,7 +1,6 @@
 package com.willfp.ecoskills.skills.display
 
 import com.willfp.eco.core.EcoPlugin
-import com.willfp.eco.core.Prerequisite
 import com.willfp.eco.core.entities.Entities
 import com.willfp.eco.core.entities.impl.EmptyTestableEntity
 import com.willfp.eco.core.integrations.hologram.HologramManager
@@ -85,10 +84,8 @@ class DamageIndicatorListener(
             return
         }
 
-        if (Prerequisite.HAS_1_19.isMet) {
-            if (entity is Allay) {
-                return
-            }
+        if (entity is Allay) {
+            return
         }
 
         val location = entity.location.clone()
