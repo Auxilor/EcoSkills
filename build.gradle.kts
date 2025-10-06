@@ -21,7 +21,9 @@ dependencies {
     implementation(project(":eco-core:core-plugin"))
     implementation(project(":eco-core:core-nms:v1_21_4"))
     implementation(project(":eco-core:core-nms:v1_21_5"))
+    implementation(project(":eco-core:core-nms:v1_21_6"))
     implementation(project(":eco-core:core-nms:v1_21_7"))
+    implementation(project(":eco-core:core-nms:v1_21_8"))
 }
 
 allprojects {
@@ -48,7 +50,7 @@ allprojects {
 
     java {
         withSourcesJar()
-        toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+        toolchain.languageVersion.set(JavaLanguageVersion.of(21))
     }
 
     tasks {
@@ -59,7 +61,7 @@ allprojects {
 
         compileKotlin {
             compilerOptions {
-                jvmTarget = JvmTarget.JVM_17
+                jvmTarget = JvmTarget.JVM_21
             }
         }
 
