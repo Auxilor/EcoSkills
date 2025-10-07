@@ -47,6 +47,7 @@ gui:
     column: 5
 
     enabled: true
+    icon: player_head head:%player%
     name: "&f%player%&f's &fStats:"
 
     lore:
