@@ -34,17 +34,17 @@ class CommandGive(plugin: EcoPlugin) :
 
         val amount = notifyNull(args.getOrNull(2)?.toDoubleOrNull(), "invalid-amount")
 
-        // Get optional silent parameter (default to false)
-        val silent = args.getOrNull(3)?.toBooleanStrictOrNull() ?: false
+        // Get optional showActionBar parameter (default to false for backward compatibility)
+        val showActionBar = args.getOrNull(3)?.toBooleanStrictOrNull() ?: false
 
         val key = when (obj) {
             is Skill -> {
-                if (silent) {
-                    player.giveSkillXP(obj, amount)
-                    "gave-skill-xp"
-                } else {
+                if (showActionBar) {
                     player.gainSkillXP(obj, amount)
                     "gained-skill-xp"
+                } else {
+                    player.giveSkillXP(obj, amount)
+                    "gave-skill-xp"
                 }
             }
 
