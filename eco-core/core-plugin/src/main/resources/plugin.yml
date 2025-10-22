@@ -40,7 +40,6 @@ permissions:
       ecoskills.command.skills: true
       ecoskills.command.stats: true
       ecoskills.command.give: true
-      ecoskills.command.gain: true
       ecoskills.command.set: true
       ecoskills.command.top: true
       ecoskills.command.recount: true
@@ -67,9 +66,6 @@ permissions:
     default: true
   ecoskills.command.give:
     description: Allows the use of /ecoskills give.
-    default: op
-  ecoskills.command.gain:
-    description: Allows the use of /ecoskills gain.
     default: op
   ecoskills.command.set:
     description: Allows the use of /ecoskills set.
