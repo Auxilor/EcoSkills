@@ -6,7 +6,6 @@ import com.willfp.eco.util.StringUtils
 import com.willfp.eco.util.formatEco
 import com.willfp.ecoskills.api.gainSkillXP
 import com.willfp.ecoskills.api.giveBaseStatLevel
-import com.willfp.ecoskills.api.giveSkillXP
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.stats.Stat
@@ -16,11 +15,11 @@ import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
 
 
-class CommandGive(plugin: EcoPlugin) :
+class CommandGain(plugin: EcoPlugin) :
     Subcommand(
         plugin,
-        "give",
-        "ecoskills.command.give",
+        "gain",
+        "ecoskills.command.gain",
         false
     ) {
 
@@ -34,18 +33,10 @@ class CommandGive(plugin: EcoPlugin) :
 
         val amount = notifyNull(args.getOrNull(2)?.toDoubleOrNull(), "invalid-amount")
 
-        // Get optional showActionBar parameter (default to false for backward compatibility)
-        val showActionBar = args.getOrNull(3)?.toBooleanStrictOrNull() ?: false
-
         val key = when (obj) {
             is Skill -> {
-                if (showActionBar) {
-                    player.gainSkillXP(obj, amount)
-                    "gained-skill-xp"
-                } else {
-                    player.giveSkillXP(obj, amount)
-                    "gave-skill-xp"
-                }
+                player.gainSkillXP(obj, amount)
+                "gained-skill-xp"
             }
 
             is Stat -> {
@@ -90,15 +81,6 @@ class CommandGive(plugin: EcoPlugin) :
             StringUtil.copyPartialMatches(
                 args[2],
                 listOf(1, 2, 5, 10, 100).map { it.toString() },
-                completions
-            )
-            return completions
-        }
-
-        if (args.size == 4) {
-            StringUtil.copyPartialMatches(
-                args[3],
-                listOf("true", "false"),
                 completions
             )
             return completions
