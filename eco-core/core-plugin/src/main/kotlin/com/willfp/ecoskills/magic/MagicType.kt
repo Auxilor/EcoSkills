@@ -26,6 +26,8 @@ class MagicType(
 
     private val limitExpr = config.getString("limit")
 
+    val name = config.getFormattedString("name")
+
     val joinOnFull = config.getBool("join-on-full")
 
     init {
