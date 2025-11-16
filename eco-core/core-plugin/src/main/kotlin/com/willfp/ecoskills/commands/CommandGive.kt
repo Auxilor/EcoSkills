@@ -4,7 +4,7 @@ import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.eco.util.StringUtils
 import com.willfp.eco.util.formatEco
-import com.willfp.ecoskills.api.giveBaseStatLevel
+import com.willfp.ecoskills.api.giveBaseStatLevelDouble
 import com.willfp.ecoskills.api.giveSkillXP
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.skills.Skills
@@ -40,7 +40,7 @@ class CommandGive(plugin: EcoPlugin) :
             }
 
             is Stat -> {
-                player.giveBaseStatLevel(obj, amount.toInt())
+                player.giveBaseStatLevelDouble(obj, amount)
                 "gave-stat"
             }
 

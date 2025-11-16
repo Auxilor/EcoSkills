@@ -16,6 +16,16 @@ class LevelMap<T : Levellable>(
         levellable.setSavedLevel(player, level)
     }
 
+    fun set(levellable: T, level: Double) {
+        require(level >= 0) { "Level must be positive" }
+
+        levellable.setSavedLevelDouble(player, level)
+    }
+    
+    fun getDouble(levellable: T): Double {
+        return levellable.getSavedLevelDouble(player)
+    }
+
     fun reset(levellable: T) {
         levellable.setSavedLevel(player, levellable.startLevel)
     }

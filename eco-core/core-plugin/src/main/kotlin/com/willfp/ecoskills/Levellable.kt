@@ -31,8 +31,8 @@ abstract class Levellable(
 
     private val key = PersistentDataKey(
         plugin.createNamespacedKey(id),
-        PersistentDataKeyType.INT,
-        startLevel
+        PersistentDataKeyType.DOUBLE,
+        startLevel.toDouble()
     )
 
     // Not the best way to do this, but it works!
@@ -90,8 +90,11 @@ abstract class Levellable(
 
     internal open fun getActualLevel(player: OfflinePlayer) = getSavedLevel(player)
 
-    internal fun getSavedLevel(player: OfflinePlayer) = player.profile.read(key)
-    internal fun setSavedLevel(player: OfflinePlayer, level: Int) = player.profile.write(key, level)
+    internal fun getSavedLevel(player: OfflinePlayer) = player.profile.read(key).toInt()
+    internal fun setSavedLevel(player: OfflinePlayer, level: Int) = player.profile.write(key, level.toDouble())
+    
+    internal fun getSavedLevelDouble(player: OfflinePlayer) = player.profile.read(key)
+    internal fun setSavedLevelDouble(player: OfflinePlayer, level: Double) = player.profile.write(key, level)
 
     fun addPlaceholdersInto(string: String, level: Int): String {
         var result = string
