@@ -71,7 +71,7 @@ class Skill(
 
         LevelUpReward(
             reward,
-            it.getInt("levels"),
+            it.getDouble("levels"),
             it.getIntOrNull("start-level"),
             it.getIntOrNull("end-level"),
             it.getIntOrNull("every")
@@ -200,7 +200,7 @@ class Skill(
         var processed = this
 
         // Fixes visual bug with repeated rewards
-        val levels = defaultMap<Levellable, Int>(0)
+        val levels = defaultMap<Levellable, Double>(0.0)
         for (reward in rewards) {
             levels[reward.reward] += reward.getCumulativeLevels(level)
         }

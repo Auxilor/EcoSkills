@@ -26,6 +26,11 @@ class LevelMap<T : Levellable>(
         return levellable.getSavedLevelDouble(player)
     }
 
+    fun add(levellable: T, amount: Double) {
+        val current = levellable.getSavedLevelDouble(player)
+        levellable.setSavedLevelDouble(player, current + amount)
+    }
+
     fun reset(levellable: T) {
         levellable.setSavedLevel(player, levellable.startLevel)
     }

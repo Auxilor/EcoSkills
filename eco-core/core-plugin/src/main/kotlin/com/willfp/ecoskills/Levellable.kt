@@ -118,6 +118,28 @@ abstract class Levellable(
         return result
     }
 
+    fun addPlaceholdersInto(string: String, level: Double): String {
+        var result = string
+            .replace("%ecoskills_${id}_numeral%", level.toInt().toNumeral())
+            .replace("%ecoskills_${id}_description%", getDescription(level.toInt()))
+            .replace("%ecoskills_${id}%", level.toNiceString())
+            .replace("%level%", level.toNiceString())
+            .replace("%level_numeral%", level.toInt().toNumeral())
+
+        // Regex for %level_X% and %level_X_numeral%
+        val regex = Regex("%level_(-?\\d+)(_numeral)?%")
+
+        result = regex.replace(result) { match ->
+            val offset = match.groupValues[1].toIntOrNull() ?: return@replace match.value
+            val isNumeral = match.groupValues[2].isNotEmpty()
+            val newLevel = level + offset
+
+            if (isNumeral) newLevel.toInt().toNumeral() else newLevel.toNiceString()
+        }
+
+        return result
+    }
+
     fun getTop(position: Int): LeaderboardEntry? {
         require(position > 0) { "Position must be greater than 0" }
 
