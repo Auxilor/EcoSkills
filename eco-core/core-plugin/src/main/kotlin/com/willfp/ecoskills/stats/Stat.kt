@@ -7,6 +7,7 @@ import com.willfp.eco.util.toNiceString
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.LevellableWithHolder
 import com.willfp.ecoskills.api.getBaseStatLevel
+import com.willfp.ecoskills.api.getBaseStatLevelDouble
 import com.willfp.ecoskills.api.getBonusStatLevel
 import com.willfp.ecoskills.api.getStatLevel
 import com.willfp.ecoskills.gui.components.StatIcon
@@ -39,7 +40,7 @@ class Stat(
 
     init {
         PlayerPlaceholder(plugin, "${id}_base") {
-            it.getBaseStatLevel(this).toNiceString()
+            it.getBaseStatLevelDouble(this).toNiceString()
         }.register()
 
         PlayerPlaceholder(plugin, "${id}_bonus") {
@@ -49,6 +50,11 @@ class Stat(
                 bonus < 0 -> "$bonus"
                 else -> ""
             }
+        }.register()
+        
+        // Override parent's integer placeholder with double version for stats
+        PlayerPlaceholder(plugin, id) {
+            it.getBaseStatLevelDouble(this).toNiceString()
         }.register()
     }
 
