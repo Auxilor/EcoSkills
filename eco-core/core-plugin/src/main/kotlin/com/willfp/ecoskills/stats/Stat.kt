@@ -10,6 +10,7 @@ import com.willfp.ecoskills.api.getBaseStatLevel
 import com.willfp.ecoskills.api.getBaseStatLevelDouble
 import com.willfp.ecoskills.api.getBonusStatLevel
 import com.willfp.ecoskills.api.getStatLevel
+import com.willfp.ecoskills.api.getStatLevelDouble
 import com.willfp.ecoskills.gui.components.StatIcon
 import com.willfp.ecoskills.util.LevelMap
 import org.bukkit.OfflinePlayer
@@ -51,10 +52,10 @@ class Stat(
                 else -> ""
             }
         }.register()
-        
-        // Override parent's integer placeholder with double version for stats
+
+        // Override parent's placeholder to show total stat with decimals (base + bonus)
         PlayerPlaceholder(plugin, id) {
-            it.getBaseStatLevelDouble(this).toNiceString()
+            it.getStatLevelDouble(this).toNiceString()
         }.register()
     }
 

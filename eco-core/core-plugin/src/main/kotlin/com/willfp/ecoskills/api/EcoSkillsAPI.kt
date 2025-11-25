@@ -106,6 +106,9 @@ fun OfflinePlayer.giveBaseStatLevelDouble(stat: Stat, amount: Double) {
 fun OfflinePlayer.getStatLevel(stat: Stat): Int =
     if (this is Player) this.statModifiers.getModifiedValue(stat) else this.getBaseStatLevel(stat)
 
+fun OfflinePlayer.getStatLevelDouble(stat: Stat): Double =
+    if (this is Player) this.statModifiers.getModifiedValueDouble(stat) else this.getBaseStatLevelDouble(stat)
+
 val OfflinePlayer.statModifiers: List<StatModifier>
     get() = if (this is Player) this.statModifiers.getModifiers() else emptyList()
 
