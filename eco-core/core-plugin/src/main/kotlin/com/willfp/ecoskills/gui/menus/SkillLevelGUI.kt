@@ -31,7 +31,7 @@ class SkillLevelGUI(
         val levelComponent = SkillLevelComponent(plugin, skill)
 
         menu = menu(plugin.configYml.getInt("level-gui.rows")) {
-            title = plugin.configYml.getString("level-gui.title")
+            title = (skill.levelMenuTitle ?: plugin.configYml.getString("level-gui.title"))
                 .replace("%skill%", skill.name)
                 .formatEco()
 

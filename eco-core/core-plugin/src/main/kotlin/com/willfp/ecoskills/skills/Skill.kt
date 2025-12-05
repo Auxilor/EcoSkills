@@ -84,11 +84,13 @@ class Skill(
         ViolationContext(plugin, "Skill $id level-up-effects")
     )
 
-    val levelGUI = SkillLevelGUI(plugin, this)
-
     val icon = SkillIcon(this, config.getSubsection("gui"), plugin)
 
     val isHiddenBeforeLevel1 = config.getBool("hide-before-level-1")
+
+    val levelMenuTitle: String? = config.getStringOrNull("gui.level-menu-title")
+
+    val levelGUI = SkillLevelGUI(plugin, this)
 
     init {
         if (xpFormula == null && requirements == null) {
