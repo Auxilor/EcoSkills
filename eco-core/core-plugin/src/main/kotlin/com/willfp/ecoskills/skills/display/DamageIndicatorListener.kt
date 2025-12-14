@@ -67,7 +67,11 @@ class DamageIndicatorListener(
             text.replace("%damage%", event.finalDamage.toNiceString())
         } else {
             text.replace("%damage%", event.damage.toNiceString())
-        }.formatEco()
+        }
+        
+        if (!useDisplayEntities) {
+            text = text.formatEco()
+        }
 
         spawnHologram(location, text)
     }
@@ -92,9 +96,12 @@ class DamageIndicatorListener(
             .add(0.0, entity.height, 0.0)
             .withHoloOffset()
 
-        val text = plugin.configYml.getString("damage-indicators.healing.format")
+        var text = plugin.configYml.getString("damage-indicators.healing.format")
             .replace("%damage%", event.amount.toNiceString())
-            .formatEco()
+        
+        if (!useDisplayEntities) {
+            text = text.formatEco()
+        }
 
         spawnHologram(location, text)
     }

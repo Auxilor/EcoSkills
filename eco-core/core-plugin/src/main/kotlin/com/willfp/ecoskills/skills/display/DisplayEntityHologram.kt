@@ -115,34 +115,41 @@ class DisplayEntityHologram(
     }
 
     private fun convertLegacyToMiniMessage(input: String): String {
-        return input.replace("§", "&")
-            .replace("&([0-9a-fk-or])".toRegex()) { match ->
-                when (val code = match.groupValues[1].lowercase()) {
-                    "0" -> "<black>"
-                    "1" -> "<dark_blue>"
-                    "2" -> "<dark_green>"
-                    "3" -> "<dark_aqua>"
-                    "4" -> "<dark_red>"
-                    "5" -> "<dark_purple>"
-                    "6" -> "<gold>"
-                    "7" -> "<gray>"
-                    "8" -> "<dark_gray>"
-                    "9" -> "<blue>"
-                    "a" -> "<green>"
-                    "b" -> "<aqua>"
-                    "c" -> "<red>"
-                    "d" -> "<light_purple>"
-                    "e" -> "<yellow>"
-                    "f" -> "<white>"
-                    "k" -> "<obfuscated>"
-                    "l" -> "<bold>"
-                    "m" -> "<strikethrough>"
-                    "n" -> "<underlined>"
-                    "o" -> "<italic>"
-                    "r" -> "<reset>"
-                    else -> match.value
-                }
+        var result = input.replace("§", "&")
+        
+        result = result.replace("&#([0-9a-fA-F]{6})".toRegex()) { match ->
+            "<#${match.groupValues[1]}>"
+        }
+        
+        result = result.replace("&([0-9a-fk-or])".toRegex()) { match ->
+            when (val code = match.groupValues[1].lowercase()) {
+                "0" -> "<black>"
+                "1" -> "<dark_blue>"
+                "2" -> "<dark_green>"
+                "3" -> "<dark_aqua>"
+                "4" -> "<dark_red>"
+                "5" -> "<dark_purple>"
+                "6" -> "<gold>"
+                "7" -> "<gray>"
+                "8" -> "<dark_gray>"
+                "9" -> "<blue>"
+                "a" -> "<green>"
+                "b" -> "<aqua>"
+                "c" -> "<red>"
+                "d" -> "<light_purple>"
+                "e" -> "<yellow>"
+                "f" -> "<white>"
+                "k" -> "<obfuscated>"
+                "l" -> "<bold>"
+                "m" -> "<strikethrough>"
+                "n" -> "<underlined>"
+                "o" -> "<italic>"
+                "r" -> "<reset>"
+                else -> match.value
             }
+        }
+        
+        return result
     }
 
     /**

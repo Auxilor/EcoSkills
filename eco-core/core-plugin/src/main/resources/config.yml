@@ -320,7 +320,7 @@ damage-indicators:
 
   format:
     normal: "&7%damage%"
-    crit: "&f✧ <gradient:#f953c6>%damage%</gradient:#b91d73> &f✧"
+    crit: "&f✧ <gradient:#ffffff:#f9b804>%damage%</gradient> &f✧"
 
   healing:
     enabled: true
