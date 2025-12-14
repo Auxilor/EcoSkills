@@ -63,6 +63,7 @@ class EcoSkillsPlugin : LibreforgePlugin() {
         com.willfp.libreforge.effects.Effects.register(EffectAddStat)
         com.willfp.libreforge.effects.Effects.register(EffectMultiplyStat)
         com.willfp.libreforge.effects.Effects.register(EffectSkillXpMultiplier)
+        com.willfp.libreforge.effects.Effects.register(EffectSkillXpMultiplierOnKill)
         com.willfp.libreforge.effects.Effects.register(EffectGiveSkillXp)
         com.willfp.libreforge.effects.Effects.register(EffectMultiplyAllStats)
         com.willfp.libreforge.effects.Effects.register(EffectMakeSkillCrit)
