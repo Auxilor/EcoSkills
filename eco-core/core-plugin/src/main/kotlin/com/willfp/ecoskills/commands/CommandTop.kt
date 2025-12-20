@@ -6,6 +6,7 @@ import com.willfp.eco.core.placeholder.context.placeholderContext
 import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.savedDisplayName
 import com.willfp.ecoskills.skills.Skills
+import com.willfp.ecoskills.skills.SkillsLeaderboard.getTop
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
@@ -42,7 +43,7 @@ class CommandTop(plugin: EcoPlugin) :
             val top = if (skill == null) {
                 positions.mapNotNull { Skills.getTop(it) }
             } else {
-                positions.mapNotNull { skill.getTop(it) }
+                positions.mapNotNull { getTop(skill, it) }
             }
 
             val messages = plugin.langYml.getStrings("top.format")
