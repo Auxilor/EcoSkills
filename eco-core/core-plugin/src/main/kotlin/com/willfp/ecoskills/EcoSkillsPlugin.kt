@@ -85,8 +85,10 @@ class EcoSkillsPlugin : LibreforgePlugin() {
         Filters.register(FilterSkillCrit)
         Filters.register(FilterMagicType)
 
-        EcoSkillsTopPlaceholder(this).register()
-        EcoSkillsSkillTopPlaceholder(this).register()
+        if (this.configYml.getBool("leaderboard.enabled")) {
+            EcoSkillsTopPlaceholder(this).register()
+            EcoSkillsSkillTopPlaceholder(this).register()
+        }
         Skills.registerPlaceholders(this)
     }
 
