@@ -2,15 +2,18 @@ package com.willfp.ecoskills.skills
 
 import com.github.benmanes.caffeine.cache.Caffeine
 import com.willfp.ecoskills.Levellable
+import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.util.LeaderboardEntry
 import org.bukkit.Bukkit
+import java.time.Duration
 import java.util.UUID
-import java.util.concurrent.TimeUnit
 
 object SkillsLeaderboard {
     private var leaderboardCache = Caffeine.newBuilder()
-        .expireAfterWrite(1, TimeUnit.MINUTES)
+        .expireAfterWrite(Duration.ofSeconds(plugin.configYml.getInt("leaderboard.cache-lifetime").toLong()))
         .build<Boolean, Map<Levellable, List<UUID>>> {
+            if (!plugin.configYml.getBool("leaderboard.enabled"))
+                return@build emptyMap()
             val offlinePlayers = Bukkit.getOfflinePlayers()
             val top = mutableMapOf<Levellable, List<UUID>>()
             for (skill in Skills.values())
