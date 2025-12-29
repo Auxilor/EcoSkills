@@ -4,6 +4,7 @@ import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.eco.util.StringUtils
 import com.willfp.eco.util.formatEco
+import com.willfp.ecoskills.api.gainSkillXP
 import com.willfp.ecoskills.api.giveBaseStatLevel
 import com.willfp.ecoskills.api.giveSkillXP
 import com.willfp.ecoskills.skills.Skill
@@ -33,10 +34,18 @@ class CommandGive(plugin: EcoPlugin) :
 
         val amount = notifyNull(args.getOrNull(2)?.toDoubleOrNull(), "invalid-amount")
 
+        // Get optional showActionBar parameter (default to false for backward compatibility)
+        val showActionBar = args.getOrNull(3)?.toBooleanStrictOrNull() ?: false
+
         val key = when (obj) {
             is Skill -> {
-                player.giveSkillXP(obj, amount)
-                "gave-skill-xp"
+                if (showActionBar) {
+                    player.gainSkillXP(obj, amount)
+                    "gained-skill-xp"
+                } else {
+                    player.giveSkillXP(obj, amount)
+                    "gave-skill-xp"
+                }
             }
 
             is Stat -> {
@@ -81,6 +90,15 @@ class CommandGive(plugin: EcoPlugin) :
             StringUtil.copyPartialMatches(
                 args[2],
                 listOf(1, 2, 5, 10, 100).map { it.toString() },
+                completions
+            )
+            return completions
+        }
+
+        if (args.size == 4) {
+            StringUtil.copyPartialMatches(
+                args[3],
+                listOf("true", "false"),
                 completions
             )
             return completions
