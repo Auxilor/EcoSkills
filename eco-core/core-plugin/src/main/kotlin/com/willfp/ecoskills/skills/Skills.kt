@@ -10,15 +10,18 @@ import com.willfp.ecoskills.util.LeaderboardEntry
 import com.willfp.libreforge.loader.LibreforgePlugin
 import com.willfp.libreforge.loader.configs.RegistrableCategory
 import com.willfp.eco.core.placeholder.PlayerPlaceholder
+import com.willfp.ecoskills.plugin
 import org.bukkit.Bukkit
+import java.time.Duration
 import java.util.UUID
-import java.util.concurrent.TimeUnit
 
 object Skills : RegistrableCategory<Skill>("skill", "skills") {
     // Totally not copied over from Levellable
     private val leaderboardCache = Caffeine.newBuilder()
-        .expireAfterWrite(1, TimeUnit.MINUTES)
+        .expireAfterWrite(Duration.ofSeconds(plugin.configYml.getInt("leaderboard.cache-lifetime").toLong()))
         .build<Boolean, List<UUID>> {
+            if (!plugin.configYml.getBool("leaderboard.enabled"))
+                return@build emptyList()
             Bukkit.getOfflinePlayers().sortedByDescending {
                 it.totalSkillLevel
             }.map { it.uniqueId }

@@ -23,6 +23,7 @@ import com.willfp.ecoskills.gui.components.SkillIcon
 import com.willfp.ecoskills.gui.menus.SkillLevelGUI
 import com.willfp.ecoskills.libreforge.TriggerLevelUpSkill
 import com.willfp.ecoskills.plugin
+import com.willfp.ecoskills.skills.SkillsLeaderboard.getPosition
 import com.willfp.ecoskills.stats.Stats
 import com.willfp.ecoskills.util.InvalidConfigurationException
 import com.willfp.ecoskills.util.LevelInjectable
@@ -166,7 +167,7 @@ class Skill(
             .replace("%required_xp%", player.getFormattedRequiredXP(skill))
             .replace("%description%", skill.getDescription(level))
             .replace("%skill%", skill.name)
-            .replace("%rank%", skill.getPosition(player.uniqueId)?.toString() ?: plugin.langYml.getString("top.empty-position"))
+            .replace("%rank%", getPosition(skill, player.uniqueId)?.toString() ?: plugin.langYml.getString("top.empty-position"))
             .let { addPlaceholdersInto(it, level) }
             .injectRewardPlaceholders(level)
 

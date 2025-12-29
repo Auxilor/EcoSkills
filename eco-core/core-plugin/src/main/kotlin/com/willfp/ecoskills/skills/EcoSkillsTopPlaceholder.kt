@@ -4,6 +4,7 @@ import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.placeholder.RegistrablePlaceholder
 import com.willfp.eco.core.placeholder.context.PlaceholderContext
 import com.willfp.eco.util.savedDisplayName
+import com.willfp.ecoskills.skills.SkillsLeaderboard.getTop
 import java.util.regex.Pattern
 
 class EcoSkillsSkillTopPlaceholder(
@@ -27,8 +28,8 @@ class EcoSkillsSkillTopPlaceholder(
         val skill = Skills.getByID(skillId) ?: return null
 
         return when (type) {
-            "name" -> skill.getTop(place)?.player?.savedDisplayName ?: emptyPosition
-            "level", "amount" -> skill.getTop(place)?.level?.toString() ?: emptyPosition
+            "name" -> getTop(skill, place)?.player?.savedDisplayName ?: emptyPosition
+            "level", "amount" -> getTop(skill, place)?.level?.toString() ?: emptyPosition
             else -> null
         }
     }
