@@ -5,6 +5,7 @@ import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.eco.util.StringUtils
 import com.willfp.eco.util.formatEco
 import com.willfp.ecoskills.api.giveBaseStatLevelDouble
+import com.willfp.ecoskills.api.gainSkillXP
 import com.willfp.ecoskills.api.giveSkillXP
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.skills.Skills
@@ -33,10 +34,18 @@ class CommandGive(plugin: EcoPlugin) :
 
         val amount = notifyNull(args.getOrNull(2)?.toDoubleOrNull(), "invalid-amount")
 
+                // Get optional silent parameter (default to false)
+        val silent = args.getOrNull(3)?.toBooleanStrictOrNull() ?: false
+
         val key = when (obj) {
             is Skill -> {
-                player.giveSkillXP(obj, amount)
-                "gave-skill-xp"
+                if (silent) {
+                    player.giveSkillXP(obj, amount)
+                    "gave-skill-xp"
+                } else {
+                    player.gainSkillXP(obj, amount)
+                    "gained-skill-xp"
+                }
             }
 
             is Stat -> {
@@ -63,6 +72,15 @@ class CommandGive(plugin: EcoPlugin) :
             StringUtil.copyPartialMatches(
                 args[0],
                 Bukkit.getOnlinePlayers().map { player -> player.name }.toCollection(ArrayList()),
+                completions
+            )
+            return completions
+        }
+
+        if (args.size == 4) {
+            StringUtil.copyPartialMatches(
+                args[3],
+                listOf("true", "false"),
                 completions
             )
             return completions

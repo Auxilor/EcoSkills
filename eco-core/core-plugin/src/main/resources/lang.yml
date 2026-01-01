@@ -12,6 +12,7 @@ messages:
   invalid-skill-stat: "&cInvalid skill or stat!"
   invalid-amount: "&cInvalid amount!"
   gave-skill-xp: "Gave %player% %amount% %obj% experience!"
+  gained-skill-xp: "Gave %player% %amount% %obj% experience!"
   set-skill-level: "Set %player% %obj% level to %amount%!"
   gave-stat: "Gave %player% %amount% %obj%&r!"
   set-stat: "Set %player% %obj% to %amount%!"
