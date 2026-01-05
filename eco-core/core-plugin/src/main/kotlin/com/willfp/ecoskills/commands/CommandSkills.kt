@@ -17,7 +17,8 @@ class CommandSkills(plugin: EcoPlugin) : PluginCommand(
     init {
         this.addSubcommand(CommandToggleActionBar(plugin))
             .addSubcommand(CommandToggleXpGainSound(plugin))
-            .addSubcommand(CommandTop(plugin))
+        if (plugin.configYml.getBool("leaderboard.enabled"))
+            this.addSubcommand(CommandTop(plugin))
     }
 
     override fun onExecute(player: Player, args: List<String>) {

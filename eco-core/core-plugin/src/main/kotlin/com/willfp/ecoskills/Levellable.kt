@@ -14,12 +14,11 @@ import com.willfp.eco.util.evaluateExpression
 import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.toNiceString
 import com.willfp.eco.util.toNumeral
-import com.willfp.ecoskills.util.LeaderboardEntry
+import com.willfp.ecoskills.skills.SkillsLeaderboard
+import com.willfp.ecoskills.skills.SkillsLeaderboard.getPosition
 import com.willfp.ecoskills.util.LevelInjectable
 import com.willfp.ecoskills.util.loadDescriptionPlaceholders
-import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
-import java.util.UUID
 import java.util.concurrent.TimeUnit
 
 abstract class Levellable(
@@ -34,21 +33,6 @@ abstract class Levellable(
         PersistentDataKeyType.INT,
         startLevel
     )
-
-    // Not the best way to do this, but it works!
-    private val leaderboardCache = Caffeine.newBuilder()
-        .expireAfterWrite(1, TimeUnit.MINUTES)
-        .build<Boolean, List<UUID>> {
-            Bukkit.getOfflinePlayers().sortedByDescending {
-                getActualLevel(it)
-            }.map { it.uniqueId }
-        }
-
-    fun getPosition(uuid: UUID): Int? {
-        val leaderboard = leaderboardCache.get(true)
-        val index = leaderboard.indexOf(uuid)
-        return if (index == -1) null else index + 1
-    }
 
     private val descCache = Caffeine.newBuilder()
         .expireAfterWrite(plugin.configYml.getInt("gui.cache-ttl").toLong(), TimeUnit.MILLISECONDS)
@@ -83,7 +67,7 @@ abstract class Levellable(
 
         PlayerPlaceholder(plugin, "${id}_leaderboard_rank") { player ->
             val emptyPosition = plugin.langYml.getString("top.empty-position")
-            val position = getPosition(player.uniqueId)
+            val position = getPosition(this, player.uniqueId)
             position?.toString() ?: emptyPosition
         }.register()
     }
@@ -113,19 +97,6 @@ abstract class Levellable(
         }
 
         return result
-    }
-
-    fun getTop(position: Int): LeaderboardEntry? {
-        require(position > 0) { "Position must be greater than 0" }
-
-        val uuid = leaderboardCache.get(true).getOrNull(position - 1) ?: return null
-
-        val player = Bukkit.getOfflinePlayer(uuid).takeIf { it.hasPlayedBefore() } ?: return null
-
-        return LeaderboardEntry(
-            player,
-            getActualLevel(player)
-        )
     }
 
     fun getDescription(level: Int): String {
