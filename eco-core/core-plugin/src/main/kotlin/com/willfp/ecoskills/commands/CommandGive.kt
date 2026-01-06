@@ -7,6 +7,10 @@ import com.willfp.eco.util.formatEco
 import com.willfp.ecoskills.api.giveBaseStatLevelDouble
 import com.willfp.ecoskills.api.gainSkillXP
 import com.willfp.ecoskills.api.giveSkillXP
+import com.willfp.ecoskills.api.getMagic
+import com.willfp.ecoskills.api.setMagic
+import com.willfp.ecoskills.magic.MagicType
+import com.willfp.ecoskills.magic.MagicTypes
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.stats.Stat
@@ -28,23 +32,23 @@ class CommandGive(plugin: EcoPlugin) :
         val player = notifyPlayerRequired(args.getOrNull(0), "invalid-player")
 
         val obj = notifyNull(
-            Skills.getByID(args.getOrNull(1)) ?: Stats.getByID(args.getOrNull(1)),
-            "invalid-skill-stat"
+            Skills.getByID(args.getOrNull(1)) ?: Stats.getByID(args.getOrNull(1)) ?: MagicTypes.getByID(args.getOrNull(1)),
+            "invalid-skill-stat-magic"
         )
 
         val amount = notifyNull(args.getOrNull(2)?.toDoubleOrNull(), "invalid-amount")
 
-                // Get optional silent parameter (default to false)
-        val silent = args.getOrNull(3)?.toBooleanStrictOrNull() ?: false
+        // Get optional showActionBar parameter (default to false for backward compatibility)
+        val showActionBar = args.getOrNull(3)?.toBooleanStrictOrNull() ?: false
 
         val key = when (obj) {
             is Skill -> {
-                if (silent) {
-                    player.giveSkillXP(obj, amount)
-                    "gave-skill-xp"
-                } else {
+                if (showActionBar) {
                     player.gainSkillXP(obj, amount)
                     "gained-skill-xp"
+                } else {
+                    player.giveSkillXP(obj, amount)
+                    "gave-skill-xp"
                 }
             }
 
@@ -53,14 +57,27 @@ class CommandGive(plugin: EcoPlugin) :
                 "gave-stat"
             }
 
+            is MagicType -> {
+                val newAmount = player.getMagic(obj) + amount.toInt()
+                player.setMagic(obj, newAmount)
+                "gave-magic"
+            }
+
             else -> ""
+        }
+
+        val objName = when (obj) {
+            is Skill -> obj.name
+            is Stat -> obj.name
+            is MagicType -> obj.name
+            else -> "unknown"
         }
 
         sender.sendMessage(
             this.plugin.langYml.getMessage(key, StringUtils.FormatOption.WITHOUT_PLACEHOLDERS)
                 .replace("%player%", player.name)
                 .replace("%amount%", amount.toString())
-                .replace("%obj%", obj.name)
+                .replace("%obj%", objName)
                 .formatEco()
         )
     }
@@ -89,7 +106,7 @@ class CommandGive(plugin: EcoPlugin) :
         if (args.size == 2) {
             StringUtil.copyPartialMatches(
                 args[1],
-                (Skills.values() union Stats.values()).map { it.id },
+                (Skills.values() union Stats.values() union MagicTypes.values()).map { it.id },
                 completions
             )
             return completions
@@ -99,6 +116,15 @@ class CommandGive(plugin: EcoPlugin) :
             StringUtil.copyPartialMatches(
                 args[2],
                 listOf(1, 2, 5, 10, 100).map { it.toString() },
+                completions
+            )
+            return completions
+        }
+
+        if (args.size == 4) {
+            StringUtil.copyPartialMatches(
+                args[3],
+                listOf("true", "false"),
                 completions
             )
             return completions
