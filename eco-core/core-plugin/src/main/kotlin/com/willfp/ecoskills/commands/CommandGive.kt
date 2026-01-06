@@ -4,10 +4,10 @@ import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.eco.util.StringUtils
 import com.willfp.eco.util.formatEco
-import com.willfp.ecoskills.api.getMagic
+import com.willfp.ecoskills.api.giveBaseStatLevelDouble
 import com.willfp.ecoskills.api.gainSkillXP
-import com.willfp.ecoskills.api.giveBaseStatLevel
 import com.willfp.ecoskills.api.giveSkillXP
+import com.willfp.ecoskills.api.getMagic
 import com.willfp.ecoskills.api.setMagic
 import com.willfp.ecoskills.magic.MagicType
 import com.willfp.ecoskills.magic.MagicTypes
@@ -53,7 +53,7 @@ class CommandGive(plugin: EcoPlugin) :
             }
 
             is Stat -> {
-                player.giveBaseStatLevel(obj, amount.toInt())
+                player.giveBaseStatLevelDouble(obj, amount)
                 "gave-stat"
             }
 
@@ -89,6 +89,15 @@ class CommandGive(plugin: EcoPlugin) :
             StringUtil.copyPartialMatches(
                 args[0],
                 Bukkit.getOnlinePlayers().map { player -> player.name }.toCollection(ArrayList()),
+                completions
+            )
+            return completions
+        }
+
+        if (args.size == 4) {
+            StringUtil.copyPartialMatches(
+                args[3],
+                listOf("true", "false"),
                 completions
             )
             return completions

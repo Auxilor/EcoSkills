@@ -328,7 +328,7 @@ damage-indicators:
 
   format:
     normal: "&7%damage%"
-    crit: "&f✧ <gradient:#f953c6>%damage%</gradient:#b91d73> &f✧"
+    crit: "&f✧ <gradient:#ffffff:#f9b804>%damage%</gradient> &f✧"
 
   healing:
     enabled: true
@@ -337,6 +337,42 @@ damage-indicators:
   max-x-offset: 0.6
   max-y-offset: 0.6
   max-z-offset: 0.6
+
+  # Native Display Entity support (1.19.4+)
+  # Uses Minecraft's built-in TextDisplay entities instead of requiring a hologram plugin
+  display-entity:
+    # Enable native TextDisplay entities for damage indicators
+    # If disabled or server doesn't support it, falls back to HologramManager
+    enabled: false
+
+    # How long the indicator should last (in ticks, 20 ticks = 1 second)
+    duration: 30
+
+    # Billboard mode: CENTER, FIXED, HORIZONTAL, or VERTICAL
+    # CENTER = Always faces the player (recommended)
+    billboard: CENTER
+
+    # Background color as ARGB integer (-1 for transparent)
+    # Examples: -1 (transparent), 1073741824 (semi-transparent black), 0x40000000
+    background-color: -1
+
+    # Whether to use the default Minecraft background
+    default-background: false
+
+    # Whether the text should have a shadow
+    shadow: true
+
+    # Whether the text is visible through blocks
+    see-through: false
+
+    # Text opacity (0-255, 255 = fully opaque)
+    text-opacity: 255
+
+    # View range multiplier (default 1.0)
+    view-range: 1.0
+
+    # Scale of the text display (1.0 = normal size)
+    scale: 1.0
 
 skills:
   prevent-levelling-while-afk: true # If the player is AFK then don't give xp

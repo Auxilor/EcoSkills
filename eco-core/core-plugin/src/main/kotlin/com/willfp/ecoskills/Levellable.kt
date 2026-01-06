@@ -30,8 +30,8 @@ abstract class Levellable(
 
     private val key = PersistentDataKey(
         plugin.createNamespacedKey(id),
-        PersistentDataKeyType.INT,
-        startLevel
+        PersistentDataKeyType.DOUBLE,
+        startLevel.toDouble()
     )
 
     private val descCache = Caffeine.newBuilder()
@@ -74,8 +74,11 @@ abstract class Levellable(
 
     internal open fun getActualLevel(player: OfflinePlayer) = getSavedLevel(player)
 
-    internal fun getSavedLevel(player: OfflinePlayer) = player.profile.read(key)
-    internal fun setSavedLevel(player: OfflinePlayer, level: Int) = player.profile.write(key, level)
+    internal fun getSavedLevel(player: OfflinePlayer) = player.profile.read(key).toInt()
+    internal fun setSavedLevel(player: OfflinePlayer, level: Int) = player.profile.write(key, level.toDouble())
+    
+    internal fun getSavedLevelDouble(player: OfflinePlayer) = player.profile.read(key)
+    internal fun setSavedLevelDouble(player: OfflinePlayer, level: Double) = player.profile.write(key, level)
 
     fun addPlaceholdersInto(string: String, level: Int): String {
         var result = string
@@ -97,6 +100,41 @@ abstract class Levellable(
         }
 
         return result
+    }
+
+    fun addPlaceholdersInto(string: String, level: Double): String {
+        var result = string
+            .replace("%ecoskills_${id}_numeral%", level.toInt().toNumeral())
+            .replace("%ecoskills_${id}_description%", getDescription(level.toInt()))
+            .replace("%ecoskills_${id}%", level.toNiceString())
+            .replace("%level%", level.toNiceString())
+            .replace("%level_numeral%", level.toInt().toNumeral())
+
+        // Regex for %level_X% and %level_X_numeral%
+        val regex = Regex("%level_(-?\\d+)(_numeral)?%")
+
+        result = regex.replace(result) { match ->
+            val offset = match.groupValues[1].toIntOrNull() ?: return@replace match.value
+            val isNumeral = match.groupValues[2].isNotEmpty()
+            val newLevel = level + offset
+
+            if (isNumeral) newLevel.toInt().toNumeral() else newLevel.toNiceString()
+        }
+
+        return result
+    }
+
+    fun getTop(position: Int): LeaderboardEntry? {
+        require(position > 0) { "Position must be greater than 0" }
+
+        val uuid = leaderboardCache.get(true).getOrNull(position - 1) ?: return null
+
+        val player = Bukkit.getOfflinePlayer(uuid).takeIf { it.hasPlayedBefore() } ?: return null
+
+        return LeaderboardEntry(
+            player,
+            getActualLevel(player)
+        )
     }
 
     fun getDescription(level: Int): String {

@@ -7,8 +7,10 @@ import com.willfp.eco.util.toNiceString
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.LevellableWithHolder
 import com.willfp.ecoskills.api.getBaseStatLevel
+import com.willfp.ecoskills.api.getBaseStatLevelDouble
 import com.willfp.ecoskills.api.getBonusStatLevel
 import com.willfp.ecoskills.api.getStatLevel
+import com.willfp.ecoskills.api.getStatLevelDouble
 import com.willfp.ecoskills.gui.components.StatIcon
 import com.willfp.ecoskills.util.LevelMap
 import org.bukkit.OfflinePlayer
@@ -39,7 +41,7 @@ class Stat(
 
     init {
         PlayerPlaceholder(plugin, "${id}_base") {
-            it.getBaseStatLevel(this).toNiceString()
+            it.getBaseStatLevelDouble(this).toNiceString()
         }.register()
 
         PlayerPlaceholder(plugin, "${id}_bonus") {
@@ -49,6 +51,11 @@ class Stat(
                 bonus < 0 -> "$bonus"
                 else -> ""
             }
+        }.register()
+
+        // Override parent's placeholder to show total stat with decimals (base + bonus)
+        PlayerPlaceholder(plugin, id) {
+            it.getStatLevelDouble(this).toNiceString()
         }.register()
     }
 
