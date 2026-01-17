@@ -25,6 +25,7 @@ dependencies {
     implementation(project(":eco-core:core-nms:v1_21_7"))
     implementation(project(":eco-core:core-nms:v1_21_8"))
     implementation(project(":eco-core:core-nms:v1_21_10"))
+    implementation(project(":eco-core:core-nms:v1_21_11"))
 }
 
 allprojects {
