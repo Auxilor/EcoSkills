@@ -4,7 +4,8 @@ import com.github.benmanes.caffeine.cache.Caffeine
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.gui.onLeftClick
 import com.willfp.eco.core.gui.slot
-import com.willfp.eco.core.items.builder.SkullBuilder
+import com.willfp.eco.core.items.Items
+import com.willfp.eco.core.items.builder.modify
 import com.willfp.eco.core.placeholder.context.placeholderContext
 import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.savedDisplayName
@@ -12,48 +13,52 @@ import com.willfp.ecoskills.gui.menus.StatsGUI
 import com.willfp.ecoskills.plugin
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.SkullMeta
-import java.util.UUID
 import java.util.concurrent.TimeUnit
 
-private val skullCache = Caffeine.newBuilder()
+private val iconCache = Caffeine.newBuilder()
     .expireAfterWrite(plugin.configYml.getInt("gui.cache-ttl").toLong(), TimeUnit.MILLISECONDS)
-    .build<UUID, ItemStack>()
+    .build<Int, ItemStack>()
 
 class PlayerInfoIcon(
     config: Config,
     opensStatMenu: Boolean
 ) : PositionedComponent {
+    private val baseIcon = Items.lookup(config.getString("icon")).item
+        get() = field.clone()
+
     override val isEnabled = config.getBoolOrNull("enabled") ?: true
     private val slot = if (isEnabled) {
         slot({ player, _ ->
-            skullCache.get(player.uniqueId) {
-                val skullBuilder = SkullBuilder()
-                    .setDisplayName(
-                        config.getString("name")
+            iconCache.get(player.uniqueId.hashCode()) {
+                baseIcon.modify {
+                    setDisplayName(
+                        config.getFormattedString("name")
                             .replace("%player%", player.savedDisplayName)
                             .formatEco(player, true)
                     )
                     .addLoreLines(
                         config.getFormattedStrings(
-                            "lore", // Ensure correct path for lore
+                            "lore",
                             placeholderContext(player = player)
                         )
                     )
-                    .apply {
-                        if (opensStatMenu) {
-                            addLoreLines(
-                                config.getFormattedStrings(
-                                    "view-more",
-                                    placeholderContext(player = player)
+                        .apply {
+                            if (opensStatMenu) {
+                                addLoreLines(
+                                    config.getFormattedStrings(
+                                        "view-more",
+                                        placeholderContext(player = player)
+                                    )
                                 )
-                            )
+                            }
                         }
-                    }
 
-                skullBuilder.build().apply {
-                    val meta = itemMeta as SkullMeta
+                val meta = baseIcon.itemMeta
+                if (meta is SkullMeta && meta.owningPlayer == null) {
                     meta.owningPlayer = player
-                    itemMeta = meta
+                    baseIcon.itemMeta = meta
+                }
+                    baseIcon
                 }
             }
         }) {
