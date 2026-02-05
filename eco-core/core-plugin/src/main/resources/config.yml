@@ -265,6 +265,8 @@ level-gui:
 persistent-action-bar:
   # If the persistent action bar should be enabled
   enabled: true
+  # If the persistent action bar should require the 'ecoskills.enable-persistent-action-bar' permission
+  require-permission: false
   # If a player's health should be scaled to always display as 10 hearts.
   scale-health: true
   # The format

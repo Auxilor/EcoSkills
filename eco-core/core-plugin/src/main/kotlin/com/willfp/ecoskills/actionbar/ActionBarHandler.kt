@@ -94,6 +94,12 @@ class ActionBarHandler(
             return
         }
 
+        if (plugin.configYml.getBool("persistent-action-bar.require-permission")) {
+            if (!player.hasPermission("ecoskills.enable-persistent-action-bar")) {
+                return
+            }
+        }
+
         if (disabledWorlds.containsIgnoreCase(player.world.name)) {
             return
         }
