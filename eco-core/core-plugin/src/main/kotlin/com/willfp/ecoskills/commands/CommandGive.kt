@@ -37,6 +37,8 @@ object CommandGive : Subcommand(
 
         val amount = notifyNull(args.getOrNull(2)?.toDoubleOrNull(), "invalid-amount")
 
+        notifyFalse(amount >= 0, "invalid-amount")
+
         // Get optional showActionBar parameter (default to false for backward compatibility)
         val showActionBar = args.getOrNull(3)?.toBooleanStrictOrNull() ?: false
 
