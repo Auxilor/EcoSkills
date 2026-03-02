@@ -39,6 +39,8 @@ class CommandSet(plugin: EcoPlugin) :
 
         val amount = notifyNull(args.getOrNull(2)?.toIntOrNull(), "invalid-amount")
 
+        notifyFalse(amount >= 0, "invalid-amount")
+
         val key = when (obj) {
             is Skill -> {
                 player.setSkillLevel(obj, amount)
