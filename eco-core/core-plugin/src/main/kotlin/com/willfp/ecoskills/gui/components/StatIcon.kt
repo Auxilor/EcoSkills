@@ -7,6 +7,8 @@ import com.willfp.eco.core.gui.slot
 import com.willfp.eco.core.items.Items
 import com.willfp.eco.core.items.builder.modify
 import com.willfp.eco.util.lineWrap
+import com.willfp.eco.util.toNiceString
+import com.willfp.ecoskills.api.getBaseStatLevelDouble
 import com.willfp.ecoskills.api.getStatLevel
 import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.stats.Stat
@@ -28,11 +30,13 @@ class StatIcon(
     private val slot = slot { player, _ ->
         itemCache.get(player.hashCode() xor stat.hashCode()) {
             val level = player.getStatLevel(stat)
+            val levelDouble = player.getBaseStatLevelDouble(stat)
 
             baseIcon.clone().modify {
                 setDisplayName(
                     plugin.configYml.getFormattedString("stats-gui.stat-icon.name")
                         .replace("%stat%", stat.name)
+                        .replace("%level%", levelDouble.toNiceString())
                         .let { stat.addPlaceholdersInto(it, level) }
                 )
 

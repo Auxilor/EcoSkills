@@ -4,6 +4,7 @@ package com.willfp.ecoskills.stats
 
 import com.willfp.eco.core.map.nestedMap
 import com.willfp.ecoskills.api.getBaseStatLevel
+import com.willfp.ecoskills.api.getBaseStatLevelDouble
 import com.willfp.ecoskills.api.modifiers.ModifierOperation
 import com.willfp.ecoskills.api.modifiers.StatModifier
 import org.bukkit.entity.Player
@@ -55,16 +56,23 @@ class StatModifiers(
      * Get how much a stat is modified by.
      */
     fun getBonusStatLevel(stat: Stat): Int {
-        return getModifiedValue(stat) - player.getBaseStatLevel(stat)
+        return getModifiedValue(stat) - player.getBaseStatLevelDouble(stat).toInt()
     }
 
     /**
      * Get the modified value of a stat.
      */
     fun getModifiedValue(stat: Stat): Int {
+        return getModifiedValueDouble(stat).toInt()
+    }
+
+    /**
+     * Get the modified value of a stat as a double (preserves decimals).
+     */
+    fun getModifiedValueDouble(stat: Stat): Double {
         val modifiers = getModifiers(stat)
 
-        var level = player.getBaseStatLevel(stat).toDouble()
+        var level = player.getBaseStatLevelDouble(stat)
 
         modifiers.filter { it.operation == ModifierOperation.ADD }.forEach {
             level += it.modifier
@@ -74,7 +82,7 @@ class StatModifiers(
             level *= it.modifier
         }
 
-        return level.toInt()
+        return level
     }
 }
 

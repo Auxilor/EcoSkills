@@ -2,6 +2,11 @@ name: Alchemy
 description: Brew potions to earn XP
 
 gui:
+  # Custom title for this skill's level progression GUI (optional)
+  # If not set, uses the global level-gui.title from config.yml
+  # Supports %skill% placeholder
+  # level-menu-title: "&5✦ &d%skill% &5Progression ✦"
+
   icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMTExYTNjZWM3YWFmOTA0MjEyY2NmOTNiYjY3YTNjYWYzZDY0OTc4M2JhOTBiOGI2MGJiNjNjNzY4N2ViMzlmIn19fQ==
 
   lore:

@@ -9,14 +9,14 @@ import org.bukkit.OfflinePlayer
 
 class LevelUpReward(
     val reward: Levellable,
-    private val levels: Int,
+    private val levels: Double,
     private val startLevel: Int?,
     private val endLevel: Int?,
     private val every: Int?,
     private val levelList: List<Int>?
 ) {
-    fun getCumulativeLevels(level: Int): Int {
-        var sum = 0
+    fun getCumulativeLevels(level: Int): Double {
+        var sum = 0.0
 
         for (skillLevel in (1..level)) {
             if (startLevel != null && skillLevel < startLevel) {
@@ -71,8 +71,8 @@ class LevelUpReward(
         }
 
         when (reward) {
-            is Effect -> player.effects[reward] += levels
-            is Stat -> player.stats[reward] += levels
+            is Effect -> player.effects.add(reward, levels)
+            is Stat -> player.stats.add(reward, levels)
         }
     }
 }

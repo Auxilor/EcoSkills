@@ -11,7 +11,13 @@ plugins {
 
 group = "com.willfp"
 version = findProperty("version")!!
-val libreforgeVersion = findProperty("libreforge-version")
+val libreforgeVersion = findProperty("libreforge-version")?.toString()
+    ?: error("Missing required property: libreforge-version")
+val libreforgeLocalJarProperty = (findProperty("libreforge-local-jar") as String?) ?: System.getenv("LIBREFORGE_LOCAL_JAR")
+val libreforgeLocalJar = (
+    libreforgeLocalJarProperty?.takeIf { it.isNotBlank() }?.let { file(it) }
+        ?: layout.projectDirectory.file("libs/libreforge-loader-$libreforgeVersion.jar").asFile
+).takeIf { it.exists() }
 
 base {
     archivesName.set(project.name)
@@ -41,13 +47,22 @@ allprojects {
         maven("https://repo.papermc.io/repository/maven-public/")
         maven("https://repo.auxilor.io/repository/maven-public/")
         maven("https://repo.codemc.org/repository/nms/")
-        maven("https://jitpack.io")
+
+    configurations.configureEach {
+        if (libreforgeLocalJar != null) {
+            exclude(group = "com.willfp", module = "libreforge-loader")
+        }
     }
 
     dependencies {
         compileOnly("com.willfp:eco:6.77.0")
         compileOnly("org.jetbrains:annotations:23.0.0")
         compileOnly("org.jetbrains.kotlin:kotlin-stdlib:2.1.0")
+
+        if (libreforgeLocalJar != null) {
+            compileOnly(files(libreforgeLocalJar))
+            runtimeOnly(files(libreforgeLocalJar))
+        }
     }
 
     java {

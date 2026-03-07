@@ -25,6 +25,10 @@ class DamageIndicatorListener(
         .map { Entities.lookup(it) }
         .filterNot { it is EmptyTestableEntity }
 
+    private val useDisplayEntities: Boolean
+        get() = plugin.configYml.getBool("damage-indicators.display-entity.enabled") 
+                && DisplayEntityHologram.isSupported()
+
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun onEntityDamageByEntity(event: EntityDamageByEntityEvent) {
         if (!plugin.configYml.getBool("damage-indicators.enabled")) {
@@ -63,13 +67,13 @@ class DamageIndicatorListener(
             text.replace("%damage%", event.finalDamage.toNiceString())
         } else {
             text.replace("%damage%", event.damage.toNiceString())
-        }.formatEco()
-
-        val holo = HologramManager.createHologram(location, listOf(text))
-
-        plugin.scheduler.runLater(30) {
-            holo.remove()
         }
+        
+        if (!useDisplayEntities) {
+            text = text.formatEco()
+        }
+
+        spawnHologram(location, text)
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -92,14 +96,28 @@ class DamageIndicatorListener(
             .add(0.0, entity.height, 0.0)
             .withHoloOffset()
 
-        val text = plugin.configYml.getString("damage-indicators.healing.format")
+        var text = plugin.configYml.getString("damage-indicators.healing.format")
             .replace("%damage%", event.amount.toNiceString())
-            .formatEco()
+        
+        if (!useDisplayEntities) {
+            text = text.formatEco()
+        }
 
-        val holo = HologramManager.createHologram(location, listOf(text))
+        spawnHologram(location, text)
+    }
 
-        plugin.scheduler.runLater(30) {
-            holo.remove()
+    private fun spawnHologram(location: Location, text: String) {
+        if (useDisplayEntities) {
+            val displayHolo = DisplayEntityHologram(plugin, location, text)
+            val duration = plugin.configYml.getInt("damage-indicators.display-entity.duration")
+            plugin.scheduler.runLater(duration.toLong()) {
+                displayHolo.remove()
+            }
+        } else {
+            val holo = HologramManager.createHologram(location, listOf(text))
+            plugin.scheduler.runLater(30) {
+                holo.remove()
+            }
         }
     }
 
