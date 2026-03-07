@@ -370,6 +370,8 @@ skills:
       pitch: 2
       # The volume
       volume: 0.1
+      # The category
+      category: PLAYER
 
   level-up:
     message:
