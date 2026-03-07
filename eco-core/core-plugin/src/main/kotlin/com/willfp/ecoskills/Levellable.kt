@@ -16,6 +16,7 @@ import com.willfp.eco.util.toNiceString
 import com.willfp.eco.util.toNumeral
 import com.willfp.ecoskills.skills.SkillsLeaderboard
 import com.willfp.ecoskills.skills.SkillsLeaderboard.getPosition
+import com.willfp.ecoskills.util.LeaderboardEntry
 import com.willfp.ecoskills.util.LevelInjectable
 import com.willfp.ecoskills.util.loadDescriptionPlaceholders
 import org.bukkit.OfflinePlayer
@@ -125,16 +126,7 @@ abstract class Levellable(
     }
 
     fun getTop(position: Int): LeaderboardEntry? {
-        require(position > 0) { "Position must be greater than 0" }
-
-        val uuid = leaderboardCache.get(true).getOrNull(position - 1) ?: return null
-
-        val player = Bukkit.getOfflinePlayer(uuid).takeIf { it.hasPlayedBefore() } ?: return null
-
-        return LeaderboardEntry(
-            player,
-            getActualLevel(player)
-        )
+        return SkillsLeaderboard.getTop(this, position)
     }
 
     fun getDescription(level: Int): String {
