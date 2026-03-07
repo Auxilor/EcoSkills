@@ -56,11 +56,7 @@ class GainXPDisplay(
     private val gainCache: Cache<PlayerSkill, Double> = Caffeine.newBuilder().expireAfterWrite(Duration.ofSeconds(3))
         .build()
 
-    private val sound = if (plugin.configYml.getBool("skills.gain-xp.sound.enabled")) {
-        PlayableSound.create(
-            plugin.configYml.getSubsection("skills.gain-xp.sound")
-        )
-    } else null
+    private val sound = PlayableSound.create(plugin.configYml.getSubsection("skills.gain-xp.sound"))
 
     @EventHandler(priority = EventPriority.MONITOR)
     fun handle(event: PlayerSkillXPGainEvent) {

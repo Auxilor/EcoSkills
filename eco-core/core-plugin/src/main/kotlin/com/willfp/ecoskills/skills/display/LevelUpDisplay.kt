@@ -12,11 +12,7 @@ import java.time.Duration
 class LevelUpDisplay(
     private val plugin: EcoPlugin
 ) : Listener {
-    private val sound = if (plugin.configYml.getBool("skills.level-up.sound.enabled")) {
-        PlayableSound.create(
-            plugin.configYml.getSubsection("skills.level-up.sound")
-        )
-    } else null
+    private val sound = PlayableSound.create(plugin.configYml.getSubsection("skills.level-up.sound"))
 
     @EventHandler
     fun handle(event: PlayerSkillLevelUpEvent) {
