@@ -28,7 +28,6 @@ import com.willfp.ecoskills.stats.Stats
 import com.willfp.ecoskills.util.InvalidConfigurationException
 import com.willfp.ecoskills.util.LevelInjectable
 import com.willfp.ecoskills.util.loadDescriptionPlaceholders
-import com.willfp.libreforge.EmptyProvidedHolder
 import com.willfp.libreforge.NamedValue
 import com.willfp.libreforge.ViolationContext
 import com.willfp.libreforge.conditions.Conditions

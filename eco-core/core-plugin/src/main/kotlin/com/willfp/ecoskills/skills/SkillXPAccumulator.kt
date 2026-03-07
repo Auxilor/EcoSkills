@@ -3,7 +3,6 @@ package com.willfp.ecoskills.skills
 import com.github.benmanes.caffeine.cache.Caffeine
 import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.integrations.afk.AFKManager
-import com.willfp.eco.util.containsIgnoreCase
 import com.willfp.ecoskills.api.gainSkillXP
 import com.willfp.libreforge.EmptyProvidedHolder
 import com.willfp.libreforge.counters.Accumulator

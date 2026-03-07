@@ -2,15 +2,15 @@ package com.willfp.ecoskills.skills
 
 import com.github.benmanes.caffeine.cache.Caffeine
 import com.willfp.eco.core.config.interfaces.Config
+import com.willfp.eco.core.placeholder.PlayerPlaceholder
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.api.totalSkillLevel
 import com.willfp.ecoskills.gui.menus.SkillsGUI
+import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.util.InvalidConfigurationException
 import com.willfp.ecoskills.util.LeaderboardEntry
 import com.willfp.libreforge.loader.LibreforgePlugin
 import com.willfp.libreforge.loader.configs.RegistrableCategory
-import com.willfp.eco.core.placeholder.PlayerPlaceholder
-import com.willfp.ecoskills.plugin
 import org.bukkit.Bukkit
 import java.time.Duration
 import java.util.UUID

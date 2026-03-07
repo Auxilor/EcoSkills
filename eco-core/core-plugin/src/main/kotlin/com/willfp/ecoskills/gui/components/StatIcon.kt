@@ -11,7 +11,6 @@ import com.willfp.ecoskills.api.getStatLevel
 import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.stats.Stat
 import org.bukkit.inventory.ItemStack
-import java.util.UUID
 import java.util.concurrent.TimeUnit
 
 private val itemCache = Caffeine.newBuilder()

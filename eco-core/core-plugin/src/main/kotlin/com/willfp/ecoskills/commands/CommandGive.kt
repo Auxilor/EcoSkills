@@ -4,8 +4,8 @@ import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.eco.util.StringUtils
 import com.willfp.eco.util.formatEco
-import com.willfp.ecoskills.api.getMagic
 import com.willfp.ecoskills.api.gainSkillXP
+import com.willfp.ecoskills.api.getMagic
 import com.willfp.ecoskills.api.giveBaseStatLevel
 import com.willfp.ecoskills.api.giveSkillXP
 import com.willfp.ecoskills.api.setMagic
