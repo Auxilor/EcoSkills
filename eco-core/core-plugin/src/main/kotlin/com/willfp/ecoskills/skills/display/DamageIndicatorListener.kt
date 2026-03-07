@@ -1,12 +1,12 @@
 package com.willfp.ecoskills.skills.display
 
-import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.entities.Entities
 import com.willfp.eco.core.entities.impl.EmptyTestableEntity
 import com.willfp.eco.core.integrations.hologram.HologramManager
 import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.randDouble
 import com.willfp.eco.util.toNiceString
+import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.skills.isSkillCrit
 import org.bukkit.GameMode
 import org.bukkit.Location
@@ -18,9 +18,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityRegainHealthEvent
 
-class DamageIndicatorListener(
-    private val plugin: EcoPlugin
-) : Listener {
+object DamageIndicatorListener : Listener {
     private val disabledEntities = plugin.configYml.getStrings("damage-indicators.disabled-for-entities")
         .map { Entities.lookup(it) }
         .filterNot { it is EmptyTestableEntity }

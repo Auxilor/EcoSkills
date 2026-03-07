@@ -2,21 +2,20 @@
 
 package com.willfp.ecoskills.commands
 
-import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.ecoskills.api.resetSkills
+import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.util.offlinePlayers
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
 
-class CommandReset(plugin: EcoPlugin) :
-    Subcommand(
-        plugin,
-        "reset",
-        "ecoskills.command.reset",
-        false
-    ) {
+object CommandReset : Subcommand(
+    plugin,
+    "reset",
+    "ecoskills.command.reset",
+    false
+) {
 
     override fun onExecute(sender: CommandSender, args: List<String>) {
         val players = offlinePlayers(args, 0, "invalid-player")

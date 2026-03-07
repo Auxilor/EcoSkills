@@ -1,10 +1,10 @@
 package com.willfp.ecoskills.commands
 
-import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.effects.effects
+import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.stats.Stats
 import com.willfp.ecoskills.stats.stats
@@ -13,13 +13,12 @@ import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
 
-class CommandRecount(plugin: EcoPlugin) :
-    Subcommand(
-        plugin,
-        "recount",
-        "ecoskills.command.recount",
-        false
-    ) {
+object CommandRecount : Subcommand(
+    plugin,
+    "recount",
+    "ecoskills.command.recount",
+    false
+) {
 
     override fun onExecute(sender: CommandSender, args: List<String>) {
         val players = offlinePlayers(args, 0, "invalid-player")

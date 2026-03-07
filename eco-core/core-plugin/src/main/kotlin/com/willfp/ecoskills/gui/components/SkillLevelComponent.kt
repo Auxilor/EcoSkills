@@ -1,7 +1,6 @@
 package com.willfp.ecoskills.gui.components
 
 import com.github.benmanes.caffeine.cache.Caffeine
-import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.gui.menu.Menu
 import com.willfp.eco.core.items.Items
 import com.willfp.eco.core.items.builder.ItemStackBuilder
@@ -25,7 +24,6 @@ private val levelItemCache = Caffeine.newBuilder()
     .build<Int, ItemStack>()
 
 class SkillLevelComponent(
-    private val plugin: EcoPlugin,
     private val skill: Skill
 ) : LevelComponent() {
     override val pattern: List<String> = plugin.configYml.getStrings("level-gui.progression-slots.pattern")

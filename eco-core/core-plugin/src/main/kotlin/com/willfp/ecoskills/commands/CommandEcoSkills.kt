@@ -1,21 +1,21 @@
 package com.willfp.ecoskills.commands
 
-import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.impl.PluginCommand
+import com.willfp.ecoskills.plugin
 import org.bukkit.command.CommandSender
 
-class CommandEcoSkills(plugin: EcoPlugin) : PluginCommand(
+object CommandEcoSkills : PluginCommand(
     plugin,
     "ecoskills",
     "ecoskills.command.ecoskills",
     false
 ) {
     init {
-        this.addSubcommand(CommandReload(plugin))
-            .addSubcommand(CommandGive(plugin))
-            .addSubcommand(CommandReset(plugin))
-            .addSubcommand(CommandRecount(plugin))
-            .addSubcommand(CommandSet(plugin))
+        this.addSubcommand(CommandReload)
+            .addSubcommand(CommandGive)
+            .addSubcommand(CommandReset)
+            .addSubcommand(CommandRecount)
+            .addSubcommand(CommandSet)
     }
 
     override fun onExecute(sender: CommandSender, args: List<String>) {

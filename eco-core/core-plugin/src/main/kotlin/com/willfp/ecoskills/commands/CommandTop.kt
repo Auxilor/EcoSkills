@@ -1,24 +1,22 @@
 package com.willfp.ecoskills.commands
 
-import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.eco.core.placeholder.context.placeholderContext
 import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.savedDisplayName
+import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.skills.SkillsLeaderboard.getTop
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 
-
-class CommandTop(plugin: EcoPlugin) :
-    Subcommand(
-        plugin,
-        "top",
-        "ecoskills.command.top",
-        false
-    ) {
+object CommandTop : Subcommand(
+    plugin,
+    "top",
+    "ecoskills.command.top",
+    false
+) {
 
     override fun onExecute(sender: CommandSender, args: List<String>) {
         plugin.scheduler.runAsync {

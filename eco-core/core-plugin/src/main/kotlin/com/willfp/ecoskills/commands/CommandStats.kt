@@ -1,11 +1,11 @@
 package com.willfp.ecoskills.commands
 
-import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.impl.PluginCommand
 import com.willfp.ecoskills.gui.menus.StatsGUI
+import com.willfp.ecoskills.plugin
 import org.bukkit.entity.Player
 
-class CommandStats(plugin: EcoPlugin) : PluginCommand(
+object CommandStats : PluginCommand(
     plugin,
     "stats",
     "ecoskills.command.stats",

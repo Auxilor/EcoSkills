@@ -9,9 +9,9 @@ import com.willfp.eco.core.registry.KRegistrable
 import com.willfp.eco.util.evaluateExpression
 import com.willfp.eco.util.toNiceString
 import com.willfp.eco.util.toNumeral
-import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.api.event.PlayerRegenMagicEvent
 import com.willfp.ecoskills.libreforge.EffectArgumentMagicCost
+import com.willfp.ecoskills.plugin
 import com.willfp.libreforge.effects.arguments.EffectArguments
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -19,8 +19,7 @@ import kotlin.math.ceil
 
 class MagicType(
     override val id: String,
-    config: Config,
-    plugin: EcoSkillsPlugin
+    config: Config
 ) : KRegistrable {
     private val regenRateExpr = config.getString("regen-rate")
 

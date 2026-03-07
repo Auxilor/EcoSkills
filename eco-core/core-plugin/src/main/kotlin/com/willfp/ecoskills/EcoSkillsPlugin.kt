@@ -92,8 +92,8 @@ class EcoSkillsPlugin : LibreforgePlugin() {
         com.willfp.libreforge.effects.Effects.register(EffectGiveMagic)
         com.willfp.libreforge.effects.Effects.register(EffectMultiplyMagic)
         com.willfp.libreforge.effects.Effects.register(EffectGiveSkillXpNaturally)
-        com.willfp.libreforge.effects.Effects.register(EffectAddStatTemporarily(this))
-        com.willfp.libreforge.effects.Effects.register(EffectMultiplyStatTemporarily(this))
+        com.willfp.libreforge.effects.Effects.register(EffectAddStatTemporarily)
+        com.willfp.libreforge.effects.Effects.register(EffectMultiplyStatTemporarily)
         com.willfp.libreforge.effects.Effects.register(EffectMagicRegenMultiplier)
         Conditions.register(ConditionStatAbove)
         Conditions.register(ConditionStatBelow)
@@ -109,36 +109,36 @@ class EcoSkillsPlugin : LibreforgePlugin() {
         Filters.register(FilterMagicType)
 
         if (this.configYml.getBool("leaderboard.enabled")) {
-            EcoSkillsTopPlaceholder(this).register()
-            EcoSkillsSkillTopPlaceholder(this).register()
+            EcoSkillsTopPlaceholder.register()
+            EcoSkillsSkillTopPlaceholder.register()
         }
-        Skills.registerPlaceholders(this)
+        Skills.registerPlaceholders()
     }
 
     override fun handleReload() {
         if (this.configYml.getBool("persistent-action-bar.enabled")) {
-            ActionBarHandler(this).startTicking()
+            ActionBarHandler.startTicking()
         }
 
-        TemporaryBossBarHandler(this).startTicking()
-        MagicHandler(this).startTicking()
+        TemporaryBossBarHandler.startTicking()
+        MagicHandler.startTicking()
     }
 
     override fun loadPluginCommands(): List<PluginCommand> {
         return listOf(
-            CommandEcoSkills(this),
-            CommandSkills(this),
-            CommandStats(this)
+            CommandEcoSkills,
+            CommandSkills,
+            CommandStats
         )
     }
 
     override fun loadListeners(): List<Listener> {
         return listOf(
-            LevelUpDisplay(this),
-            GainXPDisplay(this),
-            DamageIndicatorListener(this),
-            MagicListener(this),
-            HealthScaleDisabler(this),
+            LevelUpDisplay,
+            GainXPDisplay,
+            DamageIndicatorListener,
+            MagicListener,
+            HealthScaleDisabler,
             ActionBarGamemodeListener,
             SkillCritListener,
             StatModifierListener

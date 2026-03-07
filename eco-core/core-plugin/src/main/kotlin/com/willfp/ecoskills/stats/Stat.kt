@@ -4,22 +4,21 @@ import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.placeholder.PlayerPlaceholder
 import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.toNiceString
-import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.LevellableWithHolder
 import com.willfp.ecoskills.api.getBaseStatLevel
 import com.willfp.ecoskills.api.getBonusStatLevel
 import com.willfp.ecoskills.api.getStatLevel
 import com.willfp.ecoskills.gui.components.StatIcon
+import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.util.LevelMap
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
 
 class Stat(
     id: String,
-    config: Config,
-    plugin: EcoSkillsPlugin
-) : LevellableWithHolder(id, config, plugin) {
-    val icon = StatIcon(this, config.getSubsection("gui"), plugin)
+    config: Config
+) : LevellableWithHolder(id, config) {
+    val icon = StatIcon(this, config.getSubsection("gui"))
 
     /**
      * Add stat placeholders into [strings], to be shown to a [player].

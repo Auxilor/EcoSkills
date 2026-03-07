@@ -1,12 +1,12 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    java
-    `java-library`
-    `maven-publish`
-    kotlin("jvm") version "2.1.0"
-    id("io.github.goooler.shadow") version "8.1.7"
-    id("com.willfp.libreforge-gradle-plugin") version "1.0.0"
+    kotlin("jvm") version "2.3.0"
+    id("java")
+    id("java-library")
+    id("maven-publish")
+    id("com.gradleup.shadow") version "9.3.1"
+    id("com.willfp.libreforge-gradle-plugin") version "1.0.3"
 }
 
 group = "com.willfp"
@@ -19,20 +19,20 @@ base {
 
 dependencies {
     implementation(project(":eco-core:core-plugin"))
-    implementation(project(":eco-core:core-nms:v1_21_4"))
-    implementation(project(":eco-core:core-nms:v1_21_5"))
-    implementation(project(":eco-core:core-nms:v1_21_6"))
-    implementation(project(":eco-core:core-nms:v1_21_7"))
-    implementation(project(":eco-core:core-nms:v1_21_8"))
-    implementation(project(":eco-core:core-nms:v1_21_10"))
-    implementation(project(":eco-core:core-nms:v1_21_11"))
+    implementation(project(":eco-core:core-nms:v1_21_4", configuration = "reobf"))
+    implementation(project(":eco-core:core-nms:v1_21_5", configuration = "reobf"))
+    implementation(project(":eco-core:core-nms:v1_21_6", configuration = "reobf"))
+    implementation(project(":eco-core:core-nms:v1_21_7", configuration = "reobf"))
+    implementation(project(":eco-core:core-nms:v1_21_8", configuration = "reobf"))
+    implementation(project(":eco-core:core-nms:v1_21_10", configuration = "reobf"))
+    implementation(project(":eco-core:core-nms:v1_21_11", configuration = "reobf"))
 }
 
 allprojects {
     apply(plugin = "java")
     apply(plugin = "kotlin")
     apply(plugin = "maven-publish")
-    apply(plugin = "io.github.goooler.shadow")
+    apply(plugin = "com.gradleup.shadow")
 
     repositories {
         mavenLocal()
@@ -46,8 +46,9 @@ allprojects {
 
     dependencies {
         compileOnly("com.willfp:eco:6.77.6")
-        compileOnly("org.jetbrains:annotations:23.0.0")
-        compileOnly("org.jetbrains.kotlin:kotlin-stdlib:2.1.0")
+        compileOnly("org.jetbrains:annotations:26.0.2")
+        compileOnly("org.jetbrains.kotlin:kotlin-stdlib:2.3.0")
+        compileOnly("com.github.ben-manes.caffeine:caffeine:3.2.3")
     }
 
     java {
@@ -78,7 +79,7 @@ allprojects {
             filesMatching(listOf("**plugin.yml", "**eco.yml")) {
                 expand(
                     "version" to project.version,
-                    "libreforgeVersion" to libreforgeVersion,
+                    "libreforgeVersion" to libreforgeVersion!!,
                     "pluginName" to rootProject.name
                 )
             }

@@ -1,24 +1,24 @@
 package com.willfp.ecoskills.commands
 
-import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.impl.PluginCommand
 import com.willfp.ecoskills.gui.menus.SkillsGUI
+import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.skills.Skills
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
 
-class CommandSkills(plugin: EcoPlugin) : PluginCommand(
+object CommandSkills : PluginCommand(
     plugin,
     "skills",
     "ecoskills.command.skills",
     true
 ) {
     init {
-        this.addSubcommand(CommandToggleActionBar(plugin))
-            .addSubcommand(CommandToggleXpGainSound(plugin))
+        this.addSubcommand(CommandToggleActionBar)
+            .addSubcommand(CommandToggleXpGainSound)
         if (plugin.configYml.getBool("leaderboard.enabled"))
-            this.addSubcommand(CommandTop(plugin))
+            this.addSubcommand(CommandTop)
     }
 
     override fun onExecute(player: Player, args: List<String>) {

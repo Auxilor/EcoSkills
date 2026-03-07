@@ -1,6 +1,5 @@
 package com.willfp.ecoskills.commands
 
-import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.eco.util.StringUtils
 import com.willfp.eco.util.formatEco
@@ -11,6 +10,7 @@ import com.willfp.ecoskills.api.giveSkillXP
 import com.willfp.ecoskills.api.setMagic
 import com.willfp.ecoskills.magic.MagicType
 import com.willfp.ecoskills.magic.MagicTypes
+import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.stats.Stat
@@ -19,20 +19,19 @@ import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
 
-
-class CommandGive(plugin: EcoPlugin) :
-    Subcommand(
-        plugin,
-        "give",
-        "ecoskills.command.give",
-        false
-    ) {
+object CommandGive : Subcommand(
+    plugin,
+    "give",
+    "ecoskills.command.give",
+    false
+) {
 
     override fun onExecute(sender: CommandSender, args: List<String>) {
         val player = notifyPlayerRequired(args.getOrNull(0), "invalid-player")
 
         val obj = notifyNull(
-            Skills.getByID(args.getOrNull(1)) ?: Stats.getByID(args.getOrNull(1)) ?: MagicTypes.getByID(args.getOrNull(1)),
+            Skills.getByID(args.getOrNull(1)) ?: Stats.getByID(args.getOrNull(1))
+            ?: MagicTypes.getByID(args.getOrNull(1)),
             "invalid-skill-stat-magic"
         )
 

@@ -1,10 +1,10 @@
 package com.willfp.ecoskills.commands
 
-import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.command.impl.Subcommand
+import com.willfp.ecoskills.plugin
 import org.bukkit.command.CommandSender
 
-class CommandReload(plugin: EcoPlugin) : Subcommand(
+object CommandReload : Subcommand(
     plugin,
     "reload",
     "ecoskills.command.reload",

@@ -7,13 +7,11 @@ import com.willfp.eco.util.savedDisplayName
 import com.willfp.ecoskills.skills.SkillsLeaderboard.getTop
 import java.util.regex.Pattern
 
-class EcoSkillsSkillTopPlaceholder(
-    private val plugin: EcoPlugin
-) : RegistrablePlaceholder {
+object EcoSkillsSkillTopPlaceholder : RegistrablePlaceholder {
     private val pattern = Pattern.compile("top_([a-z0-9_]+)_(\\d+)_(name|level|amount)")
 
     override fun getPattern(): Pattern = pattern
-    override fun getPlugin(): EcoPlugin = plugin
+    override fun getPlugin(): EcoPlugin = com.willfp.ecoskills.plugin
 
     override fun getValue(params: String, ctx: PlaceholderContext): String? {
         val emptyPosition: String = plugin.langYml.getString("top.empty-position")
@@ -35,13 +33,11 @@ class EcoSkillsSkillTopPlaceholder(
     }
 }
 
-class EcoSkillsTopPlaceholder(
-    private val plugin: EcoPlugin
-) : RegistrablePlaceholder {
+object EcoSkillsTopPlaceholder : RegistrablePlaceholder {
     private val pattern = Pattern.compile("top_(\\d+)_(name|level|amount)")
 
     override fun getPattern(): Pattern = pattern
-    override fun getPlugin(): EcoPlugin = plugin
+    override fun getPlugin(): EcoPlugin = com.willfp.ecoskills.plugin
 
     override fun getValue(params: String, ctx: PlaceholderContext): String? {
         val emptyPosition: String = plugin.langYml.getString("top.empty-position")

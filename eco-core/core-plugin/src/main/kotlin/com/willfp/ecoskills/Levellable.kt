@@ -22,8 +22,7 @@ import java.util.concurrent.TimeUnit
 
 abstract class Levellable(
     final override val id: String,
-    val config: Config,
-    protected val plugin: EcoSkillsPlugin
+    val config: Config
 ) : KRegistrable {
     val startLevel = 0
 

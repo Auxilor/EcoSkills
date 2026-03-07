@@ -1,13 +1,13 @@
 package com.willfp.ecoskills.magic
 
-import com.willfp.eco.core.EcoPlugin
+import com.willfp.ecoskills.plugin
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 
-class MagicHandler(private val plugin: EcoPlugin) {
+object MagicHandler {
     internal fun startTicking() {
         // Stagger to avoid lag spikes with other plugins? Maybe?
         plugin.scheduler.runTimer(18, 20) {
@@ -20,9 +20,7 @@ class MagicHandler(private val plugin: EcoPlugin) {
     }
 }
 
-class MagicListener(
-    private val plugin: EcoPlugin
-) : Listener {
+object MagicListener : Listener {
     @EventHandler
     fun onJoin(event: PlayerJoinEvent) {
         plugin.scheduler.runLater(2) {

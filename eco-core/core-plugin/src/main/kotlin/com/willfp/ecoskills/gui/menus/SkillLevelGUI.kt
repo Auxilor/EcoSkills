@@ -1,6 +1,5 @@
 package com.willfp.ecoskills.gui.menus
 
-import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.gui.menu
 import com.willfp.eco.core.gui.menu.Menu
 import com.willfp.eco.core.gui.menu.MenuLayer
@@ -15,11 +14,11 @@ import com.willfp.eco.core.items.builder.ItemStackBuilder
 import com.willfp.eco.util.formatEco
 import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.gui.components.SkillLevelComponent
+import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.skills.Skill
 import org.bukkit.entity.Player
 
 class SkillLevelGUI(
-    plugin: EcoPlugin,
     private val skill: Skill
 ) {
     private val menu: Menu
@@ -28,7 +27,7 @@ class SkillLevelGUI(
         val maskPattern = plugin.configYml.getStrings("level-gui.mask.pattern").toTypedArray()
         val maskItems = MaskItems.fromItemNames(plugin.configYml.getStrings("level-gui.mask.materials"))
 
-        val levelComponent = SkillLevelComponent(plugin, skill)
+        val levelComponent = SkillLevelComponent(skill)
 
         menu = menu(plugin.configYml.getInt("level-gui.rows")) {
             title = plugin.configYml.getString("level-gui.title")

@@ -1,9 +1,9 @@
 package com.willfp.ecoskills.skills
 
 import com.github.benmanes.caffeine.cache.Caffeine
-import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.integrations.afk.AFKManager
 import com.willfp.ecoskills.api.gainSkillXP
+import com.willfp.ecoskills.plugin
 import com.willfp.libreforge.EmptyProvidedHolder
 import com.willfp.libreforge.counters.Accumulator
 import com.willfp.libreforge.toDispatcher
@@ -13,7 +13,6 @@ import java.util.concurrent.TimeUnit
 import kotlin.math.max
 
 class SkillXPAccumulator(
-    private val plugin: EcoPlugin,
     private val skill: Skill
 ) : Accumulator {
     override fun accept(player: Player, count: Double) {
