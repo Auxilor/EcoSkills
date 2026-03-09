@@ -3,7 +3,7 @@ messages:
   no-permission: "&cYou don't have permission to do this!"
   not-player: "&cThis command must be run by a player"
   invalid-command: "&cUnknown subcommand!"
-  reloaded: "Reloaded!"
+  reloaded: "Reloaded! Took %time%ms"
 
   invalid-player: "&cInvalid player!"
   invalid-skill: "&cInvalid skill!"
