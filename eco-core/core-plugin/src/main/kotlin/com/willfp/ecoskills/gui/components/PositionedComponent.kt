@@ -22,7 +22,7 @@ interface PositionedComponent : GUIComponent {
 
 fun MenuBuilder.addComponent(
     component: PositionedComponent
-) = if (component.isEnabled) addComponent(
+): MenuBuilder = if (component.isEnabled) addComponent(
     component.row,
     component.column,
     component
@@ -31,7 +31,7 @@ fun MenuBuilder.addComponent(
 fun MenuBuilder.addComponent(
     layer: MenuLayer,
     component: PositionedComponent
-) = if (component.isEnabled) addComponent(
+): MenuBuilder = if (component.isEnabled) addComponent(
     layer,
     component.row,
     component.column,

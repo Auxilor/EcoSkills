@@ -1,6 +1,5 @@
 package com.willfp.ecoskills.gui.menus
 
-import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.gui.menu
 import com.willfp.eco.core.gui.menu.Menu
 import com.willfp.eco.core.gui.slot.ConfigSlot
@@ -9,17 +8,18 @@ import com.willfp.eco.core.gui.slot.MaskItems
 import com.willfp.ecoskills.gui.components.CloseButton
 import com.willfp.ecoskills.gui.components.PlayerInfoIcon
 import com.willfp.ecoskills.gui.components.addComponent
+import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.skills.Skills
 import org.bukkit.entity.Player
 
 object SkillsGUI {
     private lateinit var menu: Menu
 
-    internal fun update(plugin: EcoPlugin) {
-        menu = buildMenu(plugin)
+    internal fun update() {
+        menu = buildMenu()
     }
 
-    private fun buildMenu(plugin: EcoPlugin): Menu {
+    private fun buildMenu(): Menu {
         return menu(plugin.configYml.getInt("gui.rows")) {
             title = plugin.langYml.getFormattedString("menu.title")
 

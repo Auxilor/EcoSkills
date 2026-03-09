@@ -1,7 +1,6 @@
 package com.willfp.ecoskills.gui.components
 
 import com.github.benmanes.caffeine.cache.Caffeine
-import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.gui.slot
 import com.willfp.eco.core.items.Items
@@ -19,8 +18,7 @@ private val itemCache = Caffeine.newBuilder()
 
 class StatIcon(
     stat: Stat,
-    config: Config,
-    plugin: EcoPlugin
+    config: Config
 ) : PositionedComponent {
     private val baseIcon = Items.lookup(config.getString("icon")).item
 

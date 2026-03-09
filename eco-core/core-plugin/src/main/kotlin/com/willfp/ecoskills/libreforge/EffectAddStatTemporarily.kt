@@ -1,12 +1,12 @@
 package com.willfp.ecoskills.libreforge
 
-import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.util.randInt
 import com.willfp.ecoskills.api.addStatModifier
 import com.willfp.ecoskills.api.modifiers.ModifierOperation
 import com.willfp.ecoskills.api.modifiers.StatModifier
 import com.willfp.ecoskills.api.removeStatModifier
+import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.stats.Stats
 import com.willfp.libreforge.NoCompileData
 import com.willfp.libreforge.arguments
@@ -18,9 +18,7 @@ import com.willfp.libreforge.triggers.TriggerData
 import com.willfp.libreforge.triggers.TriggerParameter
 import java.util.UUID
 
-class EffectAddStatTemporarily(
-    private val plugin: EcoPlugin
-) : Effect<NoCompileData>("add_stat_temporarily") {
+object EffectAddStatTemporarily : Effect<NoCompileData>("add_stat_temporarily") {
     override val runOrder = RunOrder.START // Not sure if this is necessary
 
     override val parameters = setOf(

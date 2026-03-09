@@ -2,7 +2,6 @@ package com.willfp.ecoskills.skills.display
 
 import com.github.benmanes.caffeine.cache.Cache
 import com.github.benmanes.caffeine.cache.Caffeine
-import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.eco.core.data.keys.PersistentDataKeyType
 import com.willfp.eco.core.data.profile
@@ -18,6 +17,7 @@ import com.willfp.ecoskills.api.getFormattedRequiredXP
 import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.api.getSkillProgress
 import com.willfp.ecoskills.api.getSkillXP
+import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.skills.Skill
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle
@@ -50,9 +50,7 @@ private fun playerSkill(player: Player, skill: Skill): PlayerSkill {
 val Player.isXPGainSoundEnabled: Boolean
     get() = this.profile.read(xpGainSoundEnabledKey)
 
-class GainXPDisplay(
-    private val plugin: EcoPlugin
-) : Listener {
+object GainXPDisplay : Listener {
     private val gainCache: Cache<PlayerSkill, Double> = Caffeine.newBuilder().expireAfterWrite(Duration.ofSeconds(3))
         .build()
 
@@ -89,9 +87,9 @@ class GainXPDisplay(
         player.sendTemporaryBossBar(
             message,
             event.skill.id,
-            this.plugin.configYml.getInt("skills.gain-xp.boss-bar.duration"),
-            BarColor.valueOf(this.plugin.configYml.getString("skills.gain-xp.boss-bar.color").uppercase()),
-            BarStyle.valueOf(this.plugin.configYml.getString("skills.gain-xp.boss-bar.style").uppercase()),
+            plugin.configYml.getInt("skills.gain-xp.boss-bar.duration"),
+            BarColor.valueOf(plugin.configYml.getString("skills.gain-xp.boss-bar.color").uppercase()),
+            BarStyle.valueOf(plugin.configYml.getString("skills.gain-xp.boss-bar.style").uppercase()),
             player.getSkillProgress(skill).coerceIn(0.0..1.0)
         )
     }

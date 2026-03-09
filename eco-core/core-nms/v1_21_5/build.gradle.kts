@@ -1,14 +1,28 @@
+plugins {
+    id("io.papermc.paperweight.userdev")
+}
+
 group = "com.willfp"
 version = rootProject.version
 
-val spigotVersion = "1.21.5-R0.1-SNAPSHOT"
-
 dependencies {
-    compileOnly("org.spigotmc:spigot:$spigotVersion")
+    implementation(project(":eco-core:core-nms:v1_21_4", configuration = "shadow"))
+    paperweight.paperDevBundle("1.21.5-R0.1-SNAPSHOT")
 }
 
-configurations.compileOnly {
-    resolutionStrategy {
-        force("org.spigotmc:spigot:$spigotVersion")
+tasks {
+    build {
+        dependsOn(reobfJar)
+    }
+
+    reobfJar {
+        mustRunAfter(shadowJar)
+    }
+
+    shadowJar {
+        relocate(
+            "com.willfp.ecoskills.proxy.v1_21_4",
+            "com.willfp.ecoskills.proxy.v1_21_5",
+        )
     }
 }

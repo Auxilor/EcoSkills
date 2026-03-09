@@ -10,7 +10,7 @@ class Effect(
     id: String,
     config: Config,
     plugin: EcoSkillsPlugin
-) : LevellableWithHolder(id, config, plugin) {
+) : LevellableWithHolder(id, config) {
     override fun equals(other: Any?): Boolean {
         return other is Effect && other.id == id
     }

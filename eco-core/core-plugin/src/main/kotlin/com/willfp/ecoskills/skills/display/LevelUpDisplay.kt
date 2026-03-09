@@ -1,17 +1,15 @@
 package com.willfp.ecoskills.skills.display
 
-import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.sound.PlayableSound
 import com.willfp.eco.util.toComponent
 import com.willfp.ecoskills.api.event.PlayerSkillLevelUpEvent
+import com.willfp.ecoskills.plugin
 import net.kyori.adventure.title.Title
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import java.time.Duration
 
-class LevelUpDisplay(
-    private val plugin: EcoPlugin
-) : Listener {
+object LevelUpDisplay : Listener {
     private val sound = PlayableSound.create(plugin.configYml.getSubsection("skills.level-up.sound"))
 
     @EventHandler

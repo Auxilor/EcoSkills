@@ -1,14 +1,20 @@
+plugins {
+    id("io.papermc.paperweight.userdev")
+}
+
 group = "com.willfp"
 version = rootProject.version
 
-val spigotVersion = "1.21.4-R0.1-SNAPSHOT"
-
 dependencies {
-    compileOnly("org.spigotmc:spigot:$spigotVersion")
+    paperweight.paperDevBundle("1.21.4-R0.1-SNAPSHOT")
 }
 
-configurations.compileOnly {
-    resolutionStrategy {
-        force("org.spigotmc:spigot:$spigotVersion")
+tasks {
+    build {
+        dependsOn(reobfJar)
+    }
+
+    reobfJar {
+        mustRunAfter(shadowJar)
     }
 }

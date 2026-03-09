@@ -1,7 +1,6 @@
 package com.willfp.ecoskills.gui.components
 
 import com.github.benmanes.caffeine.cache.Caffeine
-import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.gui.menu.Menu
 import com.willfp.eco.core.gui.onLeftClick
@@ -15,7 +14,6 @@ import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.skills.Skill
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import java.util.UUID
 import java.util.concurrent.TimeUnit
 
 private val iconCache = Caffeine.newBuilder()
@@ -24,8 +22,7 @@ private val iconCache = Caffeine.newBuilder()
 
 class SkillIcon(
     private val skill: Skill,
-    config: Config,
-    plugin: EcoPlugin
+    config: Config
 ) : PositionedComponent {
     private val baseIcon = Items.lookup(config.getString("icon")).item
         get() = field.clone()

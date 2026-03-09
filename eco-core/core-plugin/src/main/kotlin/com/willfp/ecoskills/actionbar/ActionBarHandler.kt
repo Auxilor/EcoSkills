@@ -1,6 +1,5 @@
 package com.willfp.ecoskills.actionbar
 
-import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.eco.core.data.keys.PersistentDataKeyType
 import com.willfp.eco.core.data.profile
@@ -10,6 +9,7 @@ import com.willfp.eco.core.placeholder.PlayerStaticPlaceholder
 import com.willfp.eco.core.placeholder.context.placeholderContext
 import com.willfp.eco.util.containsIgnoreCase
 import com.willfp.eco.util.namespacedKeyOf
+import com.willfp.ecoskills.plugin
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.attribute.Attribute
@@ -83,9 +83,7 @@ object ActionBarGamemodeListener : Listener {
     }
 }
 
-class ActionBarHandler(
-    private val plugin: EcoPlugin
-) {
+object ActionBarHandler {
     private val disabledWorlds = plugin.configYml
         .getStrings("persistent-action-bar.disabled-in-worlds")
 
@@ -156,9 +154,7 @@ class ActionBarHandler(
     }
 }
 
-class HealthScaleDisabler(
-    private val plugin: EcoPlugin
-) : Listener {
+object HealthScaleDisabler : Listener {
     @EventHandler
     fun handle(event: PlayerJoinEvent) {
         if (!plugin.configYml.getBool("persistent-action-bar.scale-health")) {

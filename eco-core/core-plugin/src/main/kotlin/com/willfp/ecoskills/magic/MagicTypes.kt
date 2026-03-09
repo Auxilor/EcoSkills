@@ -1,7 +1,6 @@
 package com.willfp.ecoskills.magic
 
 import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.libreforge.loader.LibreforgePlugin
 import com.willfp.libreforge.loader.configs.RegistrableCategory
 
@@ -13,6 +12,6 @@ object MagicTypes : RegistrableCategory<MagicType>("magic_type", "magic_types") 
     }
 
     override fun acceptConfig(plugin: LibreforgePlugin, id: String, config: Config) {
-        registry.register(MagicType(id, config, plugin as EcoSkillsPlugin))
+        registry.register(MagicType(id, config))
     }
 }

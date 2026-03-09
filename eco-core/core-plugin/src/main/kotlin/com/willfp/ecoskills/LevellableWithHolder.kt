@@ -10,9 +10,8 @@ import com.willfp.libreforge.effects.Effects
 
 abstract class LevellableWithHolder(
     id: String,
-    config: Config,
-    plugin: EcoSkillsPlugin
-) : Levellable(id, config, plugin) {
+    config: Config
+) : Levellable(id, config) {
     private val levels = mutableMapOf<Int, LevelHolder>()
 
     private val effects: EffectList

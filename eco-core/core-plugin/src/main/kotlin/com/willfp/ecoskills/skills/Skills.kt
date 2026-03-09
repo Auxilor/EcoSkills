@@ -3,7 +3,6 @@ package com.willfp.ecoskills.skills
 import com.github.benmanes.caffeine.cache.Caffeine
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.placeholder.PlayerPlaceholder
-import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.api.totalSkillLevel
 import com.willfp.ecoskills.gui.menus.SkillsGUI
 import com.willfp.ecoskills.plugin
@@ -46,7 +45,7 @@ object Skills : RegistrableCategory<Skill>("skill", "skills") {
         return if (index == -1) null else index + 1
     }
 
-    fun registerPlaceholders(plugin: EcoSkillsPlugin) {
+    fun registerPlaceholders() {
         PlayerPlaceholder(plugin, "leaderboard_rank") { player ->
             val emptyPosition = plugin.langYml.getString("top.empty-position")
             val position = getPosition(player.uniqueId)
@@ -60,13 +59,13 @@ object Skills : RegistrableCategory<Skill>("skill", "skills") {
 
     override fun acceptConfig(plugin: LibreforgePlugin, id: String, config: Config) {
         try {
-            registry.register(Skill(id, config, plugin as EcoSkillsPlugin))
+            registry.register(Skill(id, config))
         } catch (e: InvalidConfigurationException) {
             plugin.logger.warning("Failed to load skill $id: ${e.message}")
         }
     }
 
     override fun afterReload(plugin: LibreforgePlugin) {
-        SkillsGUI.update(plugin)
+        SkillsGUI.update()
     }
 }

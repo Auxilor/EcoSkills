@@ -1,7 +1,7 @@
 package com.willfp.ecoskills.skills.display
 
-import com.willfp.eco.core.EcoPlugin
 import com.willfp.eco.util.namespacedKeyOf
+import com.willfp.ecoskills.plugin
 import org.bukkit.Bukkit
 import org.bukkit.NamespacedKey
 import org.bukkit.boss.BarColor
@@ -37,9 +37,7 @@ fun Player.sendTemporaryBossBar(
     bossBars[key] = System.currentTimeMillis() + duration
 }
 
-class TemporaryBossBarHandler(
-    private val plugin: EcoPlugin
-) {
+object TemporaryBossBarHandler {
     internal fun startTicking() {
         plugin.scheduler.runTimer(5, 5) {
             val iterator = bossBars.iterator()
