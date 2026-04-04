@@ -17,18 +17,7 @@ publishing {
     publications {
         create<MavenPublication>("shadow") {
             from(components["java"])
-            artifactId = "EcoSkills"
-        }
-    }
-
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/Auxilor/eco")
-            credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
-            }
+            artifactId = rootProject.name
         }
     }
 
