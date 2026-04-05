@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     id("io.papermc.paperweight.userdev")
 }
@@ -16,5 +18,15 @@ tasks {
 
     reobfJar {
         mustRunAfter(shadowJar)
+    }
+
+    compileJava {
+        options.release.set(21)
+    }
+
+    compileKotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_21)
+        }
     }
 }

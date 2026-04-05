@@ -26,6 +26,7 @@ dependencies {
     implementation(project(":eco-core:core-nms:v1_21_8", configuration = "reobf"))
     implementation(project(":eco-core:core-nms:v1_21_10", configuration = "reobf"))
     implementation(project(":eco-core:core-nms:v1_21_11", configuration = "reobf"))
+    implementation(project(":eco-core:core-nms:v26_1_1", configuration = "shadow"))
 }
 
 allprojects {
@@ -49,11 +50,6 @@ allprojects {
         compileOnly("org.jetbrains:annotations:26.0.2")
         compileOnly("org.jetbrains.kotlin:kotlin-stdlib:2.3.0")
         compileOnly("com.github.ben-manes.caffeine:caffeine:3.2.3")
-    }
-
-    java {
-        withSourcesJar()
-        toolchain.languageVersion.set(JavaLanguageVersion.of(21))
     }
 
     tasks {
@@ -92,6 +88,17 @@ allprojects {
 
         build {
             dependsOn(shadowJar)
+        }
+
+        withType<JavaCompile>().configureEach {
+            options.release = 21
+        }
+    }
+
+    java {
+        withSourcesJar()
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(25)
         }
     }
 }

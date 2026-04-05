@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     id("io.papermc.paperweight.userdev")
 }
@@ -24,5 +26,15 @@ tasks {
             "com.willfp.ecoskills.proxy.v1_21_4",
             "com.willfp.ecoskills.proxy.v1_21_8",
         )
+    }
+
+    compileJava {
+        options.release.set(21)
+    }
+
+    compileKotlin {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_21)
+        }
     }
 }
