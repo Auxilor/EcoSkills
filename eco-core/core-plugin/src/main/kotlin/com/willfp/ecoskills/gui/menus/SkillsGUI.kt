@@ -41,11 +41,14 @@ object SkillsGUI {
                 addComponent(skill.icon)
             }
 
-            addComponent(
-                CloseButton(
-                    plugin.configYml.getSubsection("gui.close")
+            val closeEnabled = plugin.configYml.getBoolOrNull("gui.close.enabled") ?: true
+            if (closeEnabled) {
+                addComponent(
+                    CloseButton(
+                        plugin.configYml.getSubsection("gui.close")
+                    )
                 )
-            )
+            }
 
             for (config in plugin.configYml.getSubsections("gui.custom-slots")) {
                 setSlot(

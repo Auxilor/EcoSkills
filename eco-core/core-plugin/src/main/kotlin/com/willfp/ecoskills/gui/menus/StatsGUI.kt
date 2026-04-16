@@ -42,11 +42,14 @@ object StatsGUI {
                 addComponent(stat.icon)
             }
 
-            addComponent(
-                CloseButton(
-                    plugin.configYml.getSubsection("stats-gui.close")
+            val closeEnabled = plugin.configYml.getBoolOrNull("stats-gui.close.enabled") ?: true
+            if (closeEnabled) {
+                addComponent(
+                    CloseButton(
+                        plugin.configYml.getSubsection("stats-gui.close")
+                    )
                 )
-            )
+            }
 
             addComponent(
                 BackButton(
