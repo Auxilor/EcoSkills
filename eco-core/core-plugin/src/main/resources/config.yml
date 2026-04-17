@@ -96,6 +96,7 @@ gui:
       - "&7and progress this skill!"
 
   close:
+    enabled: true
     item: barrier
     name: "&cClose"
     location:
@@ -150,6 +151,7 @@ stats-gui:
       column: 4
 
   close:
+    enabled: true
     item: barrier
     name: "&cClose"
     location:
@@ -216,6 +218,7 @@ level-gui:
         column: 6
 
     close:
+      enabled: true
       material: barrier
       name: "&cClose"
       location:
@@ -249,13 +252,6 @@ level-gui:
         - "&f"
         - "&fRewards:"
         - "%rewards%"
-
-  close:
-    material: barrier
-    name: "&cClose"
-    location:
-      row: 6
-      column: 5
 
   # Custom GUI slots; see here for a how-to: https://plugins.auxilor.io/all-plugins/custom-gui-slots
   custom-slots: [ ]
