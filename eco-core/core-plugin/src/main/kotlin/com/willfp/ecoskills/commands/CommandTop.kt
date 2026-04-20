@@ -19,7 +19,7 @@ object CommandTop : Subcommand(
 ) {
 
     override fun onExecute(sender: CommandSender, args: List<String>) {
-        plugin.scheduler.runAsync {
+        plugin.scheduler.runTaskAsync {
             val skill = Skills.getByID(args.getOrNull(0))
 
             val pageIndex = if (skill == null) 0 else 1
@@ -31,7 +31,7 @@ object CommandTop : Subcommand(
                 && args.getOrNull(pageIndex)?.isBlank() == false
             ) {
                 sender.sendMessage(plugin.langYml.getMessage("invalid-skill"))
-                return@runAsync
+                return@runTaskAsync
             }
 
             val offset = (page - 1) * 10

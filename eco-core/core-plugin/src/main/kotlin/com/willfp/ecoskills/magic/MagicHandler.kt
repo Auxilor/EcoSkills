@@ -10,10 +10,12 @@ import org.bukkit.event.player.PlayerJoinEvent
 object MagicHandler {
     internal fun startTicking() {
         // Stagger to avoid lag spikes with other plugins? Maybe?
-        plugin.scheduler.runTimer(18, 20) {
+        plugin.scheduler.runTaskTimer(18, 20) {
             for (player in Bukkit.getOnlinePlayers()) {
-                for (type in MagicTypes.values()) {
-                    type.tick(player)
+                plugin.scheduler.runTask(player) { // folia issue
+                    for (type in MagicTypes.values()) {
+                        type.tick(player)
+                    }
                 }
             }
         }
@@ -23,7 +25,7 @@ object MagicHandler {
 object MagicListener : Listener {
     @EventHandler
     fun onJoin(event: PlayerJoinEvent) {
-        plugin.scheduler.runLater(2) {
+        plugin.scheduler.runTaskLater(event.player, 2) {
             for (type in MagicTypes.values()) {
                 if (type.joinOnFull) {
                     event.player.magic[type] = type.getLimit(event.player)
