@@ -123,9 +123,11 @@ object ActionBarHandler {
     }
 
     internal fun startTicking() {
-        plugin.scheduler.runTimer(5, 5) {
+        plugin.scheduler.runTaskTimer(5, 5) {
             for (player in Bukkit.getOnlinePlayers()) {
-                trySendMessage(player)
+                plugin.scheduler.runTask(player) { // folia issue
+                    trySendMessage(player)
+                }
             }
         }
     }
