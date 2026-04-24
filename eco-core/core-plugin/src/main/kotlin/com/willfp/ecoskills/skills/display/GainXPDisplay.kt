@@ -63,7 +63,7 @@ object GainXPDisplay : Listener {
         gainCache.put(playerSkill(player, event.skill), current + event.gainedXP)
 
         // Run next tick because level up calls before xp is added
-        plugin.scheduler.run {
+        plugin.scheduler.runTask(player) {
             handleActionBar(event)
             handleBossBar(event)
 
