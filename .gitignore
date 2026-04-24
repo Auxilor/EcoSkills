@@ -20,4 +20,4 @@ bin/
 gradle-app.setting
 
 # Mac OSX
-.DS_Store
+.DS_Store.worktrees
