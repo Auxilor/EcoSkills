@@ -4,8 +4,6 @@ main: com.willfp.ecoskills.EcoSkillsPlugin
 api-version: 1.21.4
 authors: [ Auxilor ]
 website: willfp.com
-folia-supported: true
-
 depend:
   - eco
 softdepend:

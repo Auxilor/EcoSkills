@@ -39,7 +39,7 @@ fun Player.sendTemporaryBossBar(
 
 object TemporaryBossBarHandler {
     internal fun startTicking() {
-        plugin.scheduler.runTaskTimer(5, 5) {
+        plugin.scheduler.runTimer(5, 5) {
             val iterator = bossBars.iterator()
 
             while (iterator.hasNext()) {

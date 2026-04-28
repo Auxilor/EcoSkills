@@ -279,8 +279,6 @@ damage-indicators:
   enabled: true
   final-damage: false # If final damage (with reductions applied) should be used.
 
-  time-to-display: 30 # Time in ticks for how long to display the damage indicator.
-
   disabled-for-entities:
     - area_effect_cloud
     - armor_stand
