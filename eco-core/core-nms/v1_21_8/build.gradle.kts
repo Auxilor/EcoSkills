@@ -8,7 +8,6 @@ group = "com.willfp"
 version = rootProject.version
 
 dependencies {
-    implementation(project(":eco-core:core-nms:v1_21_4", configuration = "shadow"))
     paperweight.paperDevBundle("1.21.8-R0.1-SNAPSHOT")
 }
 

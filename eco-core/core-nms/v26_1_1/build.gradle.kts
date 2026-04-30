@@ -9,32 +9,26 @@ version = rootProject.version
 
 dependencies {
     implementation(project(":eco-core:core-nms:v1_21_8", configuration = "shadow"))
-    paperweight.paperDevBundle("1.21.10-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("26.1.1.build.+")
 }
 
 tasks {
-    build {
-        dependsOn(reobfJar)
-    }
-
-    reobfJar {
-        mustRunAfter(shadowJar)
-    }
-
     shadowJar {
         relocate(
             "com.willfp.ecoskills.proxy.v1_21_8",
-            "com.willfp.ecoskills.proxy.v1_21_10",
+            "com.willfp.ecoskills.proxy.v26_1_1",
         )
+
+        duplicatesStrategy = DuplicatesStrategy.FAIL
     }
 
     compileJava {
-        options.release.set(21)
+        options.release.set(25)
     }
 
     compileKotlin {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_21)
+            jvmTarget.set(JvmTarget.JVM_25)
         }
     }
 }
