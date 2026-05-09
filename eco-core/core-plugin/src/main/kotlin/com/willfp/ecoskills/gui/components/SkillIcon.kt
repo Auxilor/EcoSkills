@@ -28,10 +28,11 @@ class SkillIcon(
         get() = field.clone()
 
     private val slot = slot({ player, _ ->
-        iconCache.get(player.uniqueId.hashCode() xor skill.hashCode()) {
+        val cacheKey = player.uniqueId.hashCode() xor skill.hashCode()
+        iconCache.getIfPresent(cacheKey) ?: run {
             val level = player.getSkillLevel(skill)
 
-            baseIcon.modify {
+            val item = baseIcon.modify {
                 setDisplayName(
                     plugin.configYml.getFormattedString("gui.skill-icon.name")
                         .replace("%skill%", skill.name)
@@ -45,6 +46,9 @@ class SkillIcon(
                     ).lineWrap(plugin.configYml.getInt("gui.skill-icon.line-wrap"))
                 )
             }
+
+            iconCache.put(cacheKey, item)
+            item
         }
     }) {
         onLeftClick { player, _, _, _ ->

@@ -98,20 +98,22 @@ abstract class Levellable(
     }
 
     fun getDescription(level: Int): String {
-        return descCache.get(level) {
-            var desc = unformattedDescription
+        descCache.getIfPresent(level)?.let { return it }
 
-            val context = placeholderContext(
-                injectable = LevelInjectable(level)
-            )
+        var desc = unformattedDescription
 
-            for (placeholder in loadDescriptionPlaceholders(config)) {
-                val id = placeholder.id
-                val value = evaluateExpression(placeholder.expr, context)
-                desc = desc.replace("%$id%", value.toNiceString())
-            }
+        val context = placeholderContext(
+            injectable = LevelInjectable(level)
+        )
 
-            desc.formatEco(context)
+        for (placeholder in loadDescriptionPlaceholders(config)) {
+            val id = placeholder.id
+            val value = evaluateExpression(placeholder.expr, context)
+            desc = desc.replace("%$id%", value.toNiceString())
         }
+
+        val result = desc.formatEco(context)
+        descCache.put(level, result)
+        return result
     }
 }
