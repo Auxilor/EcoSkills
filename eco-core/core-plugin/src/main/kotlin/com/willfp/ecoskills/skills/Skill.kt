@@ -126,10 +126,12 @@ class Skill(
      */
     fun getXPRequired(level: Int): Double {
         if (xpFormula != null) {
+            // Level 0 would make most formulas return 0; use 1 to get XP required to reach level 1.
+            val formulaLevel = if (level == 0) 1 else level
             return evaluateExpression(
                 xpFormula,
                 placeholderContext(
-                    injectable = LevelInjectable(level)
+                    injectable = LevelInjectable(formulaLevel)
                 )
             )
         }
