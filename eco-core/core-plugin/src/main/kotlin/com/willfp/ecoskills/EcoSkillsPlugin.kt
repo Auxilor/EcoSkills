@@ -1,5 +1,6 @@
 package com.willfp.ecoskills
 
+import com.willfp.eco.core.bstats.EcoMetricsChart
 import com.willfp.eco.core.command.impl.PluginCommand
 import com.willfp.eco.core.packet.PacketListener
 import com.willfp.ecoskills.actionbar.ActionBarCompatibilityProxy
@@ -150,4 +151,23 @@ class EcoSkillsPlugin : LibreforgePlugin() {
             getProxy(ActionBarCompatibilityProxy::class.java)
         )
     }
+
+    override fun getCustomCharts() = listOf(
+        EcoMetricsChart.SingleLine("total_skills") { Skills.values().size },
+        EcoMetricsChart.SingleLine("total_stats") { Stats.values().size },
+        EcoMetricsChart.SingleLine("total_skill_effects") { Effects.values().size },
+        EcoMetricsChart.SingleLine("total_magic_types") { MagicTypes.values().size },
+        EcoMetricsChart.SimplePie("leaderboard_enabled") {
+            if (configYml.getBool("leaderboard.enabled")) "enabled" else "disabled"
+        },
+        EcoMetricsChart.SimplePie("use_local_storage") {
+            if (configYml.getBool("use-local-storage")) "local" else "shared"
+        },
+        EcoMetricsChart.SimplePie("damage_indicators_enabled") {
+            if (configYml.getBool("damage-indicators.enabled")) "enabled" else "disabled"
+        },
+        EcoMetricsChart.SimplePie("persistent_action_bar") {
+            if (configYml.getBool("persistent-action-bar.enabled")) "enabled" else "disabled"
+        }
+    )
 }
