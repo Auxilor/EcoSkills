@@ -269,6 +269,8 @@ class Skill(
                 ).apply {
                     addPlaceholder(NamedValue("level", level))
                     addPlaceholder(NamedValue("level_numeral", level.toNumeral()))
+                    addPlaceholder(NamedValue("previous_level", level - 1))
+                    addPlaceholder(NamedValue("previous_level_numeral", (level - 1).toNumeral()))
                 }
             )
         }
