@@ -15,6 +15,7 @@ import com.willfp.libreforge.effects.Identifiers
 import com.willfp.libreforge.effects.RunOrder
 import com.willfp.libreforge.get
 import org.bukkit.entity.Player
+import java.util.UUID
 
 object EffectMultiplyAllStats : Effect<NoCompileData>("multiply_all_stats") {
     override val runOrder = RunOrder.START
@@ -25,6 +26,9 @@ object EffectMultiplyAllStats : Effect<NoCompileData>("multiply_all_stats") {
 
     override val shouldReload = false
 
+    // "${playerUUID}_${holderID}" -> set of modifier UUIDs active for that holder
+    private val activeModifiers = HashMap<String, MutableSet<UUID>>()
+
     override fun onEnable(
         dispatcher: Dispatcher<*>,
         config: Config,
@@ -33,13 +37,16 @@ object EffectMultiplyAllStats : Effect<NoCompileData>("multiply_all_stats") {
         compileData: NoCompileData
     ) {
         val player = dispatcher.get<Player>() ?: return
+        val lookupKey = "${player.uniqueId}_${holder.holder.id}"
+        val uuids = activeModifiers.getOrPut(lookupKey) { mutableSetOf() }
 
-        val factory = identifiers.makeFactory()
-
-        for ((offset, stat) in Stats.values().withIndex()) {
+        for (stat in Stats.values()) {
+            val modifierUUID = UUID.nameUUIDFromBytes("${lookupKey}_${stat.id}".toByteArray())
+            uuids.add(modifierUUID)
+            player.removeStatModifier(modifierUUID)
             player.addStatModifier(
                 StatModifier(
-                    factory.makeIdentifiers(offset).uuid,
+                    modifierUUID,
                     stat,
                     config.getDoubleFromExpression("multiplier", player),
                     ModifierOperation.MULTIPLY
@@ -51,10 +58,11 @@ object EffectMultiplyAllStats : Effect<NoCompileData>("multiply_all_stats") {
     override fun onDisable(dispatcher: Dispatcher<*>, identifiers: Identifiers, holder: ProvidedHolder) {
         val player = dispatcher.get<Player>() ?: return
 
-        val factory = identifiers.makeFactory()
+        val lookupKey = "${player.uniqueId}_${holder.holder.id}"
+        val modifierUUIDs = activeModifiers.remove(lookupKey) ?: return
 
-        for (offset in Stats.values().indices) {
-            player.removeStatModifier(factory.makeIdentifiers(offset).uuid)
+        for (uuid in modifierUUIDs) {
+            player.removeStatModifier(uuid)
         }
     }
 }
