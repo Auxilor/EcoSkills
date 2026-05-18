@@ -5,18 +5,35 @@ import com.willfp.eco.util.toComponent
 import com.willfp.ecoskills.api.event.PlayerSkillLevelUpEvent
 import com.willfp.ecoskills.plugin
 import net.kyori.adventure.title.Title
+import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import java.time.Duration
+import java.util.UUID
 
 object LevelUpDisplay : Listener {
     private val sound = PlayableSound.create(plugin.configYml.getSubsection("skills.level-up.sound"))
+
+    private val soundsToPlay = mutableSetOf<UUID>()
+
+    internal fun startTickingSounds() {
+        plugin.scheduler.runTimer(1, 1) {
+            for (uuid in soundsToPlay) {
+                val player = Bukkit.getPlayer(uuid) ?: continue
+                sound?.playTo(player)
+            }
+
+            soundsToPlay.clear()
+        }
+    }
 
     @EventHandler
     fun handle(event: PlayerSkillLevelUpEvent) {
         val player = event.player
         val skill = event.skill
         val level = event.level
+
+        soundsToPlay += player.uniqueId
 
         if (plugin.configYml.getBool("skills.level-up.message.enabled")) {
             val rawMessage = plugin.configYml.getStrings("skills.level-up.message.message")
@@ -52,7 +69,5 @@ object LevelUpDisplay : Listener {
                 )
             )
         }
-
-        sound?.playTo(player)
     }
 }
