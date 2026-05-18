@@ -123,6 +123,7 @@ class EcoSkillsPlugin : LibreforgePlugin() {
 
         TemporaryBossBarHandler.startTicking()
         MagicHandler.startTicking()
+        GainXPDisplay.startTickingSounds()
     }
 
     override fun loadPluginCommands(): List<PluginCommand> {

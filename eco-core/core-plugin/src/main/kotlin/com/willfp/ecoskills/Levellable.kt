@@ -17,6 +17,7 @@ import com.willfp.eco.util.toNumeral
 import com.willfp.ecoskills.skills.SkillsLeaderboard.getPosition
 import com.willfp.ecoskills.util.LevelInjectable
 import com.willfp.ecoskills.util.loadDescriptionPlaceholders
+import jdk.internal.joptsimple.util.RegexMatcher.regex
 import org.bukkit.OfflinePlayer
 import java.util.concurrent.TimeUnit
 
@@ -82,6 +83,8 @@ abstract class Levellable(
             .replace("%ecoskills_${id}%", level.toString())
             .replace("%level%", level.toString())
             .replace("%level_numeral%", level.toNumeral())
+            .replace("%previous_level%", (level - 1).toString())
+            .replace("%previous_level_numeral%", (level - 1).toNumeral())
 
         // Regex for %level_X% and %level_X_numeral%
         val regex = Regex("%level_(-?\\d+)(_numeral)?%")

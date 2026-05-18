@@ -19,6 +19,7 @@ import com.willfp.ecoskills.api.getSkillProgress
 import com.willfp.ecoskills.api.getSkillXP
 import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.skills.Skill
+import org.bukkit.Bukkit
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle
 import org.bukkit.entity.Player
@@ -56,20 +57,33 @@ object GainXPDisplay : Listener {
 
     private val sound = PlayableSound.create(plugin.configYml.getSubsection("skills.gain-xp.sound"))
 
+    private val soundsToPlay = mutableSetOf<UUID>()
+
+    internal fun startTickingSounds() {
+        plugin.scheduler.runTimer(1, 1) {
+            for (uuid in soundsToPlay) {
+                val player = Bukkit.getPlayer(uuid) ?: continue
+                sound?.playTo(player)
+            }
+
+            soundsToPlay.clear()
+        }
+    }
+
     @EventHandler(priority = EventPriority.MONITOR)
     fun handle(event: PlayerSkillXPGainEvent) {
         val player = event.player
         val current = gainCache.get(playerSkill(player, event.skill)) { 0.0 }
         gainCache.put(playerSkill(player, event.skill), current + event.gainedXP)
 
+        if (player.isXPGainSoundEnabled) {
+            soundsToPlay += event.player.uniqueId
+        }
+
         // Run next tick because level up calls before xp is added
         plugin.scheduler.run {
             handleActionBar(event)
             handleBossBar(event)
-
-            if (player.isXPGainSoundEnabled) {
-                sound?.playTo(player)
-            }
         }
     }
 
