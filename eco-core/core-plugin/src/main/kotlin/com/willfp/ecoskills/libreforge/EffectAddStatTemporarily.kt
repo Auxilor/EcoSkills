@@ -1,7 +1,6 @@
 package com.willfp.ecoskills.libreforge
 
 import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.eco.util.randInt
 import com.willfp.ecoskills.api.addStatModifier
 import com.willfp.ecoskills.api.modifiers.ModifierOperation
 import com.willfp.ecoskills.api.modifiers.StatModifier
@@ -35,7 +34,7 @@ object EffectAddStatTemporarily : Effect<NoCompileData>("add_stat_temporarily") 
         val player = data.player ?: return false
         val stat = Stats.getByID(config.getString("stat")) ?: return false
         val amount = config.getDoubleFromExpression("amount", data)
-        val uuid = UUID.nameUUIDFromBytes("ast_${randInt(0, 1000000)}".toByteArray())
+        val uuid = UUID.randomUUID()
 
         player.addStatModifier(
             StatModifier(

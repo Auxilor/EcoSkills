@@ -15,6 +15,7 @@ import com.willfp.libreforge.effects.Identifiers
 import com.willfp.libreforge.effects.RunOrder
 import com.willfp.libreforge.get
 import org.bukkit.entity.Player
+import java.util.UUID
 
 object EffectAddStat : Effect<NoCompileData>("add_stat") {
     override val runOrder = RunOrder.START
@@ -24,6 +25,8 @@ object EffectAddStat : Effect<NoCompileData>("add_stat") {
         require("amount", "You must specify the amount to add/remove!")
     }
 
+    private val activeModifiers = HashMap<String, MutableSet<UUID>>()
+
     override fun onEnable(
         dispatcher: Dispatcher<*>,
         config: Config,
@@ -32,12 +35,17 @@ object EffectAddStat : Effect<NoCompileData>("add_stat") {
         compileData: NoCompileData
     ) {
         val player = dispatcher.get<Player>() ?: return
-
         val stat = Stats.getByID(config.getString("stat")) ?: return
 
+        val lookupKey = "${player.uniqueId}_${holder.holder.id}"
+        val modifierUUID = UUID.nameUUIDFromBytes("${lookupKey}_${stat.id}".toByteArray())
+
+        activeModifiers.getOrPut(lookupKey) { mutableSetOf() }.add(modifierUUID)
+
+        player.removeStatModifier(modifierUUID)
         player.addStatModifier(
             StatModifier(
-                identifiers.uuid,
+                modifierUUID,
                 stat,
                 config.getDoubleFromExpression("amount", player),
                 ModifierOperation.ADD
@@ -48,6 +56,11 @@ object EffectAddStat : Effect<NoCompileData>("add_stat") {
     override fun onDisable(dispatcher: Dispatcher<*>, identifiers: Identifiers, holder: ProvidedHolder) {
         val player = dispatcher.get<Player>() ?: return
 
-        player.removeStatModifier(identifiers.uuid)
+        val lookupKey = "${player.uniqueId}_${holder.holder.id}"
+        val modifierUUIDs = activeModifiers.remove(lookupKey) ?: return
+
+        for (uuid in modifierUUIDs) {
+            player.removeStatModifier(uuid)
+        }
     }
 }
