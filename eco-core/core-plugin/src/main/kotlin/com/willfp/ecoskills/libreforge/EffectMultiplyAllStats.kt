@@ -26,7 +26,6 @@ object EffectMultiplyAllStats : Effect<NoCompileData>("multiply_all_stats") {
 
     override val shouldReload = false
 
-    // "${playerUUID}_${holderID}" -> set of modifier UUIDs active for that holder
     private val activeModifiers = HashMap<String, MutableSet<UUID>>()
 
     override fun onEnable(
