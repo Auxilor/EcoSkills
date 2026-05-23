@@ -116,17 +116,15 @@ reward-messages:
 
 
 xp-gain-methods:
-  - trigger: mine_block
+  - trigger: mine_block_cascade
     multiplier: 1
     filters:
-      fully_grown: true
       blocks:
         - bamboo
 
-  - trigger: mine_block
+  - trigger: mine_block_cascade
     multiplier: 2
     filters:
-      fully_grown: true
       blocks:
         - cactus
         - sugar_cane
