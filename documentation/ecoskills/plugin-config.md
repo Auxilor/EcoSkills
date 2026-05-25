@@ -1,0 +1,405 @@
+---
+title: "Plugin Config"
+sidebar_position: 8
+---
+
+## Default config.yml
+
+```yaml
+# Even if eco is set up to use a database, you can
+# force EcoSkills to save to local storage to disable
+# cross-server sync.
+use-local-storage: false
+
+leaderboard:
+  # You can disable the top leaderboard if you don't want it
+  # Please note that it will require a full server restart to take into effect
+  enabled: true
+
+  # Time in seconds for the lifetime of the leaderboard cache
+  cache-lifetime: 60
+
+# Worlds that EcoSkills should be disabled in
+disabled-in-worlds:
+  - world_1
+  - world_2
+
+gui:
+  rows: 6
+
+  # The amount of time (in milliseconds) that the GUI icons should be cached for
+  # Prevents spamming the GUI to cause lag
+  cache-ttl: 2000
+
+  mask:
+    # The way the mask works is by having a list of materials
+    # And then a pattern to use those materials.
+
+    # The pattern is the rows in the GUI
+    # Each line must be 9 long, and the amount of rows should be the amount of rows in the GUI
+    # A zero represents nothing
+    # A 1 represents the first material
+    # A 2 represents the second material
+    # And so on, you can add up to 9.
+
+    materials:
+      - gray_stained_glass_pane
+      - black_stained_glass_pane
+    pattern:
+      - "211101112"
+      - "211111112"
+      - "210000012"
+      - "210010012"
+      - "211111112"
+      - "211101112"
+
+  player-info:
+    row: 1
+    column: 5
+
+    enabled: true
+    name: "&f%player%&f's &fStats:"
+
+    lore:
+      - "&f"
+      - " %ecoskills_defense_name%&f %ecoskills_defense_base% &e%ecoskills_defense_bonus%"
+      - " %ecoskills_strength_name%&f %ecoskills_strength_base% &e%ecoskills_strength_bonus%"
+      - " %ecoskills_crit_chance_name%&f %ecoskills_crit_chance_base%% &e%ecoskills_crit_chance_bonus%"
+      - " %ecoskills_crit_damage_name%&f %ecoskills_crit_damage_base% &e%ecoskills_crit_damage_bonus%"
+      - " %ecoskills_speed_name%&f %ecoskills_speed_base% &e%ecoskills_speed_bonus%"
+      - " %ecoskills_wisdom_name%&f %ecoskills_wisdom_base% &e%ecoskills_wisdom_bonus%"
+      - " %ecoskills_ferocity_name%&f %ecoskills_ferocity_base% &e%ecoskills_ferocity_bonus%"
+      - "&f"
+      - "&7Total Skill Level: &f%ecoskills_total_skill_level%"
+      - "&7Average Skill Level: &f%ecoskills_average_skill_level%"
+
+    view-more:
+      - ""
+      - "&eClick to view more!"
+
+  skill-icon:
+    name: "&#ff00ae%skill% &d%level_numeral%"
+    lore:
+      - "&8&o%description%"
+      - "&f"
+      - "%gui_lore%"
+      - "&f"
+      - "&fProgress to next level:"
+      - "&8» &e%percentage_progress%%"
+      - "&8» &e%current_xp%&8/&7%required_xp% &fXP"
+      - "&f"
+      - "&eClick to view Level Progression!"
+    line-wrap: 32
+
+  unknown-skill-icon:
+    name: "&#964b00Unknown Skill"
+    icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYmFkYzA0OGE3Y2U3OGY3ZGFkNzJhMDdkYTI3ZDg1YzA5MTY4ODFlNTUyMmVlZWQxZTNkYWYyMTdhMzhjMWEifX19
+    lore:
+      - "&7Keep playing to learn about"
+      - "&7and progress this skill!"
+
+  close:
+    enabled: true
+    item: barrier
+    name: "&cClose"
+    location:
+      row: 6
+      column: 5
+
+  # Custom GUI slots; see here for a how-to: https://plugins.auxilor.io/all-plugins/custom-gui-slots
+  custom-slots: [ ]
+
+
+stats-gui:
+  rows: 6
+
+  mask:
+    # The way the mask works is by having a list of materials
+    # And then a pattern to use those materials.
+
+    # The pattern is the rows in the GUI
+    # Each line must be 9 long, and the amount of rows should be the amount of rows in the GUI
+    # A zero represents nothing
+    # A 1 represents the first material
+    # A 2 represents the second material
+    # And so on, you can add up to 9.
+
+    materials:
+      - gray_stained_glass_pane
+      - black_stained_glass_pane
+    pattern:
+      - "211101112"
+      - "211111112"
+      - "201010102"
+      - "210101012"
+      - "211111112"
+      - "211101112"
+
+  player-info:
+    row: 1
+    column: 5
+
+  stat-icon:
+    name: "%stat%"
+    lore:
+      - "&fLevel: &a%level%"
+      - "&8&o%description%"
+    line-wrap: 24
+
+  back:
+    item: arrow
+    name: "&eGo Back"
+    location:
+      row: 6
+      column: 4
+
+  close:
+    enabled: true
+    item: barrier
+    name: "&cClose"
+    location:
+      row: 6
+      column: 5
+
+  # Custom GUI slots; see here for a how-to: https://plugins.auxilor.io/all-plugins/custom-gui-slots
+  custom-slots: [ ]
+
+
+level-gui:
+  title: "&7%skill%"
+  rows: 6
+
+  mask:
+    # The way the mask works is by having a list of materials
+    # And then a pattern to use those materials.
+
+    # The pattern is the rows in the GUI
+    # Each line must be 9 long, and the amount of rows should be the amount of rows in the GUI
+    # A zero represents nothing
+    # A 1 represents the first material
+    # A 2 represents the second material
+    # And so on, you can add up to 9.
+
+    materials:
+      - black_stained_glass_pane
+    pattern:
+      - "111111111"
+      - "111111111"
+      - "111111111"
+      - "111111111"
+      - "111111111"
+      - "111111111"
+
+  progression-slots:
+    # To set the order of the pattern,
+    # Use 1-9 and then a-z: a goes after 9.
+    pattern:
+      - "109ab0jkl"
+      - "2080c0i0m"
+      - "3070d0h0n"
+      - "4560efg0o"
+      - "00000000p"
+      - "00000000q"
+
+    # The amount of the item as a function of the level
+    item-amount: "%level%"
+    # For example, increasing every 10 levels would be "ceil((%level% + 1) / 10)"
+    # The value is always rounded down.
+
+    prev-page:
+      material: arrow
+      name: "&fPrevious Page"
+      location:
+        row: 6
+        column: 4
+
+    next-page:
+      material: arrow
+      name: "&fNext Page"
+      location:
+        row: 6
+        column: 6
+
+    close:
+      enabled: true
+      material: barrier
+      name: "&cClose"
+      location:
+        row: 6
+        column: 5
+
+    unlocked:
+      item: lime_stained_glass_pane
+      name: "&a%skill% %level_numeral%"
+      lore:
+        - "&f"
+        - "&fRewards:"
+        - "%rewards%"
+        - "&f"
+        - "&aUNLOCKED"
+    in-progress:
+      item: yellow_stained_glass_pane
+      name: "&e%skill% %level_numeral%"
+      lore:
+        - "&f"
+        - "&fRewards:"
+        - "%rewards%"
+        - "&f"
+        - "&fProgress:"
+        - "&8» &e%percentage_progress%%"
+        - "&8» &e%current_xp%&8/&7%required_xp% &fXP"
+    locked:
+      item: red_stained_glass_pane
+      name: "&c%skill% %level_numeral%"
+      lore:
+        - "&f"
+        - "&fRewards:"
+        - "%rewards%"
+
+  # Custom GUI slots; see here for a how-to: https://plugins.auxilor.io/all-plugins/custom-gui-slots
+  custom-slots: [ ]
+
+
+# A constant action bar showing health and any other information to all players online
+persistent-action-bar:
+  # If the persistent action bar should be enabled
+  enabled: true
+  # If the persistent action bar should require the 'ecoskills.enable-persistent-action-bar' permission
+  require-permission: false
+  # If a player's health should be scaled to always display as 10 hearts.
+  scale-health: true
+  # The format
+  format: "&c❤ &f%health%&8/&f%max_health%                 &#e884b0🛡 &f%ecoskills_defense% &8| &#db0000🗡 &f%ecoskills_strength% &8| &#40ffe6✦ &f%ecoskills_speed%"
+
+  # Optional format if mana is being used.
+  # format: "&c❤ &f%health%&8/&f%max_health%                  &f%ecoskills_mana%&8/&f%ecoskills_mana_limit% &#40ffe6🌊"
+
+  # The worlds that the action bar should be disabled in.
+  disabled-in-worlds: [ ]
+
+damage-indicators:
+  # Requires a compatible Hologram plugin to be installed
+  enabled: true
+  final-damage: false # If final damage (with reductions applied) should be used.
+
+  disabled-for-entities:
+    - area_effect_cloud
+    - armor_stand
+    - arrow
+    - block_display
+    - dragon_fireball
+    - dropped_item
+    - egg
+    - ender_crystal
+    - ender_pearl
+    - ender_signal
+    - evoker_fangs
+    - experience_orb
+    - fireball
+    - falling_block
+    - firework_rocket
+    - fishing_hook
+    - glow_item_frame
+    - interaction
+    - item_display
+    - item_frame
+    - leash_hitch
+    - lightning
+    - llama_spit
+    - marker
+    - minecart
+    - minecart_chest
+    - minecart_command
+    - minecart_furnace
+    - minecart_hopper
+    - minecart_mob_spawner
+    - minecart_tnt
+    - painting
+    - primed_tnt
+    - shulker_bullet
+    - small_fireball
+    - snowball
+    - spectral_arrow
+    - splash_potion
+    - text_display
+    - thrown_exp_bottle
+    - trident
+    - wind_charge
+    - wither_skull
+
+  format:
+    normal: "&7%damage%"
+    crit: "&f✧ <gradient:#f953c6>%damage%</gradient:#b91d73> &f✧"
+
+  healing:
+    enabled: true
+    format: "&a+%damage%"
+
+  max-x-offset: 0.6
+  max-y-offset: 0.6
+  max-z-offset: 0.6
+
+skills:
+  prevent-levelling-while-afk: true # If the player is AFK then don't give xp
+
+  # Ways to tell the player about skill xp gain
+  gain-xp:
+    action-bar:
+      # If the action bar should be used
+      enabled: true
+      # The actionbar message that should be sent
+      message: "&f%skill% &8| &9(%current_xp%/%required_xp%) &e+%gained_xp%"
+    boss-bar:
+      # If the boss bar should be used
+      enabled: false
+      # The boss bar message that should be sent
+      format: "&f%skill% &8| &9(%current_xp%/%required_xp%)"
+      # The color of the boss bar (from https://hub.spigotmc.org/javadocs/spigot/org/bukkit/boss/BarColor.html)
+      color: blue
+      # The style of the boss bar (from https://hub.spigotmc.org/javadocs/spigot/org/bukkit/boss/BarStyle.html)
+      style: solid
+      # How long the boss bar should last (in milliseconds)
+      duration: 2500
+    sound:
+      # If a sound should be played
+      enabled: true
+      # The sound that should be played
+      sound: entity_experience_orb_pickup
+      # Pitch between 0.5 and 2
+      pitch: 2
+      # The volume
+      volume: 0.1
+      # The category
+      category: PLAYER
+
+  level-up:
+    message:
+      enabled: true
+      message:
+        - "&f"
+        - " &#ff00aeYou levelled up &d%skill%&#ff00ae to &eLevel %level_numeral%&#ff00ae!"
+        - "&f"
+        - " &#ff00ae&lREWARDS:"
+        - "%rewards%"
+        - "&f"
+    title:
+      enabled: false
+
+      # Durations are in seconds
+      fade-in: 0.5
+      stay: 2
+      fade-out: 0.5
+
+      title: "&a%skill% &6levelled up!"
+      subtitle: "&6%previous_level_numeral% &8» &6%level_numeral%"
+    sound:
+      # If a sound should be played
+      enabled: true
+      # The sound that should be played
+      sound: entity_player_levelup
+      # Pitch between 0.5 and 2
+      pitch: 0.8
+      # The volume
+      volume: 1.0
+
+```
