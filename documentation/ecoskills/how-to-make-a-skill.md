@@ -1,4 +1,4 @@
----
+﻿---
 title: How to make a Skill
 sidebar_position: 1
 ---
@@ -235,7 +235,7 @@ reward-messages:
 ```
 
 ### The Level Up Section
-:::dangerEffects Section
+:::danger Effects Section
 
 The effects section is the core functionality of the skill. You can configure effects, conditions, filters, and mutators in this section to run when the skill levels up.
 

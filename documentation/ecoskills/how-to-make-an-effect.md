@@ -1,4 +1,4 @@
----
+﻿---
 title: How to make an Effect
 sidebar_position: 3
 ---
@@ -42,7 +42,7 @@ description: "&a%placeholder%%&8 chance to get $50 every time you mine a block" 
 ```
 
 ### The Effects Section
-:::dangerEffects Section
+:::danger Effects Section
 
 The effects section is the core functionality of the effect. You can configure effects, conditions, filters, and mutators in this section to run while this effect is levelled and active.
 
