@@ -1,297 +1,225 @@
-﻿---
-title: How to make a Skill
+---
+title: "How to Make a Skill"
 sidebar_position: 1
 ---
 
-## Skills
-Skills are leveled up by completing certain tasks, and give effects, stats, and other bonuses when leveling up.
+A **skill** is something players level up by doing a task, like mining or fishing, earning **XP** until they hit the next level. Each level can hand out **rewards** (stats and effects) and run **effects**. This page takes you from an empty file to a working skill, then breaks down every part of the config.
 
-## How to add skills
-Each skill is its own config file, placed in the `/skills/` folder, and you can add or remove them as you please. There's an example config called `_example.yml` to help you out!
+## Quick start
 
-The ID of the Skill is the file name. This is what you use in commands, effects and placeholders.
-ID's must be lowercase letters, numbers, and underscores only.
+1. Open the `/plugins/EcoSkills/skills/` folder.
+2. Copy `_example.yml` and rename the copy to your skill's ID, e.g. `mining.yml`. The file name is the ID.
+3. Set the `name`, `description`, and either `xp-requirements` or an `xp-formula`.
+4. Add `xp-gain-methods` so players actually earn XP, and `rewards` for levelling up.
+5. Run `/ecoskills reload`.
+6. Run `/skills` to confirm the skill shows, then do its task (e.g. break a block) and watch the XP go up.
 
-## Example Skill Config
+:::tip
+`_example.yml` is included as a reference and is **never loaded**, so copy or rename it to make a real skill. You can also organise skills into subfolders inside `skills/`, and they'll still load.
+:::
+
+## Naming and IDs
+
+The file name without `.yml` is the skill's ID. That ID is what you use in commands, rewards, and placeholders. For item textures and icons, see the [Item Lookup System](https://plugins.auxilor.io/the-item-lookup-system).
+
+:::warning ID rules
+IDs may only contain lowercase letters, numbers, and underscores (a-z, 0-9, _). No spaces, capitals, or hyphens, or the skill will not load.
+:::
+
+## The structure of a skill
+
+| Part | What it controls |
+| --- | --- |
+| **Info** | The name, description, and visibility of the skill |
+| **GUI** | How the skill appears in the `/skills` menu |
+| **Progression** | The XP needed per level and how players earn it |
+| **Rewards** | The stats and effects granted as the skill levels |
+| **Level-up effects** | Effects that fire when the skill levels up |
+| **Messages** | Custom placeholders and reward/level-up text |
+| **Conditions** | Global requirements to gain any XP |
 
 ```yaml
-name: Mining
-description: Break blocks to earn XP
-hide-before-level-1: true
+# === Info: name, description, visibility ===
+name: Mining # Display name shown in GUIs and messages
+description: Break blocks to earn XP # Short description shown in GUIs
+hide-before-level-1: true # Show the skill as "Unknown" until the player reaches level 1
 
+# === GUI: how it appears in /skills ===
 gui:
-  enabled: true
-  icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmIxYzI2OGVmZWM4ZDdkODhhMWNiODhjMmJmYTA5N2ZhNTcwMzc5NDIyOTlmN2QyMDIxNTlmYzkzY2QzMDM2ZCJ9fX0=
-  lore:
+  enabled: true # Whether this skill shows in the /skills menu
+  icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmIxYzI2OGVmZWM4ZDdkODhhMWNiODhjMmJmYTA5N2ZhNTcwMzc5NDIyOTlmN2QyMDIxNTlmYzkzY2QzMDM2ZCJ9fX0= # Icon item; see the Item Lookup System for the format
+  lore: # Lore lines; use ecoskills placeholders for live stat/effect values
     - "&fImproves Stats:"
     - "&8» &r%ecoskills_defense_name%"
-    - "&8» &r%ecoskills_ferocity_name%"
-    - "&f"
-    - "&fEffects:"
-    - "&8» &r&6%ecoskills_versatile_tools_name% %ecoskills_versatile_tools_numeral%"
-    - "   %ecoskills_versatile_tools_description%"
-    - "&8» &r&6%ecoskills_spelunking_name% %ecoskills_spelunking_numeral%"
-    - "   %ecoskills_spelunking_description%"
-    - "&8» &r&6%ecoskills_dynamic_mining_name% %ecoskills_dynamic_mining_numeral%"
-    - "   %ecoskills_dynamic_mining_description%"
-  position:
+  position: # Slot in the /skills menu
     row: 3
     column: 3
 
-xp-requirements:
-  - 50
-  - 125
+# === Progression: XP per level and how to earn it ===
+xp-requirements: # XP to reach each level, starting at level 1
+  - 50 # XP to reach level 1
+  - 125 # XP to reach level 2
   - 200
-  - 300
-  - 500
-  - 750
-  - 1000
-  - 1500
-  - 2000
-  - 3500
-  - 5000
-  - 7500
-  - 10000
+xp-gain-methods: # How players earn XP for this skill
+  - trigger: break_block # The trigger that grants XP
+    multiplier: 1 # XP multiplier; use "value" instead for a fixed amount
+    filters:
+      blocks: # Only these blocks count
+        - stone
 
+# === Rewards: stats and effects granted on level up ===
 rewards:
-  - reward: defense
-    levels: 2
+  - reward: defense # ID of the stat or effect to grant
+    levels: 2 # Levels of that reward to add each time
 
-  - reward: ferocity
-    levels: 1
-    start-level: 15
-
-  - reward: versatile_tools
-    levels: 1
-
-  - reward: spelunking
-    levels: 1
-    start-level: 10
-
-  - reward: dynamic_mining
-    levels: 1
-
+# === Level-up effects: run when the skill levels up ===
 level-up-effects:
   - id: give_money
     args:
-      amount: 1000 * %level%
-      require: "%level% > 50"
+      amount: 1000 * %level% # %level% is the level reached
 
-  - id: give_money
-    args:
-      amount: 3000 * %level%
-      every: 2
-      require: "%level% >= 50"
-
-placeholders:
+# === Messages: custom placeholders and reward text ===
+placeholders: # Custom placeholders for lore/messages; no % symbols in the keys
   money: "%level% * 0.4"
-  blocks: "ceil(10 - %level% / 10)"
-
-reward-messages:
+reward-messages: # Lore for %rewards%; keys are minimum levels, higher keys override lower
   1:
     - " &8» &r&f+2 %ecoskills_defense_name%"
-    - " &8» &r&6%ecoskills_versatile_tools_name% %ecoskills_versatile_tools_numeral%"
-    - "    %ecoskills_versatile_tools_description%"
-    - " &8» &r&6%ecoskills_dynamic_mining_name% %ecoskills_dynamic_mining_numeral%"
-    - "    %ecoskills_dynamic_mining_description%"
-  10:
-    - " &8» &r&f+2 %ecoskills_defense_name%"
-    - " &8» &r&6%ecoskills_versatile_tools_name% %ecoskills_versatile_tools_numeral%"
-    - "    %ecoskills_versatile_tools_description%"
-    - " &8» &r&6%ecoskills_spelunking_name% %ecoskills_spelunking_numeral%"
-    - "    %ecoskills_spelunking_description%"
-    - " &8» &r&6%ecoskills_dynamic_mining_name% %ecoskills_dynamic_mining_numeral%"
-    - "    %ecoskills_dynamic_mining_description%"
-  15:
-    - " &8» &r&f+2 %ecoskills_defense_name%"
-    - " &8» &r&f+1 %ecoskills_ferocity_name%"
-    - " &8» &r&6%ecoskills_versatile_tools_name% %ecoskills_versatile_tools_numeral%"
-    - "    %ecoskills_versatile_tools_description%"
-    - " &8» &r&6%ecoskills_spelunking_name% %ecoskills_spelunking_numeral%"
-    - "    %ecoskills_spelunking_description%"
-    - " &8» &r&6%ecoskills_dynamic_mining_name% %ecoskills_dynamic_mining_numeral%"
-    - "    %ecoskills_dynamic_mining_description%"
 
-xp-gain-methods:
-  - trigger: break_block
-    multiplier: 0.5
-    filters:
-      blocks:
-        - netherrack
-
-  - trigger: break_block
-    multiplier: 1
-    filters:
-      blocks:
-        - stone
-        - diorite
-        - granite
-        - andesite
-        - cobblestone
-
-conditions: [ ]
+# === Conditions: global requirements to gain XP ===
+conditions: [ ] # Conditions that must pass for any XP to be granted
 ```
 
-## Understanding all the sections
+### Info
 
-### The Skill Info Section
+The display fields players see for the skill.
 
 ```yaml
-name: Mining # The display name of the skill
-description: Break blocks to earn XP # The description shown in GUIs
-hide-before-level-1: true # Show this as "Unknown" before level 1
+name: Mining # Display name shown in GUIs and messages
+description: Break blocks to earn XP # Short description shown in GUIs
+hide-before-level-1: true # Show the skill as "Unknown" until the player reaches level 1
 ```
 
-### The GUI Section
+### GUI
+
+How the skill appears in the `/skills` menu.
 
 ```yaml
-# Options for the /skills GUI
 gui:
-  enabled: true # If this skill should show in /skills
-  # Icon format: https://plugins.auxilor.io/the-item-lookup-system
-  icon: player_head texture:"..."
+  enabled: true # Whether this skill shows in the /skills menu
+  icon: player_head texture:"..." # Icon item; see the Item Lookup System for the format
   lore:
     - "&fImproves Stats:"
+    - "&8» &r%ecoskills_defense_name%"
   position:
     row: 3
     column: 3
 ```
 
-### The Progression Section
+### Progression
 
-#### XP Requirements
-
-There are two ways to specify level XP requirements:
-1. A formula to calculate for infinite levels
+XP comes in two flavours: a fixed list per level, or a formula for unlimited levels. Use one or the other.
 
 ```yaml
-xp-formula: (2 ^ %level%) * 25 # The formula for each level's XP requirement. See math docs: https://plugins.auxilor.io/all-plugins/math
-max-level: 100 # (Optional) If not set, there is no max level
-```
-
-2. A list of XP requirements for each level
-
-```yaml
-xp-requirements: # XP required to reach each level, from level 1
-  - 50 # XP required to reach level 1
-  - 125 # XP required to reach level 2
+xp-requirements: # Option 1: explicit XP to reach each level
+  - 50 # XP to reach level 1
+  - 125 # XP to reach level 2
   - 200
 ```
 
-#### XP Gain Methods
+```yaml
+xp-formula: (2 ^ %level%) * 25 # Option 2: XP per level from a formula; see https://plugins.auxilor.io/all-plugins/math
+max-level: 100 # Optional; with a formula there is no max level unless you set one
+```
+
+Players earn that XP through `xp-gain-methods`, each tied to a trigger.
 
 ```yaml
-# An XP gain method takes a trigger, a multiplier/value, optional args,
-# optional local conditions, and optional filters.
 xp-gain-methods:
-  - trigger: mine_block
-    multiplier: 0.5 # You can also use "value" here for fixed XP
+  - trigger: break_block # The trigger that grants XP
+    multiplier: 0.5 # XP multiplier; use "value" instead for a fixed amount
     args:
-      chance: 50
+      chance: 50 # Optional trigger args
     filters:
-      blocks:
+      blocks: # Only these blocks count
         - netherrack
 ```
 
-### The Rewards Section
+### Rewards
+
+Each level can grant levels of a stat or effect. The `reward` is the ID of an existing stat or effect.
 
 ```yaml
-# Rewards must be a stat or effect id.
-# Stats: https://plugins.auxilor.io/ecoskills/how-to-make-a-stat
-# Effects: https://plugins.auxilor.io/ecoskills/how-to-make-an-effect
 rewards:
-  - reward: defense
-    levels: 2
-
+  - reward: defense # ID of the stat or effect to grant
+    levels: 2 # Levels of that reward to add
   - reward: ferocity
     levels: 1
-    start-level: 15
-
-  - reward: dynamic_mining
-    levels: 1
-    every: 2
+    start-level: 15 # Optional; first level this reward applies (inclusive)
+    end-level: 50 # Optional; last level this reward applies (inclusive)
+    every: 2 # Optional; apply only every X levels
 ```
 
-- `reward`: The ID of the stat/effect reward.
-- `levels`: The amount of levels to grant for that reward.
-- `start-level`: (Optional) Level where this reward starts (inclusive).
-- `end-level`: (Optional) Level where this reward stops (inclusive).
-- `every`: (Optional) Apply this reward every x levels.
+### Level-up effects
 
-### The Additional Options Section
+Effects that fire the moment the skill levels up. Triggers are not required here; these run on level up.
 
 ```yaml
-# Custom placeholders used in lore/messages.
-# IDs should not include % symbols.
-placeholders:
+level-up-effects:
+  - id: run_command
+    args:
+      command: "give %player% diamond 1"
+      require: "%level% < 10" # %level% is the level reached after levelling up
+```
+
+:::danger Effects are their own system
+The effects, conditions, filters, and mutators here are the shared libreforge system, documented in full elsewhere. Read these before going deep:
+
+- [Configuring an Effect](https://plugins.auxilor.io/effects/configuring-an-effect)
+- [Configuring an Effect Chain](https://plugins.auxilor.io/effects/configuring-a-chain)
+:::
+
+### Messages
+
+Custom placeholders and the per-level reward text shown for `%rewards%`.
+
+```yaml
+placeholders: # Reusable expressions for lore/messages; keys carry no % symbols
   money: "%level% * 0.4"
   blocks: "ceil(10 - %level% / 10)"
-
-# Lore/messages shown for %rewards% and level-up text.
-# Keys are minimum levels; higher keys override lower ones.
-reward-messages:
+reward-messages: # Keys are minimum levels; a higher key overrides a lower one
   1:
     - " &8» &r&f+2 %ecoskills_defense_name%"
 ```
 
-### The Level Up Section
-:::danger Effects Section
+### Conditions
 
-The effects section is the core functionality of the skill. You can configure effects, conditions, filters, and mutators in this section to run when the skill levels up.
+Global conditions that must pass before the skill grants any XP.
 
-Check out [Configuring an Effect](https://plugins.auxilor.io/effects/configuring-an-effect) to understand how to configure this section correctly.
+```yaml
+conditions: [ ] # Empty means no restriction
+```
 
-For more advanced users or setups, you can configure chains in this section to string together different effects under one trigger. Check out [Configuring an Effect Chain](https://plugins.auxilor.io/effects/configuring-a-chain) for more info.
+## Internal placeholders
 
+| Placeholder | Value |
+| --- | --- |
+| `%level%` | The player's skill level, for scaling effects |
+| `%level_numeral%` | The player's skill level as a Roman numeral |
+| `%level_x%` | The skill level offset by a value, e.g. `%level_-1%` is the current level minus 1 |
+| `%level_x_numeral%` | The offset skill level as a Roman numeral |
+| `%previous_level%` | The player's previous skill level |
+| `%previous_level_numeral%` | The previous skill level as a Roman numeral |
+
+:::tip Troubleshooting
+- **Skill not loading?** Check the file name: lowercase letters, numbers, and underscores only, and not prefixed with `_`.
+- **Players not gaining XP?** Make sure `xp-gain-methods` has a trigger that matches the task, and that any `filters` aren't excluding it.
+- **Skill missing from `/skills`?** Set `gui.enabled: true`, and remember it stays "Unknown" while `hide-before-level-1` is on and the player is below level 1.
 :::
-```yaml
-# Effects that run when the skill levels up.
-# %level% is the level reached after levelling up.
-level-up-effects: # Triggers are *not required* here, these effects run on level up.
-  - id: run_command
-    args:
-      command: "give %player% diamond 1"
-      require: "%level% < 10"
-```
-
-### The Global Conditions Section
-
-```yaml
-# Global conditions that must be met to gain skill XP.
-conditions: [ ]
-```
-
-See [Configuring a Condition](https://plugins.auxilor.io/effects/configuring-a-condition).
-
-## Internal Placeholders
-
-| Placeholder       | Value                                                                      |
-| ----------------- |----------------------------------------------------------------------------|
-| `%level%`         | The player's skill level. Useful for creating scaling effects              |
-| `%level_numeral%` | The player's skill level shown in Roman Numerals                           |
-| `%level_x%`         | The player's skill level, +/- a value. eg. `%level_-1%` is current level-1 |
-| `%level_x_numeral%` | The player's skill level, +/- a value, shown as Numerals                   |
-| `%previous_level%` | The player's previous skill level                                          |
-| `%previous_level_numeral%` | The player's previous skill level shown in Roman Numerals          |
 
 <hr/>
 
-## Default configs
-The default configs can be found [here](https://github.com/Auxilor/EcoSkills/tree/master/eco-core/core-plugin/src/main/resources/skills). <br/>
-You can find additional user-created configs on [lrcdb](https://lrcdb.auxilor.io/).
+## Where to go next
 
-<hr/>
-
-## Default Skills
-
-| Skill       | Task                      |
-|-------------|---------------------------|
-| Mining      | Break blocks to earn XP   |
-| Combat      | Kill mobs to earn XP      |
-| Enchanting  | Enchant items to earn XP  |
-| Farming     | Harvest crops to earn XP  |
-| Woodcutting | Cut down trees to earn XP |
-| Fishing     | Fish to earn XP           |
-| Alchemy     | Brew potions to earn XP   |
-| Armory      | Take damage to earn XP    |
-| Exploration | Move to earn XP           |
+- **Default skills:** the shipped skill configs are [on GitHub](https://github.com/Auxilor/EcoSkills/tree/master/eco-core/core-plugin/src/main/resources/skills); community configs are on [lrcdb](https://lrcdb.auxilor.io/).
+- **Grant stats and effects:** define what your rewards point to in [How to make a Stat](how-to-make-a-stat) and [How to make an Effect](how-to-make-an-effect).
+- **Configure effects:** the effects system is covered in [Configuring an Effect](https://plugins.auxilor.io/effects/configuring-an-effect).

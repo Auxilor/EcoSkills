@@ -1,119 +1,132 @@
 ---
-title: How to make a Stat
+title: "How to Make a Stat"
 sidebar_position: 2
 ---
 
-## Stats
-Stats are the base values that lie at the core of EcoSkills. Think of them like attributes in vanilla, but they're shown to the player.
+A **stat** is a base attribute at the core of EcoSkills, like vanilla attributes but visible to the player. Its **effects** apply continuously based on the stat's **level**, which skills raise as rewards. This page takes you from an empty file to a working stat, then breaks down every part of the config.
 
-## How to add stats
-Each stat is its own config file, placed in the `/stats/` folder, and you can add or remove them as you please. There's an example config called `_example.yml` to help you out!
+## Quick start
 
-The ID of the Stat is the file name. This is what you use in commands, effects and placeholders.
-ID's must be lowercase letters, numbers, and underscores only.
+1. Open the `/plugins/EcoSkills/stats/` folder.
+2. Copy `_example.yml` and rename the copy to your stat's ID, e.g. `saturation.yml`. The file name is the ID.
+3. Set the `name`, `placeholder`, and `description`.
+4. Add the `effects` that make the stat do something.
+5. Run `/ecoskills reload`.
+6. Run `/ecoskills give <player> saturation 5`, then `/stats` to confirm the stat shows and its effect applies.
 
-## Example Stat Config
+:::tip
+`_example.yml` is included as a reference and is **never loaded**, so copy or rename it to make a real stat. You can also organise stats into subfolders inside `stats/`, and they'll still load.
+:::
+
+## Naming and IDs
+
+The file name without `.yml` is the stat's ID. That ID is what you use in commands, rewards, and placeholders. For item textures and icons, see the [Item Lookup System](https://plugins.auxilor.io/the-item-lookup-system).
+
+:::warning ID rules
+IDs may only contain lowercase letters, numbers, and underscores (a-z, 0-9, _). No spaces, capitals, or hyphens, or the stat will not load.
+:::
+
+## The structure of a stat
+
+| Part | What it controls |
+| --- | --- |
+| **Info** | The name, description, and value shown to players |
+| **GUI** | How the stat appears in the `/stats` menu |
+| **Effects** | What the stat does while levelled |
+| **Conditions** | Requirements for the effects to apply |
 
 ```yaml
-name: "&#f5aa42🍖 Saturation" # The name of the stat, shown to players
-placeholder: "%level% / 3" # The placeholder to be shown in the description, you can use expressions - eg %level% * 2
-description: "&8Lose &a%placeholder%%&8 less hunger" # The description to be shown in lore and messages
+# === Info: name, value, description ===
+name: "&#f5aa42🍖 Saturation" # Display name shown to players
+placeholder: "%level% / 3" # Value shown in the description; supports expressions, e.g. %level% * 2
+description: "&8Lose &a%placeholder%%&8 less hunger" # Description shown in lore and messages
 
-# Options for the stat in the GUI
+# === GUI: how it appears in /stats ===
 gui:
-  enabled: false # (Optional) If the stat should show up in the GUI
-  icon: player_head texture:"eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDMzZGRiOTJjYjZiM2E3OTI4MGI4YmRjZWQ4OTc2YWVhYjEzYTRiZmZlYWVmMmQ0NmQ4MjhiZDkxZGVlMGYzZSJ9fX0="
-  position:
+  enabled: false # Optional; whether the stat shows in the /stats menu
+  icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDMzZGRiOTJjYjZiM2E3OTI4MGI4YmRjZWQ4OTc2YWVhYjEzYTRiZmZlYWVmMmQ0NmQ4MjhiZDkxZGVlMGYzZSJ9fX0= # Icon item; see the Item Lookup System for the format
+  position: # Slot in the /stats menu
     row: 5
     column: 5
 
-# The effects of the stat (i.e. the functionality)
-# See here: https://plugins.auxilor.io/effects/configuring-an-effect
-# Use %level% as a placeholder for the stat level
+# === Effects: what the stat does ===
 effects:
   - id: hunger_multiplier
     args:
-      multiplier: "1 - (%level% / 300)"
+      multiplier: "1 - (%level% / 300)" # %level% is the stat level
 
-# The conditions required for the effects to activate,
-# you can use %level% as a placeholder here too
-conditions: [ ]
+# === Conditions: requirements for the effects ===
+conditions: [ ] # Conditions that must pass for the effects to apply
 ```
 
-## Understanding all the sections
+### Info
 
-### The Stat Info Section
+The display fields and the value players see for the stat.
 
 ```yaml
-name: "&#f5aa42🍖 Saturation" # The name shown to players
-placeholder: "%level% / 3" # Value used in the description
-description: "&8Lose &a%placeholder%%&8 less hunger" # Lore/message description
+name: "&#f5aa42🍖 Saturation" # Display name shown to players
+placeholder: "%level% / 3" # Value shown in the description; supports expressions, e.g. %level% * 2
+description: "&8Lose &a%placeholder%%&8 less hunger" # Description shown in lore and messages
 ```
 
-### The GUI Section
+### GUI
+
+How the stat appears in the `/stats` menu.
 
 ```yaml
-# Options for the /stats GUI
 gui:
-  enabled: false # If this stat should show in /stats
-  # Icon format: https://plugins.auxilor.io/the-item-lookup-system
-  icon: player_head texture:"..."
+  enabled: false # Optional; whether the stat shows in the /stats menu
+  icon: player_head texture:"..." # Icon item; see the Item Lookup System for the format
   position:
     row: 5
     column: 5
 ```
 
-### The Effects Section
+### Effects
+
+What the stat does while the player has it levelled. Use `%level%` to scale with the stat level.
 
 ```yaml
-# The functionality of the stat.
-# %level% is the level of this stat.
 effects:
   - id: hunger_multiplier
     args:
-      multiplier: "1 - (%level% / 300)"
+      multiplier: "1 - (%level% / 300)" # %level% is the stat level
 ```
 
-### The Conditions Section
+:::danger Effects are their own system
+The effects, conditions, filters, and mutators here are the shared libreforge system, documented in full elsewhere. Read these before going deep:
+
+- [Configuring an Effect](https://plugins.auxilor.io/effects/configuring-an-effect)
+- [Configuring an Effect Chain](https://plugins.auxilor.io/effects/configuring-a-chain)
+:::
+
+### Conditions
+
+Conditions that must pass for the stat's effects to apply. You can use `%level%` here too.
 
 ```yaml
-# Conditions that must be met for this stat to activate.
-conditions: [ ]
+conditions: [ ] # Empty means the effects always apply
 ```
 
-The effects section is the core functionality of the stat. You can configure effects, conditions, filters, and mutators in this section to run while this stat is levelled and active.
+## Internal placeholders
 
-Check out [Configuring an Effect](https://plugins.auxilor.io/effects/configuring-an-effect) to understand how to configure this section correctly.
+| Placeholder | Value |
+| --- | --- |
+| `%level%` | The player's stat level, for scaling effects |
+| `%level_numeral%` | The player's stat level as a Roman numeral |
+| `%level_x%` | The stat level offset by a value, e.g. `%level_-1%` is the current level minus 1 |
+| `%level_x_numeral%` | The offset stat level as a Roman numeral |
 
-For more advanced users or setups, you can configure chains in this section to string together different effects under one trigger. Check out [Configuring an Effect Chain](https://plugins.auxilor.io/effects/configuring-a-chain) for more info.
-
-## Internal Placeholders
-
-| Placeholder       | Value                                                        |
-| ----------------- | ------------------------------------------------------------ |
-| `%level%`         | The player's stat level. Useful for creating scaling effects |
-| `%level_numeral%` | The player's stat level shown in Roman Numerals              |
-| `%level_x%`       | The player's stat level, +/- a value. eg. `%level_-1%`      |
-| `%level_x_numeral%` | The player's stat level, +/- a value, shown as Numerals    |
-
-<hr/>
-
-## Default configs
-The default configs can be found [here](https://github.com/Auxilor/EcoSkills/tree/master/eco-core/core-plugin/src/main/resources/stats). <br/>
-You can find additional user-created configs on [lrcdb](https://lrcdb.auxilor.io/).
+:::tip Troubleshooting
+- **Stat not loading?** Check the file name: lowercase letters, numbers, and underscores only, and not prefixed with `_`.
+- **Effect not applying?** Confirm the `effects` id exists and that `conditions` aren't blocking it.
+- **Stat missing from `/stats`?** Set `gui.enabled: true` and give it a free `position`.
+:::
 
 <hr/>
 
-## Default Stats
+## Where to go next
 
-| Stat         | Description                                         |
-|--------------|-----------------------------------------------------|
-| Defense      | Reduces Incoming Damage                             |
-| Strength     | Increases Outgoing Damage                           |
-| Crit Chance  | Increases the chance to deal a crit                 |
-| Crit Damage  | Increases crit damage                               |
-| Speed        | Increases movement speed                            |
-| Wisdom       | Increases experience gained (and max mana if using) |
-| Health       | Increases max health                                |
-| Ferocity     | Chance to hit twice                                 |
-| Attack Speed | Increases your attack speed                         |
+- **Default stats:** the shipped stat configs are [on GitHub](https://github.com/Auxilor/EcoSkills/tree/master/eco-core/core-plugin/src/main/resources/stats); community configs are on [lrcdb](https://lrcdb.auxilor.io/).
+- **Grant stats from skills:** hand stats out as level rewards in [How to make a Skill](how-to-make-a-skill).
+- **Configure effects:** the effects system is covered in [Configuring an Effect](https://plugins.auxilor.io/effects/configuring-an-effect).

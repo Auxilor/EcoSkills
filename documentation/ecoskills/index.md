@@ -4,15 +4,16 @@ title: "EcoSkills"
 
 ## What is EcoSkills?
 
-EcoSkills allows for an RPG-like experience on your server: with skill levelling, special effects / abilities, MMO
-stats, magic types like Mana, brand new mechanics, and more complex competition! It's been inspired by Hypixel Skyblock,
-if you're familiar with that.
+EcoSkills adds an RPG-style progression system to your server: levelling skills, special effects and abilities, MMO-style stats, regenerating magic types like Mana, and leaderboards. If you have played Hypixel Skyblock, the idea will feel familiar. It runs across BungeeCord and Velocity networks when backed by MySQL.
 
-It works on bungee / velocity with MySQL!
+## What sets EcoSkills apart?
 
-## What sets EcoSkills apart from other skill plugins?
+Every part of EcoSkills is configurable. You can create your own skills, stats, effects, and magic types, redesign every GUI, and change any value in the default config. It also works out of the box, so you can run it without configuring anything if you prefer.
 
-EcoSkills is the most configurable skills plugin ever released. You can create your own skills, stats, effects, magic
-types, you can redesign every GUI, change literally every aspect of anything that exists in the default config.
-It's also completely Plug-and-Play, so if you don't want to configure everything, you don't have to!
- 
+<hr/>
+
+## Where to go next
+
+- **Make your first skill:** [How to make a Skill](how-to-make-a-skill) walks you from an empty file to a working skill.
+- **Add stats and effects:** see [How to make a Stat](how-to-make-a-stat) and [How to make an Effect](how-to-make-an-effect).
+- **Configure the plugin:** [Plugin Config](plugin-config) covers GUIs, leaderboards, and global options.
