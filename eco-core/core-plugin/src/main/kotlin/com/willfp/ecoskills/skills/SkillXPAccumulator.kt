@@ -1,6 +1,6 @@
 package com.willfp.ecoskills.skills
 
-import com.github.benmanes.caffeine.cache.Caffeine
+import com.willfp.eco.core.cache.EcoCache
 import com.willfp.eco.core.integrations.afk.AFKManager
 import com.willfp.ecoskills.api.gainSkillXP
 import com.willfp.ecoskills.plugin
@@ -9,8 +9,8 @@ import com.willfp.libreforge.counters.Accumulator
 import com.willfp.libreforge.toDispatcher
 import org.bukkit.GameMode
 import org.bukkit.entity.Player
-import java.util.concurrent.TimeUnit
 import kotlin.math.max
+import java.time.Duration
 
 class SkillXPAccumulator(
     private val skill: Skill
@@ -37,7 +37,7 @@ class SkillXPAccumulator(
 }
 
 
-private val xpMultiplierCache = Caffeine.newBuilder().expireAfterWrite(10, TimeUnit.SECONDS).build<Player, Double> {
+private val xpMultiplierCache = EcoCache.builder<Player, Double>().expireAfterWrite(Duration.ofSeconds(10)).build {
     it.cacheSkillXPMultiplier()
 }
 

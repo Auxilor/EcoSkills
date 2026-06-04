@@ -1,6 +1,6 @@
 package com.willfp.ecoskills
 
-import com.github.benmanes.caffeine.cache.Caffeine
+import com.willfp.eco.core.cache.EcoCache
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.eco.core.data.keys.PersistentDataKeyType
@@ -19,7 +19,6 @@ import com.willfp.ecoskills.util.LevelInjectable
 import com.willfp.ecoskills.util.loadDescriptionPlaceholders
 import jdk.internal.joptsimple.util.RegexMatcher.regex
 import org.bukkit.OfflinePlayer
-import java.util.concurrent.TimeUnit
 
 abstract class Levellable(
     final override val id: String,
@@ -33,9 +32,9 @@ abstract class Levellable(
         startLevel
     )
 
-    private val descCache = Caffeine.newBuilder()
-        .expireAfterWrite(plugin.configYml.getInt("gui.cache-ttl").toLong(), TimeUnit.MILLISECONDS)
-        .build<Int, String>()
+    private val descCache = EcoCache.builder<Int, String>()
+        .expireAfterWrite(Duration.ofMillis(plugin.configYml.getInt("gui.cache-ttl").toLong()))
+        .build()
 
     private val unformattedDescription = config.getString("description")
 
@@ -101,7 +100,7 @@ abstract class Levellable(
     }
 
     fun getDescription(level: Int): String {
-        descCache.getIfPresent(level)?.let { return it }
+        descCache.get(level)?.let { return it }
 
         var desc = unformattedDescription
 

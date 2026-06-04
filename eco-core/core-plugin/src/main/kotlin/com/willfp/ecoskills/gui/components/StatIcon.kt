@@ -1,6 +1,6 @@
 package com.willfp.ecoskills.gui.components
 
-import com.github.benmanes.caffeine.cache.Caffeine
+import com.willfp.eco.core.cache.EcoCache
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.gui.slot
 import com.willfp.eco.core.items.Items
@@ -10,11 +10,10 @@ import com.willfp.ecoskills.api.getStatLevel
 import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.stats.Stat
 import org.bukkit.inventory.ItemStack
-import java.util.concurrent.TimeUnit
 
-private val itemCache = Caffeine.newBuilder()
-    .expireAfterWrite(plugin.configYml.getInt("gui.cache-ttl").toLong(), TimeUnit.MILLISECONDS)
-    .build<Int, ItemStack>()
+private val itemCache = EcoCache.builder<Int, ItemStack>()
+    .expireAfterWrite(Duration.ofMillis(plugin.configYml.getInt("gui.cache-ttl").toLong()))
+    .build()
 
 class StatIcon(
     stat: Stat,
