@@ -1,6 +1,6 @@
 package com.willfp.ecoskills.gui.components
 
-import com.github.benmanes.caffeine.cache.Caffeine
+import com.willfp.eco.core.cache.EcoCache
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.gui.onLeftClick
 import com.willfp.eco.core.gui.slot
@@ -12,12 +12,12 @@ import com.willfp.ecoskills.gui.menus.StatsGUI
 import com.willfp.ecoskills.plugin
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.SkullMeta
+import java.time.Duration
 import java.util.UUID
-import java.util.concurrent.TimeUnit
 
-private val skullCache = Caffeine.newBuilder()
-    .expireAfterWrite(plugin.configYml.getInt("gui.cache-ttl").toLong(), TimeUnit.MILLISECONDS)
-    .build<UUID, ItemStack>()
+private val skullCache = EcoCache.builder<UUID, ItemStack>()
+    .expireAfterWrite(Duration.ofMillis(plugin.configYml.getInt("gui.cache-ttl").toLong()))
+    .build()
 
 class PlayerInfoIcon(
     config: Config,

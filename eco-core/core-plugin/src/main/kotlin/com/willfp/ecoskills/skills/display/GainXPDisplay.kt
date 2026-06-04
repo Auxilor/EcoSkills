@@ -1,7 +1,6 @@
 package com.willfp.ecoskills.skills.display
 
-import com.github.benmanes.caffeine.cache.Cache
-import com.github.benmanes.caffeine.cache.Caffeine
+import com.willfp.eco.core.cache.EcoCache
 import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.eco.core.data.keys.PersistentDataKeyType
 import com.willfp.eco.core.data.profile
@@ -52,7 +51,7 @@ val Player.isXPGainSoundEnabled: Boolean
     get() = this.profile.read(xpGainSoundEnabledKey)
 
 object GainXPDisplay : Listener {
-    private val gainCache: Cache<PlayerSkill, Double> = Caffeine.newBuilder().expireAfterWrite(Duration.ofSeconds(3))
+    private val gainCache: EcoCache<PlayerSkill, Double> = EcoCache.builder().expireAfterWrite(Duration.ofSeconds(3))
         .build()
 
     private val sound = PlayableSound.create(plugin.configYml.getSubsection("skills.gain-xp.sound"))

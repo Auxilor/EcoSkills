@@ -1,6 +1,6 @@
 package com.willfp.ecoskills.gui.components
 
-import com.github.benmanes.caffeine.cache.Caffeine
+import com.willfp.eco.core.cache.EcoCache
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.gui.menu.Menu
 import com.willfp.eco.core.gui.onLeftClick
@@ -14,11 +14,10 @@ import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.skills.Skill
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import java.util.concurrent.TimeUnit
 
-private val iconCache = Caffeine.newBuilder()
-    .expireAfterWrite(plugin.configYml.getInt("gui.cache-ttl").toLong(), TimeUnit.MILLISECONDS)
-    .build<Int, ItemStack>()
+private val iconCache = EcoCache.builder<Int, ItemStack>()
+    .expireAfterWrite(Duration.ofMillis(plugin.configYml.getInt("gui.cache-ttl").toLong()))
+    .build()
 
 class SkillIcon(
     private val skill: Skill,
@@ -29,7 +28,7 @@ class SkillIcon(
 
     private val slot = slot({ player, _ ->
         val cacheKey = player.uniqueId.hashCode() xor skill.hashCode()
-        iconCache.getIfPresent(cacheKey) ?: run {
+        iconCache.get(cacheKey) ?: run {
             val level = player.getSkillLevel(skill)
 
             val item = baseIcon.modify {

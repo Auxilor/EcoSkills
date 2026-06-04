@@ -1,6 +1,6 @@
 package com.willfp.ecoskills.skills
 
-import com.github.benmanes.caffeine.cache.Caffeine
+import com.willfp.eco.core.cache.EcoCache
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.placeholder.PlayerPlaceholder
 import com.willfp.ecoskills.api.totalSkillLevel
@@ -16,9 +16,9 @@ import java.util.UUID
 
 object Skills : RegistrableCategory<Skill>("skill", "skills") {
     // Totally not copied over from Levellable
-    private val leaderboardCache = Caffeine.newBuilder()
+    private val leaderboardCache = EcoCache.builder<Boolean, List<UUID>>()
         .expireAfterWrite(Duration.ofSeconds(plugin.configYml.getInt("leaderboard.cache-lifetime").toLong()))
-        .build<Boolean, List<UUID>> {
+        .build {
             if (!plugin.configYml.getBool("leaderboard.enabled"))
                 return@build emptyList()
             Bukkit.getOfflinePlayers().sortedByDescending {
