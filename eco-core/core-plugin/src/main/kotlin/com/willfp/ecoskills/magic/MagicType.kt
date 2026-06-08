@@ -29,6 +29,8 @@ class MagicType(
 
     val joinOnFull = config.getBool("join-on-full")
 
+    val priceFactory = PriceFactoryMagic(this)
+
     init {
         PlayerlessPlaceholder(plugin, "${id}_name") {
             config.getFormattedString("name")
@@ -48,7 +50,7 @@ class MagicType(
     }
 
     override fun onRegister() {
-        Prices.registerPriceFactory(PriceFactoryMagic(this))
+        Prices.registerPriceFactory(priceFactory)
         EffectArguments.register(EffectArgumentMagicCost(this))
     }
 
