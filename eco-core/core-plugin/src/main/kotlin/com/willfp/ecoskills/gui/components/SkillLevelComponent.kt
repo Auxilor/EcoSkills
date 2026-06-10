@@ -10,6 +10,7 @@ import com.willfp.eco.util.evaluateExpression
 import com.willfp.eco.util.lineWrap
 import com.willfp.ecomponent.components.LevelComponent
 import com.willfp.ecomponent.components.LevelState
+import com.willfp.ecoskills.Placeholders
 import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.skills.Skill
@@ -39,10 +40,11 @@ class SkillLevelComponent(
                 .setDisplayName(
                     plugin.configYml.getString("level-gui.progression-slots.$key.name")
                         .replace("%skill%", skill.name)
-                        .let { skill.addPlaceholdersInto(it, level) }
+                        .let { Placeholders.applyInternalLevellablePlaceholders(skill, it, level) }
                 )
                 .addLoreLines(
-                    skill.addPlaceholdersInto(
+                    Placeholders.applyInternalSkillPlaceholders(
+                        skill,
                         plugin.configYml.getStrings("level-gui.progression-slots.$key.lore"),
                         player,
                         level = level

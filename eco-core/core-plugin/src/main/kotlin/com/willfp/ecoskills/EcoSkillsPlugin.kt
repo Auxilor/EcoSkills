@@ -38,8 +38,6 @@ import com.willfp.ecoskills.libreforge.TriggerRegenMagic
 import com.willfp.ecoskills.magic.MagicHandler
 import com.willfp.ecoskills.magic.MagicListener
 import com.willfp.ecoskills.magic.MagicTypes
-import com.willfp.ecoskills.skills.EcoSkillsSkillTopPlaceholder
-import com.willfp.ecoskills.skills.EcoSkillsTopPlaceholder
 import com.willfp.ecoskills.skills.SkillCritListener
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.skills.display.DamageIndicatorListener
@@ -109,11 +107,7 @@ class EcoSkillsPlugin : LibreforgePlugin() {
         Filters.register(FilterSkillCrit)
         Filters.register(FilterMagicType)
 
-        if (this.configYml.getBool("leaderboard.enabled")) {
-            EcoSkillsTopPlaceholder.register()
-            EcoSkillsSkillTopPlaceholder.register()
-        }
-        Skills.registerPlaceholders()
+        Placeholders.applyExternalSkillsPlaceholders()
     }
 
     override fun handleReload() {

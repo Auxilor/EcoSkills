@@ -9,6 +9,7 @@ import com.willfp.eco.core.gui.slot.Slot
 import com.willfp.eco.core.items.Items
 import com.willfp.eco.core.items.builder.modify
 import com.willfp.eco.util.lineWrap
+import com.willfp.ecoskills.Placeholders
 import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.skills.Skill
@@ -36,11 +37,12 @@ class SkillIcon(
                 setDisplayName(
                     plugin.configYml.getFormattedString("gui.skill-icon.name")
                         .replace("%skill%", skill.name)
-                        .let { skill.addPlaceholdersInto(it, level) }
+                        .let { Placeholders.applyInternalLevellablePlaceholders(skill, it, level) }
                 )
 
                 addLoreLines(
-                    skill.addPlaceholdersInto(
+                    Placeholders.applyInternalSkillPlaceholders(
+                        skill,
                         plugin.configYml.getStrings("gui.skill-icon.lore"),
                         player
                     ).lineWrap(plugin.configYml.getInt("gui.skill-icon.line-wrap"))

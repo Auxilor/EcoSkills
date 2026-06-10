@@ -10,7 +10,7 @@ import com.willfp.eco.core.sound.PlayableSound
 import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.namespacedKeyOf
 import com.willfp.eco.util.toNiceString
-import com.willfp.ecoskills.actionbar.ActionBarHandler
+import com.willfp.ecoskills.Placeholders
 import com.willfp.ecoskills.actionbar.sendCompatibleActionBarMessage
 import com.willfp.ecoskills.api.event.PlayerSkillXPGainEvent
 import com.willfp.ecoskills.api.getFormattedRequiredXP
@@ -134,7 +134,7 @@ object GainXPDisplay : Listener {
             .formatEco(
                 placeholderContext(
                     event.player,
-                    injectable = ActionBarHandler.PlayerHealthInjectable
+                    injectable = Placeholders.applyInternalActionBarPlaceholders()
                 )
             )
 }

@@ -5,19 +5,13 @@ import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.eco.core.data.keys.PersistentDataKeyType
 import com.willfp.eco.core.data.profile
-import com.willfp.eco.core.placeholder.PlayerPlaceholder
-import com.willfp.eco.core.placeholder.PlayerStaticPlaceholder
-import com.willfp.eco.core.placeholder.PlayerlessPlaceholder
 import com.willfp.eco.core.placeholder.context.placeholderContext
 import com.willfp.eco.core.registry.KRegistrable
 import com.willfp.eco.util.evaluateExpression
 import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.toNiceString
-import com.willfp.eco.util.toNumeral
-import com.willfp.ecoskills.skills.SkillsLeaderboard.getPosition
 import com.willfp.ecoskills.util.LevelInjectable
 import com.willfp.ecoskills.util.loadDescriptionPlaceholders
-import jdk.internal.joptsimple.util.RegexMatcher.regex
 import org.bukkit.OfflinePlayer
 import java.util.concurrent.TimeUnit
 
@@ -42,63 +36,14 @@ abstract class Levellable(
     val name = config.getFormattedString("name")
 
     init {
-        config.injectPlaceholders(
-            PlayerStaticPlaceholder("level") {
-                getActualLevel(it).toString()
-            }
-        )
-
-        PlayerPlaceholder(plugin, id) {
-            getActualLevel(it).toString()
-        }.register()
-
-        PlayerPlaceholder(plugin, "${id}_numeral") {
-            getActualLevel(it).toNumeral()
-        }.register()
-
-        PlayerlessPlaceholder(plugin, "${id}_name") {
-            name
-        }.register()
-
-        PlayerPlaceholder(plugin, "${id}_description") {
-            getDescription(getActualLevel(it))
-        }.register()
-
-        PlayerPlaceholder(plugin, "${id}_leaderboard_rank") { player ->
-            val emptyPosition = plugin.langYml.getString("top.empty-position")
-            val position = getPosition(this, player.uniqueId)
-            position?.toString() ?: emptyPosition
-        }.register()
+        Placeholders.applyInternalLevellablePlaceholders(this)
+        Placeholders.applyExternalLevellablePlaceholders(this)
     }
 
     internal open fun getActualLevel(player: OfflinePlayer) = getSavedLevel(player)
 
     internal fun getSavedLevel(player: OfflinePlayer) = player.profile.read(key)
     internal fun setSavedLevel(player: OfflinePlayer, level: Int) = player.profile.write(key, level)
-
-    fun addPlaceholdersInto(string: String, level: Int): String {
-        var result = string
-            .replace("%ecoskills_${id}_numeral%", level.toNumeral())
-            .replace("%ecoskills_${id}_description%", getDescription(level))
-            .replace("%ecoskills_${id}%", level.toString())
-            .replace("%level%", level.toString())
-            .replace("%level_numeral%", level.toNumeral())
-            .replace("%previous_level%", (level - 1).toString())
-            .replace("%previous_level_numeral%", (level - 1).toNumeral())
-
-        // Regex for %level_X% and %level_X_numeral%
-        val regex = Regex("%level_(-?\\d+)(_numeral)?%")
-
-        result = regex.replace(result) { match ->
-            val offset = match.groupValues[1].toIntOrNull() ?: return@replace match.value
-            val isNumeral = match.groupValues[2].isNotEmpty()
-            val newLevel = level + offset
-
-            if (isNumeral) newLevel.toNumeral() else newLevel.toString()
-        }
-
-        return result
-    }
 
     fun getDescription(level: Int): String {
         descCache.getIfPresent(level)?.let { return it }

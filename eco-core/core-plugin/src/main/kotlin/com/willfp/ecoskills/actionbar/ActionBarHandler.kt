@@ -3,16 +3,13 @@ package com.willfp.ecoskills.actionbar
 import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.eco.core.data.keys.PersistentDataKeyType
 import com.willfp.eco.core.data.profile
-import com.willfp.eco.core.placeholder.InjectablePlaceholder
-import com.willfp.eco.core.placeholder.PlaceholderInjectable
-import com.willfp.eco.core.placeholder.PlayerStaticPlaceholder
 import com.willfp.eco.core.placeholder.context.placeholderContext
 import com.willfp.eco.util.containsIgnoreCase
 import com.willfp.eco.util.namespacedKeyOf
+import com.willfp.ecoskills.Placeholders
 import com.willfp.ecoskills.plugin
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
-import org.bukkit.attribute.Attribute
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -116,7 +113,7 @@ object ActionBarHandler {
                 .getFormattedString(
                     "persistent-action-bar.format", placeholderContext(
                         player = player,
-                        injectable = PlayerHealthInjectable
+                        injectable = Placeholders.applyInternalActionBarPlaceholders()
                     )
                 )
         )
@@ -127,29 +124,6 @@ object ActionBarHandler {
             for (player in Bukkit.getOnlinePlayers()) {
                 trySendMessage(player)
             }
-        }
-    }
-
-    object PlayerHealthInjectable : PlaceholderInjectable {
-        private val injections = listOf(
-            PlayerStaticPlaceholder(
-                "health"
-            ) { it.health.toInt().toString() },
-            PlayerStaticPlaceholder(
-                "max_health"
-            ) { it.getAttribute(Attribute.GENERIC_MAX_HEALTH)?.value?.toInt()?.toString() ?: "20" },
-        )
-
-        override fun getPlaceholderInjections(): List<InjectablePlaceholder> {
-            return injections
-        }
-
-        override fun addInjectablePlaceholder(p0: Iterable<InjectablePlaceholder>) {
-            return
-        }
-
-        override fun clearInjectedPlaceholders() {
-            return
         }
     }
 }

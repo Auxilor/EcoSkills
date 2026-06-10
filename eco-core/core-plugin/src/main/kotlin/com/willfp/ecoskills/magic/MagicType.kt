@@ -1,17 +1,13 @@
 package com.willfp.ecoskills.magic
 
 import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.eco.core.placeholder.PlayerPlaceholder
-import com.willfp.eco.core.placeholder.PlayerlessPlaceholder
 import com.willfp.eco.core.placeholder.context.placeholderContext
 import com.willfp.eco.core.price.Prices
 import com.willfp.eco.core.registry.KRegistrable
 import com.willfp.eco.util.evaluateExpression
-import com.willfp.eco.util.toNiceString
-import com.willfp.eco.util.toNumeral
+import com.willfp.ecoskills.Placeholders
 import com.willfp.ecoskills.api.event.PlayerRegenMagicEvent
 import com.willfp.ecoskills.libreforge.EffectArgumentMagicCost
-import com.willfp.ecoskills.plugin
 import com.willfp.libreforge.effects.arguments.EffectArguments
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -32,21 +28,7 @@ class MagicType(
     val priceFactory = PriceFactoryMagic(this)
 
     init {
-        PlayerlessPlaceholder(plugin, "${id}_name") {
-            config.getFormattedString("name")
-        }.register()
-
-        PlayerPlaceholder(plugin, id) {
-            it.magic[this].toNiceString()
-        }.register()
-
-        PlayerPlaceholder(plugin, "${id}_numeral") {
-            it.magic[this].toNumeral()
-        }.register()
-
-        PlayerPlaceholder(plugin, "${id}_limit") {
-            getLimit(it).toNiceString()
-        }.register()
+        Placeholders.applyExternalMagicPlaceholders(this)
     }
 
     override fun onRegister() {

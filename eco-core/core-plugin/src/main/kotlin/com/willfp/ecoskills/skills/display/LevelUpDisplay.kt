@@ -2,6 +2,7 @@ package com.willfp.ecoskills.skills.display
 
 import com.willfp.eco.core.sound.PlayableSound
 import com.willfp.eco.util.toComponent
+import com.willfp.ecoskills.Placeholders
 import com.willfp.ecoskills.api.event.PlayerSkillLevelUpEvent
 import com.willfp.ecoskills.plugin
 import net.kyori.adventure.title.Title
@@ -38,7 +39,8 @@ object LevelUpDisplay : Listener {
         if (plugin.configYml.getBool("skills.level-up.message.enabled")) {
             val rawMessage = plugin.configYml.getStrings("skills.level-up.message.message")
 
-            val formatted = skill.addPlaceholdersInto(
+            val formatted = Placeholders.applyInternalSkillPlaceholders(
+                skill,
                 rawMessage,
                 player,
                 level = level
@@ -51,7 +53,8 @@ object LevelUpDisplay : Listener {
             val rawTitle = plugin.configYml.getString("skills.level-up.title.title")
             val rawSubtitle = plugin.configYml.getString("skills.level-up.title.subtitle")
 
-            val formatted = skill.addPlaceholdersInto(
+            val formatted = Placeholders.applyInternalSkillPlaceholders(
+                skill,
                 listOf(rawTitle, rawSubtitle),
                 player,
                 level = level

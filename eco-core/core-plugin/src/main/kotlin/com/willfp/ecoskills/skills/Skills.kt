@@ -2,7 +2,6 @@ package com.willfp.ecoskills.skills
 
 import com.github.benmanes.caffeine.cache.Caffeine
 import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.eco.core.placeholder.PlayerPlaceholder
 import com.willfp.ecoskills.api.totalSkillLevel
 import com.willfp.ecoskills.gui.menus.SkillsGUI
 import com.willfp.ecoskills.plugin
@@ -43,14 +42,6 @@ object Skills : RegistrableCategory<Skill>("skill", "skills") {
         val leaderboard = leaderboardCache.get(true)
         val index = leaderboard.indexOf(uuid)
         return if (index == -1) null else index + 1
-    }
-
-    fun registerPlaceholders() {
-        PlayerPlaceholder(plugin, "leaderboard_rank") { player ->
-            val emptyPosition = plugin.langYml.getString("top.empty-position")
-            val position = getPosition(player.uniqueId)
-            position?.toString() ?: emptyPosition
-        }.register()
     }
 
     override fun clear(plugin: LibreforgePlugin) {

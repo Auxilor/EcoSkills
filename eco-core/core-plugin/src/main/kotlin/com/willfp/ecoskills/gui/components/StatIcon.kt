@@ -6,6 +6,7 @@ import com.willfp.eco.core.gui.slot
 import com.willfp.eco.core.items.Items
 import com.willfp.eco.core.items.builder.modify
 import com.willfp.eco.util.lineWrap
+import com.willfp.ecoskills.Placeholders
 import com.willfp.ecoskills.api.getStatLevel
 import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.stats.Stat
@@ -30,11 +31,12 @@ class StatIcon(
                 setDisplayName(
                     plugin.configYml.getFormattedString("stats-gui.stat-icon.name")
                         .replace("%stat%", stat.name)
-                        .let { stat.addPlaceholdersInto(it, level) }
+                        .let { Placeholders.applyInternalLevellablePlaceholders(stat, it, level) }
                 )
 
                 addLoreLines(
-                    stat.addPlaceholdersInto(
+                    Placeholders.applyInternalStatPlaceholders(
+                        stat,
                         plugin.configYml.getStrings("stats-gui.stat-icon.lore"),
                         player
                     ).lineWrap(plugin.configYml.getInt("stats-gui.stat-icon.line-wrap"))
