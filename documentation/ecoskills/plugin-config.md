@@ -136,8 +136,14 @@ stats-gui:
   custom-slots: [ ] # Extra GUI slots; see https://plugins.auxilor.io/all-plugins/custom-gui-slots
 
 level-gui:
-  title: "&7%skill%" # GUI title; %skill% is the skill being viewed
+  title: "&7%skill% &8(%page%/%max_page%)" # GUI title; %skill% is the skill being viewed. Supports %page% and %max_page% placeholders
   rows: 6
+
+  page-change-sound:
+    enabled: true
+    sound: ui.button.click
+    pitch: 1.0
+    volume: 1.0
 
   mask:
     materials:
@@ -161,15 +167,14 @@ level-gui:
     item-amount: "%level%" # Item stack size as a function of level; always rounded down, e.g. "ceil((%level% + 1) / 10)" to step every 10 levels
 
     prev-page:
-      material: arrow
-      name: "&fPrevious Page"
+      item: arrow name:"&fPrevious Page"
       location:
         row: 6
         column: 4
 
     next-page:
-      material: arrow
-      name: "&fNext Page"
+      item: arrow name:"&fNext Page"
+      item-inactive: gray_dye name:"&7Next Page"
       location:
         row: 6
         column: 6
