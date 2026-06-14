@@ -6,6 +6,7 @@ import com.willfp.ecoskills.api.modifiers.ModifierOperation
 import com.willfp.ecoskills.api.modifiers.StatModifier
 import com.willfp.ecoskills.api.removeStatModifier
 import com.willfp.ecoskills.stats.Stats
+import com.willfp.libreforge.ArgType
 import com.willfp.libreforge.Dispatcher
 import com.willfp.libreforge.NoCompileData
 import com.willfp.libreforge.ProvidedHolder
@@ -18,10 +19,19 @@ import org.bukkit.entity.Player
 import java.util.UUID
 
 object EffectMultiplyAllStats : Effect<NoCompileData>("multiply_all_stats") {
+    override val description = "Multiplies all of the player's stats by the given multiplier while the holder is active."
+
+    override val categories = setOf("player")
+
     override val runOrder = RunOrder.START
 
     override val arguments = arguments {
-        require("multiplier", "You must specify the multiplier!")
+        require(
+            "multiplier",
+            "You must specify the multiplier!",
+            description = "The multiplier to apply to every stat.",
+            type = ArgType.EXPRESSION
+        )
     }
 
     override val shouldReload = false
