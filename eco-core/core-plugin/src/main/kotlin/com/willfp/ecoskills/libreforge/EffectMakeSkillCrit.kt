@@ -17,10 +17,6 @@ object EffectMakeSkillCrit : Effect<NoCompileData>("make_skill_crit") {
 
     override val categories = setOf("combat")
 
-    override val additionalInfo = listOf(
-        "Requires a trigger that provides EVENT (e.g. melee_attack)."
-    )
-
     override val runOrder = RunOrder.EARLY
 
     override val arguments = arguments {

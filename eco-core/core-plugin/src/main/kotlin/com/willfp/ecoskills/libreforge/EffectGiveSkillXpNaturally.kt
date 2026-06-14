@@ -16,10 +16,6 @@ object EffectGiveSkillXpNaturally : Effect<NoCompileData>("give_skill_xp_natural
 
     override val categories = setOf("economy", "player")
 
-    override val additionalInfo = listOf(
-        "The amount gained can be modified or cancelled by other plugins listening to the xp gain event."
-    )
-
     override val parameters = setOf(
         TriggerParameter.PLAYER
     )
