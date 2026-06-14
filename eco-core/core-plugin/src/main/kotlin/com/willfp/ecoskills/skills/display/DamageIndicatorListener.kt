@@ -16,6 +16,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
+import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.EntityRegainHealthEvent
 
 object DamageIndicatorListener : Listener {
@@ -61,6 +62,50 @@ object DamageIndicatorListener : Listener {
             text.replace("%damage%", event.finalDamage.toNiceString())
         } else {
             text.replace("%damage%", event.damage.toNiceString())
+        }.formatEco()
+
+        val holo = HologramManager.createHologram(location, listOf(text))
+
+        plugin.scheduler.runLater(30) {
+            holo.remove()
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    fun onEntityDamage(event: EntityDamageEvent) {
+        // Handled by onEntityDamageByEntity instead, to support skill crit formatting.
+        if (event is EntityDamageByEntityEvent) {
+            return
+        }
+
+        if (!plugin.configYml.getBool("damage-indicators.enabled")) {
+            return
+        }
+
+        val victim = event.entity
+
+        if (event.damage == 0.0) {
+            return
+        }
+
+        if (victim is Player && victim.isBlocking) {
+            return
+        }
+
+        if (disabledEntities.any { it.matches(victim) }) {
+            return
+        }
+
+        val location = victim.location.clone()
+            .add(0.0, victim.height, 0.0)
+            .withHoloOffset()
+
+        val text = if (plugin.configYml.getBool("damage-indicators.final-damage")) {
+            plugin.configYml.getString("damage-indicators.format.normal")
+                .replace("%damage%", event.finalDamage.toNiceString())
+        } else {
+            plugin.configYml.getString("damage-indicators.format.normal")
+                .replace("%damage%", event.damage.toNiceString())
         }.formatEco()
 
         val holo = HologramManager.createHologram(location, listOf(text))
