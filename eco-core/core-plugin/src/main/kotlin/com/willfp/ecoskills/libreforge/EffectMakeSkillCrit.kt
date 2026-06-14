@@ -2,6 +2,7 @@ package com.willfp.ecoskills.libreforge
 
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.ecoskills.skills.skillCrit
+import com.willfp.libreforge.ArgType
 import com.willfp.libreforge.NoCompileData
 import com.willfp.libreforge.arguments
 import com.willfp.libreforge.effects.Effect
@@ -12,10 +13,19 @@ import com.willfp.libreforge.triggers.TriggerParameter
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 
 object EffectMakeSkillCrit : Effect<NoCompileData>("make_skill_crit") {
+    override val description = "Marks the triggering attack as a skill crit, multiplying its damage by the given multiplier."
+
+    override val categories = setOf("combat")
+
     override val runOrder = RunOrder.EARLY
 
     override val arguments = arguments {
-        require("multiplier", "You must specify the damage multiplier!")
+        require(
+            "multiplier",
+            "You must specify the damage multiplier!",
+            description = "The multiplier to apply to the attack's damage.",
+            type = ArgType.EXPRESSION
+        )
     }
 
     override val parameters = setOf(

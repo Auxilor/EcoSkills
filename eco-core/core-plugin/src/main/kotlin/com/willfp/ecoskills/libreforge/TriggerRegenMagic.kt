@@ -8,10 +8,19 @@ import com.willfp.libreforge.triggers.TriggerParameter
 import org.bukkit.event.EventHandler
 
 object TriggerRegenMagic : Trigger("regen_magic") {
+    override val description = "Fires when the player regenerates magic over time."
+
+    override val categories = setOf("player")
+
+    override val parameterDescriptions = mapOf(
+        TriggerParameter.VALUE to "The amount of magic regenerated."
+    )
+
     override val parameters = setOf(
         TriggerParameter.PLAYER,
         TriggerParameter.LOCATION,
-        TriggerParameter.EVENT
+        TriggerParameter.EVENT,
+        TriggerParameter.VALUE
     )
 
     @EventHandler(ignoreCancelled = true)
