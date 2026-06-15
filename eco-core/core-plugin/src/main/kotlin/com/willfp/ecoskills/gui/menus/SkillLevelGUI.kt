@@ -19,7 +19,6 @@ import com.willfp.ecoskills.gui.components.SkillLevelComponent
 import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.skills.Skill
 import org.bukkit.entity.Player
-import org.bukkit.inventory.ItemStack
 
 class SkillLevelGUI(
     private val skill: Skill
@@ -33,22 +32,6 @@ class SkillLevelGUI(
         val levelComponent = SkillLevelComponent(skill)
 
         val pageChangeSound = PlayableSound.create(plugin.configYml.getSubsection("level-gui.page-change-sound"))
-
-        fun pageButtonItem(basePath: String, state: String): ItemStack? {
-            val itemString = plugin.configYml.getStringOrNull(if (state == "active") "$basePath.item" else "$basePath.item-inactive")
-                ?: plugin.configYml.getStringOrNull(if (state == "active") "$basePath.material" else "$basePath.material-inactive")
-                ?: return null
-
-            val builder = ItemStackBuilder(Items.lookup(itemString))
-
-            // Deprecated: use the item/item-inactive keys to set the name instead
-            val name = plugin.configYml.getStringOrNull(if (state == "active") "$basePath.name" else "$basePath.name-inactive")
-            if (name != null) {
-                builder.setDisplayName(name)
-            }
-
-            return builder.build()
-        }
 
         menu = menu(plugin.configYml.getInt("level-gui.rows")) {
             title = plugin.configYml.getString("level-gui.title")
@@ -73,30 +56,21 @@ class SkillLevelGUI(
             val prevPath = "level-gui.progression-slots.prev-page"
             val nextPath = "level-gui.progression-slots.next-page"
 
-            val prevRow = plugin.configYml.getInt("$prevPath.location.row")
-            val prevColumn = plugin.configYml.getInt("$prevPath.location.column")
-            val nextRow = plugin.configYml.getInt("$nextPath.location.row")
-            val nextColumn = plugin.configYml.getInt("$nextPath.location.column")
-
             addComponent(
                 MenuLayer.LOWER,
-                prevRow,
-                prevColumn,
+                plugin.configYml.getInt("$prevPath.location.row"),
+                plugin.configYml.getInt("$prevPath.location.column"),
                 slot(
-                    pageButtonItem(prevPath, "active")
+                    plugin.configYml.getStringOrNull("$prevPath.item")
+                        ?.let { Items.lookup(it).item }
                         ?: ItemStackBuilder(Items.lookup("arrow")).build()
                 ) {
                     onLeftClick { player, _, _, _ -> SkillsGUI.open(player) }
                 }
             )
 
-            pageButtonItem(prevPath, "active")?.let { active ->
-                addPageChanger(PageChanger.Direction.BACKWARDS, active, null, pageChangeSound, prevRow, prevColumn)
-            }
-
-            pageButtonItem(nextPath, "active")?.let { active ->
-                addPageChanger(PageChanger.Direction.FORWARDS, active, pageButtonItem(nextPath, "inactive"), pageChangeSound, nextRow, nextColumn)
-            }
+            addPageChanger(plugin.configYml, prevPath, PageChanger.Direction.BACKWARDS, pageChangeSound)
+            addPageChanger(plugin.configYml, nextPath, PageChanger.Direction.FORWARDS, pageChangeSound)
 
             val closeEnabled = plugin.configYml.getBoolOrNull("level-gui.progression-slots.close.enabled") ?: true
             if (closeEnabled) {
