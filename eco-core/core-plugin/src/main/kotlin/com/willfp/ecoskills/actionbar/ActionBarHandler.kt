@@ -137,7 +137,7 @@ object ActionBarHandler {
             ) { it.health.toInt().toString() },
             PlayerStaticPlaceholder(
                 "max_health"
-            ) { it.getAttribute(Attribute.GENERIC_MAX_HEALTH)?.value?.toInt()?.toString() ?: "20" },
+            ) { it.getAttribute(Attribute.MAX_HEALTH)?.value?.toInt()?.toString() ?: "20" },
         )
 
         override fun getPlaceholderInjections(): List<InjectablePlaceholder> {
