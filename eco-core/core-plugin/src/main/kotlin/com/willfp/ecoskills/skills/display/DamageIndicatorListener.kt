@@ -30,6 +30,10 @@ object DamageIndicatorListener : Listener {
             return
         }
 
+        if (event.damager !is Player) {
+            return
+        }
+
         val victim = event.entity
 
         if (event.entity == event.damager) {
@@ -73,8 +77,7 @@ object DamageIndicatorListener : Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun onEntityDamage(event: EntityDamageEvent) {
-        // Handled by onEntityDamageByEntity instead, to support skill crit formatting.
-        if (event is EntityDamageByEntityEvent) {
+        if (event is EntityDamageByEntityEvent && event.damager is Player) {
             return
         }
 
