@@ -103,12 +103,11 @@ object DamageIndicatorListener : Listener {
             .add(0.0, victim.height, 0.0)
             .withHoloOffset()
 
+        val template = plugin.configYml.getString("damage-indicators.format.normal")
         val text = if (plugin.configYml.getBool("damage-indicators.final-damage")) {
-            plugin.configYml.getString("damage-indicators.format.normal")
-                .replace("%damage%", event.finalDamage.toNiceString())
+            template.replace("%damage%", event.finalDamage.toNiceString())
         } else {
-            plugin.configYml.getString("damage-indicators.format.normal")
-                .replace("%damage%", event.damage.toNiceString())
+            template.replace("%damage%", event.damage.toNiceString())
         }.formatEco()
 
         val holo = HologramManager.createHologram(location, listOf(text))
