@@ -14,5 +14,3 @@ var EntityDamageByEntityEvent.skillCrit: Double
 
 val EntityDamageByEntityEvent.isSkillCrit: Boolean
     get() = map.containsKey(this)
-
-object SkillCritListener : Listener
