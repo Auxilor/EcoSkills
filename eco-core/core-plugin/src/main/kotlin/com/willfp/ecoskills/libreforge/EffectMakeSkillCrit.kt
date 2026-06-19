@@ -35,7 +35,9 @@ object EffectMakeSkillCrit : Effect<NoCompileData>("make_skill_crit") {
     override fun onTrigger(config: Config, data: TriggerData, compileData: NoCompileData): Boolean {
         val event = data.event as? EntityDamageByEntityEvent ?: return false
 
-        event.skillCrit *= config.getDoubleFromExpression("multiplier", data)
+        val multiplier = config.getDoubleFromExpression("multiplier", data)
+        event.damage *= multiplier
+        event.skillCrit *= multiplier
 
         return true
     }

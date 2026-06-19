@@ -40,7 +40,6 @@ import com.willfp.ecoskills.magic.MagicListener
 import com.willfp.ecoskills.magic.MagicTypes
 import com.willfp.ecoskills.skills.EcoSkillsSkillTopPlaceholder
 import com.willfp.ecoskills.skills.EcoSkillsTopPlaceholder
-import com.willfp.ecoskills.skills.SkillCritListener
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.skills.display.DamageIndicatorListener
 import com.willfp.ecoskills.skills.display.GainXPDisplay
@@ -143,7 +142,6 @@ class EcoSkillsPlugin : LibreforgePlugin() {
             MagicListener,
             HealthScaleDisabler,
             ActionBarGamemodeListener,
-            SkillCritListener,
             StatModifierListener
         )
     }
