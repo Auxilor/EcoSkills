@@ -163,8 +163,14 @@ stats-gui:
 
 
 level-gui:
-  title: "&7%skill%"
+  title: "&7%skill% &8(%page%/%max_page%)"
   rows: 6
+
+  page-change-sound:
+    enabled: true
+    sound: ui.button.click
+    pitch: 1.0
+    volume: 1.0
 
   mask:
     # The way the mask works is by having a list of materials
@@ -204,15 +210,14 @@ level-gui:
     # The value is always rounded down.
 
     prev-page:
-      material: arrow
-      name: "&fPrevious Page"
+      item: arrow name:"&fPrevious Page"
       location:
         row: 6
         column: 4
 
     next-page:
-      material: arrow
-      name: "&fNext Page"
+      item: arrow name:"&fNext Page"
+      item-inactive: gray_dye name:"&7Next Page"
       location:
         row: 6
         column: 6
