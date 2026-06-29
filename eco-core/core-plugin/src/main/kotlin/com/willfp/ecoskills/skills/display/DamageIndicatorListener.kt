@@ -56,22 +56,26 @@ object DamageIndicatorListener : Listener {
             .add(0.0, victim.height, 0.0)
             .withHoloOffset()
 
-        var text: String = if (event.isSkillCrit) {
-            plugin.configYml.getString("damage-indicators.format.crit")
-        } else {
-            plugin.configYml.getString("damage-indicators.format.normal")
-        }
+        // Defer text building by 1 tick so all MONITOR handlers (e.g. TriggerMeleeAttack
+        // applying crit/strength multipliers) have run before we read event.damage and isSkillCrit.
+        plugin.scheduler.runLater(1) {
+            var text: String = if (event.isSkillCrit) {
+                plugin.configYml.getString("damage-indicators.format.crit")
+            } else {
+                plugin.configYml.getString("damage-indicators.format.normal")
+            }
 
-        text = if (plugin.configYml.getBool("damage-indicators.final-damage")) {
-            text.replace("%damage%", event.finalDamage.toNiceString())
-        } else {
-            text.replace("%damage%", event.damage.toNiceString())
-        }.formatEco()
+            text = if (plugin.configYml.getBool("damage-indicators.final-damage")) {
+                text.replace("%damage%", event.finalDamage.toNiceString())
+            } else {
+                text.replace("%damage%", event.damage.toNiceString())
+            }.formatEco()
 
-        val holo = HologramManager.createHologram(location, listOf(text))
+            val holo = HologramManager.createHologram(location, listOf(text))
 
-        plugin.scheduler.runLater(30) {
-            holo.remove()
+            plugin.scheduler.runLater(30) {
+                holo.remove()
+            }
         }
     }
 
