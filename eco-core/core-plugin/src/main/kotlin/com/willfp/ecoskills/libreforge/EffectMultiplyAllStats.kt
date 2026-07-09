@@ -46,7 +46,7 @@ object EffectMultiplyAllStats : Effect<NoCompileData>("multiply_all_stats") {
         compileData: NoCompileData
     ) {
         val player = dispatcher.get<Player>() ?: return
-        val lookupKey = "${player.uniqueId}_${holder.holder.id}"
+        val lookupKey = holder.lookupKey(player)
         val uuids = activeModifiers.getOrPut(lookupKey) { mutableSetOf() }
 
         for (stat in Stats.values()) {
@@ -67,7 +67,7 @@ object EffectMultiplyAllStats : Effect<NoCompileData>("multiply_all_stats") {
     override fun onDisable(dispatcher: Dispatcher<*>, identifiers: Identifiers, holder: ProvidedHolder) {
         val player = dispatcher.get<Player>() ?: return
 
-        val lookupKey = "${player.uniqueId}_${holder.holder.id}"
+        val lookupKey = holder.lookupKey(player)
         val modifierUUIDs = activeModifiers.remove(lookupKey) ?: return
 
         for (uuid in modifierUUIDs) {

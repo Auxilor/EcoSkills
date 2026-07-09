@@ -52,7 +52,7 @@ object EffectAddStat : Effect<NoCompileData>("add_stat") {
         val player = dispatcher.get<Player>() ?: return
         val stat = Stats.getByID(config.getString("stat")) ?: return
 
-        val lookupKey = "${player.uniqueId}_${holder.holder.id}"
+        val lookupKey = holder.lookupKey(player)
         val modifierUUID = UUID.nameUUIDFromBytes("${lookupKey}_${stat.id}".toByteArray())
 
         activeModifiers.getOrPut(lookupKey) { mutableSetOf() }.add(modifierUUID)
@@ -71,7 +71,7 @@ object EffectAddStat : Effect<NoCompileData>("add_stat") {
     override fun onDisable(dispatcher: Dispatcher<*>, identifiers: Identifiers, holder: ProvidedHolder) {
         val player = dispatcher.get<Player>() ?: return
 
-        val lookupKey = "${player.uniqueId}_${holder.holder.id}"
+        val lookupKey = holder.lookupKey(player)
         val modifierUUIDs = activeModifiers.remove(lookupKey) ?: return
 
         for (uuid in modifierUUIDs) {
