@@ -51,7 +51,7 @@ val Player.isXPGainSoundEnabled: Boolean
     get() = this.profile.read(xpGainSoundEnabledKey)
 
 object GainXPDisplay : Listener {
-    private val gainCache: EcoCache<PlayerSkill, Double> = EcoCache.builder().expireAfterWrite(Duration.ofSeconds(3))
+    private val gainCache: EcoCache<PlayerSkill, Double> = EcoCache.builder<PlayerSkill, Double>().expireAfterWrite(Duration.ofSeconds(3))
         .build()
 
     private val sound = PlayableSound.create(plugin.configYml.getSubsection("skills.gain-xp.sound"))

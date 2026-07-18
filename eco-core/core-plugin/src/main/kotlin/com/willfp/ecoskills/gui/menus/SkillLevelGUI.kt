@@ -1,5 +1,6 @@
 package com.willfp.ecoskills.gui.menus
 
+import com.willfp.eco.core.gui.addPageChanger
 import com.willfp.eco.core.gui.menu
 import com.willfp.eco.core.gui.menu.Menu
 import com.willfp.eco.core.gui.menu.MenuLayer
@@ -11,6 +12,7 @@ import com.willfp.eco.core.gui.slot.FillerMask
 import com.willfp.eco.core.gui.slot.MaskItems
 import com.willfp.eco.core.items.Items
 import com.willfp.eco.core.items.builder.ItemStackBuilder
+import com.willfp.eco.core.sound.PlayableSound
 import com.willfp.eco.util.formatEco
 import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.gui.components.SkillLevelComponent
@@ -28,6 +30,8 @@ class SkillLevelGUI(
         val maskItems = MaskItems.fromItemNames(plugin.configYml.getStrings("level-gui.mask.materials"))
 
         val levelComponent = SkillLevelComponent(skill)
+
+        val pageChangeSound = PlayableSound.create(plugin.configYml.getSubsection("level-gui.page-change-sound"))
 
         menu = menu(plugin.configYml.getInt("level-gui.rows")) {
             title = plugin.configYml.getString("level-gui.title")
@@ -49,41 +53,24 @@ class SkillLevelGUI(
                 levelComponent.getPageOf(it.getSkillLevel(skill)).coerceAtLeast(1)
             }
 
-            // Instead of the page changer, this will show up when on the first page
+            val prevPath = "level-gui.progression-slots.prev-page"
+            val nextPath = "level-gui.progression-slots.next-page"
+
             addComponent(
                 MenuLayer.LOWER,
-                plugin.configYml.getInt("level-gui.progression-slots.prev-page.location.row"),
-                plugin.configYml.getInt("level-gui.progression-slots.prev-page.location.column"),
+                plugin.configYml.getInt("$prevPath.location.row"),
+                plugin.configYml.getInt("$prevPath.location.column"),
                 slot(
-                    ItemStackBuilder(Items.lookup(plugin.configYml.getString("level-gui.progression-slots.prev-page.material")))
-                        .setDisplayName(plugin.configYml.getString("level-gui.progression-slots.prev-page.name"))
-                        .build()
+                    plugin.configYml.getStringOrNull("$prevPath.item")
+                        ?.let { Items.lookup(it).item }
+                        ?: ItemStackBuilder(Items.lookup("arrow")).build()
                 ) {
                     onLeftClick { player, _, _, _ -> SkillsGUI.open(player) }
                 }
             )
 
-            addComponent(
-                plugin.configYml.getInt("level-gui.progression-slots.prev-page.location.row"),
-                plugin.configYml.getInt("level-gui.progression-slots.prev-page.location.column"),
-                PageChanger(
-                    ItemStackBuilder(Items.lookup(plugin.configYml.getString("level-gui.progression-slots.prev-page.material")))
-                        .setDisplayName(plugin.configYml.getString("level-gui.progression-slots.prev-page.name"))
-                        .build(),
-                    PageChanger.Direction.BACKWARDS
-                )
-            )
-
-            addComponent(
-                plugin.configYml.getInt("level-gui.progression-slots.next-page.location.row"),
-                plugin.configYml.getInt("level-gui.progression-slots.next-page.location.column"),
-                PageChanger(
-                    ItemStackBuilder(Items.lookup(plugin.configYml.getString("level-gui.progression-slots.next-page.material")))
-                        .setDisplayName(plugin.configYml.getString("level-gui.progression-slots.next-page.name"))
-                        .build(),
-                    PageChanger.Direction.FORWARDS
-                )
-            )
+            addPageChanger(plugin.configYml, prevPath, PageChanger.Direction.BACKWARDS, pageChangeSound)
+            addPageChanger(plugin.configYml, nextPath, PageChanger.Direction.FORWARDS, pageChangeSound)
 
             val closeEnabled = plugin.configYml.getBoolOrNull("level-gui.progression-slots.close.enabled") ?: true
             if (closeEnabled) {

@@ -9,7 +9,7 @@ placeholder: "%level% / 50" # The placeholder to be shown in the description, yo
 description: "&a%placeholder%%&8 chance to get $50 every time you mine a block" # The description to be shown in lore and messages
 
 # The effects of the effect (i.e. the functionality)
-# See here: https://plugins.auxilor.io/effects/configuring-an-effect
+# See here: https://hub.auxilor.io/wiki/libreforge/configuring-an-effect
 # Use %level% as a placeholder for the effect level
 effects:
   - id: give_money

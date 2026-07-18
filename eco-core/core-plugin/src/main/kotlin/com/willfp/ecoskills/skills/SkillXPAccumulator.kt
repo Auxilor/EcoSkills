@@ -42,7 +42,7 @@ private val xpMultiplierCache = EcoCache.builder<Player, Double>().expireAfterWr
 }
 
 val Player.skillXPMultiplier: Double
-    get() = xpMultiplierCache.get(this)
+    get() = xpMultiplierCache.get(this) { it.cacheSkillXPMultiplier() }
 
 private fun Player.cacheSkillXPMultiplier(): Double {
     if (this.hasPermission("ecoskills.xpmultiplier.quadruple")) {

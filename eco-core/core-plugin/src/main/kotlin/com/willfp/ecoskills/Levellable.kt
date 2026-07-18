@@ -19,6 +19,7 @@ import com.willfp.ecoskills.util.LevelInjectable
 import com.willfp.ecoskills.util.loadDescriptionPlaceholders
 import jdk.internal.joptsimple.util.RegexMatcher.regex
 import org.bukkit.OfflinePlayer
+import java.time.Duration
 
 abstract class Levellable(
     final override val id: String,

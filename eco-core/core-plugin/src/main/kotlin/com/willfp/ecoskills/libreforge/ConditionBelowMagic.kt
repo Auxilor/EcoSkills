@@ -3,6 +3,7 @@ package com.willfp.ecoskills.libreforge
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.ecoskills.api.getMagic
 import com.willfp.ecoskills.magic.MagicTypes
+import com.willfp.libreforge.ArgType
 import com.willfp.libreforge.Dispatcher
 import com.willfp.libreforge.NoCompileData
 import com.willfp.libreforge.ProvidedHolder
@@ -12,9 +13,23 @@ import com.willfp.libreforge.get
 import org.bukkit.entity.Player
 
 object ConditionBelowMagic : Condition<NoCompileData>("below_magic") {
+    override val description = "Passes when the player's magic of the given type is at or below the maximum amount."
+
+    override val categories = setOf("player")
+
     override val arguments = arguments {
-        require("type", "You must specify the magic type!")
-        require("amount", "You must specify the amount!")
+        require(
+            "type",
+            "You must specify the magic type!",
+            description = "The magic type to check.",
+            type = ArgType.STRING
+        )
+        require(
+            "amount",
+            "You must specify the amount!",
+            description = "The maximum amount of magic allowed.",
+            type = ArgType.EXPRESSION
+        )
     }
 
     override fun isMet(

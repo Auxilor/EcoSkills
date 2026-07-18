@@ -29,7 +29,7 @@ object Skills : RegistrableCategory<Skill>("skill", "skills") {
     fun getTop(position: Int): LeaderboardEntry? {
         require(position > 0) { "Position must be greater than 0" }
 
-        val uuid = leaderboardCache.get(true).getOrNull(position - 1) ?: return null
+        val uuid = leaderboardCache.get(true)?.getOrNull(position - 1) ?: return null
 
         val player = Bukkit.getOfflinePlayer(uuid).takeIf { it.hasPlayedBefore() } ?: return null
 
@@ -41,7 +41,7 @@ object Skills : RegistrableCategory<Skill>("skill", "skills") {
 
     fun getPosition(uuid: UUID): Int? {
         val leaderboard = leaderboardCache.get(true)
-        val index = leaderboard.indexOf(uuid)
+        val index = leaderboard?.indexOf(uuid) ?: -1
         return if (index == -1) null else index + 1
     }
 

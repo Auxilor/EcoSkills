@@ -3,6 +3,7 @@ package com.willfp.ecoskills.libreforge
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.ecoskills.api.getStatLevel
 import com.willfp.ecoskills.stats.Stats
+import com.willfp.libreforge.ArgType
 import com.willfp.libreforge.Dispatcher
 import com.willfp.libreforge.NoCompileData
 import com.willfp.libreforge.ProvidedHolder
@@ -12,9 +13,23 @@ import com.willfp.libreforge.get
 import org.bukkit.entity.Player
 
 object ConditionStatAbove : Condition<NoCompileData>("stat_above") {
+    override val description = "Passes when the player's level in the given stat is at or above the minimum."
+
+    override val categories = setOf("player")
+
     override val arguments = arguments {
-        require("stat", "You must specify the stat!")
-        require("level", "You must specify the level!")
+        require(
+            "stat",
+            "You must specify the stat!",
+            description = "The stat to check the level of.",
+            type = ArgType.STRING
+        )
+        require(
+            "level",
+            "You must specify the level!",
+            description = "The minimum stat level required.",
+            type = ArgType.EXPRESSION
+        )
     }
 
     override fun isMet(

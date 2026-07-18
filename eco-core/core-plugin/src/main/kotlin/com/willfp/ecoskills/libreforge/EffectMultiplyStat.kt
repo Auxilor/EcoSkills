@@ -6,6 +6,7 @@ import com.willfp.ecoskills.api.modifiers.ModifierOperation
 import com.willfp.ecoskills.api.modifiers.StatModifier
 import com.willfp.ecoskills.api.removeStatModifier
 import com.willfp.ecoskills.stats.Stats
+import com.willfp.libreforge.ArgType
 import com.willfp.libreforge.Dispatcher
 import com.willfp.libreforge.NoCompileData
 import com.willfp.libreforge.ProvidedHolder
@@ -18,11 +19,25 @@ import org.bukkit.entity.Player
 import java.util.UUID
 
 object EffectMultiplyStat : Effect<NoCompileData>("multiply_stat") {
+    override val description = "Multiplies one of the player's stats by the given multiplier while the holder is active."
+
+    override val categories = setOf("player")
+
     override val runOrder = RunOrder.START
 
     override val arguments = arguments {
-        require("stat", "You must specify the stat!")
-        require("multiplier", "You must specify the multiplier!")
+        require(
+            "stat",
+            "You must specify the stat!",
+            description = "The stat to multiply.",
+            type = ArgType.STRING
+        )
+        require(
+            "multiplier",
+            "You must specify the multiplier!",
+            description = "The multiplier to apply to the stat.",
+            type = ArgType.EXPRESSION
+        )
     }
 
     override val shouldReload = false
@@ -39,7 +54,7 @@ object EffectMultiplyStat : Effect<NoCompileData>("multiply_stat") {
         val player = dispatcher.get<Player>() ?: return
         val stat = Stats.getByID(config.getString("stat")) ?: return
 
-        val lookupKey = "${player.uniqueId}_${holder.holder.id}"
+        val lookupKey = holder.lookupKey(player)
         val modifierUUID = UUID.nameUUIDFromBytes("${lookupKey}_${stat.id}".toByteArray())
 
         activeModifiers.getOrPut(lookupKey) { mutableSetOf() }.add(modifierUUID)
@@ -58,7 +73,7 @@ object EffectMultiplyStat : Effect<NoCompileData>("multiply_stat") {
     override fun onDisable(dispatcher: Dispatcher<*>, identifiers: Identifiers, holder: ProvidedHolder) {
         val player = dispatcher.get<Player>() ?: return
 
-        val lookupKey = "${player.uniqueId}_${holder.holder.id}"
+        val lookupKey = holder.lookupKey(player)
         val modifierUUIDs = activeModifiers.remove(lookupKey) ?: return
 
         for (uuid in modifierUUIDs) {

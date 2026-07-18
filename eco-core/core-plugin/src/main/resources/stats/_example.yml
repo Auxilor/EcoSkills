@@ -19,7 +19,7 @@ gui:
   icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDMzZGRiOTJjYjZiM2E3OTI4MGI4YmRjZWQ4OTc2YWVhYjEzYTRiZmZlYWVmMmQ0NmQ4MjhiZDkxZGVlMGYzZSJ9fX0=
 
 # The effects of the stat (i.e. the functionality)
-# See here: https://plugins.auxilor.io/effects/configuring-an-effect
+# See here: https://hub.auxilor.io/wiki/libreforge/configuring-an-effect
 # Use %level% as a placeholder for the stat level
 effects:
   - id: hunger_multiplier

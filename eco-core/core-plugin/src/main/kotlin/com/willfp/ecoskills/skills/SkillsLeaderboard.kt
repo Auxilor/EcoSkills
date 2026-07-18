@@ -24,7 +24,7 @@ object SkillsLeaderboard {
     fun getTop(skill: Levellable, position: Int): LeaderboardEntry? {
         require(position > 0) { "Position must be greater than 0" }
 
-        val uuid = leaderboardCache.get(true)[skill]?.getOrNull(position - 1) ?: return null
+        val uuid = leaderboardCache.get(true)?.get(skill)?.getOrNull(position - 1) ?: return null
 
         val player = Bukkit.getOfflinePlayer(uuid).takeIf { it.hasPlayedBefore() } ?: return null
 
@@ -35,7 +35,7 @@ object SkillsLeaderboard {
     }
 
     fun getPosition(skill: Levellable, uuid: UUID): Int? {
-        val leaderboard = leaderboardCache.get(true)[skill]
+        val leaderboard = leaderboardCache.get(true)?.get(skill)
         val index = leaderboard?.indexOf(uuid)
         return if (index == -1) null else index?.plus(1)
     }

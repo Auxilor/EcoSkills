@@ -17,6 +17,7 @@ import com.willfp.ecoskills.util.LevelInjectable
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import kotlin.math.roundToInt
+import java.time.Duration
 
 private val levelItemCache = EcoCache.builder<Int, ItemStack>()
     .expireAfterWrite(Duration.ofMillis(plugin.configYml.getInt("gui.cache-ttl").toLong()))
