@@ -80,7 +80,7 @@ object DamageIndicatorListener : Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun onEntityDamage(event: EntityDamageEvent) {
-        if (event is EntityDamageByEntityEvent && event.damager is Player) {
+        if (event is EntityDamageByEntityEvent && event.playerSource != null) {
             return
         }
 
