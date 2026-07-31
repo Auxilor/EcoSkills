@@ -28,7 +28,8 @@ object ConditionAboveMagic : Condition<NoCompileData>("above_magic") {
             "amount",
             "You must specify the amount!",
             description = "The minimum amount of magic required.",
-            type = ArgType.EXPRESSION
+            type = ArgType.EXPRESSION,
+            example = "50 + %level%"
         )
     }
 

@@ -40,13 +40,15 @@ object EffectMultiplyStatTemporarily : Effect<NoCompileData>("multiply_stat_temp
             "multiplier",
             "You must specify the multiplier!",
             description = "The multiplier to apply to the stat.",
-            type = ArgType.EXPRESSION
+            type = ArgType.EXPRESSION,
+            example = "1 + %level% * 0.1"
         )
         require(
             "duration",
             "You must specify the duration for the boost!",
             description = "The duration in ticks that the boost lasts for.",
-            type = ArgType.EXPRESSION
+            type = ArgType.EXPRESSION,
+            example = "20 * %level%"
         )
     }
 

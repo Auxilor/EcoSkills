@@ -33,7 +33,8 @@ object ConditionHasSkillLevel : Condition<NoCompileData>("has_skill_level") {
             "level",
             "You must specify the skill level!",
             description = "The minimum skill level required.",
-            type = ArgType.EXPRESSION
+            type = ArgType.EXPRESSION,
+            example = "5 + %level%"
         )
     }
 

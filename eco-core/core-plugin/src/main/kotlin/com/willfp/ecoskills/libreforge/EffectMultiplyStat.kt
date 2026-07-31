@@ -36,7 +36,8 @@ object EffectMultiplyStat : Effect<NoCompileData>("multiply_stat") {
             "multiplier",
             "You must specify the multiplier!",
             description = "The multiplier to apply to the stat.",
-            type = ArgType.EXPRESSION
+            type = ArgType.EXPRESSION,
+            example = "1 + %level% * 0.1"
         )
     }
 

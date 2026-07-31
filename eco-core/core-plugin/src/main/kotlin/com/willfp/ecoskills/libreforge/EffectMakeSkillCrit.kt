@@ -24,7 +24,8 @@ object EffectMakeSkillCrit : Effect<NoCompileData>("make_skill_crit") {
             "multiplier",
             "You must specify the damage multiplier!",
             description = "The multiplier to apply to the attack's damage.",
-            type = ArgType.EXPRESSION
+            type = ArgType.EXPRESSION,
+            example = "1 + %level% * 0.1"
         )
     }
 

@@ -31,7 +31,8 @@ object EffectMultiplyMagic : Effect<NoCompileData>("multiply_magic") {
             "multiplier",
             "You must specify the multiplier!",
             description = "The multiplier to apply to the player's current magic.",
-            type = ArgType.EXPRESSION
+            type = ArgType.EXPRESSION,
+            example = "1 + %level% * 0.1"
         )
     }
 
