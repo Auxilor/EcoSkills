@@ -29,7 +29,8 @@ object EffectGiveSkillXp : Effect<NoCompileData>("give_skill_xp") {
             "amount",
             "You must specify the amount of xp to give!",
             description = "The amount of xp to give.",
-            type = ArgType.EXPRESSION
+            type = ArgType.EXPRESSION,
+            example = "10 + %level%"
         )
         require(
             "skill",

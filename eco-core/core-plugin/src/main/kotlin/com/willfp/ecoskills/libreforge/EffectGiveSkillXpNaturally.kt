@@ -25,7 +25,8 @@ object EffectGiveSkillXpNaturally : Effect<NoCompileData>("give_skill_xp_natural
             "amount",
             "You must specify the amount of xp to give!",
             description = "The base amount of xp to give before multipliers are applied.",
-            type = ArgType.EXPRESSION
+            type = ArgType.EXPRESSION,
+            example = "10 + %level%"
         )
         require(
             "skill",

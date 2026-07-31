@@ -31,7 +31,8 @@ object EffectGiveMagic : Effect<NoCompileData>("give_magic") {
             "amount",
             "You must specify the amount to add / subtract!",
             description = "The amount of magic to add. Use a negative value to subtract.",
-            type = ArgType.EXPRESSION
+            type = ArgType.EXPRESSION,
+            example = "10 + %level%"
         )
     }
 

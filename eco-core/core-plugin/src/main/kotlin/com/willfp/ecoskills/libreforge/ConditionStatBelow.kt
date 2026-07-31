@@ -28,7 +28,8 @@ object ConditionStatBelow : Condition<NoCompileData>("stat_below") {
             "level",
             "You must specify the level!",
             description = "The maximum stat level allowed.",
-            type = ArgType.EXPRESSION
+            type = ArgType.EXPRESSION,
+            example = "5 + %level%"
         )
     }
 

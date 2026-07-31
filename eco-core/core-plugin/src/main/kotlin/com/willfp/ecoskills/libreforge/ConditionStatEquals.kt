@@ -28,7 +28,8 @@ object ConditionStatEquals : Condition<NoCompileData>("stat_equals") {
             "level",
             "You must specify the level!",
             description = "The stat level to compare against.",
-            type = ArgType.EXPRESSION
+            type = ArgType.EXPRESSION,
+            example = "5 + %level%"
         )
     }
 

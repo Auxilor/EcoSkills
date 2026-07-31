@@ -36,7 +36,8 @@ object EffectAddStat : Effect<NoCompileData>("add_stat") {
             "amount",
             "You must specify the amount to add/remove!",
             description = "The amount to add to the stat. Use a negative value to remove.",
-            type = ArgType.EXPRESSION
+            type = ArgType.EXPRESSION,
+            example = "5 + %level%"
         )
     }
 

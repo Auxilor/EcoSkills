@@ -40,13 +40,15 @@ object EffectAddStatTemporarily : Effect<NoCompileData>("add_stat_temporarily") 
             "amount",
             "You must specify the amount to add/remove!",
             description = "The amount to add to the stat. Use a negative value to remove.",
-            type = ArgType.EXPRESSION
+            type = ArgType.EXPRESSION,
+            example = "5 + %level%"
         )
         require(
             "duration",
             "You must specify the duration for the boost!",
             description = "The duration in ticks that the boost lasts for.",
-            type = ArgType.EXPRESSION
+            type = ArgType.EXPRESSION,
+            example = "20 * %level%"
         )
     }
 
