@@ -12,6 +12,7 @@ import org.bukkit.GameMode
 import org.bukkit.Location
 import org.bukkit.entity.Allay
 import org.bukkit.entity.Player
+import org.bukkit.entity.Projectile
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -30,13 +31,11 @@ object DamageIndicatorListener : Listener {
             return
         }
 
-        if (event.damager !is Player) {
-            return
-        }
+        val source = event.playerSource ?: return
 
         val victim = event.entity
 
-        if (event.entity == event.damager) {
+        if (victim == source) {
             return
         }
 
@@ -81,7 +80,7 @@ object DamageIndicatorListener : Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun onEntityDamage(event: EntityDamageEvent) {
-        if (event is EntityDamageByEntityEvent && event.damager is Player) {
+        if (event is EntityDamageByEntityEvent && event.playerSource != null) {
             return
         }
 
@@ -163,4 +162,7 @@ object DamageIndicatorListener : Listener {
             randDouble(-z, z)
         )
     }
+
+    private val EntityDamageByEntityEvent.playerSource: Player?
+        get() = damager as? Player ?: (damager as? Projectile)?.shooter as? Player
 }
