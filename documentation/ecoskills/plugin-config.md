@@ -1,6 +1,6 @@
 ---
 title: "Plugin Config"
-sidebar_position: 8
+sidebar_position: 7
 ---
 
 This is the main config for EcoSkills, found at `/plugins/EcoSkills/config.yml`. It controls storage, the skills and stats GUIs, the level progression GUI, the persistent action bar, damage indicators, and how XP gain and level-ups are announced. Edit it, then run `/ecoskills reload` to apply most changes.

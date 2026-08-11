@@ -1,6 +1,6 @@
 ---
 title: "PlaceholderAPI"
-sidebar_position: 6
+sidebar_position: 5
 ---
 
 EcoSkills exposes its skill, stat, and effect data through PlaceholderAPI so you can show it anywhere placeholders are supported. Install PlaceholderAPI, then use any of the placeholders below. Swap `<id>` for a skill, stat, or effect ID.

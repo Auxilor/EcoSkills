@@ -1,6 +1,6 @@
 ---
 title: "Commands and Permissions"
-sidebar_position: 7
+sidebar_position: 6
 ---
 
 This page lists every EcoSkills command and the permission that gates it, plus the extra permissions you can grant for XP multipliers. Use these to set up who can open the GUIs, manage player data, and earn boosted XP.
