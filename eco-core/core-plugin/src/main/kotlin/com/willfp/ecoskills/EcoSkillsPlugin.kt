@@ -2,6 +2,7 @@ package com.willfp.ecoskills
 
 import com.willfp.eco.core.bstats.EcoMetricsChart
 import com.willfp.eco.core.command.impl.PluginCommand
+import com.willfp.eco.core.leaderboard.Leaderboards
 import com.willfp.eco.core.packet.PacketListener
 import com.willfp.ecoskills.actionbar.ActionBarCompatibilityProxy
 import com.willfp.ecoskills.actionbar.ActionBarGamemodeListener
@@ -116,6 +117,17 @@ class EcoSkillsPlugin : LibreforgePlugin() {
     }
 
     override fun handleReload() {
+        // Config categories are loaded by libreforge's onReload(START) tasks, which run before
+        // this handler, so every skill exists by now and re-registering here is what keeps
+        // leaderboards for removed skills from lingering.
+        Leaderboards.unregisterAll(this)
+
+        for (skill in Skills.values()) {
+            skill.registerLeaderboard()
+        }
+
+        Skills.registerLeaderboard()
+
         if (this.configYml.getBool("persistent-action-bar.enabled")) {
             ActionBarHandler.startTicking()
         }

@@ -14,7 +14,7 @@ import com.willfp.eco.util.evaluateExpression
 import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.toNiceString
 import com.willfp.eco.util.toNumeral
-import com.willfp.ecoskills.skills.SkillsLeaderboard.getPosition
+import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.util.LevelInjectable
 import com.willfp.ecoskills.util.loadDescriptionPlaceholders
 import jdk.internal.joptsimple.util.RegexMatcher.regex
@@ -27,7 +27,7 @@ abstract class Levellable(
 ) : KRegistrable {
     val startLevel = 0
 
-    private val key = PersistentDataKey(
+    internal val key = PersistentDataKey(
         plugin.createNamespacedKey(id),
         PersistentDataKeyType.INT,
         startLevel
@@ -64,9 +64,10 @@ abstract class Levellable(
             getDescription(getActualLevel(it))
         }.register()
 
+        // Only skills have a leaderboard; stats resolve to the empty position, as they always have.
         PlayerPlaceholder(plugin, "${id}_leaderboard_rank") { player ->
             val emptyPosition = plugin.langYml.getString("top.empty-position")
-            val position = getPosition(this, player.uniqueId)
+            val position = (this as? Skill)?.leaderboard?.getPosition(player.uniqueId)
             position?.toString() ?: emptyPosition
         }.register()
     }

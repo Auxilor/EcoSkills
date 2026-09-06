@@ -6,7 +6,6 @@ import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.savedDisplayName
 import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.skills.Skills
-import com.willfp.ecoskills.skills.SkillsLeaderboard.getTop
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.util.StringUtil
@@ -19,61 +18,57 @@ object CommandTop : Subcommand(
 ) {
 
     override fun onExecute(sender: CommandSender, args: List<String>) {
-        plugin.scheduler.runAsync {
-            val skill = Skills.getByID(args.getOrNull(0))
+        val skill = Skills.getByID(args.getOrNull(0))
 
-            val pageIndex = if (skill == null) 0 else 1
-            val page = args.getOrNull(pageIndex)?.toIntOrNull() ?: 1
+        val pageIndex = if (skill == null) 0 else 1
+        val page = args.getOrNull(pageIndex)?.toIntOrNull() ?: 1
 
-            if (
-                skill == null
-                && args.getOrNull(pageIndex)?.toIntOrNull() == null
-                && args.getOrNull(pageIndex)?.isBlank() == false
-            ) {
-                sender.sendMessage(plugin.langYml.getMessage("invalid-skill"))
-                return@runAsync
-            }
+        if (
+            skill == null
+            && args.getOrNull(pageIndex)?.toIntOrNull() == null
+            && args.getOrNull(pageIndex)?.isBlank() == false
+        ) {
+            sender.sendMessage(plugin.langYml.getMessage("invalid-skill"))
+            return
+        }
 
-            val offset = (page - 1) * 10
+        val offset = (page - 1) * 10
 
-            val positions = ((offset + 1)..(offset + 10)).toList()
+        val positions = ((offset + 1)..(offset + 10)).toList()
 
-            val top = if (skill == null) {
-                positions.mapNotNull { Skills.getTop(it) }
-            } else {
-                positions.mapNotNull { getTop(skill, it) }
-            }
+        val top = if (skill == null) {
+            positions.mapNotNull { Skills.getTop(it) }
+        } else {
+            positions.mapNotNull { skill.leaderboard?.getTop(it) }
+        }
 
-            val messages = plugin.langYml.getStrings("top.format")
-            val lines = mutableListOf<String>()
+        val messages = plugin.langYml.getStrings("top.format")
+        val lines = mutableListOf<String>()
 
-            for ((index, entry) in top.withIndex()) {
-                val (player, level) = entry
+        for ((index, entry) in top.withIndex()) {
+            val line = plugin.langYml.getString("top-line-format")
+                .replace("%rank%", (offset + index + 1).toString())
+                .replace("%level%", entry.value.toInt().toString())
+                .replace("%player%", entry.player.savedDisplayName)
 
-                val line = plugin.langYml.getString("top-line-format")
-                    .replace("%rank%", (offset + index + 1).toString())
-                    .replace("%level%", level.toString())
-                    .replace("%player%", player.savedDisplayName)
+            lines.add(line)
+        }
 
-                lines.add(line)
-            }
+        val linesIndex = messages.indexOf("%lines%")
 
-            val linesIndex = messages.indexOf("%lines%")
+        if (linesIndex != -1) {
+            messages.removeAt(linesIndex)
+            messages.addAll(linesIndex, lines)
+        }
 
-            if (linesIndex != -1) {
-                messages.removeAt(linesIndex)
-                messages.addAll(linesIndex, lines)
-            }
-
-            for (message in messages) {
-                sender.sendMessage(
-                    message.formatEco(
-                        placeholderContext(
-                            player = sender as? Player
-                        )
+        for (message in messages) {
+            sender.sendMessage(
+                message.formatEco(
+                    placeholderContext(
+                        player = sender as? Player
                     )
                 )
-            }
+            )
         }
     }
 
