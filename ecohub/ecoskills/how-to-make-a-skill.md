@@ -171,6 +171,22 @@ level-up-effects:
       require: "%level% < 10" # %level% is the level reached after levelling up
 ```
 
+#### Placeholders in `level-up-effects`
+
+These describe the level-up that just happened. The chain runs once per level gained, so an XP
+grant large enough to cross several levels runs it once for each level rather than once for the
+whole grant.
+
+| Placeholder | Resolves to |
+| --- | --- |
+| `%level%` | The level just reached. |
+| `%level_numeral%` | The level just reached, as a Roman numeral. |
+| `%previous_level%` | The level before this one, i.e. `%level%` minus 1. |
+| `%previous_level_numeral%` | The previous level, as a Roman numeral. |
+
+To react to a skill level-up from an effect somewhere else, use the `level_up_skill` trigger
+instead.
+
 :::danger Effects are their own system
 The effects, conditions, filters, and mutators here are the shared libreforge system, documented in full elsewhere. Read these before going deep:
 

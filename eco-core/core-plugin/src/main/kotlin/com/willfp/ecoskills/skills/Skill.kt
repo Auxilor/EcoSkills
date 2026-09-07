@@ -7,11 +7,12 @@ import com.willfp.eco.core.data.profile
 import com.willfp.eco.core.map.defaultMap
 import com.willfp.eco.core.placeholder.PlayerPlaceholder
 import com.willfp.eco.core.placeholder.context.placeholderContext
+import com.willfp.eco.core.progression.LevelCurve
+import com.willfp.eco.core.progression.LevelCurves
 import com.willfp.eco.util.containsIgnoreCase
 import com.willfp.eco.util.evaluateExpression
 import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.toNiceString
-import com.willfp.eco.util.toNumeral
 import com.willfp.ecoskills.Levellable
 import com.willfp.ecoskills.api.getFormattedRequiredXP
 import com.willfp.ecoskills.api.getSkillLevel
@@ -27,13 +28,12 @@ import com.willfp.ecoskills.stats.Stats
 import com.willfp.ecoskills.util.InvalidConfigurationException
 import com.willfp.ecoskills.util.LevelInjectable
 import com.willfp.ecoskills.util.loadDescriptionPlaceholders
-import com.willfp.libreforge.NamedValue
 import com.willfp.libreforge.ViolationContext
 import com.willfp.libreforge.conditions.Conditions
 import com.willfp.libreforge.counters.Counters
 import com.willfp.libreforge.effects.executors.impl.NormalExecutorFactory
 import com.willfp.libreforge.toDispatcher
-import com.willfp.libreforge.triggers.DispatchedTrigger
+import com.willfp.libreforge.levels.LevelUpDispatcher
 import com.willfp.libreforge.triggers.TriggerData
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
@@ -61,7 +61,37 @@ class Skill(
 
     private val requirements = config.getDoublesOrNull("xp-requirements")
 
-    val maxLevel = config.getIntOrNull("max-level") ?: requirements?.size ?: Int.MAX_VALUE
+    private val parsedCurve = LevelCurves.parse(
+        xpFormula,
+        requirements,
+        config.getIntOrNull("max-level"),
+        // EcoSkills starts at level 0 and has no free first level: requirements[0] is the
+        // cost of reaching level 1. Getting this wrong shifts every level's cost silently.
+        startLevel = 0,
+        freeFirstLevel = false
+    ) { expression, level ->
+        // Copied verbatim from the current Skill.getXPRequired, including the level-0 special
+        // case. Every server's xp-formula is written against this exact offset; normalising
+        // it to match the other plugins would rescale their whole curve.
+        val formulaLevel = if (level - 1 == 0) 1 else level - 1
+        evaluateExpression(expression, placeholderContext(injectable = LevelInjectable(formulaLevel)))
+    }
+
+    val curve: LevelCurve = parsedCurve.curve
+
+    // maxLevel keeps its Int.MAX_VALUE default deliberately when neither xp-formula nor
+    // xp-requirements is configured - LevelProgression's requirement guard is what bounds the
+    // loop, not this value, and leaving the huge default in place is what proves it.
+    val maxLevel: Int
+        get() = curve.maxLevel
+
+    private val warnedBrokenLevels = mutableSetOf<Int>()
+
+    internal fun warnBrokenCurveOnce(level: Int) {
+        if (warnedBrokenLevels.add(level)) {
+            plugin.logger.warning("Skill $id has an invalid xp requirement for level $level")
+        }
+    }
 
     private val rewards = config.getSubsections("rewards").mapNotNull {
         val reward = Effects.getByID(it.getString("reward"))
@@ -94,6 +124,10 @@ class Skill(
             throw InvalidConfigurationException("Skill $id has no requirements or xp formula")
         }
 
+        for (problem in parsedCurve.problems) {
+            plugin.logger.warning("Skill $id: ${problem.path} - ${problem.message}")
+        }
+
         PlayerPlaceholder(plugin, "${id}_current_xp") {
             getSavedXP(it).toNiceString()
         }.register()
@@ -124,24 +158,7 @@ class Skill(
     /**
      * Get the XP required to reach the next level, if currently at [level].
      */
-    fun getXPRequired(level: Int): Double {
-        if (xpFormula != null) {
-            // Level 0 would make most formulas return 0; use 1 to get XP required to reach level 1.
-            val formulaLevel = if (level == 0) 1 else level
-            return evaluateExpression(
-                xpFormula,
-                placeholderContext(
-                    injectable = LevelInjectable(formulaLevel)
-                )
-            )
-        }
-
-        if (requirements != null) {
-            return requirements.getOrNull(level) ?: Double.POSITIVE_INFINITY
-        }
-
-        return Double.POSITIVE_INFINITY
-    }
+    fun getXPRequired(level: Int): Double = curve.xpToReach(level + 1)
 
     fun getFormattedXPRequired(level: Int): String {
         val required = getXPRequired(level)
@@ -258,20 +275,19 @@ class Skill(
         giveRewards(player, level)
 
         if (player is Player) {
-            // I don't really know a way to clean this up
-            levelUpEffects?.trigger(
-                DispatchedTrigger(
-                    player.toDispatcher(),
-                    TriggerLevelUpSkill,
-                    TriggerData(
-                        player = player
-                    )
-                ).apply {
-                    addPlaceholder(NamedValue("level", level))
-                    addPlaceholder(NamedValue("level_numeral", level.toNumeral()))
-                    addPlaceholder(NamedValue("previous_level", level - 1))
-                    addPlaceholder(NamedValue("previous_level_numeral", (level - 1).toNumeral()))
-                }
+            // The placeholder set is identical to the four this block added by hand -
+            // LevelUpDispatcher provides the union of what every call site had, precisely so
+            // that migrating to it cannot drop %previous_level_numeral% out of an existing
+            // level-up-effects config.
+            LevelUpDispatcher.dispatch(
+                player.toDispatcher(),
+                TriggerLevelUpSkill,
+                levelUpEffects,
+                level,
+                TriggerData(
+                    player = player
+                ),
+                type = "level"
             )
         }
     }
