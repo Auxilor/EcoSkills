@@ -6,6 +6,7 @@ import com.willfp.eco.core.leaderboard.Leaderboard
 import com.willfp.eco.core.leaderboard.LeaderboardEntry
 import com.willfp.eco.core.leaderboard.Leaderboards
 import com.willfp.eco.core.leaderboard.registerStandardPlaceholders
+import com.willfp.eco.core.leaderboard.registerTopPlaceholders
 import com.willfp.eco.core.placeholder.PlayerPlaceholder
 import com.willfp.ecoskills.gui.menus.SkillsGUI
 import com.willfp.ecoskills.plugin
@@ -85,6 +86,12 @@ object Skills : RegistrableCategory<Skill>("skill", "skills") {
             "leaderboard",
             plugin.langYml.getString("top.empty-position")
         ) { it.toInt().toString() }
+
+        leaderboard.registerTopPlaceholders(
+            plugin,
+            plugin.langYml.getString("top.empty-position"),
+            listOf("level", "amount")
+        )
     }
 
     fun registerPlaceholders() {

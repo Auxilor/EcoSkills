@@ -3,6 +3,7 @@ package com.willfp.ecoskills
 import com.willfp.eco.core.bstats.EcoMetricsChart
 import com.willfp.eco.core.command.impl.PluginCommand
 import com.willfp.eco.core.leaderboard.Leaderboards
+import com.willfp.eco.core.leaderboard.registerCategoryTopPlaceholders
 import com.willfp.eco.core.packet.PacketListener
 import com.willfp.ecoskills.actionbar.ActionBarCompatibilityProxy
 import com.willfp.ecoskills.actionbar.ActionBarGamemodeListener
@@ -39,8 +40,6 @@ import com.willfp.ecoskills.libreforge.TriggerRegenMagic
 import com.willfp.ecoskills.magic.MagicHandler
 import com.willfp.ecoskills.magic.MagicListener
 import com.willfp.ecoskills.magic.MagicTypes
-import com.willfp.ecoskills.skills.EcoSkillsSkillTopPlaceholder
-import com.willfp.ecoskills.skills.EcoSkillsTopPlaceholder
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.skills.display.DamageIndicatorListener
 import com.willfp.ecoskills.skills.display.GainXPDisplay
@@ -110,8 +109,13 @@ class EcoSkillsPlugin : LibreforgePlugin() {
         Filters.register(FilterMagicType)
 
         if (this.configYml.getBool("leaderboard.enabled")) {
-            EcoSkillsTopPlaceholder.register()
-            EcoSkillsSkillTopPlaceholder.register()
+            // Registered once for every skill at once: the lookup resolves the ID when the
+            // placeholder is read, so a skill added or renamed in a config needs nothing here.
+            registerCategoryTopPlaceholders(
+                this,
+                this.langYml.getString("top.empty-position"),
+                listOf("level", "amount")
+            ) { Skills.getByID(it)?.leaderboard }
         }
         Skills.registerPlaceholders()
     }
