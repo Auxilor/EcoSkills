@@ -9,6 +9,7 @@ import com.willfp.eco.core.placeholder.PlayerPlaceholder
 import com.willfp.eco.core.placeholder.PlayerStaticPlaceholder
 import com.willfp.eco.core.placeholder.PlayerlessPlaceholder
 import com.willfp.eco.core.placeholder.context.placeholderContext
+import com.willfp.eco.core.progression.ProgressionPlaceholders
 import com.willfp.eco.core.registry.KRegistrable
 import com.willfp.eco.util.evaluateExpression
 import com.willfp.eco.util.formatEco
@@ -17,7 +18,6 @@ import com.willfp.eco.util.toNumeral
 import com.willfp.ecoskills.skills.SkillsLeaderboard.getPosition
 import com.willfp.ecoskills.util.LevelInjectable
 import com.willfp.ecoskills.util.loadDescriptionPlaceholders
-import jdk.internal.joptsimple.util.RegexMatcher.regex
 import org.bukkit.OfflinePlayer
 import java.time.Duration
 
@@ -77,27 +77,15 @@ abstract class Levellable(
     internal fun setSavedLevel(player: OfflinePlayer, level: Int) = player.profile.write(key, level)
 
     fun addPlaceholdersInto(string: String, level: Int): String {
-        var result = string
+        val result = string
             .replace("%ecoskills_${id}_numeral%", level.toNumeral())
             .replace("%ecoskills_${id}_description%", getDescription(level))
             .replace("%ecoskills_${id}%", level.toString())
-            .replace("%level%", level.toString())
-            .replace("%level_numeral%", level.toNumeral())
-            .replace("%previous_level%", (level - 1).toString())
-            .replace("%previous_level_numeral%", (level - 1).toNumeral())
 
-        // Regex for %level_X% and %level_X_numeral%
-        val regex = Regex("%level_(-?\\d+)(_numeral)?%")
-
-        result = regex.replace(result) { match ->
-            val offset = match.groupValues[1].toIntOrNull() ?: return@replace match.value
-            val isNumeral = match.groupValues[2].isNotEmpty()
-            val newLevel = level + offset
-
-            if (isNumeral) newLevel.toNumeral() else newLevel.toString()
-        }
-
-        return result
+        // %level%, %level_numeral%, %previous_level%, %previous_level_numeral% and the
+        // %level_N% / %level_N_numeral% offsets, resolved by the shared helper in eco so a
+        // lore line and an effect chain can never disagree about what %level_2% means.
+        return ProgressionPlaceholders.inject(result, "level", level)
     }
 
     fun getDescription(level: Int): String {

@@ -286,7 +286,8 @@ class Skill(
                 level,
                 TriggerData(
                     player = player
-                )
+                ),
+                type = "level"
             )
         }
     }
