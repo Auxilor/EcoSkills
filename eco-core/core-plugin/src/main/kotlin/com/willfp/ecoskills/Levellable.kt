@@ -66,7 +66,7 @@ abstract class Levellable(
 
         // Only skills have a leaderboard; stats resolve to the empty position, as they always have.
         PlayerPlaceholder(plugin, "${id}_leaderboard_rank") { player ->
-            val emptyPosition = plugin.langYml.getString("top.empty-position")
+            val emptyPosition = plugin.langYml.getString("top.empty-position").formatEco()
             val position = (this as? Skill)?.leaderboard?.getPosition(player.uniqueId)
             position?.toString() ?: emptyPosition
         }.register()

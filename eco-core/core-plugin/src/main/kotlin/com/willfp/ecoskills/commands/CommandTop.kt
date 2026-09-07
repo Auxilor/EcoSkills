@@ -1,6 +1,7 @@
 package com.willfp.ecoskills.commands
 
 import com.willfp.eco.core.command.impl.Subcommand
+import com.willfp.eco.core.leaderboard.Leaderboards
 import com.willfp.eco.core.placeholder.context.placeholderContext
 import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.savedDisplayName
@@ -52,6 +53,12 @@ object CommandTop : Subcommand(
                 .replace("%player%", entry.player.savedDisplayName)
 
             lines.add(line)
+        }
+
+        // An empty leaderboard still shows its header and footer, with the universal
+        // "no records" message standing in for the entries.
+        if (lines.isEmpty()) {
+            lines.add(Leaderboards.getNoRecordsMessage(plugin))
         }
 
         val linesIndex = messages.indexOf("%lines%")

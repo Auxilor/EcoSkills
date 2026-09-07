@@ -143,7 +143,7 @@ class Skill(
         leaderboard.registerStandardPlaceholders(
             plugin,
             "${id}_leaderboard",
-            plugin.langYml.getString("top.empty-position")
+            plugin.langYml.getString("top.empty-position").formatEco()
         ) { it.toInt().toString() }
     }
 
@@ -210,7 +210,7 @@ class Skill(
             .replace(
                 "%rank%",
                 skill.leaderboard?.getPosition(player.uniqueId)?.toString()
-                    ?: plugin.langYml.getString("top.empty-position")
+                    ?: plugin.langYml.getString("top.empty-position").formatEco()
             )
             .let { addPlaceholdersInto(it, level) }
             .injectRewardPlaceholders(level)

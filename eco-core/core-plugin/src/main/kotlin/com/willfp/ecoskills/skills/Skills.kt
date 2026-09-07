@@ -14,6 +14,7 @@ import com.willfp.ecoskills.util.InvalidConfigurationException
 import com.willfp.libreforge.loader.LibreforgePlugin
 import com.willfp.libreforge.loader.configs.RegistrableCategory
 import java.util.UUID
+import com.willfp.eco.util.formatEco
 
 object Skills : RegistrableCategory<Skill>("skill", "skills") {
     /**
@@ -84,12 +85,12 @@ object Skills : RegistrableCategory<Skill>("skill", "skills") {
         leaderboard.registerStandardPlaceholders(
             plugin,
             "leaderboard",
-            plugin.langYml.getString("top.empty-position")
+            plugin.langYml.getString("top.empty-position").formatEco()
         ) { it.toInt().toString() }
 
         leaderboard.registerTopPlaceholders(
             plugin,
-            plugin.langYml.getString("top.empty-position"),
+            plugin.langYml.getString("top.empty-position").formatEco(),
             listOf("level", "amount")
         )
     }
@@ -103,7 +104,7 @@ object Skills : RegistrableCategory<Skill>("skill", "skills") {
         }
 
         PlayerPlaceholder(plugin, "leaderboard_rank") { player ->
-            val emptyPosition = plugin.langYml.getString("top.empty-position")
+            val emptyPosition = plugin.langYml.getString("top.empty-position").formatEco()
             val position = getPosition(player.uniqueId)
             position?.toString() ?: emptyPosition
         }.register()
