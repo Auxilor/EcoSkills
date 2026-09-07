@@ -1,6 +1,5 @@
 package com.willfp.ecoskills.skills
 
-import com.willfp.eco.core.Eco
 import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.eco.core.data.keys.PersistentDataKeyType
@@ -126,31 +125,26 @@ class Skill(
      * [Leaderboards.unregisterAll] call at the top of the reload handler.
      */
     internal fun registerLeaderboard() {
-        val skill = this
-        val enabled = plugin.configYml.getBool("leaderboard.enabled")
-
-        val leaderboard = Leaderboards.register(plugin, "skill_$id") { uuids ->
-            if (!enabled) {
-                emptyMap()
-            } else {
-                val stored = Eco.get().readAllProfileValues(uuids, skill.key)
-                    .mapValues { it.value.toDouble() }
-
-                // No zero-filter: every player is ranked, including those still at the start
-                // level, exactly as the old leaderboard did.
-                uuids.associateWith { stored[it] ?: skill.key.defaultValue.toDouble() }
-            }
+        // Nothing at all is registered when disabled -- no leaderboard, and no placeholders. A
+        // leaderboard that ranks nobody would still occupy a slot in every refresh sweep.
+        if (!plugin.configYml.getBool("leaderboard.enabled")) {
+            leaderboard = null
+            return
         }
+
+        // Ranked by the level key directly: eco reads every ranked key on the server in one
+        // batched query and updates the values in memory as they are written, neither of which it
+        // can do through an opaque provider. Players at or below the key's default -- the start
+        // level -- have made no progress and are left unranked.
+        val leaderboard = Leaderboards.ofKey(plugin, "skill_$id", key)
 
         this.leaderboard = leaderboard
 
-        if (enabled) {
-            leaderboard.registerStandardPlaceholders(
-                plugin,
-                "${id}_leaderboard",
-                plugin.langYml.getString("top.empty-position")
-            ) { it.toInt().toString() }
-        }
+        leaderboard.registerStandardPlaceholders(
+            plugin,
+            "${id}_leaderboard",
+            plugin.langYml.getString("top.empty-position")
+        ) { it.toInt().toString() }
     }
 
     override fun onRegister() {
