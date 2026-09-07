@@ -75,6 +75,9 @@ object Skills : RegistrableCategory<Skill>("skill", "skills") {
     }
 
     fun registerPlaceholders() {
+        // The fallback registration: registerLeaderboard() replaces this by name when leaderboards
+        // are enabled, so keeping it only matters when they are disabled - without it the
+        // placeholder would go unparsed instead of resolving to the empty position.
         PlayerPlaceholder(plugin, "leaderboard_rank") { player ->
             val emptyPosition = plugin.langYml.getString("top.empty-position")
             val position = getPosition(player.uniqueId)
