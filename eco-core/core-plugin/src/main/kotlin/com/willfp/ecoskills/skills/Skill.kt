@@ -13,7 +13,6 @@ import com.willfp.eco.util.containsIgnoreCase
 import com.willfp.eco.util.evaluateExpression
 import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.toNiceString
-import com.willfp.eco.util.toNumeral
 import com.willfp.ecoskills.Levellable
 import com.willfp.ecoskills.api.getFormattedRequiredXP
 import com.willfp.ecoskills.api.getSkillLevel
@@ -29,13 +28,12 @@ import com.willfp.ecoskills.stats.Stats
 import com.willfp.ecoskills.util.InvalidConfigurationException
 import com.willfp.ecoskills.util.LevelInjectable
 import com.willfp.ecoskills.util.loadDescriptionPlaceholders
-import com.willfp.libreforge.NamedValue
 import com.willfp.libreforge.ViolationContext
 import com.willfp.libreforge.conditions.Conditions
 import com.willfp.libreforge.counters.Counters
 import com.willfp.libreforge.effects.executors.impl.NormalExecutorFactory
 import com.willfp.libreforge.toDispatcher
-import com.willfp.libreforge.triggers.DispatchedTrigger
+import com.willfp.libreforge.levels.LevelUpDispatcher
 import com.willfp.libreforge.triggers.TriggerData
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
@@ -277,20 +275,18 @@ class Skill(
         giveRewards(player, level)
 
         if (player is Player) {
-            // I don't really know a way to clean this up
-            levelUpEffects?.trigger(
-                DispatchedTrigger(
-                    player.toDispatcher(),
-                    TriggerLevelUpSkill,
-                    TriggerData(
-                        player = player
-                    )
-                ).apply {
-                    addPlaceholder(NamedValue("level", level))
-                    addPlaceholder(NamedValue("level_numeral", level.toNumeral()))
-                    addPlaceholder(NamedValue("previous_level", level - 1))
-                    addPlaceholder(NamedValue("previous_level_numeral", (level - 1).toNumeral()))
-                }
+            // The placeholder set is identical to the four this block added by hand -
+            // LevelUpDispatcher provides the union of what every call site had, precisely so
+            // that migrating to it cannot drop %previous_level_numeral% out of an existing
+            // level-up-effects config.
+            LevelUpDispatcher.dispatch(
+                player.toDispatcher(),
+                TriggerLevelUpSkill,
+                levelUpEffects,
+                level,
+                TriggerData(
+                    player = player
+                )
             )
         }
     }
