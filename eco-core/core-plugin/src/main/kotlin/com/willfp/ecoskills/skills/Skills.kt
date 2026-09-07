@@ -38,46 +38,63 @@ object Skills : RegistrableCategory<Skill>("skill", "skills") {
      * Called from the plugin's reload handler, after every skill has been loaded.
      */
     internal fun registerLeaderboard() {
-        val enabled = plugin.configYml.getBool("leaderboard.enabled")
+        // Nothing at all is registered when disabled -- no leaderboard, and no placeholders,
+        // matching every per-skill leaderboard.
+        if (!plugin.configYml.getBool("leaderboard.enabled")) {
+            leaderboard = null
+            return
+        }
 
+        // A total across every skill cannot be expressed as a single key, so this stays a custom
+        // provider and is refreshed by the reconcile sweep rather than incrementally.
         val leaderboard = Leaderboards.register(plugin, "total_skill_level") { uuids ->
-            if (!enabled) {
-                emptyMap()
-            } else {
-                val totals = HashMap<UUID, Double>()
+            val skills = values()
 
-                // One bulk read per skill, rather than one profile read per player per skill.
-                for (skill in values()) {
-                    for ((uuid, level) in Eco.get().readAllProfileValues(uuids, skill.key)) {
-                        totals.merge(uuid, level.toDouble(), Double::plus)
-                    }
-                }
+            // A player who is at the start level in every skill has made no progress, exactly as
+            // a player at the start level of one skill has made none on that skill's leaderboard.
+            // Ranking them would pad the leaderboard with the whole playerbase and shrink every
+            // percentile, so the sum of the defaults is the threshold rather than zero.
+            val noProgress = skills.sumOf { it.key.defaultValue.toDouble() }
 
-                // A player with no level saved for any skill still totals zero, and was still
-                // ranked by the old leaderboard, so they must stay ranked here.
+            // One batched read for every skill key at once, rather than a separate pass over the
+            // table per skill.
+            val stored = Eco.get().readAllProfileValuesForKeys(uuids, skills.map { it.key })
+
+            val totals = HashMap<UUID, Double>()
+
+            for (skill in skills) {
+                val default = skill.key.defaultValue.toDouble()
+                val levels = stored[skill.key].orEmpty()
+
                 for (uuid in uuids) {
-                    totals.putIfAbsent(uuid, 0.0)
-                }
+                    // Absent means the player is on this skill's default, which still counts
+                    // toward their total -- it is the total that decides whether they are ranked.
+                    val level = (levels[uuid] as? Number)?.toDouble() ?: default
 
-                totals
+                    totals.merge(uuid, level, Double::plus)
+                }
             }
+
+            totals.filterValues { it > noProgress }
         }
 
         this.leaderboard = leaderboard
 
-        if (enabled) {
-            leaderboard.registerStandardPlaceholders(
-                plugin,
-                "leaderboard",
-                plugin.langYml.getString("top.empty-position")
-            ) { it.toInt().toString() }
-        }
+        leaderboard.registerStandardPlaceholders(
+            plugin,
+            "leaderboard",
+            plugin.langYml.getString("top.empty-position")
+        ) { it.toInt().toString() }
     }
 
     fun registerPlaceholders() {
-        // The fallback registration: registerLeaderboard() replaces this by name when leaderboards
-        // are enabled, so keeping it only matters when they are disabled - without it the
-        // placeholder would go unparsed instead of resolving to the empty position.
+        // Only registered when leaderboards are on, matching every other leaderboard placeholder:
+        // with them off, nothing registers at all rather than resolving to the empty position.
+        // registerLeaderboard() replaces this by name when it runs, so the two cannot conflict.
+        if (!plugin.configYml.getBool("leaderboard.enabled")) {
+            return
+        }
+
         PlayerPlaceholder(plugin, "leaderboard_rank") { player ->
             val emptyPosition = plugin.langYml.getString("top.empty-position")
             val position = getPosition(player.uniqueId)
