@@ -2,6 +2,8 @@ package com.willfp.ecoskills
 
 import com.willfp.eco.core.bstats.EcoMetricsChart
 import com.willfp.eco.core.command.impl.PluginCommand
+import com.willfp.eco.core.leaderboard.Leaderboards
+import com.willfp.eco.core.leaderboard.registerCategoryTopPlaceholders
 import com.willfp.eco.core.packet.PacketListener
 import com.willfp.ecoskills.actionbar.ActionBarCompatibilityProxy
 import com.willfp.ecoskills.actionbar.ActionBarGamemodeListener
@@ -38,8 +40,6 @@ import com.willfp.ecoskills.libreforge.TriggerRegenMagic
 import com.willfp.ecoskills.magic.MagicHandler
 import com.willfp.ecoskills.magic.MagicListener
 import com.willfp.ecoskills.magic.MagicTypes
-import com.willfp.ecoskills.skills.EcoSkillsSkillTopPlaceholder
-import com.willfp.ecoskills.skills.EcoSkillsTopPlaceholder
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.skills.display.DamageIndicatorListener
 import com.willfp.ecoskills.skills.display.GainXPDisplay
@@ -57,6 +57,7 @@ import com.willfp.libreforge.registerSpecificHolderProvider
 import com.willfp.libreforge.triggers.Triggers
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
+import com.willfp.eco.util.formatEco
 
 internal lateinit var plugin: EcoSkillsPlugin
     private set
@@ -109,13 +110,29 @@ class EcoSkillsPlugin : LibreforgePlugin() {
         Filters.register(FilterMagicType)
 
         if (this.configYml.getBool("leaderboard.enabled")) {
-            EcoSkillsTopPlaceholder.register()
-            EcoSkillsSkillTopPlaceholder.register()
+            // Registered once for every skill at once: the lookup resolves the ID when the
+            // placeholder is read, so a skill added or renamed in a config needs nothing here.
+            registerCategoryTopPlaceholders(
+                this,
+                this.langYml.getString("top.empty-position").formatEco(),
+                listOf("level", "amount")
+            ) { Skills.getByID(it)?.leaderboard }
         }
         Skills.registerPlaceholders()
     }
 
     override fun handleReload() {
+        // Config categories are loaded by libreforge's onReload(START) tasks, which run before
+        // this handler, so every skill exists by now and re-registering here is what keeps
+        // leaderboards for removed skills from lingering.
+        Leaderboards.unregisterAll(this)
+
+        for (skill in Skills.values()) {
+            skill.registerLeaderboard()
+        }
+
+        Skills.registerLeaderboard()
+
         if (this.configYml.getBool("persistent-action-bar.enabled")) {
             ActionBarHandler.startTicking()
         }

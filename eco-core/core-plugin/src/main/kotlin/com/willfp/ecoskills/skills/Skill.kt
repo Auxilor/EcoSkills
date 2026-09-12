@@ -4,6 +4,9 @@ import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.eco.core.data.keys.PersistentDataKeyType
 import com.willfp.eco.core.data.profile
+import com.willfp.eco.core.leaderboard.Leaderboard
+import com.willfp.eco.core.leaderboard.Leaderboards
+import com.willfp.eco.core.leaderboard.registerStandardPlaceholders
 import com.willfp.eco.core.map.defaultMap
 import com.willfp.eco.core.placeholder.PlayerPlaceholder
 import com.willfp.eco.core.placeholder.context.placeholderContext
@@ -22,7 +25,6 @@ import com.willfp.ecoskills.gui.components.SkillIcon
 import com.willfp.ecoskills.gui.menus.SkillLevelGUI
 import com.willfp.ecoskills.libreforge.TriggerLevelUpSkill
 import com.willfp.ecoskills.plugin
-import com.willfp.ecoskills.skills.SkillsLeaderboard.getPosition
 import com.willfp.ecoskills.stats.Stats
 import com.willfp.ecoskills.util.InvalidConfigurationException
 import com.willfp.ecoskills.util.LevelInjectable
@@ -89,6 +91,13 @@ class Skill(
 
     val isHiddenBeforeLevel1 = config.getBool("hide-before-level-1")
 
+    /**
+     * The leaderboard ranking players by this skill's level, or null before the first reload
+     * has registered it.
+     */
+    var leaderboard: Leaderboard? = null
+        private set
+
     init {
         if (xpFormula == null && requirements == null) {
             throw InvalidConfigurationException("Skill $id has no requirements or xp formula")
@@ -105,6 +114,37 @@ class Skill(
         PlayerPlaceholder(plugin, "${id}_percentage_progress") {
             (it.getSkillProgress(this) * 100).toNiceString()
         }.register()
+    }
+
+    /**
+     * Register (or re-register) this skill's leaderboard and its placeholders.
+     *
+     * Called from the plugin's reload handler rather than from the constructor, because
+     * libreforge loads config categories *before* [com.willfp.eco.core.EcoPlugin.handleReload]
+     * runs, so a leaderboard registered in the constructor would be thrown away by the
+     * [Leaderboards.unregisterAll] call at the top of the reload handler.
+     */
+    internal fun registerLeaderboard() {
+        // Nothing at all is registered when disabled -- no leaderboard, and no placeholders. A
+        // leaderboard that ranks nobody would still occupy a slot in every refresh sweep.
+        if (!plugin.configYml.getBool("leaderboard.enabled")) {
+            leaderboard = null
+            return
+        }
+
+        // Ranked by the level key directly: eco reads every ranked key on the server in one
+        // batched query and updates the values in memory as they are written, neither of which it
+        // can do through an opaque provider. Players at or below the key's default -- the start
+        // level -- have made no progress and are left unranked.
+        val leaderboard = Leaderboards.ofKey(plugin, "skill_$id", key)
+
+        this.leaderboard = leaderboard
+
+        leaderboard.registerStandardPlaceholders(
+            plugin,
+            "${id}_leaderboard",
+            plugin.langYml.getString("top.empty-position").formatEco()
+        ) { it.toInt().toString() }
     }
 
     override fun onRegister() {
@@ -167,7 +207,11 @@ class Skill(
             .replace("%required_xp%", player.getFormattedRequiredXP(skill))
             .replace("%description%", skill.getDescription(level))
             .replace("%skill%", skill.name)
-            .replace("%rank%", getPosition(skill, player.uniqueId)?.toString() ?: plugin.langYml.getString("top.empty-position"))
+            .replace(
+                "%rank%",
+                skill.leaderboard?.getPosition(player.uniqueId)?.toString()
+                    ?: plugin.langYml.getString("top.empty-position").formatEco()
+            )
             .let { addPlaceholdersInto(it, level) }
             .injectRewardPlaceholders(level)
 
