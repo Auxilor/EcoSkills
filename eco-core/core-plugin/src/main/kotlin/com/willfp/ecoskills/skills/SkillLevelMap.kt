@@ -1,5 +1,7 @@
 package com.willfp.ecoskills.skills
 
+import com.willfp.eco.core.progression.LevelProgression
+import com.willfp.eco.core.progression.StopReason
 import com.willfp.ecoskills.api.event.PlayerSkillLevelUpEvent
 import com.willfp.ecoskills.api.event.PlayerSkillXPGainEvent
 import org.bukkit.Bukkit
@@ -25,38 +27,27 @@ class SkillLevelMap(
     }
 
     fun giveXP(skill: Skill, xp: Double) {
-        require(xp >= 0) { "XP must be positive" }
+        if (!xp.isFinite() || xp < 0.0) {
+            return
+        }
 
         val current = this[skill]
+        val change = LevelProgression.progress(skill.curve, current.level, current.xp, xp)
 
-        val required = skill.getXPRequired(current.level)
+        if (change.stopReason == StopReason.INVALID_REQUIREMENT) {
+            skill.warnBrokenCurveOnce(current.level + 1)
+        }
 
-        return if (current.xp + xp >= required && current.level < skill.maxLevel) {
-            val overshoot = current.xp + xp - required
+        this[skill] = SkillLevel(change.newLevel, change.newXp)
 
-            this[skill] = SkillLevel(
-                current.level + 1,
-                0.0
-            )
+        val gained = change.levelsGained ?: return
 
+        for (level in gained) {
             if (player is Player) {
-                Bukkit.getPluginManager().callEvent(
-                    PlayerSkillLevelUpEvent(
-                        player,
-                        skill,
-                        current.level + 1
-                    )
-                )
+                Bukkit.getPluginManager().callEvent(PlayerSkillLevelUpEvent(player, skill, level))
             }
 
-            skill.handleLevelUp(player, current.level + 1)
-
-            giveXP(skill, overshoot) // For recursive level gains.
-        } else {
-            this[skill] = SkillLevel(
-                current.level,
-                current.xp + xp
-            )
+            skill.handleLevelUp(player, level)
         }
     }
 

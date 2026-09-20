@@ -9,8 +9,8 @@ import com.willfp.libreforge.counters.Accumulator
 import com.willfp.libreforge.toDispatcher
 import org.bukkit.GameMode
 import org.bukkit.entity.Player
-import kotlin.math.max
 import java.time.Duration
+import com.willfp.eco.util.NumericalPermissions
 
 class SkillXPAccumulator(
     private val skill: Skill
@@ -65,15 +65,15 @@ private fun Player.cacheSkillXPMultiplier(): Double {
 }
 
 fun Player.getNumericalPermission(permission: String, default: Double): Double {
-    var highest: Double? = null
-
-    for (permissionAttachmentInfo in this.effectivePermissions) {
-        val perm = permissionAttachmentInfo.permission
-        if (perm.startsWith(permission)) {
-            val found = perm.substring(perm.lastIndexOf(".") + 1).toDoubleOrNull() ?: continue
-            highest = max(highest ?: Double.MIN_VALUE, found)
-        }
-    }
-
-    return highest ?: default
+    // Delegates to eco so the four copies of this loop cannot drift apart again. Two
+    // behaviour fixes come with it: a permission explicitly set to false no longer counts,
+    // and a negative value is honoured rather than lost to a `Double.MIN_VALUE` seed - which
+    // is the smallest *positive* double, so `.-50` used to resolve to roughly zero.
+    //
+    // The node itself stays this plugin's own; eco supplies the arithmetic, never a prefix.
+    return NumericalPermissions.highest(
+        this.effectivePermissions.filter { it.value }.map { it.permission },
+        permission,
+        default
+    )
 }
