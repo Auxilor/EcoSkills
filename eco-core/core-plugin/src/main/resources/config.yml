@@ -13,8 +13,8 @@ leaderboard:
   # Please note that it will require a full server restart to take into effect
   enabled: true
 
-  # Time in seconds for the lifetime of the leaderboard cache
-  cache-lifetime: 60
+  # Leaderboard refresh timing, entry caps, and rank display are now configured
+  # server-wide in eco's own config.yml, under the leaderboards: section.
 
 # Worlds that EcoSkills should be disabled in
 disabled-in-worlds:
