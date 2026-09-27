@@ -2,6 +2,7 @@
 
 package com.willfp.ecoskills.api
 
+import com.willfp.eco.core.progression.LevelProgression
 import com.willfp.ecoskills.api.modifiers.StatModifier
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.effects.Effects
@@ -57,10 +58,13 @@ fun OfflinePlayer.getFormattedRequiredXP(skill: Skill) =
     skill.getFormattedXPRequired(this.getSkillLevel(skill))
 
 fun OfflinePlayer.getSkillProgress(skill: Skill): Double {
-    val currentXP = getSkillXP(skill)
-    val requiredXP = getRequiredXP(skill)
+    val level = skill.getSavedLevel(this)
 
-    return currentXP / requiredXP
+    return LevelProgression.progressFraction(
+        skill.getSavedXP(this),
+        skill.getXPRequired(level),
+        level >= skill.maxLevel
+    )
 }
 
 fun OfflinePlayer.getSkillLevel(skill: Skill): Int =
