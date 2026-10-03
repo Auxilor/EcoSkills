@@ -12,7 +12,6 @@ import com.willfp.eco.core.placeholder.PlayerPlaceholder
 import com.willfp.eco.core.placeholder.context.placeholderContext
 import com.willfp.eco.core.progression.LevelCurve
 import com.willfp.eco.core.progression.LevelCurves
-import com.willfp.eco.util.containsIgnoreCase
 import com.willfp.eco.util.evaluateExpression
 import com.willfp.eco.util.formatEco
 import com.willfp.eco.util.toNiceString
@@ -352,4 +351,4 @@ internal val OfflinePlayer.skills: SkillLevelMap
     get() = SkillLevelMap(this)
 
 val Player.isInDisabledWorld: Boolean
-    get() = plugin.configYml.getStrings("disabled-in-worlds").containsIgnoreCase(world.name)
+    get() = plugin.isDisabledIn(world)
