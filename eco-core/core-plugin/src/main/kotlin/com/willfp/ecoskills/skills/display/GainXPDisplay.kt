@@ -127,6 +127,7 @@ object GainXPDisplay : Listener {
                 "learning-skill"
             )
         )
+            .replace("%percentage_progress%", (event.player.getSkillProgress(event.skill) * 100).toNiceString())
             .replace("%current_xp%", event.player.getSkillXP(event.skill).toNiceString())
             .replace("%required_xp%", event.player.getFormattedRequiredXP(event.skill))
             .replace("%gained_xp%", gainCache.get(playerSkill(event.player, event.skill)) { 0.0 }.toNiceString())
