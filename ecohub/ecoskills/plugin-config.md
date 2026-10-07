@@ -218,6 +218,7 @@ persistent-action-bar: # A constant action bar showing health and stats to onlin
   scale-health: true # Scale displayed health so it always reads as 10 hearts
   format: "&c❤ &f%health%&8/&f%max_health%                 &#e884b0🛡 &f%ecoskills_defense% &8| &#db0000🗡 &f%ecoskills_strength% &8| &#40ffe6✦ &f%ecoskills_speed%" # The action bar format; an alternative mana format is "&c❤ &f%health%&8/&f%max_health%                  &f%ecoskills_mana%&8/&f%ecoskills_mana_limit% &#40ffe6🌊"
   disabled-in-worlds: [ ] # Worlds the action bar is hidden in
+  priority: 50 # Priority against other persistent action bars, such as EcoItems HUDs (100); the highest active one shows
 
 damage-indicators: # Floating damage numbers; requires a compatible hologram plugin
   enabled: true # Whether damage indicators are shown
