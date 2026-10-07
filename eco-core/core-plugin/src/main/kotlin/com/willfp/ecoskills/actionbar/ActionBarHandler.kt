@@ -9,6 +9,7 @@ import com.willfp.eco.core.placeholder.PlayerStaticPlaceholder
 import com.willfp.eco.core.placeholder.context.placeholderContext
 import com.willfp.eco.util.containsIgnoreCase
 import com.willfp.eco.util.namespacedKeyOf
+import com.willfp.eco.util.toComponent
 import com.willfp.ecoskills.plugin
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
@@ -19,13 +20,19 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerGameModeChangeEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import java.util.UUID
+import java.util.WeakHashMap
 
 private const val ACTION_BAR_DURATION = 2700L
 private const val TICK_DURATION = 50L
+private const val KEEP_ALIVE_DURATION = 2000L
 
 private val blacklist = mutableMapOf<UUID, Long>()
 
 private val whitelist = mutableMapOf<UUID, Long>()
+
+private data class SentActionBar(val message: String, val time: Long)
+
+private val lastSentActionBars = WeakHashMap<Player, SentActionBar>()
 
 private val actionBarEnabledKey = PersistentDataKey(
     namespacedKeyOf("ecoskills", "actionbar_enabled"),
@@ -41,12 +48,7 @@ val Player.isPersistentActionBarEnabled: Boolean
     get() = this.profile.read(actionBarEnabledKey)
 
 fun Player.sendCompatibleActionBarMessage(message: String) {
-    // Have to use the shit method for compatibility.
-    @Suppress("DEPRECATION")
-    this.spigot().sendMessage(
-        net.md_5.bungee.api.ChatMessageType.ACTION_BAR,
-        *net.md_5.bungee.api.chat.TextComponent.fromLegacyText(message)
-    )
+    this.sendActionBar(message.toComponent())
 }
 
 fun Player.pausePersistentActionBar() {
@@ -88,38 +90,53 @@ object ActionBarHandler {
         .getStrings("persistent-action-bar.disabled-in-worlds")
 
     private fun trySendMessage(player: Player) {
-        if (player.isPersistentActionBarPaused || !player.isPersistentActionBarEnabled) {
+        if (!canSendMessage(player)) {
+            lastSentActionBars.remove(player)
             return
         }
 
-        if (plugin.configYml.getBool("persistent-action-bar.require-permission")) {
-            if (!player.hasPermission("ecoskills.enable-persistent-action-bar")) {
-                return
-            }
-        }
-
-        if (disabledWorlds.containsIgnoreCase(player.world.name)) {
-            return
-        }
-
-        if (player.gameMode in setOf(GameMode.CREATIVE, GameMode.SPECTATOR)) {
-            return
-        }
-
-        if (plugin.configYml.getBool("persistent-action-bar.scale-health")) {
+        if (plugin.configYml.getBool("persistent-action-bar.scale-health")
+            && (!player.isHealthScaled || player.healthScale != 20.0)
+        ) {
             player.isHealthScaled = true
             player.healthScale = 20.0
         }
 
-        player.sendPersistentActionBar(
-            plugin.configYml
-                .getFormattedString(
-                    "persistent-action-bar.format", placeholderContext(
-                        player = player,
-                        injectable = PlayerHealthInjectable
-                    )
+        val message = plugin.configYml
+            .getFormattedString(
+                "persistent-action-bar.format", placeholderContext(
+                    player = player,
+                    injectable = PlayerHealthInjectable
                 )
-        )
+            )
+
+        val now = System.currentTimeMillis()
+        val lastSent = lastSentActionBars[player]
+
+        if (lastSent != null && lastSent.message == message && now - lastSent.time < KEEP_ALIVE_DURATION) {
+            return
+        }
+
+        lastSentActionBars[player] = SentActionBar(message, now)
+        player.sendPersistentActionBar(message)
+    }
+
+    private fun canSendMessage(player: Player): Boolean {
+        if (player.isPersistentActionBarPaused || !player.isPersistentActionBarEnabled) {
+            return false
+        }
+
+        if (plugin.configYml.getBool("persistent-action-bar.require-permission")) {
+            if (!player.hasPermission("ecoskills.enable-persistent-action-bar")) {
+                return false
+            }
+        }
+
+        if (disabledWorlds.containsIgnoreCase(player.world.name)) {
+            return false
+        }
+
+        return player.gameMode !in setOf(GameMode.CREATIVE, GameMode.SPECTATOR)
     }
 
     internal fun startTicking() {
