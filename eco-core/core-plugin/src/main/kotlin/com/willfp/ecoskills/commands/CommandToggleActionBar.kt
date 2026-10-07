@@ -1,5 +1,6 @@
 package com.willfp.ecoskills.commands
 
+import com.willfp.eco.core.actionbar.PersistentActionBars
 import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.ecoskills.actionbar.isPersistentActionBarEnabled
 import com.willfp.ecoskills.actionbar.sendCompatibleActionBarMessage
@@ -25,5 +26,9 @@ object CommandToggleActionBar : Subcommand(
         }
 
         player.togglePersistentActionBar()
+
+        if (player.isPersistentActionBarEnabled) {
+            PersistentActionBars.refresh(player)
+        }
     }
 }

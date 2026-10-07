@@ -279,6 +279,10 @@ persistent-action-bar:
   # The worlds that the action bar should be disabled in.
   disabled-in-worlds: [ ]
 
+  # The priority against other persistent action bars, such as EcoItems HUDs (priority 100).
+  # The highest priority active bar is shown.
+  priority: 50
+
 damage-indicators:
   # Requires a compatible Hologram plugin to be installed
   enabled: true
