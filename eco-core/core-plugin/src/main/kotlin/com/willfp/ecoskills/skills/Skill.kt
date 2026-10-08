@@ -38,6 +38,7 @@ import com.willfp.libreforge.levels.LevelUpDispatcher
 import com.willfp.libreforge.triggers.TriggerData
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
+import java.util.concurrent.ConcurrentHashMap
 
 class Skill(
     id: String,
@@ -86,7 +87,7 @@ class Skill(
     val maxLevel: Int
         get() = curve.maxLevel
 
-    private val warnedBrokenLevels = mutableSetOf<Int>()
+    private val warnedBrokenLevels = ConcurrentHashMap.newKeySet<Int>()
 
     internal fun warnBrokenCurveOnce(level: Int) {
         if (warnedBrokenLevels.add(level)) {
@@ -124,6 +125,7 @@ class Skill(
      * The leaderboard ranking players by this skill's level, or null before the first reload
      * has registered it.
      */
+    @Volatile
     var leaderboard: Leaderboard? = null
         private set
 

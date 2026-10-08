@@ -9,6 +9,7 @@ import com.willfp.ecoskills.api.setSkillLevel
 import com.willfp.ecoskills.magic.MagicType
 import com.willfp.ecoskills.magic.MagicTypes
 import com.willfp.ecoskills.plugin
+import com.willfp.ecoskills.runOwned
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.stats.Stat
@@ -37,39 +38,41 @@ object CommandSet : Subcommand(
 
         notifyFalse(amount >= 0, "invalid-amount")
 
-        val key = when (obj) {
-            is Skill -> {
-                player.setSkillLevel(obj, amount)
-                "set-skill-level"
+        player.runOwned {
+            val key = when (obj) {
+                is Skill -> {
+                    player.setSkillLevel(obj, amount)
+                    "set-skill-level"
+                }
+
+                is Stat -> {
+                    player.setBaseStatLevel(obj, amount)
+                    "set-stat"
+                }
+
+                is MagicType -> {
+                    player.setMagic(obj, amount)
+                    "set-magic"
+                }
+
+                else -> ""
             }
 
-            is Stat -> {
-                player.setBaseStatLevel(obj, amount)
-                "set-stat"
+            val objName = when (obj) {
+                is Skill -> obj.name
+                is Stat -> obj.name
+                is MagicType -> obj.name
+                else -> "unknown"
             }
 
-            is MagicType -> {
-                player.setMagic(obj, amount)
-                "set-magic"
-            }
-
-            else -> ""
+            sender.sendMessage(
+                this.plugin.langYml.getMessage(key, StringUtils.FormatOption.WITHOUT_PLACEHOLDERS)
+                    .replace("%player%", player.name)
+                    .replace("%amount%", amount.toString())
+                    .replace("%obj%", objName)
+                    .formatEco()
+            )
         }
-
-        val objName = when (obj) {
-            is Skill -> obj.name
-            is Stat -> obj.name
-            is MagicType -> obj.name
-            else -> "unknown"
-        }
-
-        sender.sendMessage(
-            this.plugin.langYml.getMessage(key, StringUtils.FormatOption.WITHOUT_PLACEHOLDERS)
-                .replace("%player%", player.name)
-                .replace("%amount%", amount.toString())
-                .replace("%obj%", objName)
-                .formatEco()
-        )
     }
 
     override fun tabComplete(sender: CommandSender, args: List<String>): List<String> {

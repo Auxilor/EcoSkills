@@ -1,22 +1,25 @@
 package com.willfp.ecoskills.magic
 
-import com.willfp.eco.core.map.nestedMap
 import org.bukkit.entity.Player
 import java.util.UUID
+import java.util.concurrent.ConcurrentHashMap
 
 
-private val map = nestedMap<UUID, MagicType, Int>()
+private val map = ConcurrentHashMap<UUID, MutableMap<MagicType, Int>>()
 
 class MagicMap(
     private val player: Player
 ) {
+    private val values: MutableMap<MagicType, Int>
+        get() = map.computeIfAbsent(player.uniqueId) { ConcurrentHashMap() }
+
     operator fun get(type: MagicType): Int {
-        return map[player.uniqueId][type] ?: 0
+        return values[type] ?: 0
     }
 
     operator fun set(type: MagicType, amount: Int) {
         val actualAmount = amount.coerceIn(0..type.getLimit(player))
 
-        map[player.uniqueId][type] = actualAmount
+        values[type] = actualAmount
     }
 }

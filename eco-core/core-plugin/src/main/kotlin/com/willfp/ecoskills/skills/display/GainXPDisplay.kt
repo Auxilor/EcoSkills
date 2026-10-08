@@ -17,6 +17,7 @@ import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.api.getSkillProgress
 import com.willfp.ecoskills.api.getSkillXP
 import com.willfp.ecoskills.plugin
+import com.willfp.ecoskills.runOwned
 import com.willfp.ecoskills.skills.Skill
 import org.bukkit.Bukkit
 import org.bukkit.boss.BarColor
@@ -27,6 +28,7 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import java.time.Duration
 import java.util.UUID
+import java.util.concurrent.ConcurrentHashMap
 
 private val xpGainSoundEnabledKey = PersistentDataKey(
     namespacedKeyOf("ecoskills", "gain_sound_enabled"),
@@ -56,16 +58,17 @@ object GainXPDisplay : Listener {
 
     private val sound = PlayableSound.create(plugin.configYml.getSubsection("skills.gain-xp.sound"))
 
-    private val soundsToPlay = mutableSetOf<UUID>()
+    private val soundsToPlay = ConcurrentHashMap.newKeySet<UUID>()
 
     internal fun startTickingSounds() {
-        plugin.scheduler.runTimer(1, 1) {
-            for (uuid in soundsToPlay) {
-                val player = Bukkit.getPlayer(uuid) ?: continue
-                sound?.playTo(player)
-            }
+        plugin.scheduler.global().runTimer(1, 1) {
+            val iterator = soundsToPlay.iterator()
 
-            soundsToPlay.clear()
+            while (iterator.hasNext()) {
+                val player = Bukkit.getPlayer(iterator.next())
+                iterator.remove()
+                player?.runOwned { sound?.playTo(player) }
+            }
         }
     }
 
@@ -80,7 +83,7 @@ object GainXPDisplay : Listener {
         }
 
         // Run next tick because level up calls before xp is added
-        plugin.scheduler.run {
+        plugin.scheduler.on(player).run {
             handleActionBar(event)
             handleBossBar(event)
         }

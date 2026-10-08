@@ -11,6 +11,7 @@ import com.willfp.ecoskills.api.setMagic
 import com.willfp.ecoskills.magic.MagicType
 import com.willfp.ecoskills.magic.MagicTypes
 import com.willfp.ecoskills.plugin
+import com.willfp.ecoskills.runOwned
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.stats.Stat
@@ -42,45 +43,47 @@ object CommandGive : Subcommand(
         // Get optional showActionBar parameter (default to false for backward compatibility)
         val showActionBar = args.getOrNull(3)?.toBooleanStrictOrNull() ?: false
 
-        val key = when (obj) {
-            is Skill -> {
-                if (showActionBar) {
-                    player.gainSkillXP(obj, amount)
-                    "gained-skill-xp"
-                } else {
-                    player.giveSkillXP(obj, amount)
-                    "gave-skill-xp"
+        player.runOwned {
+            val key = when (obj) {
+                is Skill -> {
+                    if (showActionBar) {
+                        player.gainSkillXP(obj, amount)
+                        "gained-skill-xp"
+                    } else {
+                        player.giveSkillXP(obj, amount)
+                        "gave-skill-xp"
+                    }
                 }
+
+                is Stat -> {
+                    player.giveBaseStatLevel(obj, amount.toInt())
+                    "gave-stat"
+                }
+
+                is MagicType -> {
+                    val newAmount = player.getMagic(obj) + amount.toInt()
+                    player.setMagic(obj, newAmount)
+                    "gave-magic"
+                }
+
+                else -> ""
             }
 
-            is Stat -> {
-                player.giveBaseStatLevel(obj, amount.toInt())
-                "gave-stat"
+            val objName = when (obj) {
+                is Skill -> obj.name
+                is Stat -> obj.name
+                is MagicType -> obj.name
+                else -> "unknown"
             }
 
-            is MagicType -> {
-                val newAmount = player.getMagic(obj) + amount.toInt()
-                player.setMagic(obj, newAmount)
-                "gave-magic"
-            }
-
-            else -> ""
+            sender.sendMessage(
+                this.plugin.langYml.getMessage(key, StringUtils.FormatOption.WITHOUT_PLACEHOLDERS)
+                    .replace("%player%", player.name)
+                    .replace("%amount%", amount.toString())
+                    .replace("%obj%", objName)
+                    .formatEco()
+            )
         }
-
-        val objName = when (obj) {
-            is Skill -> obj.name
-            is Stat -> obj.name
-            is MagicType -> obj.name
-            else -> "unknown"
-        }
-
-        sender.sendMessage(
-            this.plugin.langYml.getMessage(key, StringUtils.FormatOption.WITHOUT_PLACEHOLDERS)
-                .replace("%player%", player.name)
-                .replace("%amount%", amount.toString())
-                .replace("%obj%", objName)
-                .formatEco()
-        )
     }
 
     override fun tabComplete(sender: CommandSender, args: List<String>): List<String> {

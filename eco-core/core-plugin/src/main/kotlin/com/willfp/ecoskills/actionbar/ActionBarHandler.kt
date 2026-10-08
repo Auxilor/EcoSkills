@@ -10,6 +10,7 @@ import com.willfp.eco.core.placeholder.context.placeholderContext
 import com.willfp.eco.util.containsIgnoreCase
 import com.willfp.eco.util.namespacedKeyOf
 import com.willfp.ecoskills.plugin
+import com.willfp.ecoskills.runOwned
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.attribute.Attribute
@@ -19,13 +20,14 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerGameModeChangeEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import java.util.UUID
+import java.util.concurrent.ConcurrentHashMap
 
 private const val ACTION_BAR_DURATION = 2700L
 private const val TICK_DURATION = 50L
 
-private val blacklist = mutableMapOf<UUID, Long>()
+private val blacklist = ConcurrentHashMap<UUID, Long>()
 
-private val whitelist = mutableMapOf<UUID, Long>()
+private val whitelist = ConcurrentHashMap<UUID, Long>()
 
 private val actionBarEnabledKey = PersistentDataKey(
     namespacedKeyOf("ecoskills", "actionbar_enabled"),
@@ -123,9 +125,13 @@ object ActionBarHandler {
     }
 
     internal fun startTicking() {
-        plugin.scheduler.runTimer(5, 5) {
+        plugin.scheduler.global().runTimer(5, 5) {
             for (player in Bukkit.getOnlinePlayers()) {
-                trySendMessage(player)
+                player.runOwned {
+                    if (player.isOnline) {
+                        trySendMessage(player)
+                    }
+                }
             }
         }
     }

@@ -13,6 +13,7 @@ import com.willfp.ecoskills.skills.Skills
 import org.bukkit.entity.Player
 
 object SkillsGUI {
+    @Volatile
     private lateinit var menu: Menu
 
     internal fun update() {
