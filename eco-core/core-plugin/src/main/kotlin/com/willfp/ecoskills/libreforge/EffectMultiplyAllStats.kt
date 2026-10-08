@@ -17,6 +17,7 @@ import com.willfp.libreforge.effects.RunOrder
 import com.willfp.libreforge.get
 import org.bukkit.entity.Player
 import java.util.UUID
+import java.util.concurrent.ConcurrentHashMap
 
 object EffectMultiplyAllStats : Effect<NoCompileData>("multiply_all_stats") {
     override val description = "Multiplies all of the player's stats by the given multiplier while the holder is active."
@@ -37,7 +38,7 @@ object EffectMultiplyAllStats : Effect<NoCompileData>("multiply_all_stats") {
 
     override val shouldReload = false
 
-    private val activeModifiers = HashMap<String, MutableSet<UUID>>()
+    private val activeModifiers = ConcurrentHashMap<String, MutableSet<UUID>>()
 
     override fun onEnable(
         dispatcher: Dispatcher<*>,
@@ -48,7 +49,7 @@ object EffectMultiplyAllStats : Effect<NoCompileData>("multiply_all_stats") {
     ) {
         val player = dispatcher.get<Player>() ?: return
         val lookupKey = holder.lookupKey(player)
-        val uuids = activeModifiers.getOrPut(lookupKey) { mutableSetOf() }
+        val uuids = activeModifiers.computeIfAbsent(lookupKey) { ConcurrentHashMap.newKeySet() }
 
         for (stat in Stats.values()) {
             val modifierUUID = UUID.nameUUIDFromBytes("${lookupKey}_${stat.id}".toByteArray())

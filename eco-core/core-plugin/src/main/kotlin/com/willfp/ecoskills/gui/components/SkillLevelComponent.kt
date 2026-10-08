@@ -4,7 +4,6 @@ import com.willfp.eco.core.cache.EcoCache
 import com.willfp.eco.core.gui.menu.Menu
 import com.willfp.eco.core.items.Items
 import com.willfp.eco.core.items.builder.ItemStackBuilder
-import com.willfp.eco.core.map.nestedMap
 import com.willfp.eco.core.placeholder.context.placeholderContext
 import com.willfp.eco.util.evaluateExpression
 import com.willfp.eco.util.lineWrap
@@ -18,6 +17,7 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import kotlin.math.roundToInt
 import java.time.Duration
+import java.util.concurrent.ConcurrentHashMap
 
 private val levelItemCache = EcoCache.builder<Int, ItemStack>()
     .expireAfterWrite(Duration.ofMillis(plugin.configYml.getInt("gui.cache-ttl").toLong()))
@@ -29,7 +29,7 @@ class SkillLevelComponent(
     override val pattern: List<String> = plugin.configYml.getStrings("level-gui.progression-slots.pattern")
     override val maxLevel = skill.maxLevel
 
-    private val itemCache = nestedMap<LevelState, Int, ItemStack>()
+    private val itemCache = ConcurrentHashMap<LevelState, MutableMap<Int, ItemStack>>()
 
     override fun getLevelItem(player: Player, menu: Menu, level: Int, levelState: LevelState): ItemStack {
         val key = levelState.key
@@ -60,7 +60,7 @@ class SkillLevelComponent(
         }
 
         return if (levelState != LevelState.IN_PROGRESS) {
-            itemCache[levelState].getOrPut(level) { item() }
+            itemCache.computeIfAbsent(levelState) { ConcurrentHashMap() }.computeIfAbsent(level) { item() }
         } else {
             item()
         }

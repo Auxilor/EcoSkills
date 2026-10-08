@@ -7,12 +7,13 @@ import com.willfp.libreforge.conditions.ConditionList
 import com.willfp.libreforge.conditions.Conditions
 import com.willfp.libreforge.effects.EffectList
 import com.willfp.libreforge.effects.Effects
+import java.util.concurrent.ConcurrentHashMap
 
 abstract class LevellableWithHolder(
     id: String,
     config: Config
 ) : Levellable(id, config) {
-    private val levels = mutableMapOf<Int, LevelHolder>()
+    private val levels = ConcurrentHashMap<Int, LevelHolder>()
 
     private val effects: EffectList
     private val conditions: ConditionList
@@ -29,7 +30,7 @@ abstract class LevellableWithHolder(
         )
     }
 
-    fun getLevelHolder(level: Int): Holder? = if (level == 0) null else levels.getOrPut(level) {
+    fun getLevelHolder(level: Int): Holder? = if (level == 0) null else levels.computeIfAbsent(level) {
         LevelHolder(level, conditions, effects)
     }
 

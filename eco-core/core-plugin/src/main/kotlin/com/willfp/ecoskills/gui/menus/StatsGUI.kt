@@ -14,6 +14,7 @@ import com.willfp.ecoskills.stats.Stats
 import org.bukkit.entity.Player
 
 object StatsGUI {
+    @Volatile
     private lateinit var menu: Menu
 
     internal fun update() {

@@ -5,6 +5,7 @@ package com.willfp.ecoskills.commands
 import com.willfp.eco.core.command.impl.Subcommand
 import com.willfp.ecoskills.api.resetSkills
 import com.willfp.ecoskills.plugin
+import com.willfp.ecoskills.runOwnedIfOnline
 import com.willfp.ecoskills.util.offlinePlayers
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
@@ -25,13 +26,18 @@ object CommandReset : Subcommand(
         }
 
         for (player in players) {
-            player.resetSkills()
+            player.runOwnedIfOnline {
+                player.resetSkills()
+
+                if (players.size == 1) {
+                    sender.sendMessage(plugin.langYml.getMessage("reset-player"))
+                }
+            }
         }
 
         if (players.size > 1) {
             sender.sendMessage(plugin.langYml.getMessage("reset-all-players"))
-            return
-        } else {
+        } else if (players.isEmpty()) {
             sender.sendMessage(plugin.langYml.getMessage("reset-player"))
         }
     }

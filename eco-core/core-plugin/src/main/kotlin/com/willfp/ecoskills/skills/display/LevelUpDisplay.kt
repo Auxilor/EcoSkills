@@ -4,26 +4,29 @@ import com.willfp.eco.core.sound.PlayableSound
 import com.willfp.eco.util.toComponent
 import com.willfp.ecoskills.api.event.PlayerSkillLevelUpEvent
 import com.willfp.ecoskills.plugin
+import com.willfp.ecoskills.runOwned
 import net.kyori.adventure.title.Title
 import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import java.time.Duration
 import java.util.UUID
+import java.util.concurrent.ConcurrentHashMap
 
 object LevelUpDisplay : Listener {
     private val sound = PlayableSound.create(plugin.configYml.getSubsection("skills.level-up.sound"))
 
-    private val soundsToPlay = mutableSetOf<UUID>()
+    private val soundsToPlay = ConcurrentHashMap.newKeySet<UUID>()
 
     internal fun startTickingSounds() {
-        plugin.scheduler.runTimer(1, 1) {
-            for (uuid in soundsToPlay) {
-                val player = Bukkit.getPlayer(uuid) ?: continue
-                sound?.playTo(player)
-            }
+        plugin.scheduler.global().runTimer(1, 1) {
+            val iterator = soundsToPlay.iterator()
 
-            soundsToPlay.clear()
+            while (iterator.hasNext()) {
+                val player = Bukkit.getPlayer(iterator.next())
+                iterator.remove()
+                player?.runOwned { sound?.playTo(player) }
+            }
         }
     }
 

@@ -5,6 +5,7 @@ import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.effects.effects
 import com.willfp.ecoskills.plugin
+import com.willfp.ecoskills.runOwnedIfOnline
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.stats.Stats
 import com.willfp.ecoskills.stats.stats
@@ -28,26 +29,31 @@ object CommandRecount : Subcommand(
         }
 
         for (player in players) {
-            for (stat in Stats.values()) {
-                player.stats.reset(stat)
-            }
-            for (effect in Effects.values()) {
-                player.effects.reset(effect)
-            }
-            for (skill in Skills.values()) {
-                val level = player.getSkillLevel(skill)
-                if (level > 0) {
-                    for (i in (0 until level)) {
-                        skill.giveRewards(player, i)
+            player.runOwnedIfOnline {
+                for (stat in Stats.values()) {
+                    player.stats.reset(stat)
+                }
+                for (effect in Effects.values()) {
+                    player.effects.reset(effect)
+                }
+                for (skill in Skills.values()) {
+                    val level = player.getSkillLevel(skill)
+                    if (level > 0) {
+                        for (i in (0 until level)) {
+                            skill.giveRewards(player, i)
+                        }
                     }
+                }
+
+                if (players.size == 1) {
+                    sender.sendMessage(plugin.langYml.getMessage("recounted-player"))
                 }
             }
         }
 
         if (players.size > 1) {
             sender.sendMessage(plugin.langYml.getMessage("recounted-all-players"))
-            return
-        } else {
+        } else if (players.isEmpty()) {
             sender.sendMessage(plugin.langYml.getMessage("recounted-player"))
         }
     }

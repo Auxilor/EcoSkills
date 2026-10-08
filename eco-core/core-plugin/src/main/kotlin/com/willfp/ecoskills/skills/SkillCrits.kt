@@ -2,9 +2,10 @@ package com.willfp.ecoskills.skills
 
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
+import java.util.Collections
 import java.util.WeakHashMap
 
-private val map = WeakHashMap<EntityDamageByEntityEvent, Double>()
+private val map = Collections.synchronizedMap(WeakHashMap<EntityDamageByEntityEvent, Double>())
 
 var EntityDamageByEntityEvent.skillCrit: Double
     get() = map[this] ?: 1.0

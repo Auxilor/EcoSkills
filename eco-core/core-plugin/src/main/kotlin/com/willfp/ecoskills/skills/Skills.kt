@@ -21,6 +21,7 @@ object Skills : RegistrableCategory<Skill>("skill", "skills") {
      * The leaderboard ranking players by their total skill level, or null before the first
      * reload has registered it.
      */
+    @Volatile
     var leaderboard: Leaderboard? = null
         private set
 

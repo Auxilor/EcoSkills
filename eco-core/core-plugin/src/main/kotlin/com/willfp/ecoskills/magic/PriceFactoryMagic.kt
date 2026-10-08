@@ -6,6 +6,7 @@ import com.willfp.eco.core.price.Price
 import com.willfp.eco.core.price.PriceFactory
 import org.bukkit.entity.Player
 import java.util.UUID
+import java.util.concurrent.ConcurrentHashMap
 
 class PriceFactoryMagic(
     private val type: MagicType
@@ -20,7 +21,7 @@ class PriceFactoryMagic(
         private val baseContext: PlaceholderContext,
         private val function: (PlaceholderContext) -> Double
     ) : Price {
-        private val multipliers = mutableMapOf<UUID, Double>()
+        private val multipliers = ConcurrentHashMap<UUID, Double>()
 
         override fun canAfford(player: Player, multiplier: Double): Boolean {
             return player.magic[type] >= getValue(player, multiplier)
