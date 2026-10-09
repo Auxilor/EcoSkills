@@ -2,14 +2,16 @@ package com.willfp.ecoskills.skills.display
 
 import com.willfp.eco.util.namespacedKeyOf
 import com.willfp.ecoskills.plugin
+import com.willfp.ecoskills.runGlobal
 import org.bukkit.Bukkit
 import org.bukkit.NamespacedKey
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle
 import org.bukkit.entity.Player
+import java.util.concurrent.ConcurrentHashMap
 
 // Maps BossBar's to their expiry time
-private val bossBars = mutableMapOf<NamespacedKey, Long>()
+private val bossBars = ConcurrentHashMap<NamespacedKey, Long>()
 
 fun Player.sendTemporaryBossBar(
     message: String,
@@ -23,23 +25,26 @@ fun Player.sendTemporaryBossBar(
 
     val key = namespacedKeyOf("ecoskills", idBytes.toString())
 
-    val bossBar = Bukkit.getBossBar(key) ?: Bukkit.createBossBar(
-        key,
-        message,
-        barColor,
-        barStyle
-    )
+    // Keyed boss bars live in a server-wide registry, which the global region owns on Folia.
+    runGlobal {
+        val bossBar = Bukkit.getBossBar(key) ?: Bukkit.createBossBar(
+            key,
+            message,
+            barColor,
+            barStyle
+        )
 
-    bossBar.setTitle(message)
-    bossBar.progress = progress
-    bossBar.addPlayer(this)
+        bossBar.setTitle(message)
+        bossBar.progress = progress
+        bossBar.addPlayer(this)
 
-    bossBars[key] = System.currentTimeMillis() + duration
+        bossBars[key] = System.currentTimeMillis() + duration
+    }
 }
 
 object TemporaryBossBarHandler {
     internal fun startTicking() {
-        plugin.scheduler.runTimer(5, 5) {
+        plugin.scheduler.global().runTimer(5, 5) {
             val iterator = bossBars.iterator()
 
             while (iterator.hasNext()) {

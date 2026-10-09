@@ -17,6 +17,7 @@ import com.willfp.libreforge.effects.RunOrder
 import com.willfp.libreforge.get
 import org.bukkit.entity.Player
 import java.util.UUID
+import java.util.concurrent.ConcurrentHashMap
 
 object EffectAddStat : Effect<NoCompileData>("add_stat") {
     override val description = "Adds a flat amount to one of the player's stats while the holder is active."
@@ -41,7 +42,7 @@ object EffectAddStat : Effect<NoCompileData>("add_stat") {
         )
     }
 
-    private val activeModifiers = HashMap<String, MutableSet<UUID>>()
+    private val activeModifiers = ConcurrentHashMap<String, MutableSet<UUID>>()
 
     override fun onEnable(
         dispatcher: Dispatcher<*>,
@@ -56,7 +57,7 @@ object EffectAddStat : Effect<NoCompileData>("add_stat") {
         val lookupKey = holder.lookupKey(player)
         val modifierUUID = UUID.nameUUIDFromBytes("${lookupKey}_${stat.id}".toByteArray())
 
-        activeModifiers.getOrPut(lookupKey) { mutableSetOf() }.add(modifierUUID)
+        activeModifiers.computeIfAbsent(lookupKey) { ConcurrentHashMap.newKeySet() }.add(modifierUUID)
 
         player.removeStatModifier(modifierUUID)
         player.addStatModifier(

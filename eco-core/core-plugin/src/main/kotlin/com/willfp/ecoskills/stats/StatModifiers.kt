@@ -2,7 +2,6 @@
 
 package com.willfp.ecoskills.stats
 
-import com.willfp.eco.core.map.nestedMap
 import com.willfp.ecoskills.api.getBaseStatLevel
 import com.willfp.ecoskills.api.modifiers.ModifierOperation
 import com.willfp.ecoskills.api.modifiers.StatModifier
@@ -11,9 +10,10 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerQuitEvent
 import java.util.UUID
+import java.util.concurrent.ConcurrentHashMap
 
 // Player UUID -> Stat Modifier UUID -> Stat Modifier
-private val trackedStatModifiers = nestedMap<UUID, UUID, StatModifier>()
+private val trackedStatModifiers = ConcurrentHashMap<UUID, MutableMap<UUID, StatModifier>>()
 
 internal val Player.statModifiers: StatModifiers
     get() = StatModifiers(this)
@@ -21,14 +21,17 @@ internal val Player.statModifiers: StatModifiers
 class StatModifiers(
     private val player: Player
 ) {
+    private val modifiers: MutableMap<UUID, StatModifier>
+        get() = trackedStatModifiers.computeIfAbsent(player.uniqueId) { ConcurrentHashMap() }
+
     fun add(modifier: StatModifier) {
-        trackedStatModifiers[player.uniqueId][modifier.uuid] = modifier
+        modifiers[modifier.uuid] = modifier
     }
 
     operator fun plusAssign(modifier: StatModifier) = add(modifier)
 
     fun remove(uuid: UUID): StatModifier? {
-        return trackedStatModifiers[player.uniqueId].remove(uuid)
+        return modifiers.remove(uuid)
     }
 
     operator fun minusAssign(uuid: UUID) {
@@ -40,7 +43,7 @@ class StatModifiers(
     }
 
     fun getModifiers(): List<StatModifier> {
-        return trackedStatModifiers[player.uniqueId].values.toList()
+        return modifiers.values.toList()
     }
 
     fun getModifiers(stat: Stat): List<StatModifier> {

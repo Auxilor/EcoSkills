@@ -67,7 +67,7 @@ object EffectAddStatTemporarily : Effect<NoCompileData>("add_stat_temporarily") 
             )
         )
 
-        plugin.scheduler.runLater(config.getIntFromExpression("duration", data).toLong()) {
+        plugin.scheduler.global().runLater(config.getIntFromExpression("duration", data).toLong()) {
             player.removeStatModifier(uuid)
         }
 

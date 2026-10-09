@@ -57,7 +57,7 @@ object DamageIndicatorListener : Listener {
 
         // Defer text building by 1 tick so all MONITOR handlers (e.g. TriggerMeleeAttack
         // applying crit/strength multipliers) have run before we read event.damage and isSkillCrit.
-        plugin.scheduler.runLater(1) {
+        plugin.scheduler.at(location).runLater(1) {
             var text: String = if (event.isSkillCrit) {
                 plugin.configYml.getString("damage-indicators.format.crit")
             } else {
@@ -72,7 +72,7 @@ object DamageIndicatorListener : Listener {
 
             val holo = HologramManager.createHologram(location, listOf(text))
 
-            plugin.scheduler.runLater(30) {
+            plugin.scheduler.global().runLater(30) {
                 holo.remove()
             }
         }
@@ -115,7 +115,7 @@ object DamageIndicatorListener : Listener {
 
         val holo = HologramManager.createHologram(location, listOf(text))
 
-        plugin.scheduler.runLater(30) {
+        plugin.scheduler.global().runLater(30) {
             holo.remove()
         }
     }
@@ -146,7 +146,7 @@ object DamageIndicatorListener : Listener {
 
         val holo = HologramManager.createHologram(location, listOf(text))
 
-        plugin.scheduler.runLater(30) {
+        plugin.scheduler.global().runLater(30) {
             holo.remove()
         }
     }

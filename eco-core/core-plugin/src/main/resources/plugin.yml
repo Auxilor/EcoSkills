@@ -2,7 +2,8 @@ name: ${pluginName}
 version: ${version}
 main: com.willfp.ecoskills.EcoSkillsPlugin
 api-version: 1.21.8
-authors: [ Auxilor ]
+folia-supported: true
+authors: [ Auxilor, Exanthiax, Callum ]
 website: willfp.com
 depend:
   - eco
