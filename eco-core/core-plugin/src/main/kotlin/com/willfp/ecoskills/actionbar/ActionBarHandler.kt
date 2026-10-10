@@ -1,5 +1,7 @@
 package com.willfp.ecoskills.actionbar
 
+import com.willfp.eco.core.actionbar.PersistentActionBar
+import com.willfp.eco.core.actionbar.PersistentActionBars
 import com.willfp.eco.core.data.keys.PersistentDataKey
 import com.willfp.eco.core.data.keys.PersistentDataKeyType
 import com.willfp.eco.core.data.profile
@@ -9,25 +11,15 @@ import com.willfp.eco.core.placeholder.PlayerStaticPlaceholder
 import com.willfp.eco.core.placeholder.context.placeholderContext
 import com.willfp.eco.util.containsIgnoreCase
 import com.willfp.eco.util.namespacedKeyOf
+import com.willfp.eco.util.toComponent
 import com.willfp.ecoskills.plugin
-import com.willfp.ecoskills.runOwned
-import org.bukkit.Bukkit
+import net.kyori.adventure.text.Component
 import org.bukkit.GameMode
 import org.bukkit.attribute.Attribute
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.bukkit.event.player.PlayerGameModeChangeEvent
 import org.bukkit.event.player.PlayerJoinEvent
-import java.util.UUID
-import java.util.concurrent.ConcurrentHashMap
-
-private const val ACTION_BAR_DURATION = 2700L
-private const val TICK_DURATION = 50L
-
-private val blacklist = ConcurrentHashMap<UUID, Long>()
-
-private val whitelist = ConcurrentHashMap<UUID, Long>()
 
 private val actionBarEnabledKey = PersistentDataKey(
     namespacedKeyOf("ecoskills", "actionbar_enabled"),
@@ -43,97 +35,65 @@ val Player.isPersistentActionBarEnabled: Boolean
     get() = this.profile.read(actionBarEnabledKey)
 
 fun Player.sendCompatibleActionBarMessage(message: String) {
-    // Have to use the shit method for compatibility.
-    @Suppress("DEPRECATION")
-    this.spigot().sendMessage(
-        net.md_5.bungee.api.ChatMessageType.ACTION_BAR,
-        *net.md_5.bungee.api.chat.TextComponent.fromLegacyText(message)
-    )
-}
-
-fun Player.pausePersistentActionBar() {
-    if (isSendingPersistentActionBar) {
-        return
-    }
-
-    blacklist[this.uniqueId] = System.currentTimeMillis() + ACTION_BAR_DURATION
-}
-
-private val Player.isPersistentActionBarPaused: Boolean
-    get() {
-        val time = blacklist[this.uniqueId] ?: return false
-        return time > System.currentTimeMillis()
-    }
-
-private fun Player.sendPersistentActionBar(message: String) {
-    whitelist[this.uniqueId] = System.currentTimeMillis() + TICK_DURATION
-    sendCompatibleActionBarMessage(message)
-}
-
-private val Player.isSendingPersistentActionBar: Boolean
-    get() {
-        val time = whitelist[this.uniqueId] ?: return false
-        return time > System.currentTimeMillis()
-    }
-
-object ActionBarGamemodeListener : Listener {
-    @EventHandler
-    fun handle(event: PlayerGameModeChangeEvent) {
-        if (event.newGameMode in setOf(GameMode.CREATIVE, GameMode.SPECTATOR)) {
-            event.player.sendPersistentActionBar("")
-        }
-    }
+    this.sendActionBar(message.toComponent())
 }
 
 object ActionBarHandler {
     private val disabledWorlds = plugin.configYml
         .getStrings("persistent-action-bar.disabled-in-worlds")
 
-    private fun trySendMessage(player: Player) {
-        if (player.isPersistentActionBarPaused || !player.isPersistentActionBarEnabled) {
+    private val hiddenGameModes = setOf(GameMode.CREATIVE, GameMode.SPECTATOR)
+
+    private var persistentActionBar: PersistentActionBar? = null
+
+    internal fun reload() {
+        if (!plugin.configYml.getBool("persistent-action-bar.enabled")) {
+            persistentActionBar?.unregister()
+            persistentActionBar = null
             return
+        }
+
+        persistentActionBar = PersistentActionBars.register(
+            plugin,
+            "persistent",
+            plugin.configYml.getIntOrNull("persistent-action-bar.priority") ?: 50
+        ) { render(it) }
+    }
+
+    private fun render(player: Player): Component? {
+        if (!player.isPersistentActionBarEnabled) {
+            return null
         }
 
         if (plugin.configYml.getBool("persistent-action-bar.require-permission")) {
             if (!player.hasPermission("ecoskills.enable-persistent-action-bar")) {
-                return
+                return null
             }
         }
 
         if (disabledWorlds.containsIgnoreCase(player.world.name)) {
-            return
+            return null
         }
 
-        if (player.gameMode in setOf(GameMode.CREATIVE, GameMode.SPECTATOR)) {
-            return
+        if (player.gameMode in hiddenGameModes) {
+            return null
         }
 
         if (plugin.configYml.getBool("persistent-action-bar.scale-health")) {
-            player.isHealthScaled = true
-            player.healthScale = 20.0
-        }
-
-        player.sendPersistentActionBar(
-            plugin.configYml
-                .getFormattedString(
-                    "persistent-action-bar.format", placeholderContext(
-                        player = player,
-                        injectable = PlayerHealthInjectable
-                    )
-                )
-        )
-    }
-
-    internal fun startTicking() {
-        plugin.scheduler.global().runTimer(5, 5) {
-            for (player in Bukkit.getOnlinePlayers()) {
-                player.runOwned {
-                    if (player.isOnline) {
-                        trySendMessage(player)
-                    }
-                }
+            if (!player.isHealthScaled || player.healthScale != 20.0) {
+                player.isHealthScaled = true
+                player.healthScale = 20.0
             }
         }
+
+        return plugin.configYml
+            .getFormattedString(
+                "persistent-action-bar.format", placeholderContext(
+                    player = player,
+                    injectable = PlayerHealthInjectable
+                )
+            )
+            .toComponent()
     }
 
     object PlayerHealthInjectable : PlaceholderInjectable {

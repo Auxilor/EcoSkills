@@ -4,9 +4,6 @@ import com.willfp.eco.core.bstats.EcoMetricsChart
 import com.willfp.eco.core.command.impl.PluginCommand
 import com.willfp.eco.core.leaderboard.Leaderboards
 import com.willfp.eco.core.leaderboard.registerCategoryTopPlaceholders
-import com.willfp.eco.core.packet.PacketListener
-import com.willfp.ecoskills.actionbar.ActionBarCompatibilityProxy
-import com.willfp.ecoskills.actionbar.ActionBarGamemodeListener
 import com.willfp.ecoskills.actionbar.ActionBarHandler
 import com.willfp.ecoskills.actionbar.HealthScaleDisabler
 import com.willfp.ecoskills.commands.CommandEcoSkills
@@ -133,9 +130,7 @@ class EcoSkillsPlugin : LibreforgePlugin() {
 
         Skills.registerLeaderboard()
 
-        if (this.configYml.getBool("persistent-action-bar.enabled")) {
-            ActionBarHandler.startTicking()
-        }
+        ActionBarHandler.reload()
 
         TemporaryBossBarHandler.startTicking()
         MagicHandler.startTicking()
@@ -158,14 +153,7 @@ class EcoSkillsPlugin : LibreforgePlugin() {
             DamageIndicatorListener,
             MagicListener,
             HealthScaleDisabler,
-            ActionBarGamemodeListener,
             StatModifierListener
-        )
-    }
-
-    override fun loadPacketListeners(): List<PacketListener> {
-        return listOf(
-            getProxy(ActionBarCompatibilityProxy::class.java)
         )
     }
 
