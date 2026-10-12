@@ -54,7 +54,7 @@ object CommandRecount : Subcommand(
         if (players.size > 1) {
             sender.sendMessage(plugin.langYml.getMessage("recounted-all-players"))
         } else if (players.isEmpty()) {
-            sender.sendMessage(plugin.langYml.getMessage("recounted-player"))
+            sender.sendMessage(plugin.langYml.getMessage("invalid-player"))
         }
     }
 

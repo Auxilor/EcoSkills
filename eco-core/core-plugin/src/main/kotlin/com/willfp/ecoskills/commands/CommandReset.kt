@@ -38,7 +38,7 @@ object CommandReset : Subcommand(
         if (players.size > 1) {
             sender.sendMessage(plugin.langYml.getMessage("reset-all-players"))
         } else if (players.isEmpty()) {
-            sender.sendMessage(plugin.langYml.getMessage("reset-player"))
+            sender.sendMessage(plugin.langYml.getMessage("invalid-player"))
         }
     }
 

@@ -20,10 +20,9 @@ fun CommandBase.offlinePlayers(args: List<String>, position: Int, key: String): 
     val arg = this.notifyNull(args.getOrNull(position), key)
 
     return if (arg.equals("all", ignoreCase = true)) {
-        Bukkit.getOfflinePlayers().toList()
+        (Bukkit.getOnlinePlayers() + Bukkit.getOfflinePlayers()).distinctBy { it.uniqueId }
     } else {
-        Bukkit.getOfflinePlayer(arg)
-            .takeIf { it.hasPlayedBefore() }
+        (Bukkit.getPlayer(arg) ?: Bukkit.getOfflinePlayer(arg).takeIf { it.hasPlayedBefore() })
             ?.toSingletonList() ?: emptyList()
     }
 }
