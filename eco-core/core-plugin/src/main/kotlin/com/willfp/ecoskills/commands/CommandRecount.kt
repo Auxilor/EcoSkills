@@ -10,7 +10,7 @@ import com.willfp.ecoskills.runOwnedIfOnline
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.stats.Stats
 import com.willfp.ecoskills.stats.stats
-import com.willfp.ecoskills.util.offlinePlayers
+import com.willfp.ecoskills.util.offlinePlayer
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import org.bukkit.command.CommandSender
@@ -29,26 +29,12 @@ object CommandRecount : Subcommand(
             return
         }
 
-        val players = offlinePlayers(args, 0, "invalid-player")
+        val player = notifyNull(offlinePlayer(args, 0, "invalid-player"), "invalid-player")
 
-        if (players.size > 1) {
-            sender.sendMessage(plugin.langYml.getMessage("recounting-all-players"))
-        }
+        player.runOwnedIfOnline {
+            recount(player)
 
-        for (player in players) {
-            player.runOwnedIfOnline {
-                recount(player)
-
-                if (players.size == 1) {
-                    sender.sendMessage(plugin.langYml.getMessage("recounted-player"))
-                }
-            }
-        }
-
-        if (players.size > 1) {
-            sender.sendMessage(plugin.langYml.getMessage("recounted-all-players"))
-        } else if (players.isEmpty()) {
-            sender.sendMessage(plugin.langYml.getMessage("invalid-player"))
+            sender.sendMessage(plugin.langYml.getMessage("recounted-player"))
         }
     }
 
