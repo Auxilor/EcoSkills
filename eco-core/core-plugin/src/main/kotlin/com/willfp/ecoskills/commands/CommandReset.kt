@@ -7,7 +7,7 @@ import com.willfp.eco.core.data.forEachSavedProfile
 import com.willfp.ecoskills.api.resetSkills
 import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.runOwnedIfOnline
-import com.willfp.ecoskills.util.offlinePlayers
+import com.willfp.ecoskills.util.offlinePlayer
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
@@ -25,25 +25,11 @@ object CommandReset : Subcommand(
             return
         }
 
-        val players = offlinePlayers(args, 0, "invalid-player")
+        val player = notifyNull(offlinePlayer(args, 0, "invalid-player"), "invalid-player")
 
-        if (players.size > 1) {
-            sender.sendMessage(plugin.langYml.getMessage("resetting-all-players"))
-        }
+        player.runOwnedIfOnline {
+            player.resetSkills()
 
-        for (player in players) {
-            player.runOwnedIfOnline {
-                player.resetSkills()
-
-                if (players.size == 1) {
-                    sender.sendMessage(plugin.langYml.getMessage("reset-player"))
-                }
-            }
-        }
-
-        if (players.size > 1) {
-            sender.sendMessage(plugin.langYml.getMessage("reset-all-players"))
-        } else if (players.isEmpty()) {
             sender.sendMessage(plugin.langYml.getMessage("reset-player"))
         }
     }
