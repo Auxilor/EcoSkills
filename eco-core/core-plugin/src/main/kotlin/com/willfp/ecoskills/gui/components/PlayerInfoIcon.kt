@@ -2,6 +2,7 @@ package com.willfp.ecoskills.gui.components
 
 import com.willfp.eco.core.cache.EcoCache
 import com.willfp.eco.core.config.interfaces.Config
+import com.willfp.eco.core.gui.component.PositionedComponent
 import com.willfp.eco.core.gui.getSlotLocations
 import com.willfp.eco.core.gui.onLeftClick
 import com.willfp.eco.core.gui.slot
@@ -69,9 +70,6 @@ class PlayerInfoIcon(
     }
 
     override val locations = config.getSlotLocations()
-
-    override val row: Int = locations.first().row
-    override val column: Int = locations.first().column
 
     override fun getSlotAt(row: Int, column: Int) = slot
 }

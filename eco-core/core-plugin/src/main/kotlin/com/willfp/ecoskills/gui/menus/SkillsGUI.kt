@@ -1,5 +1,6 @@
 package com.willfp.ecoskills.gui.menus
 
+import com.willfp.eco.core.gui.component.addComponent
 import com.willfp.eco.core.gui.getSlotLocations
 import com.willfp.eco.core.gui.menu
 import com.willfp.eco.core.gui.menu.Menu
@@ -8,7 +9,6 @@ import com.willfp.eco.core.gui.slot.FillerMask
 import com.willfp.eco.core.gui.slot.MaskItems
 import com.willfp.ecoskills.gui.components.CloseButton
 import com.willfp.ecoskills.gui.components.PlayerInfoIcon
-import com.willfp.ecoskills.gui.components.addComponent
 import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.skills.Skills
 import org.bukkit.entity.Player

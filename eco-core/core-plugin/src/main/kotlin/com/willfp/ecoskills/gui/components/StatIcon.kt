@@ -2,6 +2,8 @@ package com.willfp.ecoskills.gui.components
 
 import com.willfp.eco.core.cache.EcoCache
 import com.willfp.eco.core.config.interfaces.Config
+import com.willfp.eco.core.gui.SlotLocation
+import com.willfp.eco.core.gui.component.PositionedComponent
 import com.willfp.eco.core.gui.slot
 import com.willfp.eco.core.items.Items
 import com.willfp.eco.core.items.builder.modify
@@ -44,8 +46,9 @@ class StatIcon(
     }
 
     override val isEnabled = config.getBoolOrNull("enabled") ?: true
-    override val row = config.getInt("position.row")
-    override val column = config.getInt("position.column")
+    override val locations = listOf(
+        SlotLocation(config.getInt("position.row"), config.getInt("position.column"))
+    )
 
     override fun getSlotAt(row: Int, column: Int) = slot
 }
