@@ -1,11 +1,10 @@
 package com.willfp.ecoskills.gui.menus
 
+import com.willfp.eco.core.gui.addCustomSlots
 import com.willfp.eco.core.gui.component.addComponent
-import com.willfp.eco.core.gui.getSlotLocations
 import com.willfp.eco.core.gui.menu
 import com.willfp.eco.core.gui.menu.Menu
 import com.willfp.eco.core.gui.setMask
-import com.willfp.eco.core.gui.slot.ConfigSlot
 import com.willfp.ecoskills.gui.components.BackButton
 import com.willfp.ecoskills.gui.components.CloseButton
 import com.willfp.ecoskills.gui.components.PlayerInfoIcon
@@ -55,11 +54,7 @@ object StatsGUI {
                 }
             )
 
-            for (config in plugin.configYml.getSubsections("stats-gui.custom-slots")) {
-                for (location in config.getSlotLocations()) {
-                    setSlot(location.row, location.column, ConfigSlot(config))
-                }
-            }
+            addCustomSlots(plugin.configYml, "stats-gui")
         }
     }
 

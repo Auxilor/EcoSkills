@@ -1,5 +1,6 @@
 package com.willfp.ecoskills.gui.menus
 
+import com.willfp.eco.core.gui.addCustomSlots
 import com.willfp.eco.core.gui.addPageChanger
 import com.willfp.eco.core.gui.getSlotLocations
 import com.willfp.eco.core.gui.menu
@@ -9,7 +10,6 @@ import com.willfp.eco.core.gui.onLeftClick
 import com.willfp.eco.core.gui.page.PageChanger
 import com.willfp.eco.core.gui.setMask
 import com.willfp.eco.core.gui.slot
-import com.willfp.eco.core.gui.slot.ConfigSlot
 import com.willfp.eco.core.items.Items
 import com.willfp.eco.core.items.builder.ItemStackBuilder
 import com.willfp.eco.core.sound.PlayableSound
@@ -85,11 +85,7 @@ class SkillLevelGUI(
                 }
             }
 
-            for (config in plugin.configYml.getSubsections("level-gui.custom-slots")) {
-                for (location in config.getSlotLocations()) {
-                    setSlot(location.row, location.column, ConfigSlot(config))
-                }
-            }
+            addCustomSlots(plugin.configYml, "level-gui")
         }
     }
 
