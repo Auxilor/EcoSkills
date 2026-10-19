@@ -2,11 +2,11 @@ package com.willfp.ecoskills.gui.menus
 
 import com.willfp.eco.core.gui.addCustomSlots
 import com.willfp.eco.core.gui.component.addComponent
+import com.willfp.eco.core.gui.component.closeButton
 import com.willfp.eco.core.gui.menu
 import com.willfp.eco.core.gui.menu.Menu
 import com.willfp.eco.core.gui.setMask
 import com.willfp.ecoskills.gui.components.BackButton
-import com.willfp.ecoskills.gui.components.CloseButton
 import com.willfp.ecoskills.gui.components.PlayerInfoIcon
 import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.stats.Stats
@@ -37,14 +37,7 @@ object StatsGUI {
                 addComponent(stat.icon)
             }
 
-            val closeEnabled = plugin.configYml.getBoolOrNull("stats-gui.close.enabled") ?: true
-            if (closeEnabled) {
-                addComponent(
-                    CloseButton(
-                        plugin.configYml.getSubsection("stats-gui.close")
-                    )
-                )
-            }
+            addComponent(closeButton(plugin.configYml.getSubsection("stats-gui.close")))
 
             addComponent(
                 BackButton(
