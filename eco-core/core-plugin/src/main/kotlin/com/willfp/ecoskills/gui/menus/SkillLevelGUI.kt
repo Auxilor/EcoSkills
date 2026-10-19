@@ -2,16 +2,14 @@ package com.willfp.ecoskills.gui.menus
 
 import com.willfp.eco.core.gui.addCustomSlots
 import com.willfp.eco.core.gui.addPageChanger
+import com.willfp.eco.core.gui.component.ConfigButton
 import com.willfp.eco.core.gui.component.addComponent
 import com.willfp.eco.core.gui.component.closeButton
-import com.willfp.eco.core.gui.getSlotLocations
 import com.willfp.eco.core.gui.menu
 import com.willfp.eco.core.gui.menu.Menu
 import com.willfp.eco.core.gui.menu.MenuLayer
-import com.willfp.eco.core.gui.onLeftClick
 import com.willfp.eco.core.gui.page.PageChanger
 import com.willfp.eco.core.gui.setMask
-import com.willfp.eco.core.gui.slot
 import com.willfp.eco.core.items.Items
 import com.willfp.eco.core.items.builder.ItemStackBuilder
 import com.willfp.eco.core.sound.PlayableSound
@@ -50,20 +48,13 @@ class SkillLevelGUI(
             val prevPath = "level-gui.progression-slots.prev-page"
             val nextPath = "level-gui.progression-slots.next-page"
 
-            for (location in plugin.configYml.getSlotLocations(prevPath)) {
-                addComponent(
-                    MenuLayer.LOWER,
-                    location.row,
-                    location.column,
-                    slot(
-                        plugin.configYml.getStringOrNull("$prevPath.item")
-                            ?.let { Items.lookup(it).item }
-                            ?: ItemStackBuilder(Items.lookup("arrow")).build()
-                    ) {
-                        onLeftClick { player, _, _, _ -> SkillsGUI.open(player) }
-                    }
-                )
-            }
+            addComponent(
+                ConfigButton(
+                    plugin.configYml.getSubsection(prevPath),
+                    defaultItem = "arrow",
+                    layer = MenuLayer.LOWER
+                ) { player, _, _, _ -> SkillsGUI.open(player) }
+            )
 
             addPageChanger(plugin.configYml, prevPath, PageChanger.Direction.BACKWARDS, pageChangeSound)
             addPageChanger(plugin.configYml, nextPath, PageChanger.Direction.FORWARDS, pageChangeSound)
