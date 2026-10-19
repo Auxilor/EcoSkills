@@ -7,10 +7,9 @@ import com.willfp.eco.core.gui.menu.Menu
 import com.willfp.eco.core.gui.menu.MenuLayer
 import com.willfp.eco.core.gui.onLeftClick
 import com.willfp.eco.core.gui.page.PageChanger
+import com.willfp.eco.core.gui.setMask
 import com.willfp.eco.core.gui.slot
 import com.willfp.eco.core.gui.slot.ConfigSlot
-import com.willfp.eco.core.gui.slot.FillerMask
-import com.willfp.eco.core.gui.slot.MaskItems
 import com.willfp.eco.core.items.Items
 import com.willfp.eco.core.items.builder.ItemStackBuilder
 import com.willfp.eco.core.sound.PlayableSound
@@ -27,9 +26,6 @@ class SkillLevelGUI(
     private val menu: Menu
 
     init {
-        val maskPattern = plugin.configYml.getStrings("level-gui.mask.pattern").toTypedArray()
-        val maskItems = MaskItems.fromItemNames(plugin.configYml.getStrings("level-gui.mask.materials"))
-
         val levelComponent = SkillLevelComponent(skill)
 
         val pageChangeSound = PlayableSound.create(plugin.configYml.getSubsection("level-gui.page-change-sound"))
@@ -41,12 +37,7 @@ class SkillLevelGUI(
 
             maxPages(levelComponent.pages)
 
-            setMask(
-                FillerMask(
-                    maskItems,
-                    *maskPattern
-                )
-            )
+            setMask(plugin.configYml, "level-gui")
 
             addComponent(1, 1, levelComponent)
 

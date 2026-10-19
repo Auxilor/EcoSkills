@@ -4,9 +4,8 @@ import com.willfp.eco.core.gui.component.addComponent
 import com.willfp.eco.core.gui.getSlotLocations
 import com.willfp.eco.core.gui.menu
 import com.willfp.eco.core.gui.menu.Menu
+import com.willfp.eco.core.gui.setMask
 import com.willfp.eco.core.gui.slot.ConfigSlot
-import com.willfp.eco.core.gui.slot.FillerMask
-import com.willfp.eco.core.gui.slot.MaskItems
 import com.willfp.ecoskills.gui.components.CloseButton
 import com.willfp.ecoskills.gui.components.PlayerInfoIcon
 import com.willfp.ecoskills.plugin
@@ -25,12 +24,7 @@ object SkillsGUI {
         return menu(plugin.configYml.getInt("gui.rows")) {
             title = plugin.langYml.getFormattedString("menu.title")
 
-            setMask(
-                FillerMask(
-                    MaskItems.fromItemNames(plugin.configYml.getStrings("gui.mask.materials")),
-                    *plugin.configYml.getStrings("gui.mask.pattern").toTypedArray()
-                )
-            )
+            setMask(plugin.configYml, "gui")
 
             addComponent(
                 PlayerInfoIcon(
