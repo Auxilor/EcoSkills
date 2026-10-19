@@ -53,6 +53,7 @@ gui:
   player-info:
     row: 1
     column: 5
+    locations: [ ] # Optional list of row/column slots; if set, the button shows in each of them instead of row/column
 
     enabled: true
     name: "&f%player%&f's &fStats:"
@@ -102,6 +103,7 @@ gui:
     location:
       row: 6
       column: 5
+    locations: [ ] # Optional list of row/column slots; if set, the button shows in each of them instead of row/column
 
   # Custom GUI slots; see here for a how-to: https://hub.auxilor.io/wiki/eco/pages#custom-gui-slots
   custom-slots: [ ]
@@ -135,6 +137,7 @@ stats-gui:
   player-info:
     row: 1
     column: 5
+    locations: [ ] # Optional list of row/column slots; if set, the button shows in each of them instead of row/column
 
   stat-icon:
     name: "%stat%"
@@ -149,6 +152,7 @@ stats-gui:
     location:
       row: 6
       column: 4
+    locations: [ ] # Optional list of row/column slots; if set, the button shows in each of them instead of row/column
 
   close:
     enabled: true
@@ -157,6 +161,7 @@ stats-gui:
     location:
       row: 6
       column: 5
+    locations: [ ] # Optional list of row/column slots; if set, the button shows in each of them instead of row/column
 
   # Custom GUI slots; see here for a how-to: https://hub.auxilor.io/wiki/eco/pages#custom-gui-slots
   custom-slots: [ ]
@@ -214,6 +219,7 @@ level-gui:
       location:
         row: 6
         column: 4
+      locations: [ ] # Optional list of row/column slots; if set, the button shows in each of them instead of row/column
 
     next-page:
       item: arrow name:"&fNext Page"
@@ -221,6 +227,7 @@ level-gui:
       location:
         row: 6
         column: 6
+      locations: [ ] # Optional list of row/column slots; if set, the button shows in each of them instead of row/column
 
     close:
       enabled: true
@@ -229,6 +236,7 @@ level-gui:
       location:
         row: 6
         column: 5
+      locations: [ ] # Optional list of row/column slots; if set, the button shows in each of them instead of row/column
 
     unlocked:
       item: lime_stained_glass_pane
