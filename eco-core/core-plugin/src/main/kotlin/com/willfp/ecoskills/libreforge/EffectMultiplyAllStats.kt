@@ -38,7 +38,7 @@ object EffectMultiplyAllStats : Effect<NoCompileData>("multiply_all_stats") {
 
     override val shouldReload = false
 
-    private val activeModifiers = ConcurrentHashMap<String, MutableSet<UUID>>()
+    private val activeModifiers = ConcurrentHashMap<UUID, MutableSet<UUID>>()
 
     override fun onEnable(
         dispatcher: Dispatcher<*>,
@@ -48,11 +48,10 @@ object EffectMultiplyAllStats : Effect<NoCompileData>("multiply_all_stats") {
         compileData: NoCompileData
     ) {
         val player = dispatcher.get<Player>() ?: return
-        val lookupKey = holder.lookupKey(player)
-        val uuids = activeModifiers.computeIfAbsent(lookupKey) { ConcurrentHashMap.newKeySet() }
+        val uuids = activeModifiers.computeIfAbsent(identifiers.uuid) { ConcurrentHashMap.newKeySet() }
 
         for (stat in Stats.values()) {
-            val modifierUUID = UUID.nameUUIDFromBytes("${lookupKey}_${stat.id}".toByteArray())
+            val modifierUUID = UUID.nameUUIDFromBytes("${identifiers.uuid}_${stat.id}".toByteArray())
             uuids.add(modifierUUID)
             player.removeStatModifier(modifierUUID)
             player.addStatModifier(
@@ -69,8 +68,7 @@ object EffectMultiplyAllStats : Effect<NoCompileData>("multiply_all_stats") {
     override fun onDisable(dispatcher: Dispatcher<*>, identifiers: Identifiers, holder: ProvidedHolder) {
         val player = dispatcher.get<Player>() ?: return
 
-        val lookupKey = holder.lookupKey(player)
-        val modifierUUIDs = activeModifiers.remove(lookupKey) ?: return
+        val modifierUUIDs = activeModifiers.remove(identifiers.uuid) ?: return
 
         for (uuid in modifierUUIDs) {
             player.removeStatModifier(uuid)
