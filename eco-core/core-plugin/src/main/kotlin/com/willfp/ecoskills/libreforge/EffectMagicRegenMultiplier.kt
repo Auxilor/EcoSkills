@@ -43,6 +43,6 @@ object EffectMagicRegenMultiplier : MultiMultiplierEffect<MagicType>("magic_rege
     fun handle(event: PlayerRegenMagicEvent) {
         val player = event.player
 
-        event.amount *= getMultiplier(player.toDispatcher(), event.magicType).roundToInt()
+        event.amount = (event.amount * getMultiplier(player.toDispatcher(), event.magicType)).roundToInt()
     }
 }
