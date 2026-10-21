@@ -59,10 +59,8 @@ object CommandRecount : Subcommand(
         }
         for (skill in Skills.values()) {
             val level = player.getSkillLevel(skill)
-            if (level > 0) {
-                for (i in (0 until level)) {
-                    skill.giveRewards(player, i)
-                }
+            for (i in 1..level) {
+                skill.giveRewards(player, i)
             }
         }
     }
