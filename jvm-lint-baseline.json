@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "findings": [
+    {
+      "code": "U002",
+      "path": "eco-core/core-plugin/src/main/kotlin/com/willfp/ecoskills/api/EcoSkillsAPI.kt",
+      "message": "Unused function `getEffectLevel`"
+    },
+    {
+      "code": "U002",
+      "path": "eco-core/core-plugin/src/main/kotlin/com/willfp/ecoskills/api/EcoSkillsAPI.kt",
+      "message": "Unused function `getMaxMagic`"
+    },
+    {
+      "code": "U002",
+      "path": "eco-core/core-plugin/src/main/kotlin/com/willfp/ecoskills/api/EcoSkillsAPI.kt",
+      "message": "Unused function `getRequiredXP`"
+    },
+    {
+      "code": "U002",
+      "path": "eco-core/core-plugin/src/main/kotlin/com/willfp/ecoskills/api/EcoSkillsAPI.kt",
+      "message": "Unused function `getStatModifier`"
+    },
+    {
+      "code": "U002",
+      "path": "eco-core/core-plugin/src/main/kotlin/com/willfp/ecoskills/api/EcoSkillsAPI.kt",
+      "message": "Unused function `getStatModifiers`"
+    },
+    {
+      "code": "U002",
+      "path": "eco-core/core-plugin/src/main/kotlin/com/willfp/ecoskills/api/EcoSkillsAPI.kt",
+      "message": "Unused function `resetSkill`"
+    },
+    {
+      "code": "U003",
+      "path": "eco-core/core-plugin/src/main/kotlin/com/willfp/ecoskills/api/EcoSkillsAPI.kt",
+      "message": "Unused property `statModifiers`"
+    },
+    {
+      "code": "U001",
+      "path": "eco-core/core-plugin/src/main/kotlin/com/willfp/ecoskills/effects/EffectLevel.kt",
+      "message": "Unused class `EffectLevel`"
+    },
+    {
+      "code": "U002",
+      "path": "eco-core/core-plugin/src/main/kotlin/com/willfp/ecoskills/gui/components/PositionedComponent.kt",
+      "message": "Unused function `addComponent`"
+    },
+    {
+      "code": "U002",
+      "path": "eco-core/core-plugin/src/main/kotlin/com/willfp/ecoskills/stats/StatModifiers.kt",
+      "message": "Unused function `minusAssign`"
+    },
+    {
+      "code": "U002",
+      "path": "eco-core/core-plugin/src/main/kotlin/com/willfp/ecoskills/stats/StatModifiers.kt",
+      "message": "Unused function `plusAssign`"
+    },
+    {
+      "code": "U002",
+      "path": "eco-core/core-plugin/src/main/kotlin/com/willfp/ecoskills/util/MultiPlayerSelector.kt",
+      "message": "Unused function `players`"
+    }
+  ]
+}
