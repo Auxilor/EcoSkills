@@ -16,8 +16,6 @@ import com.willfp.libreforge.effects.Identifiers
 import com.willfp.libreforge.effects.RunOrder
 import com.willfp.libreforge.get
 import org.bukkit.entity.Player
-import java.util.UUID
-import java.util.concurrent.ConcurrentHashMap
 
 object EffectMultiplyStat : Effect<NoCompileData>("multiply_stat") {
     override val description = "Multiplies one of the player's stats by the given multiplier while the holder is active."
@@ -44,8 +42,6 @@ object EffectMultiplyStat : Effect<NoCompileData>("multiply_stat") {
 
     override val shouldReload = false
 
-    private val activeModifiers = ConcurrentHashMap<String, MutableSet<UUID>>()
-
     override fun onEnable(
         dispatcher: Dispatcher<*>,
         config: Config,
@@ -56,15 +52,10 @@ object EffectMultiplyStat : Effect<NoCompileData>("multiply_stat") {
         val player = dispatcher.get<Player>() ?: return
         val stat = Stats.getByID(config.getString("stat")) ?: return
 
-        val lookupKey = holder.lookupKey(player)
-        val modifierUUID = UUID.nameUUIDFromBytes("${lookupKey}_${stat.id}".toByteArray())
-
-        activeModifiers.computeIfAbsent(lookupKey) { ConcurrentHashMap.newKeySet() }.add(modifierUUID)
-
-        player.removeStatModifier(modifierUUID)
+        player.removeStatModifier(identifiers.uuid)
         player.addStatModifier(
             StatModifier(
-                modifierUUID,
+                identifiers.uuid,
                 stat,
                 config.getDoubleFromExpression("multiplier", player),
                 ModifierOperation.MULTIPLY
@@ -73,13 +64,6 @@ object EffectMultiplyStat : Effect<NoCompileData>("multiply_stat") {
     }
 
     override fun onDisable(dispatcher: Dispatcher<*>, identifiers: Identifiers, holder: ProvidedHolder) {
-        val player = dispatcher.get<Player>() ?: return
-
-        val lookupKey = holder.lookupKey(player)
-        val modifierUUIDs = activeModifiers.remove(lookupKey) ?: return
-
-        for (uuid in modifierUUIDs) {
-            player.removeStatModifier(uuid)
-        }
+        dispatcher.get<Player>()?.removeStatModifier(identifiers.uuid)
     }
 }

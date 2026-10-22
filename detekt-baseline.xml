@@ -1,0 +1,249 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>AbstractClassCanBeConcreteClass:Levellable.kt:Levellable$Levellable</ID>
+    <ID>AbstractClassCanBeConcreteClass:LevellableWithHolder.kt:LevellableWithHolder$LevellableWithHolder</ID>
+    <ID>BracesOnIfStatements:CommandSkills.kt:CommandSkills$if</ID>
+    <ID>BracesOnIfStatements:EcoSkillsPlugin.kt:EcoSkillsPlugin$if</ID>
+    <ID>BracesOnIfStatements:GainXPDisplay.kt:GainXPDisplay$if</ID>
+    <ID>BracesOnIfStatements:LevellableWithHolder.kt:LevellableWithHolder$if</ID>
+    <ID>BracesOnIfStatements:PositionedComponent.kt:else</ID>
+    <ID>BracesOnIfStatements:PositionedComponent.kt:if</ID>
+    <ID>BracesOnWhenStatements:CommandGive.kt:CommandGive$when</ID>
+    <ID>BracesOnWhenStatements:CommandSet.kt:CommandSet$when</ID>
+    <ID>BracesOnWhenStatements:CommandToggleActionBar.kt:CommandToggleActionBar$when</ID>
+    <ID>BracesOnWhenStatements:CommandToggleXpGainSound.kt:CommandToggleXpGainSound$when</ID>
+    <ID>C002:CommandRecount.kt:CommandRecount$forEachSavedProfile(plugin) { uuid -&gt; val player = Bukkit.getOfflinePlayer(uuid) player.runOwnedIfOnline { recount(player) } }.thenRun { plugin.scheduler.global().run { sender.sendMessage(plugin.langYml.getMessage("recounted-all-players")) } }</ID>
+    <ID>C002:CommandReset.kt:CommandReset$forEachSavedProfile(plugin) { uuid -&gt; val player = Bukkit.getOfflinePlayer(uuid) player.runOwnedIfOnline { player.resetSkills() } }.thenRun { plugin.scheduler.global().run { sender.sendMessage(plugin.langYml.getMessage("reset-all-players")) } }</ID>
+    <ID>CascadingCallWrapping:Skill.kt:Skill$config.getSubsection("reward-messages") .getKeys(false) .mapNotNull { it.toIntOrNull() } // Convert strings to Int, ignoring any that cannot be converted .filter { it &lt;= level } // Only consider levels not greater than the provided level .maxOrNull() ?: 1</ID>
+    <ID>CognitiveComplexMethod:LevelUpReward.kt:LevelUpReward$fun getCumulativeLevels: Int</ID>
+    <ID>CollapsibleIfStatements:ActionBarHandler.kt:ActionBarHandler$if (plugin.configYml.getBool("persistent-action-bar.require-permission")) { if (!player.hasPermission("ecoskills.enable-persistent-action-bar")) { return null } }</ID>
+    <ID>CollapsibleIfStatements:ActionBarHandler.kt:ActionBarHandler$if (plugin.configYml.getBool("persistent-action-bar.scale-health")) { if (!player.isHealthScaled || player.healthScale != 20.0) { player.isHealthScaled = true player.healthScale = 20.0 } }</ID>
+    <ID>CyclomaticComplexMethod:LevelUpReward.kt:LevelUpReward$fun getCumulativeLevels: Int</ID>
+    <ID>CyclomaticComplexMethod:LevelUpReward.kt:LevelUpReward$fun giveTo</ID>
+    <ID>DocumentationOverPrivateFunction:Skill.kt:Skill$private fun getRewardMessages: List&lt;String&gt;</ID>
+    <ID>ExpressionBodySyntax:ActionBarHandler.kt:ActionBarHandler.PlayerHealthInjectable$return</ID>
+    <ID>ExpressionBodySyntax:ActionBarHandler.kt:ActionBarHandler.PlayerHealthInjectable$return injections</ID>
+    <ID>ExpressionBodySyntax:Effect.kt:Effect$return id.hashCode()</ID>
+    <ID>ExpressionBodySyntax:Effect.kt:Effect$return other is Effect &amp;&amp; other.id == id</ID>
+    <ID>ExpressionBodySyntax:EffectMagicRegenMultiplier.kt:EffectMagicRegenMultiplier$return MagicTypes.getByID(key)</ID>
+    <ID>ExpressionBodySyntax:EffectMagicRegenMultiplier.kt:EffectMagicRegenMultiplier$return MagicTypes.values()</ID>
+    <ID>ExpressionBodySyntax:EffectSkillXpMultiplier.kt:EffectSkillXpMultiplier$return Skills.getByID(key)</ID>
+    <ID>ExpressionBodySyntax:EffectSkillXpMultiplier.kt:EffectSkillXpMultiplier$return Skills.values()</ID>
+    <ID>ExpressionBodySyntax:FilterMagicType.kt:FilterMagicType$return config.getStrings(key)</ID>
+    <ID>ExpressionBodySyntax:FilterSkill.kt:FilterSkill$return config.getStrings(key)</ID>
+    <ID>ExpressionBodySyntax:FilterSkillCrit.kt:FilterSkillCrit$return config.getBool(key)</ID>
+    <ID>ExpressionBodySyntax:GainXPDisplay.kt:return PlayerSkill(player.uniqueId, skill.id)</ID>
+    <ID>ExpressionBodySyntax:LevelInjectable.kt:LevelInjectable$return</ID>
+    <ID>ExpressionBodySyntax:LevelInjectable.kt:LevelInjectable$return placeholders</ID>
+    <ID>ExpressionBodySyntax:LevelMap.kt:LevelMap$return levellable.getSavedLevel(player)</ID>
+    <ID>ExpressionBodySyntax:MagicMap.kt:MagicMap$return values[type] ?: 0</ID>
+    <ID>ExpressionBodySyntax:MagicType.kt:MagicType$return id.hashCode()</ID>
+    <ID>ExpressionBodySyntax:MagicType.kt:MagicType$return other is MagicType &amp;&amp; other.id == this.id</ID>
+    <ID>ExpressionBodySyntax:PlayerRegenMagicEvent.kt:PlayerRegenMagicEvent$return handlerList</ID>
+    <ID>ExpressionBodySyntax:PlayerRegenMagicEvent.kt:PlayerRegenMagicEvent.Companion$return handlerList</ID>
+    <ID>ExpressionBodySyntax:PlayerSkillLevelUpEvent.kt:PlayerSkillLevelUpEvent$return handlerList</ID>
+    <ID>ExpressionBodySyntax:PlayerSkillLevelUpEvent.kt:PlayerSkillLevelUpEvent.Companion$return handlerList</ID>
+    <ID>ExpressionBodySyntax:PlayerSkillXPGainEvent.kt:PlayerSkillXPGainEvent$return handlerList</ID>
+    <ID>ExpressionBodySyntax:PlayerSkillXPGainEvent.kt:PlayerSkillXPGainEvent.Companion$return handlerList</ID>
+    <ID>ExpressionBodySyntax:PriceFactoryMagic.kt:PriceFactoryMagic$return PriceMagic(baseContext) { function.get(it) }</ID>
+    <ID>ExpressionBodySyntax:PriceFactoryMagic.kt:PriceFactoryMagic.PriceMagic$return "ecoskills:${type.id}"</ID>
+    <ID>ExpressionBodySyntax:PriceFactoryMagic.kt:PriceFactoryMagic.PriceMagic$return function(baseContext.copyWithPlayer(player)) * getMultiplier(player) * multiplier</ID>
+    <ID>ExpressionBodySyntax:PriceFactoryMagic.kt:PriceFactoryMagic.PriceMagic$return multipliers[player.uniqueId] ?: 1.0</ID>
+    <ID>ExpressionBodySyntax:PriceFactoryMagic.kt:PriceFactoryMagic.PriceMagic$return player.magic[type] &gt;= getValue(player, multiplier)</ID>
+    <ID>ExpressionBodySyntax:Skill.kt:Skill$return id.hashCode()</ID>
+    <ID>ExpressionBodySyntax:Skill.kt:Skill$return other is Skill &amp;&amp; other.id == id</ID>
+    <ID>ExpressionBodySyntax:Skill.kt:Skill$return this.map { s -&gt; " ".repeat(margin) + s }</ID>
+    <ID>ExpressionBodySyntax:Skills.kt:Skills$return leaderboard?.getPosition(uuid)</ID>
+    <ID>ExpressionBodySyntax:Stat.kt:Stat$return id.hashCode()</ID>
+    <ID>ExpressionBodySyntax:Stat.kt:Stat$return other is Stat &amp;&amp; other.id == id</ID>
+    <ID>ExpressionBodySyntax:Stat.kt:Stat$return player.getStatLevel(this)</ID>
+    <ID>ExpressionBodySyntax:StatModifiers.kt:StatModifiers$return getModifiedValue(stat) - player.getBaseStatLevel(stat)</ID>
+    <ID>ExpressionBodySyntax:StatModifiers.kt:StatModifiers$return getModifiers().filter { it.stat == stat }</ID>
+    <ID>ExpressionBodySyntax:StatModifiers.kt:StatModifiers$return getModifiers().firstOrNull { it.uuid == uuid }</ID>
+    <ID>ExpressionBodySyntax:StatModifiers.kt:StatModifiers$return modifiers.remove(uuid)</ID>
+    <ID>ExpressionBodySyntax:StatModifiers.kt:StatModifiers$return modifiers.values.toList()</ID>
+    <ID>IC001:EffectAddStatTemporarily.kt:EffectAddStatTemporarily$// Not sure if this is necessary</ID>
+    <ID>IC001:EffectMultiplyStatTemporarily.kt:EffectMultiplyStatTemporarily$// Not sure if this is necessary</ID>
+    <ID>IC001:PlayerInfoIcon.kt:PlayerInfoIcon$// Ensure correct path for lore</ID>
+    <ID>IC001:Skill.kt:Skill$// Convert strings to Int, ignoring any that cannot be converted</ID>
+    <ID>IC001:Skill.kt:Skill$// Get the maximum level, default to 1 if no suitable level was found</ID>
+    <ID>IC001:Skill.kt:Skill$// I just hate the @ notation kotlin uses</ID>
+    <ID>IC001:Skill.kt:Skill$// Only consider levels not greater than the provided level</ID>
+    <ID>IC001:TemporaryBossBars.kt:// In milliseconds</ID>
+    <ID>IC001:TemporaryBossBars.kt:// Progress between 0 and 1</ID>
+    <ID>IC001:TemporaryBossBars.kt:// The identifier for the boss bar (e.g. The skill name)</ID>
+    <ID>IC002:CommandGive.kt:CommandGive$// Get optional showActionBar parameter (default to false for backward compatibility)</ID>
+    <ID>IC002:CommandTop.kt:CommandTop$// An empty leaderboard still shows its header and footer, with the universal</ID>
+    <ID>IC002:DamageIndicatorListener.kt:DamageIndicatorListener$// Defer text building by 1 tick so all MONITOR handlers (e.g. TriggerMeleeAttack</ID>
+    <ID>IC002:EcoSkillsPlugin.kt:EcoSkillsPlugin$// Config categories are loaded by libreforge's onReload(START) tasks, which run before</ID>
+    <ID>IC002:EcoSkillsPlugin.kt:EcoSkillsPlugin$// Registered once for every skill at once: the lookup resolves the ID when the</ID>
+    <ID>IC002:GainXPDisplay.kt:GainXPDisplay$// Run next tick because level up calls before xp is added</ID>
+    <ID>IC002:Levellable.kt:Levellable$// %level%, %level_numeral%, %previous_level%, %previous_level_numeral% and the</ID>
+    <ID>IC002:Levellable.kt:Levellable$// Only skills have a leaderboard; stats resolve to the empty position, as they always have.</ID>
+    <ID>IC002:MagicHandler.kt:MagicHandler$// Stagger to avoid lag spikes with other plugins? Maybe?</ID>
+    <ID>IC002:Skill.kt:Skill$// Determine the highest level of messages from the config that is not greater than the provided level.</ID>
+    <ID>IC002:Skill.kt:Skill$// Fixes visual bug with repeated rewards</ID>
+    <ID>IC002:Skill.kt:Skill$// Nothing at all is registered when disabled -- no leaderboard, and no placeholders. A</ID>
+    <ID>IC002:Skill.kt:Skill$// Ranked by the level key directly: eco reads every ranked key on the server in one</ID>
+    <ID>IC002:Skill.kt:Skill$// Replace multi-line placeholders.</ID>
+    <ID>IC002:Skill.kt:Skill$// Replace placeholders in the strings with their actual values.</ID>
+    <ID>IC002:Skill.kt:Skill$// The placeholder set is identical to the four this block added by hand -</ID>
+    <ID>IC002:SkillXPAccumulator.kt:// Delegates to eco so the four copies of this loop cannot drift apart again. Two</ID>
+    <ID>IC002:Skills.kt:Skills$// A player who is at the start level in every skill has made no progress, exactly as</ID>
+    <ID>IC002:Skills.kt:Skills$// A total across every skill cannot be expressed as a single key, so this stays a custom</ID>
+    <ID>IC002:Skills.kt:Skills$// Absent means the player is on this skill's default, which still counts</ID>
+    <ID>IC002:Skills.kt:Skills$// Nothing at all is registered when disabled -- no leaderboard, and no placeholders,</ID>
+    <ID>IC002:Skills.kt:Skills$// One batched read for every skill key at once, rather than a separate pass over the</ID>
+    <ID>IC002:Skills.kt:Skills$// Only registered when leaderboards are on, matching every other leaderboard placeholder:</ID>
+    <ID>IC002:Stat.kt:Stat$// Replace placeholders in the strings with their actual values.</ID>
+    <ID>IC002:TemporaryBossBars.kt:// Keyed boss bars live in a server-wide registry, which the global region owns on Folia.</ID>
+    <ID>ImplicitUnitReturnType:EcoSkillsAPI.kt:fun OfflinePlayer.resetSkill</ID>
+    <ID>ImplicitUnitReturnType:EcoSkillsAPI.kt:fun OfflinePlayer.setBaseStatLevel</ID>
+    <ID>ImplicitUnitReturnType:EcoSkillsAPI.kt:fun OfflinePlayer.setSkillLevel</ID>
+    <ID>ImplicitUnitReturnType:StatModifiers.kt:StatModifiers$operator fun plusAssign</ID>
+    <ID>LabeledExpression:Skill.kt:Skill$@mapNotNull</ID>
+    <ID>LongParameterList:TemporaryBossBars.kt:fun Player.sendTemporaryBossBar</ID>
+    <ID>LoopWithTooManyJumpStatements:LevelUpReward.kt:LevelUpReward$for</ID>
+    <ID>MagicNumber:ActionBarHandler.kt:ActionBarHandler$20.0</ID>
+    <ID>MagicNumber:ActionBarHandler.kt:ActionBarHandler$50</ID>
+    <ID>MagicNumber:CommandGive.kt:CommandGive$10</ID>
+    <ID>MagicNumber:CommandGive.kt:CommandGive$100</ID>
+    <ID>MagicNumber:CommandGive.kt:CommandGive$3</ID>
+    <ID>MagicNumber:CommandGive.kt:CommandGive$4</ID>
+    <ID>MagicNumber:CommandGive.kt:CommandGive$5</ID>
+    <ID>MagicNumber:CommandSet.kt:CommandSet$10</ID>
+    <ID>MagicNumber:CommandSet.kt:CommandSet$100</ID>
+    <ID>MagicNumber:CommandSet.kt:CommandSet$3</ID>
+    <ID>MagicNumber:CommandSet.kt:CommandSet$5</ID>
+    <ID>MagicNumber:CommandTop.kt:CommandTop$3</ID>
+    <ID>MagicNumber:CommandTop.kt:CommandTop$4</ID>
+    <ID>MagicNumber:CommandTop.kt:CommandTop$5</ID>
+    <ID>MagicNumber:DamageIndicatorListener.kt:DamageIndicatorListener$30</ID>
+    <ID>MagicNumber:GainXPDisplay.kt:GainXPDisplay$100</ID>
+    <ID>MagicNumber:LevelUpDisplay.kt:LevelUpDisplay$1000</ID>
+    <ID>MagicNumber:MagicHandler.kt:MagicHandler$18</ID>
+    <ID>MagicNumber:MagicHandler.kt:MagicHandler$20</ID>
+    <ID>MagicNumber:Skill.kt:Skill$100</ID>
+    <ID>MagicNumber:SkillXPAccumulator.kt:100</ID>
+    <ID>MagicNumber:TemporaryBossBars.kt:TemporaryBossBarHandler$5</ID>
+    <ID>MaxLineLength:EffectGiveSkillXpNaturally.kt:EffectGiveSkillXpNaturally$override val description = "Gives the player xp for the given skill as if it was gained naturally, applying xp multipliers."</ID>
+    <ID>MaxLineLength:EffectMagicRegenMultiplier.kt:EffectMagicRegenMultiplier$override val description = "Multiplies magic regenerated for one or all EcoSkills magic types while the holder is active."</ID>
+    <ID>MaxLineLength:EffectMakeSkillCrit.kt:EffectMakeSkillCrit$override val description = "Marks the triggering attack as a skill crit, multiplying its damage by the given multiplier."</ID>
+    <ID>MaxLineLength:EffectMultiplyAllStats.kt:EffectMultiplyAllStats$override val description = "Multiplies all of the player's stats by the given multiplier while the holder is active."</ID>
+    <ID>MaxLineLength:EffectMultiplyStat.kt:EffectMultiplyStat$override val description = "Multiplies one of the player's stats by the given multiplier while the holder is active."</ID>
+    <ID>MaxLineLength:EffectMultiplyStatTemporarily.kt:EffectMultiplyStatTemporarily$override val description = "Temporarily multiplies one of the player's stats by the given multiplier for a fixed duration."</ID>
+    <ID>MaxLineLength:GainXPDisplay.kt:GainXPDisplay$if</ID>
+    <ID>MaxLineLength:GainXPDisplay.kt:GainXPDisplay$private</ID>
+    <ID>MaxLineLength:LevelUpDisplay.kt:LevelUpDisplay$Duration.ofMillis((plugin.configYml.getDouble("skills.level-up.title.fade-in") * 1000).toLong())</ID>
+    <ID>MaxLineLength:LevelUpDisplay.kt:LevelUpDisplay$Duration.ofMillis((plugin.configYml.getDouble("skills.level-up.title.fade-out") * 1000).toLong())</ID>
+    <ID>MaxLineLength:SkillLevelGUI.kt:SkillLevelGUI$ItemStackBuilder(Items.lookup(plugin.configYml.getString("level-gui.progression-slots.close.material")))</ID>
+    <ID>MultilineLambdaItParameter:Skill.kt:Skill${ val reward = Effects.getByID(it.getString("reward")) ?: Stats.getByID(it.getString("reward")) ?: return@mapNotNull null LevelUpReward( reward, it.getInt("levels"), it.getIntOrNull("start-level"), it.getIntOrNull("end-level"), it.getIntOrNull("every"), it.getIntsOrNull("level-list") ) }</ID>
+    <ID>MultilineLambdaItParameter:Stat.kt:Stat${ val bonus = it.getBonusStatLevel(this) when { bonus &gt; 0 -&gt; "+${bonus}" bonus &lt; 0 -&gt; "$bonus" else -&gt; "" } }</ID>
+    <ID>NewLineAtEndOfFile:CommandSet.kt:com.willfp.ecoskills.commands.CommandSet.kt</ID>
+    <ID>NewLineAtEndOfFile:EffectLevel.kt:com.willfp.ecoskills.effects.EffectLevel.kt</ID>
+    <ID>NewLineAtEndOfFile:EffectMultiplyStat.kt:com.willfp.ecoskills.libreforge.EffectMultiplyStat.kt</ID>
+    <ID>NewLineAtEndOfFile:SkillCrits.kt:com.willfp.ecoskills.skills.SkillCrits.kt</ID>
+    <ID>NoNameShadowing:SkillLevelComponent.kt:SkillLevelComponent${ skill.addPlaceholdersInto(it, level) }</ID>
+    <ID>NullableBooleanCheck:CommandGive.kt:CommandGive$args.getOrNull(3)?.toBooleanStrictOrNull() ?: false</ID>
+    <ID>NullableBooleanCheck:PlayerInfoIcon.kt:PlayerInfoIcon$config.getBoolOrNull("enabled") ?: true</ID>
+    <ID>NullableBooleanCheck:SkillIcon.kt:SkillIcon$config.getBoolOrNull("enabled") ?: true</ID>
+    <ID>NullableBooleanCheck:SkillLevelGUI.kt:SkillLevelGUI$plugin.configYml.getBoolOrNull("level-gui.progression-slots.close.enabled") ?: true</ID>
+    <ID>NullableBooleanCheck:SkillsGUI.kt:SkillsGUI$plugin.configYml.getBoolOrNull("gui.close.enabled") ?: true</ID>
+    <ID>NullableBooleanCheck:StatIcon.kt:StatIcon$config.getBoolOrNull("enabled") ?: true</ID>
+    <ID>NullableBooleanCheck:StatsGUI.kt:StatsGUI$plugin.configYml.getBoolOrNull("stats-gui.close.enabled") ?: true</ID>
+    <ID>NullableToStringCall:Skills.kt:Skills$${e.message}</ID>
+    <ID>OptionalUnit:EcoSkillsAPI.kt:Unit</ID>
+    <ID>PF011:LevelUpReward.kt:LevelUpReward$contains(skillLevel)</ID>
+    <ID>PF012:CommandRecount.kt:CommandRecount$values()</ID>
+    <ID>PF012:EcoSkillsAPI.kt:values()</ID>
+    <ID>PF012:EcoSkillsPlugin.kt:EcoSkillsPlugin$values()</ID>
+    <ID>PF012:EffectMultiplyAllStats.kt:EffectMultiplyAllStats$values()</ID>
+    <ID>PF012:MagicHandler.kt:MagicHandler$values()</ID>
+    <ID>PF012:MagicHandler.kt:MagicListener$values()</ID>
+    <ID>PF012:SkillsGUI.kt:SkillsGUI$values()</ID>
+    <ID>PF012:StatsGUI.kt:StatsGUI$values()</ID>
+    <ID>PropertyUsedBeforeDeclaration:DamageIndicatorListener.kt:DamageIndicatorListener$playerSource</ID>
+    <ID>ReplaceSafeCallChainWithRun:ActionBarHandler.kt:ActionBarHandler.PlayerHealthInjectable$it.getAttribute(Attribute.MAX_HEALTH)?.value?.toInt()?.toString()</ID>
+    <ID>ReturnCount:ActionBarHandler.kt:ActionBarHandler$private fun render: Component?</ID>
+    <ID>ReturnCount:CommandGive.kt:CommandGive$override fun tabComplete: List&lt;String&gt;</ID>
+    <ID>ReturnCount:CommandSet.kt:CommandSet$override fun tabComplete: List&lt;String&gt;</ID>
+    <ID>ReturnCount:CommandTop.kt:CommandTop$override fun tabComplete: List&lt;String&gt;</ID>
+    <ID>ReturnCount:ConditionAboveMagic.kt:ConditionAboveMagic$override fun isMet: Boolean</ID>
+    <ID>ReturnCount:ConditionBelowMagic.kt:ConditionBelowMagic$override fun isMet: Boolean</ID>
+    <ID>ReturnCount:ConditionHasSkillLevel.kt:ConditionHasSkillLevel$override fun isMet: Boolean</ID>
+    <ID>ReturnCount:ConditionStatAbove.kt:ConditionStatAbove$override fun isMet: Boolean</ID>
+    <ID>ReturnCount:ConditionStatBelow.kt:ConditionStatBelow$override fun isMet: Boolean</ID>
+    <ID>ReturnCount:ConditionStatEquals.kt:ConditionStatEquals$override fun isMet: Boolean</ID>
+    <ID>ReturnCount:DamageIndicatorListener.kt:DamageIndicatorListener$@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true) fun onEntityDamage</ID>
+    <ID>ReturnCount:DamageIndicatorListener.kt:DamageIndicatorListener$@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true) fun onEntityDamageByEntity</ID>
+    <ID>ReturnCount:DamageIndicatorListener.kt:DamageIndicatorListener$@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true) fun onHeal</ID>
+    <ID>ReturnCount:EffectAddStatTemporarily.kt:EffectAddStatTemporarily$override fun onTrigger: Boolean</ID>
+    <ID>ReturnCount:EffectGiveMagic.kt:EffectGiveMagic$override fun onTrigger: Boolean</ID>
+    <ID>ReturnCount:EffectGiveSkillXp.kt:EffectGiveSkillXp$override fun onTrigger: Boolean</ID>
+    <ID>ReturnCount:EffectGiveSkillXpNaturally.kt:EffectGiveSkillXpNaturally$override fun onTrigger: Boolean</ID>
+    <ID>ReturnCount:EffectMultiplyMagic.kt:EffectMultiplyMagic$override fun onTrigger: Boolean</ID>
+    <ID>ReturnCount:EffectMultiplyStatTemporarily.kt:EffectMultiplyStatTemporarily$override fun onTrigger: Boolean</ID>
+    <ID>ReturnCount:LevelUpReward.kt:LevelUpReward$fun giveTo</ID>
+    <ID>ReturnCount:SkillXPAccumulator.kt:SkillXPAccumulator$override fun accept</ID>
+    <ID>ReturnCount:SkillXPAccumulator.kt:private fun Player.cacheSkillXPMultiplier: Double</ID>
+    <ID>SpacingAfterPackageAndImports:MagicMap.kt: </ID>
+    <ID>SpreadOperator:SkillLevelGUI.kt:SkillLevelGUI$( maskItems, *maskPattern )</ID>
+    <ID>SpreadOperator:SkillsGUI.kt:SkillsGUI$( MaskItems.fromItemNames(plugin.configYml.getStrings("gui.mask.materials")), *plugin.configYml.getStrings("gui.mask.pattern").toTypedArray() )</ID>
+    <ID>SpreadOperator:StatsGUI.kt:StatsGUI$( MaskItems.fromItemNames(plugin.configYml.getStrings("stats-gui.mask.materials")), *plugin.configYml.getStrings("stats-gui.mask.pattern").toTypedArray() )</ID>
+    <ID>TooManyFunctions:EcoSkillsAPI.kt:com.willfp.ecoskills.api.EcoSkillsAPI.kt</ID>
+    <ID>TooManyFunctions:Skill.kt:Skill : Levellable</ID>
+    <ID>UnnamedParameterUse:ActionBarHandler.kt:namespacedKeyOf</ID>
+    <ID>UnnamedParameterUse:CommandGive.kt:CommandGive$replace</ID>
+    <ID>UnnamedParameterUse:CommandReload.kt:CommandReload$replace</ID>
+    <ID>UnnamedParameterUse:CommandSet.kt:CommandSet$replace</ID>
+    <ID>UnnamedParameterUse:CommandTop.kt:CommandTop$replace</ID>
+    <ID>UnnamedParameterUse:ConditionAboveMagic.kt:ConditionAboveMagic$require</ID>
+    <ID>UnnamedParameterUse:ConditionBelowMagic.kt:ConditionBelowMagic$require</ID>
+    <ID>UnnamedParameterUse:ConditionHasSkillLevel.kt:ConditionHasSkillLevel$require</ID>
+    <ID>UnnamedParameterUse:ConditionStatAbove.kt:ConditionStatAbove$require</ID>
+    <ID>UnnamedParameterUse:ConditionStatBelow.kt:ConditionStatBelow$require</ID>
+    <ID>UnnamedParameterUse:ConditionStatEquals.kt:ConditionStatEquals$require</ID>
+    <ID>UnnamedParameterUse:DamageIndicatorListener.kt:DamageIndicatorListener$randDouble</ID>
+    <ID>UnnamedParameterUse:DamageIndicatorListener.kt:DamageIndicatorListener$replace</ID>
+    <ID>UnnamedParameterUse:DescriptionPlaceholder.kt:DescriptionPlaceholder</ID>
+    <ID>UnnamedParameterUse:EcoSkillsAPI.kt:progressFraction</ID>
+    <ID>UnnamedParameterUse:EffectAddStat.kt:EffectAddStat$require</ID>
+    <ID>UnnamedParameterUse:EffectAddStatTemporarily.kt:EffectAddStatTemporarily$require</ID>
+    <ID>UnnamedParameterUse:EffectGiveMagic.kt:EffectGiveMagic$require</ID>
+    <ID>UnnamedParameterUse:EffectGiveSkillXp.kt:EffectGiveSkillXp$require</ID>
+    <ID>UnnamedParameterUse:EffectGiveSkillXpNaturally.kt:EffectGiveSkillXpNaturally$require</ID>
+    <ID>UnnamedParameterUse:EffectMagicRegenMultiplier.kt:EffectMagicRegenMultiplier$require</ID>
+    <ID>UnnamedParameterUse:EffectMakeSkillCrit.kt:EffectMakeSkillCrit$require</ID>
+    <ID>UnnamedParameterUse:EffectMultiplyAllStats.kt:EffectMultiplyAllStats$require</ID>
+    <ID>UnnamedParameterUse:EffectMultiplyMagic.kt:EffectMultiplyMagic$require</ID>
+    <ID>UnnamedParameterUse:EffectMultiplyStat.kt:EffectMultiplyStat$require</ID>
+    <ID>UnnamedParameterUse:EffectMultiplyStatTemporarily.kt:EffectMultiplyStatTemporarily$require</ID>
+    <ID>UnnamedParameterUse:EffectSkillXpMultiplier.kt:EffectSkillXpMultiplier$require</ID>
+    <ID>UnnamedParameterUse:GainXPDisplay.kt:GainXPDisplay$replace</ID>
+    <ID>UnnamedParameterUse:GainXPDisplay.kt:namespacedKeyOf</ID>
+    <ID>UnnamedParameterUse:Levellable.kt:Levellable$inject</ID>
+    <ID>UnnamedParameterUse:Levellable.kt:Levellable$replace</ID>
+    <ID>UnnamedParameterUse:PlayerInfoIcon.kt:PlayerInfoIcon$replace</ID>
+    <ID>UnnamedParameterUse:Skill.kt:Skill$LevelUpReward</ID>
+    <ID>UnnamedParameterUse:Skill.kt:Skill$registerStandardPlaceholders</ID>
+    <ID>UnnamedParameterUse:Skill.kt:Skill$replace</ID>
+    <ID>UnnamedParameterUse:SkillIcon.kt:SkillIcon$replace</ID>
+    <ID>UnnamedParameterUse:SkillLevelComponent.kt:SkillLevelComponent$replace</ID>
+    <ID>UnnamedParameterUse:SkillLevelGUI.kt:SkillLevelGUI$replace</ID>
+    <ID>UnnamedParameterUse:SkillLevelMap.kt:SkillLevelMap$progress</ID>
+    <ID>UnnamedParameterUse:Skills.kt:Skills$registerStandardPlaceholders</ID>
+    <ID>UnnamedParameterUse:Stat.kt:Stat$replace</ID>
+    <ID>UnnamedParameterUse:StatIcon.kt:StatIcon$replace</ID>
+    <ID>UnnamedParameterUse:TemporaryBossBars.kt:namespacedKeyOf</ID>
+    <ID>UnnecessaryParentheses:CommandRecount.kt:CommandRecount$(0 until level)</ID>
+    <ID>UnnecessaryParentheses:CommandTop.kt:CommandTop$(offset + 1)</ID>
+    <ID>UnnecessaryParentheses:CommandTop.kt:CommandTop$(offset + 10)</ID>
+    <ID>UnnecessaryParentheses:LevelUpReward.kt:LevelUpReward$(1..level)</ID>
+    <ID>UnnecessaryParentheses:TemporaryBossBars.kt:(this.uniqueId.hashCode() shl 5)</ID>
+    <ID>UnusedImport:SkillCrits.kt:import org.bukkit.event.Listener</ID>
+    <ID>UnusedPrivateProperty:Effect.kt:Effect$plugin: EcoSkillsPlugin</ID>
+    <ID>UseOrEmpty:MultiPlayerSelector.kt:Bukkit.getPlayer(arg)?.toSingletonList() ?: emptyList()</ID>
+  </CurrentIssues>
+</SmellBaseline>

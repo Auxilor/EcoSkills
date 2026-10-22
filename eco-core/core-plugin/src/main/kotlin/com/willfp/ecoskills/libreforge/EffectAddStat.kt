@@ -16,8 +16,6 @@ import com.willfp.libreforge.effects.Identifiers
 import com.willfp.libreforge.effects.RunOrder
 import com.willfp.libreforge.get
 import org.bukkit.entity.Player
-import java.util.UUID
-import java.util.concurrent.ConcurrentHashMap
 
 object EffectAddStat : Effect<NoCompileData>("add_stat") {
     override val description = "Adds a flat amount to one of the player's stats while the holder is active."
@@ -42,8 +40,6 @@ object EffectAddStat : Effect<NoCompileData>("add_stat") {
         )
     }
 
-    private val activeModifiers = ConcurrentHashMap<String, MutableSet<UUID>>()
-
     override fun onEnable(
         dispatcher: Dispatcher<*>,
         config: Config,
@@ -54,15 +50,10 @@ object EffectAddStat : Effect<NoCompileData>("add_stat") {
         val player = dispatcher.get<Player>() ?: return
         val stat = Stats.getByID(config.getString("stat")) ?: return
 
-        val lookupKey = holder.lookupKey(player)
-        val modifierUUID = UUID.nameUUIDFromBytes("${lookupKey}_${stat.id}".toByteArray())
-
-        activeModifiers.computeIfAbsent(lookupKey) { ConcurrentHashMap.newKeySet() }.add(modifierUUID)
-
-        player.removeStatModifier(modifierUUID)
+        player.removeStatModifier(identifiers.uuid)
         player.addStatModifier(
             StatModifier(
-                modifierUUID,
+                identifiers.uuid,
                 stat,
                 config.getDoubleFromExpression("amount", player),
                 ModifierOperation.ADD
@@ -71,13 +62,6 @@ object EffectAddStat : Effect<NoCompileData>("add_stat") {
     }
 
     override fun onDisable(dispatcher: Dispatcher<*>, identifiers: Identifiers, holder: ProvidedHolder) {
-        val player = dispatcher.get<Player>() ?: return
-
-        val lookupKey = holder.lookupKey(player)
-        val modifierUUIDs = activeModifiers.remove(lookupKey) ?: return
-
-        for (uuid in modifierUUIDs) {
-            player.removeStatModifier(uuid)
-        }
+        dispatcher.get<Player>()?.removeStatModifier(identifiers.uuid)
     }
 }
