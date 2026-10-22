@@ -66,7 +66,6 @@ class SkillLevelComponent(
         }
     }
 
-    override fun getLevelState(player: Player, level: Int): LevelState {
-        return LevelState.of(level, player.getSkillLevel(skill))
-    }
+    override fun getLevelState(player: Player, level: Int): LevelState =
+        LevelState.of(level, player.getSkillLevel(skill))
 }

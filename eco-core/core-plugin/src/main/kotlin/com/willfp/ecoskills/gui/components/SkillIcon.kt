@@ -72,7 +72,7 @@ class SkillIcon(
 
     override val isEnabled = config.getBoolOrNull("enabled") ?: true
     override val locations = listOf(
-        SlotLocation(config.getInt("position.row"), config.getInt("position.column"))
+        SlotLocation(row = config.getInt("position.row"), column = config.getInt("position.column"))
     )
 
     override fun getSlotAt(row: Int, column: Int, player: Player, menu: Menu): Slot {
