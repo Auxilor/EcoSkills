@@ -10,7 +10,6 @@ use-local-storage: false
 
 leaderboard:
   # You can disable the top leaderboard if you don't want it
-  # Please note that it will require a full server restart to take into effect
   enabled: true
 
   # Leaderboard refresh timing, entry caps, and rank display are now configured

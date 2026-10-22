@@ -17,8 +17,7 @@ object CommandSkills : PluginCommand(
     init {
         this.addSubcommand(CommandToggleActionBar)
             .addSubcommand(CommandToggleXpGainSound)
-        if (plugin.configYml.getBool("leaderboard.enabled"))
-            this.addSubcommand(CommandTop)
+            .addSubcommand(CommandTop)
     }
 
     override fun onExecute(player: Player, args: List<String>) {
