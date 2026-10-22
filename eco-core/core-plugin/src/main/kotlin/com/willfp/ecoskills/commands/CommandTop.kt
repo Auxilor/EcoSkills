@@ -51,9 +51,9 @@ object CommandTop : Subcommand(
         val messages = plugin.langYml.getStrings("top.format")
         val lines = mutableListOf<String>()
 
-        for ((index, entry) in top.withIndex()) {
+        for (entry in top) {
             val line = plugin.langYml.getString("top-line-format")
-                .replace("%rank%", (offset + index + 1).toString())
+                .replace("%rank%", entry.position.toString())
                 .replace("%level%", entry.value.toInt().toString())
                 .replace("%player%", entry.player.savedDisplayName)
 
