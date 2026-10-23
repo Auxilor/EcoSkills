@@ -24,9 +24,8 @@ class PriceFactoryMagic(
     ) : Price {
         private val multipliers = ConcurrentHashMap<UUID, Double>()
 
-        override fun canAfford(player: Player, multiplier: Double): Boolean {
-            return player.magic[type] >= getRoundedValue(player, multiplier)
-        }
+        override fun canAfford(player: Player, multiplier: Double): Boolean =
+            player.magic[type] >= getRoundedValue(player, multiplier)
 
         override fun pay(player: Player, multiplier: Double) {
             player.magic[type] -= getRoundedValue(player, multiplier)
@@ -36,9 +35,8 @@ class PriceFactoryMagic(
             player.magic[type] += getRoundedValue(player, multiplier)
         }
 
-        private fun getRoundedValue(player: Player, multiplier: Double): Int {
-            return ceil(getValue(player, multiplier)).toInt()
-        }
+        private fun getRoundedValue(player: Player, multiplier: Double): Int =
+            ceil(getValue(player, multiplier)).toInt()
 
         override fun getValue(player: Player, multiplier: Double): Double {
             return function(baseContext.copyWithPlayer(player)) * getMultiplier(player) * multiplier
