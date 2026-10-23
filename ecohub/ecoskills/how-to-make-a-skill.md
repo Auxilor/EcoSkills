@@ -54,6 +54,7 @@ gui:
   position: # Slot in the /skills menu
     row: 3
     column: 3
+    locations: [ ] # Optional list of row/column slots; if set, the icon shows in each of them instead of row/column
 
 # === Progression: XP per level and how to earn it ===
 xp-requirements: # XP to reach each level, starting at level 1

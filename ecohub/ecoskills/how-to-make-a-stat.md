@@ -48,6 +48,7 @@ gui:
   position: # Slot in the /stats menu
     row: 5
     column: 5
+    locations: [ ] # Optional list of row/column slots; if set, the icon shows in each of them instead of row/column
 
 # === Effects: what the stat does ===
 effects:
