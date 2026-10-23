@@ -7,6 +7,13 @@ import java.util.concurrent.ConcurrentHashMap
 
 private val map = ConcurrentHashMap<UUID, MutableMap<MagicType, Int>>()
 
+internal fun clearJoinOnFullMagic(player: Player) {
+    map.computeIfPresent(player.uniqueId) { _, values ->
+        values.keys.removeIf { it.joinOnFull }
+        values.ifEmpty { null }
+    }
+}
+
 class MagicMap(
     private val player: Player
 ) {

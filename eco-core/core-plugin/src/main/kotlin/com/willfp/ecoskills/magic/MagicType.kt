@@ -69,6 +69,10 @@ class MagicType(
             )
         ).toInt()
 
+        if (baseToRegen >= 0 && player.magic[this] >= getLimit(player)) {
+            return
+        }
+
         val event = PlayerRegenMagicEvent(player, this, baseToRegen)
         Bukkit.getPluginManager().callEvent(event)
 
