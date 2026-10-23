@@ -7,6 +7,7 @@ import com.willfp.eco.core.price.PriceFactory
 import org.bukkit.entity.Player
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
+import kotlin.math.ceil
 
 class PriceFactoryMagic(
     private val type: MagicType
@@ -24,15 +25,19 @@ class PriceFactoryMagic(
         private val multipliers = ConcurrentHashMap<UUID, Double>()
 
         override fun canAfford(player: Player, multiplier: Double): Boolean {
-            return player.magic[type] >= getValue(player, multiplier)
+            return player.magic[type] >= getRoundedValue(player, multiplier)
         }
 
         override fun pay(player: Player, multiplier: Double) {
-            player.magic[type] -= getValue(player, multiplier).toInt()
+            player.magic[type] -= getRoundedValue(player, multiplier)
         }
 
         override fun giveTo(player: Player, multiplier: Double) {
-            player.magic[type] += getValue(player, multiplier).toInt()
+            player.magic[type] += getRoundedValue(player, multiplier)
+        }
+
+        private fun getRoundedValue(player: Player, multiplier: Double): Int {
+            return ceil(getValue(player, multiplier)).toInt()
         }
 
         override fun getValue(player: Player, multiplier: Double): Double {
