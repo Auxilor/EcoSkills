@@ -106,15 +106,14 @@ class EcoSkillsPlugin : LibreforgePlugin() {
         Filters.register(FilterSkillCrit)
         Filters.register(FilterMagicType)
 
-        if (this.configYml.getBool("leaderboard.enabled")) {
-            // Registered once for every skill at once: the lookup resolves the ID when the
-            // placeholder is read, so a skill added or renamed in a config needs nothing here.
-            registerCategoryTopPlaceholders(
-                this,
-                this.langYml.getString("top.empty-position").formatEco(),
-                listOf("level", "amount")
-            ) { Skills.getByID(it)?.leaderboard }
-        }
+        // Registered once for every skill at once: the lookup resolves the ID when the
+        // placeholder is read, so a skill added or renamed in a config needs nothing here.
+        // A disabled leaderboard is null, so its placeholders stay unresolved until enabled.
+        registerCategoryTopPlaceholders(
+            this,
+            this.langYml.getString("top.empty-position").formatEco(),
+            listOf("level", "amount")
+        ) { Skills.getByID(it)?.leaderboard }
         Skills.registerPlaceholders()
     }
 

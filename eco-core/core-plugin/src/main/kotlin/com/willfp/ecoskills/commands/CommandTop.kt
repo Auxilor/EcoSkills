@@ -19,6 +19,11 @@ object CommandTop : Subcommand(
 ) {
 
     override fun onExecute(sender: CommandSender, args: List<String>) {
+        if (!plugin.configYml.getBool("leaderboard.enabled")) {
+            sender.sendMessage(plugin.langYml.getMessage("invalid-skill"))
+            return
+        }
+
         val skill = Skills.getByID(args.getOrNull(0))
 
         val pageIndex = if (skill == null) 0 else 1
@@ -46,9 +51,9 @@ object CommandTop : Subcommand(
         val messages = plugin.langYml.getStrings("top.format")
         val lines = mutableListOf<String>()
 
-        for ((index, entry) in top.withIndex()) {
+        for (entry in top) {
             val line = plugin.langYml.getString("top-line-format")
-                .replace("%rank%", (offset + index + 1).toString())
+                .replace("%rank%", entry.position.toString())
                 .replace("%level%", entry.value.toInt().toString())
                 .replace("%player%", entry.player.savedDisplayName)
 
@@ -80,6 +85,10 @@ object CommandTop : Subcommand(
     }
 
     override fun tabComplete(sender: CommandSender, args: List<String>): List<String> {
+        if (!plugin.configYml.getBool("leaderboard.enabled")) {
+            return emptyList()
+        }
+
         val completions = mutableListOf<String>()
 
         if (args.size == 1) {

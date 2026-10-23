@@ -5,17 +5,13 @@ sidebar_position: 7
 
 This is the main config for EcoSkills, found at `/plugins/EcoSkills/config.yml`. It controls storage, the skills and stats GUIs, the level progression GUI, the persistent action bar, damage indicators, and how XP gain and level-ups are announced. Edit it, then run `/ecoskills reload` to apply most changes.
 
-:::warning
-Toggling the leaderboard (`leaderboard.enabled`) needs a full server restart, not a reload. A reload alone will leave the old state in place.
-:::
-
 ## Default config.yml
 
 ```yaml
 use-local-storage: false # Force local storage even when eco uses a database; disables cross-server sync
 
 leaderboard:
-  enabled: true # Whether the top leaderboard is active; toggling this needs a full server restart
+  enabled: true # Whether the top leaderboard is active
   cache-lifetime: 60 # Lifetime of the leaderboard cache, in seconds
 
 disabled-in-worlds: # Worlds EcoSkills is fully disabled in
