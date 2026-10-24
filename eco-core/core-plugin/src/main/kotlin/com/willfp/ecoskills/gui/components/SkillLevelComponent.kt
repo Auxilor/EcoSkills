@@ -1,14 +1,14 @@
 package com.willfp.ecoskills.gui.components
 
 import com.willfp.eco.core.cache.EcoCache
+import com.willfp.eco.core.gui.component.LevelComponent
+import com.willfp.eco.core.gui.component.LevelState
 import com.willfp.eco.core.gui.menu.Menu
 import com.willfp.eco.core.items.Items
 import com.willfp.eco.core.items.builder.ItemStackBuilder
 import com.willfp.eco.core.placeholder.context.placeholderContext
 import com.willfp.eco.util.evaluateExpression
 import com.willfp.eco.util.lineWrap
-import com.willfp.ecomponent.components.LevelComponent
-import com.willfp.ecomponent.components.LevelState
 import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.skills.Skill
@@ -66,11 +66,6 @@ class SkillLevelComponent(
         }
     }
 
-    override fun getLevelState(player: Player, level: Int): LevelState {
-        return when {
-            level <= player.getSkillLevel(skill) -> LevelState.UNLOCKED
-            level == player.getSkillLevel(skill) + 1 -> LevelState.IN_PROGRESS
-            else -> LevelState.LOCKED
-        }
-    }
+    override fun getLevelState(player: Player, level: Int): LevelState =
+        LevelState.of(level, player.getSkillLevel(skill))
 }

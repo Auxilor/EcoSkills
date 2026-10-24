@@ -39,6 +39,7 @@ gui:
   player-info: # The player summary icon at the top of the GUI
     row: 1
     column: 5
+    locations: [ ] # Optional list of row/column slots; if set, the button shows in each of them instead of row/column
     enabled: true # Whether the summary icon is shown
     name: "&f%player%&f's &fStats:" # Icon title
     lore: # Icon lore; uses ecoskills placeholders for live stat values
@@ -85,6 +86,7 @@ gui:
     location:
       row: 6
       column: 5
+    locations: [ ] # Optional list of row/column slots; if set, the button shows in each of them instead of row/column
 
   custom-slots: [ ] # Extra GUI slots; see https://plugins.auxilor.io/all-plugins/custom-gui-slots
 
@@ -106,6 +108,7 @@ stats-gui:
   player-info:
     row: 1
     column: 5
+    locations: [ ] # Optional list of row/column slots; if set, the button shows in each of them instead of row/column
 
   stat-icon: # The per-stat icon in the /stats GUI
     name: "%stat%"
@@ -120,6 +123,7 @@ stats-gui:
     location:
       row: 6
       column: 4
+    locations: [ ] # Optional list of row/column slots; if set, the button shows in each of them instead of row/column
 
   close:
     enabled: true
@@ -128,6 +132,7 @@ stats-gui:
     location:
       row: 6
       column: 5
+    locations: [ ] # Optional list of row/column slots; if set, the button shows in each of them instead of row/column
 
   custom-slots: [ ] # Extra GUI slots; see https://plugins.auxilor.io/all-plugins/custom-gui-slots
 
@@ -162,6 +167,7 @@ level-gui:
       location:
         row: 6
         column: 4
+      locations: [ ] # Optional list of row/column slots; if set, the button shows in each of them instead of row/column
 
     next-page:
       material: arrow
@@ -169,6 +175,7 @@ level-gui:
       location:
         row: 6
         column: 6
+      locations: [ ] # Optional list of row/column slots; if set, the button shows in each of them instead of row/column
 
     close:
       enabled: true
@@ -177,6 +184,7 @@ level-gui:
       location:
         row: 6
         column: 5
+      locations: [ ] # Optional list of row/column slots; if set, the button shows in each of them instead of row/column
 
     unlocked: # Node style for a reached level
       item: lime_stained_glass_pane

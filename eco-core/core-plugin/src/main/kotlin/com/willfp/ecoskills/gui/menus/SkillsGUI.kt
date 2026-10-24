@@ -1,13 +1,12 @@
 package com.willfp.ecoskills.gui.menus
 
+import com.willfp.eco.core.gui.addCustomSlots
+import com.willfp.eco.core.gui.component.addComponent
+import com.willfp.eco.core.gui.component.closeButton
 import com.willfp.eco.core.gui.menu
 import com.willfp.eco.core.gui.menu.Menu
-import com.willfp.eco.core.gui.slot.ConfigSlot
-import com.willfp.eco.core.gui.slot.FillerMask
-import com.willfp.eco.core.gui.slot.MaskItems
-import com.willfp.ecoskills.gui.components.CloseButton
+import com.willfp.eco.core.gui.setMask
 import com.willfp.ecoskills.gui.components.PlayerInfoIcon
-import com.willfp.ecoskills.gui.components.addComponent
 import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.skills.Skills
 import org.bukkit.entity.Player
@@ -24,12 +23,7 @@ object SkillsGUI {
         return menu(plugin.configYml.getInt("gui.rows")) {
             title = plugin.langYml.getFormattedString("menu.title")
 
-            setMask(
-                FillerMask(
-                    MaskItems.fromItemNames(plugin.configYml.getStrings("gui.mask.materials")),
-                    *plugin.configYml.getStrings("gui.mask.pattern").toTypedArray()
-                )
-            )
+            setMask(plugin.configYml, "gui")
 
             addComponent(
                 PlayerInfoIcon(
@@ -42,22 +36,9 @@ object SkillsGUI {
                 addComponent(skill.icon)
             }
 
-            val closeEnabled = plugin.configYml.getBoolOrNull("gui.close.enabled") ?: true
-            if (closeEnabled) {
-                addComponent(
-                    CloseButton(
-                        plugin.configYml.getSubsection("gui.close")
-                    )
-                )
-            }
+            addComponent(closeButton(plugin.configYml.getSubsection("gui.close")))
 
-            for (config in plugin.configYml.getSubsections("gui.custom-slots")) {
-                setSlot(
-                    config.getInt("row"),
-                    config.getInt("column"),
-                    ConfigSlot(config)
-                )
-            }
+            addCustomSlots(plugin.configYml, "gui")
         }
     }
 

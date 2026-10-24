@@ -2,6 +2,8 @@ package com.willfp.ecoskills.gui.components
 
 import com.willfp.eco.core.cache.EcoCache
 import com.willfp.eco.core.config.interfaces.Config
+import com.willfp.eco.core.gui.component.PositionedComponent
+import com.willfp.eco.core.gui.getSlotLocations
 import com.willfp.eco.core.gui.menu.Menu
 import com.willfp.eco.core.gui.onLeftClick
 import com.willfp.eco.core.gui.slot
@@ -69,8 +71,7 @@ class SkillIcon(
     )
 
     override val isEnabled = config.getBoolOrNull("enabled") ?: true
-    override val row = config.getInt("position.row")
-    override val column = config.getInt("position.column")
+    override val locations = config.getSlotLocations("position")
 
     override fun getSlotAt(row: Int, column: Int, player: Player, menu: Menu): Slot {
         return if (player.getSkillLevel(skill) > 0 || !skill.isHiddenBeforeLevel1) {

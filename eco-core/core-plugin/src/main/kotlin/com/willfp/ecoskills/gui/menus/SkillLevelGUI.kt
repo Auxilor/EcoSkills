@@ -1,17 +1,15 @@
 package com.willfp.ecoskills.gui.menus
 
+import com.willfp.eco.core.gui.addCustomSlots
 import com.willfp.eco.core.gui.addPageChanger
+import com.willfp.eco.core.gui.component.ConfigButton
+import com.willfp.eco.core.gui.component.addComponent
+import com.willfp.eco.core.gui.component.closeButton
 import com.willfp.eco.core.gui.menu
 import com.willfp.eco.core.gui.menu.Menu
 import com.willfp.eco.core.gui.menu.MenuLayer
-import com.willfp.eco.core.gui.onLeftClick
 import com.willfp.eco.core.gui.page.PageChanger
-import com.willfp.eco.core.gui.slot
-import com.willfp.eco.core.gui.slot.ConfigSlot
-import com.willfp.eco.core.gui.slot.FillerMask
-import com.willfp.eco.core.gui.slot.MaskItems
-import com.willfp.eco.core.items.Items
-import com.willfp.eco.core.items.builder.ItemStackBuilder
+import com.willfp.eco.core.gui.setMask
 import com.willfp.eco.core.sound.PlayableSound
 import com.willfp.eco.util.formatEco
 import com.willfp.ecoskills.api.getSkillLevel
@@ -26,9 +24,6 @@ class SkillLevelGUI(
     private val menu: Menu
 
     init {
-        val maskPattern = plugin.configYml.getStrings("level-gui.mask.pattern").toTypedArray()
-        val maskItems = MaskItems.fromItemNames(plugin.configYml.getStrings("level-gui.mask.materials"))
-
         val levelComponent = SkillLevelComponent(skill)
 
         val pageChangeSound = PlayableSound.create(plugin.configYml.getSubsection("level-gui.page-change-sound"))
@@ -40,12 +35,7 @@ class SkillLevelGUI(
 
             maxPages(levelComponent.pages)
 
-            setMask(
-                FillerMask(
-                    maskItems,
-                    *maskPattern
-                )
-            )
+            setMask(plugin.configYml, "level-gui")
 
             addComponent(1, 1, levelComponent)
 
@@ -57,45 +47,19 @@ class SkillLevelGUI(
             val nextPath = "level-gui.progression-slots.next-page"
 
             addComponent(
-                MenuLayer.LOWER,
-                plugin.configYml.getInt("$prevPath.location.row"),
-                plugin.configYml.getInt("$prevPath.location.column"),
-                slot(
-                    plugin.configYml.getStringOrNull("$prevPath.item")
-                        ?.let { Items.lookup(it).item }
-                        ?: ItemStackBuilder(Items.lookup("arrow")).build()
-                ) {
-                    onLeftClick { player, _, _, _ -> SkillsGUI.open(player) }
-                }
+                ConfigButton(
+                    plugin.configYml.getSubsection(prevPath),
+                    defaultItem = "arrow",
+                    layer = MenuLayer.LOWER
+                ) { player, _, _, _ -> SkillsGUI.open(player) }
             )
 
             addPageChanger(plugin.configYml, prevPath, PageChanger.Direction.BACKWARDS, pageChangeSound)
             addPageChanger(plugin.configYml, nextPath, PageChanger.Direction.FORWARDS, pageChangeSound)
 
-            val closeEnabled = plugin.configYml.getBoolOrNull("level-gui.progression-slots.close.enabled") ?: true
-            if (closeEnabled) {
-                setSlot(
-                    plugin.configYml.getInt("level-gui.progression-slots.close.location.row"),
-                    plugin.configYml.getInt("level-gui.progression-slots.close.location.column"),
-                    slot(
-                        ItemStackBuilder(Items.lookup(plugin.configYml.getString("level-gui.progression-slots.close.material")))
-                            .setDisplayName(plugin.configYml.getString("level-gui.progression-slots.close.name"))
-                            .build()
-                    ) {
-                        onLeftClick { event, _ ->
-                            event.whoClicked.closeInventory()
-                        }
-                    }
-                )
-            }
+            addComponent(closeButton(plugin.configYml.getSubsection("level-gui.progression-slots.close")))
 
-            for (config in plugin.configYml.getSubsections("level-gui.custom-slots")) {
-                setSlot(
-                    config.getInt("row"),
-                    config.getInt("column"),
-                    ConfigSlot(config)
-                )
-            }
+            addCustomSlots(plugin.configYml, "level-gui")
         }
     }
 
