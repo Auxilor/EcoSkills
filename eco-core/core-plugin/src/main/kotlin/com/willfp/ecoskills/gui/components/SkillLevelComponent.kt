@@ -17,9 +17,12 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import kotlin.math.roundToInt
 import java.time.Duration
+import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 
-private val levelItemCache = EcoCache.builder<Int, ItemStack>()
+private data class SkillLevelKey(val player: UUID, val skill: String, val level: Int)
+
+private val levelItemCache = EcoCache.builder<SkillLevelKey, ItemStack>()
     .expireAfterWrite(Duration.ofMillis(plugin.configYml.getInt("gui.cache-ttl").toLong()))
     .build()
 
@@ -34,7 +37,7 @@ class SkillLevelComponent(
     override fun getLevelItem(player: Player, menu: Menu, level: Int, levelState: LevelState): ItemStack {
         val key = levelState.key
 
-        fun item() = levelItemCache.get(player.hashCode() xor skill.hashCode() xor level.hashCode()) {
+        fun item() = levelItemCache.get(SkillLevelKey(player.uniqueId, skill.id, level)) {
             ItemStackBuilder(Items.lookup(plugin.configYml.getString("level-gui.progression-slots.$key.item")))
                 .setDisplayName(
                     plugin.configYml.getString("level-gui.progression-slots.$key.name")

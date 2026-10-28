@@ -17,8 +17,11 @@ import com.willfp.ecoskills.skills.Skill
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import java.time.Duration
+import java.util.UUID
 
-private val iconCache = EcoCache.builder<Int, ItemStack>()
+private data class SkillIconKey(val player: UUID, val skill: String)
+
+private val iconCache = EcoCache.builder<SkillIconKey, ItemStack>()
     .expireAfterWrite(Duration.ofMillis(plugin.configYml.getInt("gui.cache-ttl").toLong()))
     .build()
 
@@ -30,7 +33,7 @@ class SkillIcon(
         get() = field.clone()
 
     private val slot = slot({ player, _ ->
-        val cacheKey = player.uniqueId.hashCode() xor skill.hashCode()
+        val cacheKey = SkillIconKey(player.uniqueId, skill.id)
         iconCache.get(cacheKey) ?: run {
             val level = player.getSkillLevel(skill)
 
