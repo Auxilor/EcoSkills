@@ -17,7 +17,9 @@ import org.bukkit.inventory.meta.SkullMeta
 import java.time.Duration
 import java.util.UUID
 
-private val skullCache = EcoCache.builder<UUID, ItemStack>()
+private data class PlayerInfoKey(val player: UUID, val opensStatMenu: Boolean)
+
+private val skullCache = EcoCache.builder<PlayerInfoKey, ItemStack>()
     .expireAfterWrite(Duration.ofMillis(plugin.configYml.getInt("gui.cache-ttl").toLong()))
     .build()
 
@@ -28,7 +30,7 @@ class PlayerInfoIcon(
     override val isEnabled = config.getBoolOrNull("enabled") ?: true
     private val slot = if (isEnabled) {
         slot({ player, _ ->
-            skullCache.get(player.uniqueId) {
+            skullCache.get(PlayerInfoKey(player.uniqueId, opensStatMenu)) {
                 val skullBuilder = SkullBuilder()
                     .setDisplayName(
                         config.getString("name")

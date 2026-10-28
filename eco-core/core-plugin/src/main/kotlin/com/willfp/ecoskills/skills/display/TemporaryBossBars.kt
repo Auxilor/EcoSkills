@@ -8,6 +8,7 @@ import org.bukkit.NamespacedKey
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle
 import org.bukkit.entity.Player
+import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 
 // Maps BossBar's to their expiry time
@@ -21,9 +22,10 @@ fun Player.sendTemporaryBossBar(
     barStyle: BarStyle,
     progress: Double // Progress between 0 and 1
 ) {
-    val idBytes = (this.uniqueId.hashCode() shl 5) xor identifier.hashCode()
-
-    val key = namespacedKeyOf("ecoskills", idBytes.toString())
+    val key = namespacedKeyOf(
+        "ecoskills",
+        UUID.nameUUIDFromBytes("${this.uniqueId}_$identifier".toByteArray()).toString()
+    )
 
     // Keyed boss bars live in a server-wide registry, which the global region owns on Folia.
     runGlobal {
