@@ -9,6 +9,7 @@ import com.willfp.eco.core.placeholder.InjectablePlaceholder
 import com.willfp.eco.core.placeholder.PlaceholderInjectable
 import com.willfp.eco.core.placeholder.PlayerStaticPlaceholder
 import com.willfp.eco.core.placeholder.context.placeholderContext
+import com.willfp.eco.util.asAudience
 import com.willfp.eco.util.containsIgnoreCase
 import com.willfp.eco.util.namespacedKeyOf
 import com.willfp.eco.util.toComponent
@@ -35,7 +36,7 @@ val Player.isPersistentActionBarEnabled: Boolean
     get() = this.profile.read(actionBarEnabledKey)
 
 fun Player.sendCompatibleActionBarMessage(message: String) {
-    this.sendActionBar(message.toComponent())
+    this.asAudience().sendActionBar(message.toComponent())
 }
 
 object ActionBarHandler {
