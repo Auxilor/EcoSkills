@@ -25,7 +25,7 @@ class StatIcon(
     stat: Stat,
     config: Config
 ) : PositionedComponent {
-    private val baseIcon = Items.lookup(config.getString("icon")).item
+    private val baseIcon = Items.lookup(config.getString("icon")).getItem()
 
     private val slot = slot { player, _ ->
         itemCache.get(StatIconKey(player.uniqueId, stat.id)) {

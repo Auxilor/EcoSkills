@@ -29,12 +29,12 @@ class SkillIcon(
     private val skill: Skill,
     config: Config
 ) : PositionedComponent {
-    private val baseIcon = Items.lookup(config.getString("icon")).item
+    private val baseIcon = Items.lookup(config.getString("icon")).getItem()
         get() = field.clone()
 
     private val slot = slot({ player, _ ->
         val cacheKey = SkillIconKey(player.uniqueId, skill.id)
-        iconCache.get(cacheKey) ?: run {
+        iconCache[cacheKey] ?: run {
             val level = player.getSkillLevel(skill)
 
             val item = baseIcon.modify {
@@ -62,7 +62,7 @@ class SkillIcon(
     }
 
     private val unknownSlot = slot(
-        Items.lookup(plugin.configYml.getString("gui.unknown-skill-icon.icon")).item.clone().modify {
+        Items.lookup(plugin.configYml.getString("gui.unknown-skill-icon.icon")).getItem().clone().modify {
             setDisplayName(
                 plugin.configYml.getFormattedString("gui.unknown-skill-icon.name")
             )
