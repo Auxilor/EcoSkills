@@ -21,7 +21,7 @@ object SkillsGUI {
 
     private fun buildMenu(): Menu {
         return menu(plugin.configYml.getInt("gui.rows")) {
-            title = plugin.langYml.getFormattedString("menu.title")
+            setTitle(plugin.langYml.getFormattedString("menu.title"))
 
             setMask(plugin.configYml, "gui")
 

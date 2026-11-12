@@ -22,7 +22,7 @@ object StatsGUI {
 
     private fun buildMenu(): Menu {
         return menu(plugin.configYml.getInt("stats-gui.rows")) {
-            title = plugin.langYml.getString("stats-gui.title")
+            setTitle(plugin.langYml.getString("stats-gui.title"))
 
             setMask(plugin.configYml, "stats-gui")
 
