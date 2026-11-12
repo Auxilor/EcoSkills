@@ -8,14 +8,14 @@ import wiki.ecohub.core.price.Prices
 object MagicTypes : RegistrableCategory<MagicType>("magic_type", "magic_types") {
     override val supportsSharing = false
 
-    override fun clear(plugin: LibreforgePlugin) {
+    override fun clear(plugin: EcoPlugin) {
         for (type in registry.values()) {
             Prices.unregisterPriceFactory(type.priceFactory)
         }
         registry.clear()
     }
 
-    override fun acceptConfig(plugin: LibreforgePlugin, id: String, config: Config) {
+    override fun acceptConfig(plugin: EcoPlugin, id: String, config: Config) {
         registry.register(MagicType(id, config))
     }
 }

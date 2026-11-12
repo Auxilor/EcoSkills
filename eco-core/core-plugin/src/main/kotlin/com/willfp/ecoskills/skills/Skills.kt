@@ -134,7 +134,7 @@ object Skills : RegistrableCategory<Skill>("skill", "skills") {
         }.register()
     }
 
-    override fun clear(plugin: LibreforgePlugin) {
+    override fun clear(plugin: EcoPlugin) {
         registry.clear()
     }
 
@@ -146,7 +146,7 @@ object Skills : RegistrableCategory<Skill>("skill", "skills") {
         }
     }
 
-    override fun afterReload(plugin: LibreforgePlugin) {
+    override fun afterReload(plugin: EcoPlugin) {
         SkillsGUI.update()
     }
 }
