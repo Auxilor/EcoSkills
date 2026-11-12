@@ -6,12 +6,10 @@ plugins {
     id("java-library")
     id("maven-publish")
     id("com.gradleup.shadow") version "9.3.1"
-    id("com.willfp.libreforge-gradle-plugin") version "2.0.0"
 }
 
 group = "com.willfp"
 version = findProperty("version")!!
-val libreforgeVersion = findProperty("libreforge-version")
 val ecoApiVersion = findProperty("eco-api-version")
 val ecoVersion = findProperty("eco-version")
 
@@ -65,12 +63,12 @@ publishing {
 // and its pom are published - no sources, javadoc, or classified variants.
 afterEvaluate {
     publishing.publications.named<MavenPublication>("private") {
-        artifact(tasks.named("libreforgeJar"))
+        artifact(tasks.named("shadowJar"))
     }
     // The public artifact is what other plugins compile against, so it must be the
     // plain jar, not shadowJar: shadowJar drops META-INF (taking the .kotlin_module
     // with it, which hides every top-level declaration from the Kotlin compiler) and
-    // relocates kotlin.* into com.willfp.eco.libs.kotlin, which rewrites @kotlin.Metadata
+    // relocates kotlin.* into wiki.ecohub.libs.kotlin, which rewrites @kotlin.Metadata
     // and makes the whole API read as Java. eco publishes its API the same way.
     publishing.publications.named<MavenPublication>("release") {
         artifact(project(":eco-core:core-plugin").tasks.named<Jar>("jar")) {
@@ -106,7 +104,7 @@ allprojects {
     }
 
     dependencies {
-        compileOnly("com.willfp:eco:$ecoVersion")
+        compileOnly("wiki.ecohub:eco:$ecoVersion")
         compileOnly("org.jetbrains:annotations:26.0.2")
         compileOnly("org.jetbrains.kotlin:kotlin-stdlib:2.3.0")
     }
@@ -114,11 +112,9 @@ allprojects {
     tasks {
         shadowJar {
             exclude("META-INF/**")
-            relocate("com.willfp.libreforge.loader", "com.willfp.ecoskills.libreforge.loader")
-            relocate("kotlin", "com.willfp.eco.libs.kotlin")
-            relocate("kotlin.jvm", "com.willfp.eco.libs.kotlin.jvm")
-            relocate("kotlin.coroutines", "com.willfp.eco.libs.kotlin.coroutines")
-            relocate("kotlin.reflect", "com.willfp.eco.libs.kotlin.reflect")
+            relocate("kotlin", "wiki.ecohub.libs.kotlin") {
+                exclude("kotlin.kotlin_builtins")
+            }
         }
 
         compileKotlin {
@@ -138,7 +134,6 @@ allprojects {
             filesMatching(listOf("**plugin.yml", "**eco.yml")) {
                 expand(
                     "version" to project.version,
-                    "libreforgeVersion" to libreforgeVersion!!,
                     "ecoApiVersion" to ecoApiVersion!!,
                     "pluginName" to rootProject.name
                 )

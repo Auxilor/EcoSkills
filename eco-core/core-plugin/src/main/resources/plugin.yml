@@ -7,8 +7,6 @@ authors: [ Auxilor, Exanthiax, Callum ]
 website: willfp.com
 depend:
   - eco
-softdepend:
-  - libreforge
 
 commands:
   ecoskills:
