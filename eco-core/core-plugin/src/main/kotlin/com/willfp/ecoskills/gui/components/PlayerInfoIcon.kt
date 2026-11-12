@@ -1,19 +1,19 @@
 package com.willfp.ecoskills.gui.components
 
-import com.willfp.eco.core.cache.EcoCache
-import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.eco.core.gui.component.PositionedComponent
-import com.willfp.eco.core.gui.getSlotLocations
-import com.willfp.eco.core.gui.onLeftClick
-import com.willfp.eco.core.gui.slot
-import com.willfp.eco.core.items.builder.SkullBuilder
-import com.willfp.eco.core.placeholder.context.placeholderContext
-import com.willfp.eco.util.formatEco
-import com.willfp.eco.util.savedDisplayName
 import com.willfp.ecoskills.gui.menus.StatsGUI
 import com.willfp.ecoskills.plugin
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.SkullMeta
+import wiki.ecohub.config.Config
+import wiki.ecohub.data.cache.EcoCache
+import wiki.ecohub.game.entity.player.PlayerUtils
+import wiki.ecohub.game.item.builder.SkullBuilder
+import wiki.ecohub.modules.menus.component.PositionedComponent
+import wiki.ecohub.modules.menus.getSlotLocations
+import wiki.ecohub.modules.menus.onLeftClick
+import wiki.ecohub.modules.menus.slot
+import wiki.ecohub.ui.placeholder.placeholderContext
+import wiki.ecohub.ui.text.formatEco
 import java.time.Duration
 import java.util.UUID
 
@@ -34,7 +34,7 @@ class PlayerInfoIcon(
                 val skullBuilder = SkullBuilder()
                     .setDisplayName(
                         config.getString("name")
-                            .replace("%player%", player.savedDisplayName)
+                            .replace("%player%", PlayerUtils.getSavedDisplayName(player))
                             .formatEco(player, true)
                     )
                     .addLoreLines(

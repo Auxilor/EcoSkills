@@ -1,13 +1,13 @@
 package com.willfp.ecoskills.commands
 
 import com.willfp.eco.core.command.impl.Subcommand
-import com.willfp.eco.util.StringUtils
-import com.willfp.eco.util.toNiceString
 import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.runGlobal
 import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.stats.Stats
 import org.bukkit.command.CommandSender
+import wiki.ecohub.core.stdlib.toNiceString
+import wiki.ecohub.ui.text.StringUtils
 
 object CommandReload : Subcommand(
     plugin,

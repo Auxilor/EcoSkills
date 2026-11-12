@@ -1,13 +1,13 @@
 package com.willfp.ecoskills.stats
 
-import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.eco.core.placeholder.PlayerPlaceholder
-import com.willfp.eco.util.toNiceString
 import com.willfp.ecoskills.api.averageSkillLevel
 import com.willfp.ecoskills.api.totalSkillLevel
 import com.willfp.ecoskills.gui.menus.StatsGUI
-import com.willfp.libreforge.loader.LibreforgePlugin
-import com.willfp.libreforge.loader.configs.RegistrableCategory
+import wiki.ecohub.config.Config
+import wiki.ecohub.config.category.RegistrableCategory
+import wiki.ecohub.core.plugin.EcoPlugin
+import wiki.ecohub.core.stdlib.toNiceString
+import wiki.ecohub.ui.placeholder.type.PlayerPlaceholder
 
 object Stats : RegistrableCategory<Stat>("stat", "stats") {
     override val supportsSharing = false

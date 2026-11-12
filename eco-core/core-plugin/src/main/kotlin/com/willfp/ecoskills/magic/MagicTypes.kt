@@ -1,9 +1,9 @@
 package com.willfp.ecoskills.magic
 
-import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.eco.core.price.Prices
-import com.willfp.libreforge.loader.LibreforgePlugin
-import com.willfp.libreforge.loader.configs.RegistrableCategory
+import wiki.ecohub.config.Config
+import wiki.ecohub.config.category.RegistrableCategory
+import wiki.ecohub.core.plugin.EcoPlugin
+import wiki.ecohub.core.price.Prices
 
 object MagicTypes : RegistrableCategory<MagicType>("magic_type", "magic_types") {
     override val supportsSharing = false

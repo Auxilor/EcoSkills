@@ -1,24 +1,24 @@
 package com.willfp.ecoskills.gui.components
 
-import com.willfp.eco.core.cache.EcoCache
-import com.willfp.eco.core.gui.component.LevelComponent
-import com.willfp.eco.core.gui.component.LevelState
-import com.willfp.eco.core.gui.menu.Menu
-import com.willfp.eco.core.items.Items
-import com.willfp.eco.core.items.builder.ItemStackBuilder
-import com.willfp.eco.core.placeholder.context.placeholderContext
-import com.willfp.eco.util.evaluateExpression
-import com.willfp.eco.util.lineWrap
 import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.util.LevelInjectable
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import kotlin.math.roundToInt
+import wiki.ecohub.data.cache.EcoCache
+import wiki.ecohub.game.item.Items
+import wiki.ecohub.game.item.builder.ItemStackBuilder
+import wiki.ecohub.math.evaluateExpression
+import wiki.ecohub.modules.menus.component.LevelComponent
+import wiki.ecohub.modules.menus.component.LevelState
+import wiki.ecohub.modules.menus.menu.Menu
+import wiki.ecohub.ui.placeholder.placeholderContext
+import wiki.ecohub.ui.text.lineWrap
 import java.time.Duration
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
+import kotlin.math.roundToInt
 
 private data class SkillLevelKey(val player: UUID, val skill: String, val level: Int)
 

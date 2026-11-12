@@ -1,10 +1,10 @@
 package com.willfp.ecoskills.effects
 
-import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.LevellableWithHolder
 import com.willfp.ecoskills.util.LevelMap
 import org.bukkit.OfflinePlayer
+import wiki.ecohub.config.Config
 
 class Effect(
     id: String,

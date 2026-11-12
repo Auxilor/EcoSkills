@@ -1,16 +1,16 @@
 package com.willfp.ecoskills.libreforge
 
-import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.ecoskills.api.getMagic
 import com.willfp.ecoskills.magic.MagicTypes
-import com.willfp.libreforge.ArgType
-import com.willfp.libreforge.Dispatcher
-import com.willfp.libreforge.NoCompileData
-import com.willfp.libreforge.ProvidedHolder
-import com.willfp.libreforge.arguments
-import com.willfp.libreforge.conditions.Condition
-import com.willfp.libreforge.get
 import org.bukkit.entity.Player
+import wiki.ecohub.config.ArgType
+import wiki.ecohub.config.Config
+import wiki.ecohub.config.arguments
+import wiki.ecohub.core.registry.NoCompileData
+import wiki.ecohub.rules.condition.Condition
+import wiki.ecohub.rules.holder.Dispatcher
+import wiki.ecohub.rules.holder.ProvidedHolder
+import wiki.ecohub.rules.holder.get
 
 object ConditionBelowMagic : Condition<NoCompileData>("below_magic") {
     override val description = "Passes when the player's magic of the given type is at or below the maximum amount."

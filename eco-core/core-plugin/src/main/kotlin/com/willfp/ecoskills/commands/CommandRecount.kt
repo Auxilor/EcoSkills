@@ -1,7 +1,6 @@
 package com.willfp.ecoskills.commands
 
 import com.willfp.eco.core.command.impl.Subcommand
-import com.willfp.eco.core.data.forEachSavedProfile
 import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.effects.effects
@@ -15,6 +14,7 @@ import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
+import wiki.ecohub.data.playerbase.forEachSavedProfile
 
 object CommandRecount : Subcommand(
     plugin,

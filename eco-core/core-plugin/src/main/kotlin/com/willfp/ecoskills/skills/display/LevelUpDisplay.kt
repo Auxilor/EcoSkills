@@ -1,7 +1,5 @@
 package com.willfp.ecoskills.skills.display
 
-import com.willfp.eco.core.sound.PlayableSound
-import com.willfp.eco.util.toComponent
 import com.willfp.ecoskills.api.event.PlayerSkillLevelUpEvent
 import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.runOwned
@@ -9,6 +7,8 @@ import net.kyori.adventure.title.Title
 import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import wiki.ecohub.game.sound.PlayableSound
+import wiki.ecohub.ui.text.toComponent
 import java.time.Duration
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap

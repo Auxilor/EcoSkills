@@ -1,9 +1,9 @@
 package com.willfp.ecoskills.effects
 
-import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.ecoskills.EcoSkillsPlugin
-import com.willfp.libreforge.loader.LibreforgePlugin
-import com.willfp.libreforge.loader.configs.RegistrableCategory
+import wiki.ecohub.config.Config
+import wiki.ecohub.config.category.RegistrableCategory
+import wiki.ecohub.core.plugin.EcoPlugin
 
 object Effects : RegistrableCategory<Effect>("effect", "effects") {
     override val supportsSharing = false

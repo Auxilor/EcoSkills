@@ -1,14 +1,5 @@
 package com.willfp.ecoskills.skills.display
 
-import com.willfp.eco.core.cache.EcoCache
-import com.willfp.eco.core.data.keys.PersistentDataKey
-import com.willfp.eco.core.data.keys.PersistentDataKeyType
-import com.willfp.eco.core.data.profile
-import com.willfp.eco.core.placeholder.context.placeholderContext
-import com.willfp.eco.core.sound.PlayableSound
-import com.willfp.eco.util.formatEco
-import com.willfp.eco.util.namespacedKeyOf
-import com.willfp.eco.util.toNiceString
 import com.willfp.ecoskills.actionbar.ActionBarHandler
 import com.willfp.ecoskills.actionbar.sendCompatibleActionBarMessage
 import com.willfp.ecoskills.api.event.PlayerSkillXPGainEvent
@@ -26,6 +17,15 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
+import wiki.ecohub.core.platform.namespacedKeyOf
+import wiki.ecohub.core.stdlib.toNiceString
+import wiki.ecohub.data.PersistentDataKey
+import wiki.ecohub.data.PersistentDataKeyType
+import wiki.ecohub.data.cache.EcoCache
+import wiki.ecohub.game.entity.player.profile
+import wiki.ecohub.game.sound.PlayableSound
+import wiki.ecohub.ui.placeholder.placeholderContext
+import wiki.ecohub.ui.text.formatEco
 import java.time.Duration
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap

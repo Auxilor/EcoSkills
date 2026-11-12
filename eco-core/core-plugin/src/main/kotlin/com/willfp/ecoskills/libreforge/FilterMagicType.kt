@@ -1,11 +1,11 @@
 package com.willfp.ecoskills.libreforge
 
-import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.ecoskills.api.event.MagicEvent
-import com.willfp.libreforge.ArgType
-import com.willfp.libreforge.NoCompileData
-import com.willfp.libreforge.filters.Filter
-import com.willfp.libreforge.triggers.TriggerData
+import wiki.ecohub.config.ArgType
+import wiki.ecohub.config.Config
+import wiki.ecohub.core.registry.NoCompileData
+import wiki.ecohub.rules.filter.Filter
+import wiki.ecohub.rules.trigger.TriggerData
 
 object FilterMagicType : Filter<NoCompileData, Collection<String>>("magic_type") {
     override val description = "Matches when the magic type involved in the event is one of the given types."

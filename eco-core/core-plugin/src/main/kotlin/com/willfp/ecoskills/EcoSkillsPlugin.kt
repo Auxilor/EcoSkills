@@ -1,9 +1,6 @@
 package com.willfp.ecoskills
 
-import com.willfp.eco.core.bstats.EcoMetricsChart
 import com.willfp.eco.core.command.impl.PluginCommand
-import com.willfp.eco.core.leaderboard.Leaderboards
-import com.willfp.eco.core.leaderboard.registerCategoryTopPlaceholders
 import com.willfp.ecoskills.actionbar.ActionBarHandler
 import com.willfp.ecoskills.actionbar.HealthScaleDisabler
 import com.willfp.ecoskills.commands.CommandEcoSkills
@@ -45,16 +42,19 @@ import com.willfp.ecoskills.skills.display.TemporaryBossBarHandler
 import com.willfp.ecoskills.skills.isInDisabledWorld
 import com.willfp.ecoskills.stats.StatModifierListener
 import com.willfp.ecoskills.stats.Stats
-import com.willfp.libreforge.SimpleProvidedHolder
-import com.willfp.libreforge.conditions.Conditions
-import com.willfp.libreforge.filters.Filters
-import com.willfp.libreforge.loader.LibreforgePlugin
-import com.willfp.libreforge.loader.configs.ConfigCategory
-import com.willfp.libreforge.registerSpecificHolderProvider
-import com.willfp.libreforge.triggers.Triggers
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
-import com.willfp.eco.util.formatEco
+import wiki.ecohub.config.category.NativeConfigCategory
+import wiki.ecohub.core.plugin.EcoPlugin
+import wiki.ecohub.data.playerbase.leaderboard.Leaderboards
+import wiki.ecohub.data.playerbase.leaderboard.registerCategoryTopPlaceholders
+import wiki.ecohub.provider.metrics.EcoMetricsChart
+import wiki.ecohub.rules.condition.Conditions
+import wiki.ecohub.rules.filter.Filters
+import wiki.ecohub.rules.holder.SimpleProvidedHolder
+import wiki.ecohub.rules.holder.registerSpecificHolderProvider
+import wiki.ecohub.rules.trigger.Triggers
+import wiki.ecohub.ui.text.formatEco
 
 internal lateinit var plugin: EcoSkillsPlugin
     private set

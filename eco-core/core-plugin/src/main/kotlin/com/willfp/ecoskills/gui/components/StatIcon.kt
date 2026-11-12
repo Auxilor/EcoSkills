@@ -1,17 +1,17 @@
 package com.willfp.ecoskills.gui.components
 
-import com.willfp.eco.core.cache.EcoCache
-import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.eco.core.gui.component.PositionedComponent
-import com.willfp.eco.core.gui.getSlotLocations
-import com.willfp.eco.core.gui.slot
-import com.willfp.eco.core.items.Items
-import com.willfp.eco.core.items.builder.modify
-import com.willfp.eco.util.lineWrap
 import com.willfp.ecoskills.api.getStatLevel
 import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.stats.Stat
 import org.bukkit.inventory.ItemStack
+import wiki.ecohub.config.Config
+import wiki.ecohub.data.cache.EcoCache
+import wiki.ecohub.game.item.Items
+import wiki.ecohub.game.item.modify
+import wiki.ecohub.modules.menus.component.PositionedComponent
+import wiki.ecohub.modules.menus.getSlotLocations
+import wiki.ecohub.modules.menus.slot
+import wiki.ecohub.ui.text.lineWrap
 import java.time.Duration
 import java.util.UUID
 

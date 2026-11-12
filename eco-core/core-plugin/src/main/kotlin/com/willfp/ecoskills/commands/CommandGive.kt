@@ -1,8 +1,6 @@
 package com.willfp.ecoskills.commands
 
 import com.willfp.eco.core.command.impl.Subcommand
-import com.willfp.eco.util.StringUtils
-import com.willfp.eco.util.formatEco
 import com.willfp.ecoskills.api.gainSkillXP
 import com.willfp.ecoskills.api.getMagic
 import com.willfp.ecoskills.api.giveBaseStatLevel
@@ -19,6 +17,8 @@ import com.willfp.ecoskills.stats.Stats
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
+import wiki.ecohub.ui.text.StringUtils
+import wiki.ecohub.ui.text.formatEco
 
 object CommandGive : Subcommand(
     plugin,

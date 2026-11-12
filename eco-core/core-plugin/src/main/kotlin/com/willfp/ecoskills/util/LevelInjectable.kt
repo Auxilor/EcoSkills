@@ -1,8 +1,8 @@
 package com.willfp.ecoskills.util
 
-import com.willfp.eco.core.placeholder.InjectablePlaceholder
-import com.willfp.eco.core.placeholder.PlaceholderInjectable
-import com.willfp.eco.core.placeholder.StaticPlaceholder
+import wiki.ecohub.ui.placeholder.InjectablePlaceholder
+import wiki.ecohub.ui.placeholder.PlaceholderInjectable
+import wiki.ecohub.ui.placeholder.type.StaticPlaceholder
 
 class LevelInjectable(
     level: Int

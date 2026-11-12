@@ -3,7 +3,6 @@
 package com.willfp.ecoskills.commands
 
 import com.willfp.eco.core.command.impl.Subcommand
-import com.willfp.eco.core.data.forEachSavedProfile
 import com.willfp.ecoskills.api.resetSkills
 import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.runOwnedIfOnline
@@ -11,6 +10,7 @@ import com.willfp.ecoskills.util.offlinePlayer
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.util.StringUtil
+import wiki.ecohub.data.playerbase.forEachSavedProfile
 
 object CommandReset : Subcommand(
     plugin,

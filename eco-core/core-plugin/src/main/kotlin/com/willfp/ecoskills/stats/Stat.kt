@@ -1,9 +1,5 @@
 package com.willfp.ecoskills.stats
 
-import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.eco.core.placeholder.PlayerPlaceholder
-import com.willfp.eco.util.formatEco
-import com.willfp.eco.util.toNiceString
 import com.willfp.ecoskills.LevellableWithHolder
 import com.willfp.ecoskills.api.getBaseStatLevel
 import com.willfp.ecoskills.api.getBonusStatLevel
@@ -13,6 +9,10 @@ import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.util.LevelMap
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
+import wiki.ecohub.config.Config
+import wiki.ecohub.core.stdlib.toNiceString
+import wiki.ecohub.ui.placeholder.type.PlayerPlaceholder
+import wiki.ecohub.ui.text.formatEco
 
 class Stat(
     id: String,
