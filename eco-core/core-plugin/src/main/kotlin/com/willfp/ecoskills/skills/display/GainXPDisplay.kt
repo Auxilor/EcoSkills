@@ -8,7 +8,6 @@ import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.api.getSkillProgress
 import com.willfp.ecoskills.api.getSkillXP
 import com.willfp.ecoskills.plugin
-import com.willfp.ecoskills.runOwned
 import com.willfp.ecoskills.skills.Skill
 import org.bukkit.Bukkit
 import org.bukkit.boss.BarColor
@@ -23,6 +22,7 @@ import wiki.ecohub.data.PersistentDataKey
 import wiki.ecohub.data.PersistentDataKeyType
 import wiki.ecohub.data.cache.EcoCache
 import wiki.ecohub.game.entity.player.profile
+import wiki.ecohub.game.entity.runOwned
 import wiki.ecohub.game.sound.PlayableSound
 import wiki.ecohub.ui.placeholder.placeholderContext
 import wiki.ecohub.ui.text.formatEco

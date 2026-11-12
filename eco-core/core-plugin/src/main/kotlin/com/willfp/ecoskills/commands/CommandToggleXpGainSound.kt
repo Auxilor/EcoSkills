@@ -1,27 +1,21 @@
 package com.willfp.ecoskills.commands
 
-import com.willfp.eco.core.command.impl.Subcommand
-import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.skills.display.isXPGainSoundEnabled
 import com.willfp.ecoskills.skills.display.toggleXPGainSound
-import org.bukkit.entity.Player
+import org.bukkit.command.CommandSender
+import wiki.ecohub.core.command.CommandBuilder
 
-object CommandToggleXpGainSound : Subcommand(
-    plugin,
-    "togglexpgainsound",
-    "ecoskills.command.togglexpgainsound",
-    true
+internal fun CommandBuilder<CommandSender>.toggleXpGainSoundCommand() = playerSubcommand(
+    name = "togglexpgainsound",
+    permission = "ecoskills.command.togglexpgainsound"
 ) {
-
-    override fun onExecute(player: Player, args: List<String>) {
-        when (player.isXPGainSoundEnabled) {
-            true -> {
-                player.sendMessage(plugin.langYml.getMessage("disabled-xp-gain-sound"))
-            }
-
-            false -> player.sendMessage(plugin.langYml.getMessage("enabled-xp-gain-sound"))
+    executes {
+        if (sender.isXPGainSoundEnabled) {
+            reply("disabled-xp-gain-sound")
+        } else {
+            reply("enabled-xp-gain-sound")
         }
 
-        player.toggleXPGainSound()
+        sender.toggleXPGainSound()
     }
 }

@@ -1,26 +1,13 @@
 package com.willfp.ecoskills.commands
 
-import com.willfp.eco.core.command.impl.PluginCommand
+import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.gui.menus.StatsGUI
-import com.willfp.ecoskills.plugin
-import org.bukkit.entity.Player
+import wiki.ecohub.core.command.playerCommand
 
-object CommandStats : PluginCommand(
-    plugin,
-    "stats",
-    "ecoskills.command.stats",
-    true
-) {
+internal fun EcoSkillsPlugin.statsCommand() = playerCommand(name = "stats", permission = "ecoskills.command.stats") {
+    aliases("attributes", "stat")
 
-    override fun onExecute(player: Player, args: List<String>) {
-        StatsGUI.open(player)
-        return
-    }
-
-    override fun getAliases(): List<String> {
-        return listOf(
-            "attributes",
-            "stat"
-        )
+    executes {
+        StatsGUI.open(sender)
     }
 }

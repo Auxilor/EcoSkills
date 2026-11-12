@@ -1,53 +1,37 @@
 package com.willfp.ecoskills.commands
 
-import com.willfp.eco.core.command.impl.PluginCommand
+import com.willfp.ecoskills.EcoSkillsPlugin
 import com.willfp.ecoskills.gui.menus.SkillsGUI
-import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.skills.Skills
-import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
-import org.bukkit.util.StringUtil
+import wiki.ecohub.core.command.command
 
-object CommandSkills : PluginCommand(
-    plugin,
-    "skills",
-    "ecoskills.command.skills",
-    true
-) {
-    init {
-        this.addSubcommand(CommandToggleActionBar)
-            .addSubcommand(CommandToggleXpGainSound)
-            .addSubcommand(CommandTop)
-    }
+/**
+ * Any sender can run `top`; the GUI and the toggles need a player.
+ */
+internal fun EcoSkillsPlugin.skillsCommand() = command(name = "skills", permission = "ecoskills.command.skills") {
+    aliases("skill")
 
-    override fun onExecute(player: Player, args: List<String>) {
-        if (args.isEmpty()) {
+    toggleActionBarCommand()
+    toggleXpGainSoundCommand()
+    topCommand()
+
+    executes {
+        val player = sender as? Player ?: fail("not-player")
+        val skill = args.firstOrNull()?.let { Skills.getByID(it) ?: fail("invalid-skill") }
+
+        if (skill == null) {
             SkillsGUI.open(player)
-            return
+        } else {
+            skill.levelGUI.open(player)
         }
-
-        val skill = notifyNull(Skills.getByID(args.getOrNull(0)), "invalid-skill")
-        skill.levelGUI.open(player)
     }
 
-    override fun tabComplete(sender: CommandSender, args: List<String>): List<String> {
-        val completions = mutableListOf<String>()
-
+    completes {
         if (args.size == 1) {
-            StringUtil.copyPartialMatches(
-                args[0],
-                Skills.values().map { it.id },
-                completions
-            )
-            return completions
+            Skills.values().map { it.id }
+        } else {
+            emptyList()
         }
-
-        return emptyList()
-    }
-
-    override fun getAliases(): List<String> {
-        return listOf(
-            "skill"
-        )
     }
 }
