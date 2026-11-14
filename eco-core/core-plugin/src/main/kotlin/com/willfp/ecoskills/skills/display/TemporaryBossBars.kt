@@ -1,13 +1,13 @@
 package com.willfp.ecoskills.skills.display
 
-import com.willfp.eco.util.namespacedKeyOf
 import com.willfp.ecoskills.plugin
-import com.willfp.ecoskills.runGlobal
 import org.bukkit.Bukkit
 import org.bukkit.NamespacedKey
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarStyle
 import org.bukkit.entity.Player
+import wiki.ecohub.core.platform.namespacedKeyOf
+import wiki.ecohub.core.platform.runGlobal
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 
@@ -28,7 +28,7 @@ fun Player.sendTemporaryBossBar(
     )
 
     // Keyed boss bars live in a server-wide registry, which the global region owns on Folia.
-    runGlobal {
+    Bukkit.getServer().runGlobal {
         val bossBar = Bukkit.getBossBar(key) ?: Bukkit.createBossBar(
             key,
             message,

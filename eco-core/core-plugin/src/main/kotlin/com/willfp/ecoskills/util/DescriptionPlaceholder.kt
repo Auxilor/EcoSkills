@@ -1,6 +1,6 @@
 package com.willfp.ecoskills.util
 
-import com.willfp.eco.core.config.interfaces.Config
+import wiki.ecohub.config.Config
 
 data class DescriptionPlaceholder(
     val id: String,

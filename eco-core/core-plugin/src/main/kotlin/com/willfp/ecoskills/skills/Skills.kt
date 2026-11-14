@@ -1,20 +1,31 @@
 package com.willfp.ecoskills.skills
 
-import com.willfp.eco.core.Eco
-import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.eco.core.leaderboard.Leaderboard
-import com.willfp.eco.core.leaderboard.LeaderboardEntry
-import com.willfp.eco.core.leaderboard.Leaderboards
-import com.willfp.eco.core.leaderboard.registerStandardPlaceholders
-import com.willfp.eco.core.leaderboard.registerTopPlaceholders
-import com.willfp.eco.core.placeholder.PlayerPlaceholder
 import com.willfp.ecoskills.gui.menus.SkillsGUI
 import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.util.InvalidConfigurationException
-import com.willfp.libreforge.loader.LibreforgePlugin
-import com.willfp.libreforge.loader.configs.RegistrableCategory
+import wiki.ecohub.config.Config
+import wiki.ecohub.config.category.RegistrableCategory
+import wiki.ecohub.core.Eco
+import wiki.ecohub.core.plugin.EcoPlugin
+import wiki.ecohub.data.playerbase.leaderboard.Leaderboard
+import wiki.ecohub.data.playerbase.leaderboard.LeaderboardEntry
+import wiki.ecohub.data.playerbase.leaderboard.Leaderboards
+import wiki.ecohub.data.playerbase.leaderboard.registerStandardPlaceholders
+import wiki.ecohub.game.entity.player.PlayerUtils
+import wiki.ecohub.ui.placeholder.type.DynamicPlaceholder
+import wiki.ecohub.ui.placeholder.type.PlayerPlaceholder
+import wiki.ecohub.ui.text.formatEco
 import java.util.UUID
-import com.willfp.eco.util.formatEco
+import java.util.regex.Pattern
+
+private val topPattern = Pattern.compile("top_(\\d+)_(name|level|amount)")
+
+private fun LeaderboardEntry.displayName(): String =
+    if (Eco.get().getEcoPlugin().configYml.getBool("leaderboards.use-display-names")) {
+        PlayerUtils.getSavedDisplayName(player)
+    } else {
+        PlayerUtils.getSavedName(player)
+    }
 
 object Skills : RegistrableCategory<Skill>("skill", "skills") {
     /**
@@ -89,11 +100,23 @@ object Skills : RegistrableCategory<Skill>("skill", "skills") {
             plugin.langYml.getString("top.empty-position").formatEco()
         ) { it.toInt().toString() }
 
-        leaderboard.registerTopPlaceholders(
-            plugin,
-            plugin.langYml.getString("top.empty-position").formatEco(),
-            listOf("level", "amount")
-        )
+        registerTopPlaceholders(leaderboard, plugin.langYml.getString("top.empty-position").formatEco())
+    }
+
+    private fun registerTopPlaceholders(leaderboard: Leaderboard, emptyText: String) {
+        DynamicPlaceholder(plugin, topPattern, "top_<N>_<name|level|amount>") { args ->
+            val matcher = topPattern.matcher(args)
+            val entry = matcher.takeIf { it.matches() }
+                ?.group(1)
+                ?.toIntOrNull()
+                ?.let { leaderboard.getTop(it) }
+
+            when {
+                entry == null -> emptyText
+                matcher.group(2) == "name" -> entry.displayName()
+                else -> entry.value.toInt().toString()
+            }
+        }.register()
     }
 
     fun registerPlaceholders() {
@@ -111,11 +134,11 @@ object Skills : RegistrableCategory<Skill>("skill", "skills") {
         }.register()
     }
 
-    override fun clear(plugin: LibreforgePlugin) {
+    override fun clear(plugin: EcoPlugin) {
         registry.clear()
     }
 
-    override fun acceptConfig(plugin: LibreforgePlugin, id: String, config: Config) {
+    override fun acceptConfig(plugin: EcoPlugin, id: String, config: Config) {
         try {
             registry.register(Skill(id, config))
         } catch (e: InvalidConfigurationException) {
@@ -123,7 +146,7 @@ object Skills : RegistrableCategory<Skill>("skill", "skills") {
         }
     }
 
-    override fun afterReload(plugin: LibreforgePlugin) {
+    override fun afterReload(plugin: EcoPlugin) {
         SkillsGUI.update()
     }
 }

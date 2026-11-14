@@ -1,16 +1,16 @@
 package com.willfp.ecoskills.skills
 
-import com.willfp.eco.core.cache.EcoCache
-import com.willfp.eco.core.integrations.afk.AFKManager
 import com.willfp.ecoskills.api.gainSkillXP
 import com.willfp.ecoskills.plugin
-import com.willfp.libreforge.EmptyProvidedHolder
-import com.willfp.libreforge.counters.Accumulator
-import com.willfp.libreforge.toDispatcher
 import org.bukkit.GameMode
 import org.bukkit.entity.Player
+import wiki.ecohub.core.platform.NumericalPermissions
+import wiki.ecohub.data.cache.EcoCache
+import wiki.ecohub.game.entity.toDispatcher
+import wiki.ecohub.provider.protection.ExternalAFKService
+import wiki.ecohub.rules.counter.Accumulator
+import wiki.ecohub.rules.holder.EmptyProvidedHolder
 import java.time.Duration
-import com.willfp.eco.util.NumericalPermissions
 
 class SkillXPAccumulator(
     private val skill: Skill
@@ -20,7 +20,7 @@ class SkillXPAccumulator(
             return
         }
 
-        if (plugin.configYml.getBool("skills.prevent-levelling-while-afk") && AFKManager.isAfk(player)) {
+        if (plugin.configYml.getBool("skills.prevent-levelling-while-afk") && ExternalAFKService.isAfk(player)) {
             return
         }
 

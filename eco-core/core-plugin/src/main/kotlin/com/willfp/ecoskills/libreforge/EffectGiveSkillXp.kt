@@ -1,15 +1,15 @@
 package com.willfp.ecoskills.libreforge
 
-import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.ecoskills.api.giveSkillXP
 import com.willfp.ecoskills.skills.Skills
-import com.willfp.libreforge.ArgType
-import com.willfp.libreforge.NoCompileData
-import com.willfp.libreforge.arguments
-import com.willfp.libreforge.effects.Effect
-import com.willfp.libreforge.getDoubleFromExpression
-import com.willfp.libreforge.triggers.TriggerData
-import com.willfp.libreforge.triggers.TriggerParameter
+import wiki.ecohub.config.ArgType
+import wiki.ecohub.config.Config
+import wiki.ecohub.config.arguments
+import wiki.ecohub.config.section.getDoubleFromExpression
+import wiki.ecohub.core.registry.NoCompileData
+import wiki.ecohub.rules.effect.Effect
+import wiki.ecohub.rules.trigger.TriggerData
+import wiki.ecohub.rules.trigger.TriggerParameter
 
 object EffectGiveSkillXp : Effect<NoCompileData>("give_skill_xp") {
     override val description = "Gives the player a flat amount of xp for the given skill."

@@ -1,15 +1,15 @@
 package com.willfp.ecoskills.gui.menus
 
-import com.willfp.eco.core.gui.addCustomSlots
-import com.willfp.eco.core.gui.component.addComponent
-import com.willfp.eco.core.gui.component.closeButton
-import com.willfp.eco.core.gui.menu
-import com.willfp.eco.core.gui.menu.Menu
-import com.willfp.eco.core.gui.setMask
 import com.willfp.ecoskills.gui.components.PlayerInfoIcon
 import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.skills.Skills
 import org.bukkit.entity.Player
+import wiki.ecohub.modules.menus.addCustomSlots
+import wiki.ecohub.modules.menus.component.addComponent
+import wiki.ecohub.modules.menus.component.closeButton
+import wiki.ecohub.modules.menus.menu
+import wiki.ecohub.modules.menus.menu.Menu
+import wiki.ecohub.modules.menus.setMask
 
 object SkillsGUI {
     @Volatile
@@ -21,7 +21,7 @@ object SkillsGUI {
 
     private fun buildMenu(): Menu {
         return menu(plugin.configYml.getInt("gui.rows")) {
-            title = plugin.langYml.getFormattedString("menu.title")
+            setTitle(plugin.langYml.getFormattedString("menu.title"))
 
             setMask(plugin.configYml, "gui")
 

@@ -1,130 +1,80 @@
 package com.willfp.ecoskills.commands
 
-import com.willfp.eco.core.command.impl.Subcommand
-import com.willfp.eco.util.StringUtils
-import com.willfp.eco.util.formatEco
 import com.willfp.ecoskills.api.gainSkillXP
 import com.willfp.ecoskills.api.getMagic
 import com.willfp.ecoskills.api.giveBaseStatLevel
 import com.willfp.ecoskills.api.giveSkillXP
 import com.willfp.ecoskills.api.setMagic
 import com.willfp.ecoskills.magic.MagicType
-import com.willfp.ecoskills.magic.MagicTypes
-import com.willfp.ecoskills.plugin
-import com.willfp.ecoskills.runOwned
 import com.willfp.ecoskills.skills.Skill
-import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.stats.Stat
-import com.willfp.ecoskills.stats.Stats
-import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
-import org.bukkit.util.StringUtil
+import org.bukkit.entity.Player
+import wiki.ecohub.core.command.CommandBuilder
+import wiki.ecohub.game.entity.runOwned
 
-object CommandGive : Subcommand(
-    plugin,
-    "give",
-    "ecoskills.command.give",
-    false
+private val booleanCompletions = listOf("true", "false")
+
+private const val AMOUNT_ARGS = 3
+
+private const val ACTION_BAR_ARGS = 4
+
+/**
+ * The optional fourth argument shows the XP action bar; it defaults to off as before.
+ */
+internal fun CommandBuilder<CommandSender>.giveCommand() = subcommand(
+    name = "give",
+    permission = "ecoskills.command.give"
 ) {
+    executes {
+        val player = onlinePlayer(0)
+        val obj = argument(1, "invalid-skill-stat-magic", "invalid-skill-stat-magic") { skillStatOrMagic(it) }
+        val amount = argument(2, "invalid-amount", "invalid-amount") { it.toDoubleOrNull() }
 
-    override fun onExecute(sender: CommandSender, args: List<String>) {
-        val player = notifyPlayerRequired(args.getOrNull(0), "invalid-player")
+        if (!(amount >= 0)) {
+            fail("invalid-amount")
+        }
 
-        val obj = notifyNull(
-            Skills.getByID(args.getOrNull(1)) ?: Stats.getByID(args.getOrNull(1))
-            ?: MagicTypes.getByID(args.getOrNull(1)),
-            "invalid-skill-stat-magic"
-        )
-
-        val amount = notifyNull(args.getOrNull(2)?.toDoubleOrNull(), "invalid-amount")
-
-        notifyFalse(amount >= 0, "invalid-amount")
-
-        // Get optional showActionBar parameter (default to false for backward compatibility)
-        val showActionBar = args.getOrNull(3)?.toBooleanStrictOrNull() ?: false
+        val showActionBar = args.getOrNull(3)?.toBooleanStrictOrNull() == true
 
         player.runOwned {
-            val key = when (obj) {
-                is Skill -> {
-                    if (showActionBar) {
-                        player.gainSkillXP(obj, amount)
-                        "gained-skill-xp"
-                    } else {
-                        player.giveSkillXP(obj, amount)
-                        "gave-skill-xp"
-                    }
-                }
-
-                is Stat -> {
-                    player.giveBaseStatLevel(obj, amount.toInt())
-                    "gave-stat"
-                }
-
-                is MagicType -> {
-                    val newAmount = player.getMagic(obj) + amount.toInt()
-                    player.setMagic(obj, newAmount)
-                    "gave-magic"
-                }
-
-                else -> ""
-            }
-
-            val objName = when (obj) {
-                is Skill -> obj.name
-                is Stat -> obj.name
-                is MagicType -> obj.name
-                else -> "unknown"
-            }
-
-            sender.sendMessage(
-                this.plugin.langYml.getMessage(key, StringUtils.FormatOption.WITHOUT_PLACEHOLDERS)
-                    .replace("%player%", player.name)
-                    .replace("%amount%", amount.toString())
-                    .replace("%obj%", objName)
-                    .formatEco()
-            )
+            replyChange(giveAndGetReplyKey(player, obj, amount, showActionBar), player, amount, obj)
         }
     }
 
-    override fun tabComplete(sender: CommandSender, args: List<String>): List<String> {
-        val completions = mutableListOf<String>()
-
-        if (args.size == 1) {
-            StringUtil.copyPartialMatches(
-                args[0],
-                Bukkit.getOnlinePlayers().map { player -> player.name }.toCollection(ArrayList()),
-                completions
-            )
-            return completions
+    completes {
+        when (args.size) {
+            1 -> playerNames()
+            2 -> skillStatAndMagicIds()
+            AMOUNT_ARGS -> amountCompletions
+            ACTION_BAR_ARGS -> booleanCompletions
+            else -> emptyList()
         }
+    }
+}
 
-        if (args.size == 2) {
-            StringUtil.copyPartialMatches(
-                args[1],
-                (Skills.values() union Stats.values() union MagicTypes.values()).map { it.id },
-                completions
-            )
-            return completions
+private fun giveAndGetReplyKey(player: Player, obj: Any, amount: Double, showActionBar: Boolean): String = when (obj) {
+    is Skill -> {
+        if (showActionBar) {
+            player.gainSkillXP(obj, amount)
+            "gained-skill-xp"
+        } else {
+            player.giveSkillXP(obj, amount)
+            "gave-skill-xp"
         }
+    }
 
-        if (args.size == 3) {
-            StringUtil.copyPartialMatches(
-                args[2],
-                listOf(1, 2, 5, 10, 100).map { it.toString() },
-                completions
-            )
-            return completions
-        }
+    is Stat -> {
+        player.giveBaseStatLevel(obj, amount.toInt())
+        "gave-stat"
+    }
 
-        if (args.size == 4) {
-            StringUtil.copyPartialMatches(
-                args[3],
-                listOf("true", "false"),
-                completions
-            )
-            return completions
-        }
+    is MagicType -> {
+        player.setMagic(obj, player.getMagic(obj) + amount.toInt())
+        "gave-magic"
+    }
 
-        return emptyList()
+    else -> {
+        ""
     }
 }

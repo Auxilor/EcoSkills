@@ -1,14 +1,10 @@
 package com.willfp.ecoskills
 
-import com.willfp.eco.core.bstats.EcoMetricsChart
-import com.willfp.eco.core.command.impl.PluginCommand
-import com.willfp.eco.core.leaderboard.Leaderboards
-import com.willfp.eco.core.leaderboard.registerCategoryTopPlaceholders
 import com.willfp.ecoskills.actionbar.ActionBarHandler
 import com.willfp.ecoskills.actionbar.HealthScaleDisabler
-import com.willfp.ecoskills.commands.CommandEcoSkills
-import com.willfp.ecoskills.commands.CommandSkills
-import com.willfp.ecoskills.commands.CommandStats
+import com.willfp.ecoskills.commands.ecoSkillsCommand
+import com.willfp.ecoskills.commands.skillsCommand
+import com.willfp.ecoskills.commands.statsCommand
 import com.willfp.ecoskills.effects.Effects
 import com.willfp.ecoskills.libreforge.ConditionAboveMagic
 import com.willfp.ecoskills.libreforge.ConditionBelowMagic
@@ -45,26 +41,30 @@ import com.willfp.ecoskills.skills.display.TemporaryBossBarHandler
 import com.willfp.ecoskills.skills.isInDisabledWorld
 import com.willfp.ecoskills.stats.StatModifierListener
 import com.willfp.ecoskills.stats.Stats
-import com.willfp.libreforge.SimpleProvidedHolder
-import com.willfp.libreforge.conditions.Conditions
-import com.willfp.libreforge.filters.Filters
-import com.willfp.libreforge.loader.LibreforgePlugin
-import com.willfp.libreforge.loader.configs.ConfigCategory
-import com.willfp.libreforge.registerSpecificHolderProvider
-import com.willfp.libreforge.triggers.Triggers
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
-import com.willfp.eco.util.formatEco
+import wiki.ecohub.config.category.NativeConfigCategory
+import wiki.ecohub.core.command.EcoCommand
+import wiki.ecohub.core.plugin.EcoPlugin
+import wiki.ecohub.data.playerbase.leaderboard.Leaderboards
+import wiki.ecohub.data.playerbase.leaderboard.registerCategoryTopPlaceholders
+import wiki.ecohub.provider.metrics.EcoMetricsChart
+import wiki.ecohub.rules.condition.Conditions
+import wiki.ecohub.rules.filter.Filters
+import wiki.ecohub.rules.holder.SimpleProvidedHolder
+import wiki.ecohub.rules.holder.registerSpecificHolderProvider
+import wiki.ecohub.rules.trigger.Triggers
+import wiki.ecohub.ui.text.formatEco
 
 internal lateinit var plugin: EcoSkillsPlugin
     private set
 
-class EcoSkillsPlugin : LibreforgePlugin() {
+class EcoSkillsPlugin : EcoPlugin() {
     init {
         plugin = this
     }
 
-    override fun loadConfigCategories(): List<ConfigCategory> {
+    override fun loadConfigCategories(): List<NativeConfigCategory> {
         return listOf(
             MagicTypes,
             Stats,
@@ -81,18 +81,18 @@ class EcoSkillsPlugin : LibreforgePlugin() {
                     .map { SimpleProvidedHolder(it) }
         }
 
-        com.willfp.libreforge.effects.Effects.register(EffectAddStat)
-        com.willfp.libreforge.effects.Effects.register(EffectMultiplyStat)
-        com.willfp.libreforge.effects.Effects.register(EffectSkillXpMultiplier)
-        com.willfp.libreforge.effects.Effects.register(EffectGiveSkillXp)
-        com.willfp.libreforge.effects.Effects.register(EffectMultiplyAllStats)
-        com.willfp.libreforge.effects.Effects.register(EffectMakeSkillCrit)
-        com.willfp.libreforge.effects.Effects.register(EffectGiveMagic)
-        com.willfp.libreforge.effects.Effects.register(EffectMultiplyMagic)
-        com.willfp.libreforge.effects.Effects.register(EffectGiveSkillXpNaturally)
-        com.willfp.libreforge.effects.Effects.register(EffectAddStatTemporarily)
-        com.willfp.libreforge.effects.Effects.register(EffectMultiplyStatTemporarily)
-        com.willfp.libreforge.effects.Effects.register(EffectMagicRegenMultiplier)
+        wiki.ecohub.rules.effect.Effects.register(EffectAddStat)
+        wiki.ecohub.rules.effect.Effects.register(EffectMultiplyStat)
+        wiki.ecohub.rules.effect.Effects.register(EffectSkillXpMultiplier)
+        wiki.ecohub.rules.effect.Effects.register(EffectGiveSkillXp)
+        wiki.ecohub.rules.effect.Effects.register(EffectMultiplyAllStats)
+        wiki.ecohub.rules.effect.Effects.register(EffectMakeSkillCrit)
+        wiki.ecohub.rules.effect.Effects.register(EffectGiveMagic)
+        wiki.ecohub.rules.effect.Effects.register(EffectMultiplyMagic)
+        wiki.ecohub.rules.effect.Effects.register(EffectGiveSkillXpNaturally)
+        wiki.ecohub.rules.effect.Effects.register(EffectAddStatTemporarily)
+        wiki.ecohub.rules.effect.Effects.register(EffectMultiplyStatTemporarily)
+        wiki.ecohub.rules.effect.Effects.register(EffectMagicRegenMultiplier)
         Conditions.register(ConditionStatAbove)
         Conditions.register(ConditionStatBelow)
         Conditions.register(ConditionStatEquals)
@@ -137,11 +137,11 @@ class EcoSkillsPlugin : LibreforgePlugin() {
         LevelUpDisplay.startTickingSounds()
     }
 
-    override fun loadPluginCommands(): List<PluginCommand> {
+    override fun loadPluginCommands(): List<EcoCommand> {
         return listOf(
-            CommandEcoSkills,
-            CommandSkills,
-            CommandStats
+            ecoSkillsCommand(),
+            skillsCommand(),
+            statsCommand()
         )
     }
 

@@ -1,21 +1,21 @@
 package com.willfp.ecoskills.gui.components
 
-import com.willfp.eco.core.cache.EcoCache
-import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.eco.core.gui.component.PositionedComponent
-import com.willfp.eco.core.gui.getSlotLocations
-import com.willfp.eco.core.gui.menu.Menu
-import com.willfp.eco.core.gui.onLeftClick
-import com.willfp.eco.core.gui.slot
-import com.willfp.eco.core.gui.slot.Slot
-import com.willfp.eco.core.items.Items
-import com.willfp.eco.core.items.builder.modify
-import com.willfp.eco.util.lineWrap
 import com.willfp.ecoskills.api.getSkillLevel
 import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.skills.Skill
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import wiki.ecohub.config.Config
+import wiki.ecohub.data.cache.EcoCache
+import wiki.ecohub.game.item.Items
+import wiki.ecohub.game.item.modify
+import wiki.ecohub.modules.menus.component.PositionedComponent
+import wiki.ecohub.modules.menus.getSlotLocations
+import wiki.ecohub.modules.menus.menu.Menu
+import wiki.ecohub.modules.menus.onLeftClick
+import wiki.ecohub.modules.menus.slot
+import wiki.ecohub.modules.menus.slot.Slot
+import wiki.ecohub.ui.text.lineWrap
 import java.time.Duration
 import java.util.UUID
 
@@ -29,12 +29,12 @@ class SkillIcon(
     private val skill: Skill,
     config: Config
 ) : PositionedComponent {
-    private val baseIcon = Items.lookup(config.getString("icon")).item
+    private val baseIcon = Items.lookup(config.getString("icon")).getItem()
         get() = field.clone()
 
     private val slot = slot({ player, _ ->
         val cacheKey = SkillIconKey(player.uniqueId, skill.id)
-        iconCache.get(cacheKey) ?: run {
+        iconCache[cacheKey] ?: run {
             val level = player.getSkillLevel(skill)
 
             val item = baseIcon.modify {
@@ -62,7 +62,7 @@ class SkillIcon(
     }
 
     private val unknownSlot = slot(
-        Items.lookup(plugin.configYml.getString("gui.unknown-skill-icon.icon")).item.clone().modify {
+        Items.lookup(plugin.configYml.getString("gui.unknown-skill-icon.icon")).getItem().clone().modify {
             setDisplayName(
                 plugin.configYml.getFormattedString("gui.unknown-skill-icon.name")
             )
