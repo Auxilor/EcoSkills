@@ -3,7 +3,6 @@ package com.willfp.ecoskills.actionbar
 import com.willfp.ecoskills.plugin
 import net.kyori.adventure.text.Component
 import org.bukkit.GameMode
-import org.bukkit.attribute.Attribute
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -11,6 +10,7 @@ import org.bukkit.event.player.PlayerJoinEvent
 import wiki.ecohub.core.platform.namespacedKeyOf
 import wiki.ecohub.data.PersistentDataKey
 import wiki.ecohub.data.PersistentDataKeyType
+import wiki.ecohub.game.entity.getAttributeValue
 import wiki.ecohub.game.entity.player.asAudience
 import wiki.ecohub.game.entity.player.profile
 import wiki.ecohub.ui.display.actionbar.PersistentActionBar
@@ -104,7 +104,7 @@ object ActionBarHandler {
             ) { it.health.toInt().toString() },
             PlayerStaticPlaceholder(
                 "max_health"
-            ) { it.getAttribute(Attribute.MAX_HEALTH)?.value?.toInt()?.toString() ?: "20" },
+            ) { it.getAttributeValue("minecraft:max_health")?.toInt()?.toString() ?: "20" },
         )
 
         override fun getPlaceholderInjections(): List<InjectablePlaceholder> {
