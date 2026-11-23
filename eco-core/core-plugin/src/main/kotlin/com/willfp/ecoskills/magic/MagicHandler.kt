@@ -1,18 +1,18 @@
 package com.willfp.ecoskills.magic
 
 import com.willfp.ecoskills.plugin
-import com.willfp.ecoskills.runOwned
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
+import wiki.ecohub.game.entity.runOwned
 
 object MagicHandler {
     internal fun startTicking() {
         // Stagger to avoid lag spikes with other plugins? Maybe?
-        plugin.scheduler.global().runTimer(18, 20) {
+        plugin.scheduler.global().runTimer(delay = 18, repeat = 20) {
             for (player in Bukkit.getOnlinePlayers()) {
                 player.runOwned {
                     if (player.isOnline) {

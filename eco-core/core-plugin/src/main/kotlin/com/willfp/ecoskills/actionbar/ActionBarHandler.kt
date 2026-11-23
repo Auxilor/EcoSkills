@@ -1,26 +1,26 @@
 package com.willfp.ecoskills.actionbar
 
-import com.willfp.eco.core.actionbar.PersistentActionBar
-import com.willfp.eco.core.actionbar.PersistentActionBars
-import com.willfp.eco.core.data.keys.PersistentDataKey
-import com.willfp.eco.core.data.keys.PersistentDataKeyType
-import com.willfp.eco.core.data.profile
-import com.willfp.eco.core.placeholder.InjectablePlaceholder
-import com.willfp.eco.core.placeholder.PlaceholderInjectable
-import com.willfp.eco.core.placeholder.PlayerStaticPlaceholder
-import com.willfp.eco.core.placeholder.context.placeholderContext
-import com.willfp.eco.util.asAudience
-import com.willfp.eco.util.containsIgnoreCase
-import com.willfp.eco.util.namespacedKeyOf
-import com.willfp.eco.util.toComponent
 import com.willfp.ecoskills.plugin
 import net.kyori.adventure.text.Component
 import org.bukkit.GameMode
-import org.bukkit.attribute.Attribute
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
+import wiki.ecohub.core.platform.namespacedKeyOf
+import wiki.ecohub.data.PersistentDataKey
+import wiki.ecohub.data.PersistentDataKeyType
+import wiki.ecohub.game.entity.getAttributeValue
+import wiki.ecohub.game.entity.player.asAudience
+import wiki.ecohub.game.entity.player.profile
+import wiki.ecohub.ui.display.actionbar.PersistentActionBar
+import wiki.ecohub.ui.display.actionbar.PersistentActionBars
+import wiki.ecohub.ui.placeholder.InjectablePlaceholder
+import wiki.ecohub.ui.placeholder.PlaceholderInjectable
+import wiki.ecohub.ui.placeholder.placeholderContext
+import wiki.ecohub.ui.placeholder.type.PlayerStaticPlaceholder
+import wiki.ecohub.ui.text.containsIgnoreCase
+import wiki.ecohub.ui.text.toComponent
 
 private val actionBarEnabledKey = PersistentDataKey(
     namespacedKeyOf("ecoskills", "actionbar_enabled"),
@@ -104,7 +104,7 @@ object ActionBarHandler {
             ) { it.health.toInt().toString() },
             PlayerStaticPlaceholder(
                 "max_health"
-            ) { it.getAttribute(Attribute.MAX_HEALTH)?.value?.toInt()?.toString() ?: "20" },
+            ) { it.getAttributeValue("minecraft:max_health")?.toInt()?.toString() ?: "20" },
         )
 
         override fun getPlaceholderInjections(): List<InjectablePlaceholder> {

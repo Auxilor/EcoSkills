@@ -1,18 +1,18 @@
 package com.willfp.ecoskills.stats
 
-import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.eco.core.placeholder.PlayerPlaceholder
-import com.willfp.eco.util.toNiceString
 import com.willfp.ecoskills.api.averageSkillLevel
 import com.willfp.ecoskills.api.totalSkillLevel
 import com.willfp.ecoskills.gui.menus.StatsGUI
-import com.willfp.libreforge.loader.LibreforgePlugin
-import com.willfp.libreforge.loader.configs.RegistrableCategory
+import wiki.ecohub.config.Config
+import wiki.ecohub.config.category.RegistrableCategory
+import wiki.ecohub.core.plugin.EcoPlugin
+import wiki.ecohub.core.stdlib.toNiceString
+import wiki.ecohub.ui.placeholder.type.PlayerPlaceholder
 
 object Stats : RegistrableCategory<Stat>("stat", "stats") {
     override val supportsSharing = false
 
-    override fun beforeReload(plugin: LibreforgePlugin) {
+    override fun beforeReload(plugin: EcoPlugin) {
         PlayerPlaceholder(plugin, "total_skill_level") {
             it.totalSkillLevel.toNiceString()
         }.register()
@@ -22,15 +22,15 @@ object Stats : RegistrableCategory<Stat>("stat", "stats") {
         }.register()
     }
 
-    override fun clear(plugin: LibreforgePlugin) {
+    override fun clear(plugin: EcoPlugin) {
         registry.clear()
     }
 
-    override fun acceptConfig(plugin: LibreforgePlugin, id: String, config: Config) {
+    override fun acceptConfig(plugin: EcoPlugin, id: String, config: Config) {
         registry.register(Stat(id, config))
     }
 
-    override fun afterReload(plugin: LibreforgePlugin) {
+    override fun afterReload(plugin: EcoPlugin) {
         StatsGUI.update()
     }
 }

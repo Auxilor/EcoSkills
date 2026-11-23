@@ -1,12 +1,12 @@
 package com.willfp.ecoskills.skills
 
-import com.willfp.eco.core.progression.LevelProgression
-import com.willfp.eco.core.progression.StopReason
 import com.willfp.ecoskills.api.event.PlayerSkillLevelUpEvent
 import com.willfp.ecoskills.api.event.PlayerSkillXPGainEvent
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
+import wiki.ecohub.modules.progression.LevelProgression
+import wiki.ecohub.modules.progression.StopReason
 
 class SkillLevelMap(
     private val player: OfflinePlayer

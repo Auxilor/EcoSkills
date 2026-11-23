@@ -1,20 +1,20 @@
 package com.willfp.ecoskills.magic
 
-import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.eco.core.placeholder.PlayerPlaceholder
-import com.willfp.eco.core.placeholder.PlayerlessPlaceholder
-import com.willfp.eco.core.placeholder.context.placeholderContext
-import com.willfp.eco.core.price.Prices
-import com.willfp.eco.core.registry.KRegistrable
-import com.willfp.eco.util.evaluateExpression
-import com.willfp.eco.util.toNiceString
-import com.willfp.eco.util.toNumeral
 import com.willfp.ecoskills.api.event.PlayerRegenMagicEvent
 import com.willfp.ecoskills.libreforge.EffectArgumentMagicCost
 import com.willfp.ecoskills.plugin
-import com.willfp.libreforge.effects.arguments.EffectArguments
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
+import wiki.ecohub.config.Config
+import wiki.ecohub.core.price.Prices
+import wiki.ecohub.core.registry.KRegistrable
+import wiki.ecohub.core.stdlib.toNiceString
+import wiki.ecohub.math.evaluateExpression
+import wiki.ecohub.math.toNumeral
+import wiki.ecohub.rules.argument.EffectArguments
+import wiki.ecohub.ui.placeholder.placeholderContext
+import wiki.ecohub.ui.placeholder.type.PlayerPlaceholder
+import wiki.ecohub.ui.placeholder.type.PlayerlessPlaceholder
 import kotlin.math.ceil
 
 class MagicType(

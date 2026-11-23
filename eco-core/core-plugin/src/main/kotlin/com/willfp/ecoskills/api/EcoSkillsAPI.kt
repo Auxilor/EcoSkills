@@ -2,7 +2,6 @@
 
 package com.willfp.ecoskills.api
 
-import com.willfp.eco.core.progression.LevelProgression
 import com.willfp.ecoskills.api.modifiers.StatModifier
 import com.willfp.ecoskills.effects.Effect
 import com.willfp.ecoskills.effects.Effects
@@ -19,6 +18,7 @@ import com.willfp.ecoskills.stats.statModifiers
 import com.willfp.ecoskills.stats.stats
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
+import wiki.ecohub.modules.progression.LevelProgression
 import java.util.UUID
 
 /*

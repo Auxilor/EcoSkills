@@ -1,20 +1,5 @@
 package com.willfp.ecoskills.skills
 
-import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.eco.core.data.keys.PersistentDataKey
-import com.willfp.eco.core.data.keys.PersistentDataKeyType
-import com.willfp.eco.core.data.profile
-import com.willfp.eco.core.leaderboard.Leaderboard
-import com.willfp.eco.core.leaderboard.Leaderboards
-import com.willfp.eco.core.leaderboard.registerStandardPlaceholders
-import com.willfp.eco.core.map.defaultMap
-import com.willfp.eco.core.placeholder.PlayerPlaceholder
-import com.willfp.eco.core.placeholder.context.placeholderContext
-import com.willfp.eco.core.progression.LevelCurve
-import com.willfp.eco.core.progression.LevelCurves
-import com.willfp.eco.util.evaluateExpression
-import com.willfp.eco.util.formatEco
-import com.willfp.eco.util.toNiceString
 import com.willfp.ecoskills.Levellable
 import com.willfp.ecoskills.api.getFormattedRequiredXP
 import com.willfp.ecoskills.api.getSkillLevel
@@ -29,15 +14,29 @@ import com.willfp.ecoskills.stats.Stats
 import com.willfp.ecoskills.util.InvalidConfigurationException
 import com.willfp.ecoskills.util.LevelInjectable
 import com.willfp.ecoskills.util.loadDescriptionPlaceholders
-import com.willfp.libreforge.ViolationContext
-import com.willfp.libreforge.conditions.Conditions
-import com.willfp.libreforge.counters.Counters
-import com.willfp.libreforge.effects.executors.impl.NormalExecutorFactory
-import com.willfp.libreforge.toDispatcher
-import com.willfp.libreforge.levels.LevelUpDispatcher
-import com.willfp.libreforge.triggers.TriggerData
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
+import wiki.ecohub.config.Config
+import wiki.ecohub.config.ViolationContext
+import wiki.ecohub.core.stdlib.toNiceString
+import wiki.ecohub.data.PersistentDataKey
+import wiki.ecohub.data.PersistentDataKeyType
+import wiki.ecohub.data.playerbase.leaderboard.Leaderboard
+import wiki.ecohub.data.playerbase.leaderboard.Leaderboards
+import wiki.ecohub.data.playerbase.leaderboard.registerStandardPlaceholders
+import wiki.ecohub.game.entity.player.profile
+import wiki.ecohub.game.entity.toDispatcher
+import wiki.ecohub.math.evaluateExpression
+import wiki.ecohub.modules.progression.LevelCurve
+import wiki.ecohub.modules.progression.LevelCurves
+import wiki.ecohub.modules.progression.LevelUpDispatcher
+import wiki.ecohub.rules.chain.NormalExecutorFactory
+import wiki.ecohub.rules.condition.Conditions
+import wiki.ecohub.rules.counter.Counters
+import wiki.ecohub.rules.trigger.TriggerData
+import wiki.ecohub.ui.placeholder.placeholderContext
+import wiki.ecohub.ui.placeholder.type.PlayerPlaceholder
+import wiki.ecohub.ui.text.formatEco
 import java.util.concurrent.ConcurrentHashMap
 
 class Skill(
@@ -109,7 +108,7 @@ class Skill(
         )
     }
 
-    private val levelUpEffects = com.willfp.libreforge.effects.Effects.compileChain(
+    private val levelUpEffects = wiki.ecohub.rules.effect.Effects.compileChain(
         config.getSubsections("level-up-effects"),
         NormalExecutorFactory.create(),
         ViolationContext(plugin, "Skill $id level-up-effects")
@@ -263,9 +262,9 @@ class Skill(
         var processed = this
 
         // Fixes visual bug with repeated rewards
-        val levels = defaultMap<Levellable, Int>(0)
+        val levels = mutableMapOf<Levellable, Int>()
         for (reward in rewards) {
-            levels[reward.reward] += reward.getCumulativeLevels(level)
+            levels.merge(reward.reward, reward.getCumulativeLevels(level), Int::plus)
         }
 
         for ((reward, lvl) in levels) {

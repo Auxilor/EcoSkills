@@ -1,21 +1,21 @@
 package com.willfp.ecoskills.libreforge
 
-import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.ecoskills.api.addStatModifier
 import com.willfp.ecoskills.api.modifiers.ModifierOperation
 import com.willfp.ecoskills.api.modifiers.StatModifier
 import com.willfp.ecoskills.api.removeStatModifier
 import com.willfp.ecoskills.plugin
 import com.willfp.ecoskills.stats.Stats
-import com.willfp.libreforge.ArgType
-import com.willfp.libreforge.NoCompileData
-import com.willfp.libreforge.arguments
-import com.willfp.libreforge.effects.Effect
-import com.willfp.libreforge.effects.RunOrder
-import com.willfp.libreforge.getDoubleFromExpression
-import com.willfp.libreforge.getIntFromExpression
-import com.willfp.libreforge.triggers.TriggerData
-import com.willfp.libreforge.triggers.TriggerParameter
+import wiki.ecohub.config.ArgType
+import wiki.ecohub.config.Config
+import wiki.ecohub.config.arguments
+import wiki.ecohub.config.section.getDoubleFromExpression
+import wiki.ecohub.config.section.getIntFromExpression
+import wiki.ecohub.core.registry.NoCompileData
+import wiki.ecohub.rules.effect.Effect
+import wiki.ecohub.rules.effect.RunOrder
+import wiki.ecohub.rules.trigger.TriggerData
+import wiki.ecohub.rules.trigger.TriggerParameter
 import java.util.UUID
 
 object EffectMultiplyStatTemporarily : Effect<NoCompileData>("multiply_stat_temporarily") {

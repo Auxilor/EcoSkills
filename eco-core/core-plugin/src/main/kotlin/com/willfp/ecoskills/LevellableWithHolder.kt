@@ -1,12 +1,12 @@
 package com.willfp.ecoskills
 
-import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.libreforge.Holder
-import com.willfp.libreforge.ViolationContext
-import com.willfp.libreforge.conditions.ConditionList
-import com.willfp.libreforge.conditions.Conditions
-import com.willfp.libreforge.effects.EffectList
-import com.willfp.libreforge.effects.Effects
+import wiki.ecohub.config.Config
+import wiki.ecohub.config.ViolationContext
+import wiki.ecohub.rules.condition.ConditionList
+import wiki.ecohub.rules.condition.Conditions
+import wiki.ecohub.rules.effect.EffectList
+import wiki.ecohub.rules.effect.Effects
+import wiki.ecohub.rules.holder.Holder
 import java.util.concurrent.ConcurrentHashMap
 
 abstract class LevellableWithHolder(

@@ -1,16 +1,16 @@
 package com.willfp.ecoskills.libreforge
 
-import com.willfp.eco.core.config.interfaces.Config
 import com.willfp.ecoskills.api.getStatLevel
 import com.willfp.ecoskills.stats.Stats
-import com.willfp.libreforge.ArgType
-import com.willfp.libreforge.Dispatcher
-import com.willfp.libreforge.NoCompileData
-import com.willfp.libreforge.ProvidedHolder
-import com.willfp.libreforge.arguments
-import com.willfp.libreforge.conditions.Condition
-import com.willfp.libreforge.get
 import org.bukkit.entity.Player
+import wiki.ecohub.config.ArgType
+import wiki.ecohub.config.Config
+import wiki.ecohub.config.arguments
+import wiki.ecohub.core.registry.NoCompileData
+import wiki.ecohub.rules.condition.Condition
+import wiki.ecohub.rules.holder.Dispatcher
+import wiki.ecohub.rules.holder.ProvidedHolder
+import wiki.ecohub.rules.holder.get
 
 object ConditionStatAbove : Condition<NoCompileData>("stat_above") {
     override val description = "Passes when the player's level in the given stat is at or above the minimum."

@@ -1,26 +1,15 @@
 package com.willfp.ecoskills.commands
 
-import com.willfp.eco.core.command.impl.PluginCommand
-import com.willfp.ecoskills.plugin
-import org.bukkit.command.CommandSender
+import com.willfp.ecoskills.EcoSkillsPlugin
+import wiki.ecohub.core.command.command
 
-object CommandEcoSkills : PluginCommand(
-    plugin,
-    "ecoskills",
-    "ecoskills.command.ecoskills",
-    false
+internal fun EcoSkillsPlugin.ecoSkillsCommand() = command(
+    name = "ecoskills",
+    permission = "ecoskills.command.ecoskills"
 ) {
-    init {
-        this.addSubcommand(CommandReload)
-            .addSubcommand(CommandGive)
-            .addSubcommand(CommandReset)
-            .addSubcommand(CommandRecount)
-            .addSubcommand(CommandSet)
-    }
-
-    override fun onExecute(sender: CommandSender, args: List<String>) {
-        sender.sendMessage(
-            plugin.langYml.getMessage("invalid-command")
-        )
-    }
+    reloadCommand()
+    giveCommand()
+    resetCommand()
+    recountCommand()
+    setCommand()
 }

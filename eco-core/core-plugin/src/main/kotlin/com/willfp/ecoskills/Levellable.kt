@@ -1,24 +1,24 @@
 package com.willfp.ecoskills
 
-import com.willfp.eco.core.cache.EcoCache
-import com.willfp.eco.core.config.interfaces.Config
-import com.willfp.eco.core.data.keys.PersistentDataKey
-import com.willfp.eco.core.data.keys.PersistentDataKeyType
-import com.willfp.eco.core.data.profile
-import com.willfp.eco.core.placeholder.PlayerPlaceholder
-import com.willfp.eco.core.placeholder.PlayerStaticPlaceholder
-import com.willfp.eco.core.placeholder.PlayerlessPlaceholder
-import com.willfp.eco.core.placeholder.context.placeholderContext
-import com.willfp.eco.core.progression.ProgressionPlaceholders
-import com.willfp.eco.core.registry.KRegistrable
-import com.willfp.eco.util.evaluateExpression
-import com.willfp.eco.util.formatEco
-import com.willfp.eco.util.toNiceString
-import com.willfp.eco.util.toNumeral
 import com.willfp.ecoskills.skills.Skill
 import com.willfp.ecoskills.util.LevelInjectable
 import com.willfp.ecoskills.util.loadDescriptionPlaceholders
 import org.bukkit.OfflinePlayer
+import wiki.ecohub.config.Config
+import wiki.ecohub.core.registry.KRegistrable
+import wiki.ecohub.core.stdlib.toNiceString
+import wiki.ecohub.data.PersistentDataKey
+import wiki.ecohub.data.PersistentDataKeyType
+import wiki.ecohub.data.cache.EcoCache
+import wiki.ecohub.game.entity.player.profile
+import wiki.ecohub.math.evaluateExpression
+import wiki.ecohub.math.toNumeral
+import wiki.ecohub.modules.progression.ProgressionPlaceholders
+import wiki.ecohub.ui.placeholder.placeholderContext
+import wiki.ecohub.ui.placeholder.type.PlayerPlaceholder
+import wiki.ecohub.ui.placeholder.type.PlayerStaticPlaceholder
+import wiki.ecohub.ui.placeholder.type.PlayerlessPlaceholder
+import wiki.ecohub.ui.text.formatEco
 import java.time.Duration
 
 abstract class Levellable(
@@ -90,7 +90,7 @@ abstract class Levellable(
     }
 
     fun getDescription(level: Int): String {
-        descCache.get(level)?.let { return it }
+        descCache[level]?.let { return it }
 
         var desc = unformattedDescription
 

@@ -2,12 +2,12 @@ package com.willfp.ecoskills.libreforge
 
 import com.willfp.ecoskills.magic.MagicType
 import com.willfp.ecoskills.magic.magic
-import com.willfp.libreforge.ConfigurableElement
-import com.willfp.libreforge.NoCompileData
-import com.willfp.libreforge.effects.arguments.EffectArgument
-import com.willfp.libreforge.get
-import com.willfp.libreforge.triggers.DispatchedTrigger
 import org.bukkit.entity.Player
+import wiki.ecohub.config.ConfigurableElement
+import wiki.ecohub.core.registry.NoCompileData
+import wiki.ecohub.rules.argument.EffectArgument
+import wiki.ecohub.rules.holder.get
+import wiki.ecohub.rules.trigger.DispatchedTrigger
 
 class EffectArgumentMagicCost(private val type: MagicType) : EffectArgument<NoCompileData>("${type.id}_cost") {
     override fun isMet(element: ConfigurableElement, trigger: DispatchedTrigger, compileData: NoCompileData): Boolean {

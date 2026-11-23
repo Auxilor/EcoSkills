@@ -1,111 +1,63 @@
 package com.willfp.ecoskills.commands
 
-import com.willfp.eco.core.command.impl.Subcommand
-import com.willfp.eco.util.StringUtils
-import com.willfp.eco.util.formatEco
 import com.willfp.ecoskills.api.setBaseStatLevel
 import com.willfp.ecoskills.api.setMagic
 import com.willfp.ecoskills.api.setSkillLevel
 import com.willfp.ecoskills.magic.MagicType
-import com.willfp.ecoskills.magic.MagicTypes
-import com.willfp.ecoskills.plugin
-import com.willfp.ecoskills.runOwned
 import com.willfp.ecoskills.skills.Skill
-import com.willfp.ecoskills.skills.Skills
 import com.willfp.ecoskills.stats.Stat
-import com.willfp.ecoskills.stats.Stats
-import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
-import org.bukkit.util.StringUtil
+import org.bukkit.entity.Player
+import wiki.ecohub.core.command.CommandBuilder
+import wiki.ecohub.game.entity.runOwned
 
-object CommandSet : Subcommand(
-    plugin,
-    "set",
-    "ecoskills.command.set",
-    false
+private const val AMOUNT_ARGS = 3
+
+internal fun CommandBuilder<CommandSender>.setCommand() = subcommand(
+    name = "set",
+    permission = "ecoskills.command.set"
 ) {
+    executes {
+        val player = onlinePlayer(0)
+        val obj = argument(1, "invalid-skill-stat", "invalid-skill-stat") { skillStatOrMagic(it) }
+        val amount = argument(2, "invalid-amount", "invalid-amount") { it.toIntOrNull() }
 
-    override fun onExecute(sender: CommandSender, args: MutableList<String>) {
-        val player = notifyPlayerRequired(args.getOrNull(0), "invalid-player")
-
-        val obj = notifyNull(
-            Skills.getByID(args.getOrNull(1)) ?: Stats.getByID(args.getOrNull(1))
-            ?: MagicTypes.getByID(args.getOrNull(1)),
-            "invalid-skill-stat"
-        )
-
-        val amount = notifyNull(args.getOrNull(2)?.toIntOrNull(), "invalid-amount")
-
-        notifyFalse(amount >= 0, "invalid-amount")
+        if (amount < 0) {
+            fail("invalid-amount")
+        }
 
         player.runOwned {
-            val key = when (obj) {
-                is Skill -> {
-                    player.setSkillLevel(obj, amount)
-                    "set-skill-level"
-                }
-
-                is Stat -> {
-                    player.setBaseStatLevel(obj, amount)
-                    "set-stat"
-                }
-
-                is MagicType -> {
-                    player.setMagic(obj, amount)
-                    "set-magic"
-                }
-
-                else -> ""
-            }
-
-            val objName = when (obj) {
-                is Skill -> obj.name
-                is Stat -> obj.name
-                is MagicType -> obj.name
-                else -> "unknown"
-            }
-
-            sender.sendMessage(
-                this.plugin.langYml.getMessage(key, StringUtils.FormatOption.WITHOUT_PLACEHOLDERS)
-                    .replace("%player%", player.name)
-                    .replace("%amount%", amount.toString())
-                    .replace("%obj%", objName)
-                    .formatEco()
-            )
+            replyChange(setAndGetReplyKey(player, obj, amount), player, amount, obj)
         }
     }
 
-    override fun tabComplete(sender: CommandSender, args: List<String>): List<String> {
-        val completions = mutableListOf<String>()
-
-        if (args.size == 1) {
-            StringUtil.copyPartialMatches(
-                args[0],
-                Bukkit.getOnlinePlayers().map { player -> player.name }.toCollection(ArrayList()),
-                completions
-            )
-            return completions
+    completes {
+        when (args.size) {
+            1 -> playerNames()
+            2 -> skillStatAndMagicIds()
+            AMOUNT_ARGS -> amountCompletions
+            else -> emptyList()
         }
+    }
+}
 
-        if (args.size == 2) {
-            StringUtil.copyPartialMatches(
-                args[1],
-                (Skills.values() union Stats.values() union MagicTypes.values()).map { it.id },
-                completions
-            )
-            return completions
-        }
-
-        if (args.size == 3) {
-            StringUtil.copyPartialMatches(
-                args[2],
-                listOf(1, 2, 5, 10, 100).map { it.toString() },
-                completions
-            )
-            return completions
-        }
-
-        return emptyList()
+private fun setAndGetReplyKey(player: Player, obj: Any, amount: Int): String = when (obj) {
+    is Skill -> {
+        player.setSkillLevel(obj, amount)
+        "set-skill-level"
     }
 
+    is Stat -> {
+        player.setBaseStatLevel(obj, amount)
+        "set-stat"
+    }
+
+    is MagicType -> {
+        player.setMagic(obj, amount)
+        "set-magic"
+    }
+
+    else -> {
+        ""
+    }
 }

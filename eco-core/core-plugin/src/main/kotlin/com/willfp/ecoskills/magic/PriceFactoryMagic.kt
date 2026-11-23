@@ -1,10 +1,10 @@
 package com.willfp.ecoskills.magic
 
-import com.willfp.eco.core.placeholder.context.PlaceholderContext
-import com.willfp.eco.core.placeholder.context.PlaceholderContextSupplier
-import com.willfp.eco.core.price.Price
-import com.willfp.eco.core.price.PriceFactory
 import org.bukkit.entity.Player
+import wiki.ecohub.core.price.Price
+import wiki.ecohub.core.price.PriceFactory
+import wiki.ecohub.ui.placeholder.PlaceholderContext
+import wiki.ecohub.ui.placeholder.PlaceholderContextSupplier
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.math.ceil

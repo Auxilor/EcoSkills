@@ -1,9 +1,9 @@
 package com.willfp.ecoskills.effects
 
 import com.willfp.ecoskills.plugin
-import com.willfp.libreforge.Holder
-import com.willfp.libreforge.conditions.ConditionList
-import com.willfp.libreforge.effects.EffectList
+import wiki.ecohub.rules.condition.ConditionList
+import wiki.ecohub.rules.effect.EffectList
+import wiki.ecohub.rules.holder.Holder
 
 class EffectLevel(
     val effect: Effect,
