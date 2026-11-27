@@ -29,7 +29,7 @@ class SkillLevelGUI(
         val pageChangeSound = PlayableSound.create(plugin.configYml.getSubsection("level-gui.page-change-sound"))
 
         menu = menu(plugin.configYml.getInt("level-gui.rows")) {
-            title = plugin.configYml.getString("level-gui.title")
+            title = (skill.config.getStringOrNull("gui.level-title") ?: plugin.configYml.getString("level-gui.title"))
                 .replace("%skill%", skill.name)
                 .formatEco()
 
