@@ -47,6 +47,7 @@ hide-before-level-1: true # Show the skill as "Unknown" until the player reaches
 # === GUI: how it appears in /skills ===
 gui:
   enabled: true # Whether this skill shows in the /skills menu
+  level-title: "&7%skill% &8(%page%/%max_page%)" # Optional level GUI title for this skill; defaults to level-gui.title in config.yml
   icon: player_head texture:eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmIxYzI2OGVmZWM4ZDdkODhhMWNiODhjMmJmYTA5N2ZhNTcwMzc5NDIyOTlmN2QyMDIxNTlmYzkzY2QzMDM2ZCJ9fX0= # Icon item; see the Item Lookup System for the format
   lore: # Lore lines; use ecoskills placeholders for live stat/effect values
     - "&fImproves Stats:"
@@ -102,11 +103,12 @@ hide-before-level-1: true # Show the skill as "Unknown" until the player reaches
 
 ### GUI
 
-How the skill appears in the `/skills` menu.
+How the skill appears in the `/skills` menu, and the title of its level GUI.
 
 ```yaml
 gui:
   enabled: true # Whether this skill shows in the /skills menu
+  level-title: "&6%skill% &8(%page%/%max_page%)" # Optional level GUI title for this skill; defaults to level-gui.title in config.yml
   icon: player_head texture:"..." # Icon item; see the Item Lookup System for the format
   lore:
     - "&fImproves Stats:"
