@@ -137,7 +137,7 @@ stats-gui:
   custom-slots: [ ] # Extra GUI slots; see https://plugins.auxilor.io/all-plugins/custom-gui-slots
 
 level-gui:
-  title: "&7%skill%" # GUI title; %skill% is the skill being viewed
+  title: "&7%skill%" # GUI title; %skill% is the skill being viewed. A skill can set its own with gui.level-title.
   rows: 6
 
   mask:
